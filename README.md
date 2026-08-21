@@ -41,14 +41,17 @@ UI Match Report
 
 The engine decides the score, xG, shots, scorers, cards and events. AI never decides a winner. If the AI API is missing or fails, a local template report is used.
 
+National teams live at `/national-teams/{nation}/{year}` — for example `/national-teams/brazil/2002`. Club seasons stay at `/teams/{club}/{season}`.
+
 ## Adding a historical team
 
 1. Create or edit a club file under `data/teams/`.
 2. Use `makeTeam()` and `pl()` from `data/build-team.ts`.
 3. Set `clubId`, `season` (`2008-09`), `displaySeason` (`2008/09`), formation, ratings, style tags, achievements and a factual summary.
 4. `startingXI` must be 11 player ids, ordered **attack → defence → goalkeeper**, left to right, matching `lib/formations.ts`.
-5. Export the team from `data/teams/index.ts`.
-6. If it is a new club, add it to `data/clubs.ts`.
+5. For a national team, set `kind: "nation"` and a single-year `season` such as `2002`.
+6. Export the team from `data/teams/index.ts`.
+7. If it is a new club, add it to `data/clubs.ts`. If it is a new nation, add it to `nations` in the same file.
 7. Optional: add a Prime candidate in `data/prime.ts` and a default rival in `data/matchups.ts`.
 
 Ratings are **era-relative**. Do not make modern teams automatically stronger. A 95-attack 1970 side should compete with a 95-attack 2022 side.

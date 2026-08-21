@@ -14,8 +14,11 @@ export interface Player {
   chanceCreation?: number
 }
 
+export type TeamKind = "club" | "nation"
+
 export interface HistoricalTeam {
   id: string
+  kind: TeamKind
   clubId: string
   clubName: string
   clubCode: string
@@ -51,6 +54,7 @@ export interface Club {
   code: string
   city: string
   country: string
+  kind?: TeamKind
 }
 
 export interface PrimeCandidate {
@@ -134,6 +138,7 @@ export interface MonteCarloResult {
   avgHomeGoals: number
   avgAwayGoals: number
   mostCommonScore: string
+  scorelines: Array<{ score: string; count: number; pct: number }>
 }
 
 export interface CommentaryPayload {

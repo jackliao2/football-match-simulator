@@ -1,13 +1,18 @@
+"use client"
+
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { SITE } from "@/lib/site"
 
 const links = [
   { href: "/simulate", label: "Simulate" },
   { href: "/teams", label: "Teams" },
+  { href: "/national-teams", label: "Nations" },
   { href: "/prime", label: "Prime" },
 ]
 
 export function SiteHeader() {
+  const pathname = usePathname()
   return (
     <header className="border-b-2 border-line bg-ink/90">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-4">
@@ -23,15 +28,22 @@ export function SiteHeader() {
           </span>
         </Link>
         <nav className="flex flex-wrap gap-1 sm:gap-2">
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="border-2 border-transparent px-3 py-2 font-display text-[10px] uppercase tracking-[0.14em] text-muted no-underline hover:border-line hover:text-gold"
-            >
-              {link.label}
-            </Link>
-          ))}
+          {links.map((link) => {
+            const active = pathname === link.href || pathname.startsWith(`${link.href}/`)
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`border-2 px-3 py-2 font-display text-[10px] uppercase tracking-[0.14em] no-underline ${
+                  active
+                    ? "border-gold text-gold"
+                    : "border-transparent text-muted hover:border-line hover:text-gold"
+                }`}
+              >
+                {link.label}
+              </Link>
+            )
+          })}
         </nav>
       </div>
     </header>

@@ -13,6 +13,15 @@ export const HOMEPAGE_TEAMS = [
   "ac-milan-2006-07",
 ]
 
+export const HOMEPAGE_NATIONS = [
+  "brazil-1970",
+  "brazil-2002",
+  "argentina-1986",
+  "argentina-2022",
+  "france-1998",
+  "spain-2010",
+]
+
 export const FEATURED_MATCHUPS = [
   ["barcelona-2008-09", "real-madrid-2016-17"],
   ["manchester-united-2007-08", "barcelona-2010-11"],
@@ -22,6 +31,11 @@ export const FEATURED_MATCHUPS = [
   ["barcelona-2014-15", "bayern-munich-2012-13"],
   ["real-madrid-2016-17", "manchester-united-2007-08"],
   ["inter-milan-2009-10", "barcelona-2010-11"],
+  ["brazil-2002", "argentina-2022"],
+  ["brazil-1970", "spain-2010"],
+  ["argentina-1986", "france-1998"],
+  ["italy-2006", "france-2018"],
+  ["netherlands-1974", "germany-2014"],
 ] as const
 
 export const DEFAULT_RIVALS: Record<string, string> = {
@@ -40,6 +54,16 @@ export const DEFAULT_RIVALS: Record<string, string> = {
   "bayern-munich-2012-13": "barcelona-2014-15",
   "bayern-munich-2019-20": "liverpool-2018-19",
   "manchester-city-2022-23": "arsenal-2003-04",
+  "brazil-1970": "spain-2010",
+  "brazil-2002": "argentina-2022",
+  "argentina-1986": "france-1998",
+  "argentina-2022": "brazil-2002",
+  "france-1998": "brazil-2002",
+  "france-2018": "italy-2006",
+  "spain-2010": "netherlands-1974",
+  "germany-2014": "argentina-2022",
+  "italy-2006": "france-2018",
+  "netherlands-1974": "spain-2010",
 }
 
 export function defaultOpponent(teamId: string): string {

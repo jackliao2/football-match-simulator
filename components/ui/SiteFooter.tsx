@@ -13,6 +13,12 @@ export function SiteFooter() {
           <Link href="/teams" className="text-muted hover:text-gold">
             Teams
           </Link>
+          <Link href="/national-teams" className="text-muted hover:text-gold">
+            Nations
+          </Link>
+          <Link href="/vs" className="text-muted hover:text-gold">
+            Dream matches
+          </Link>
           <Link href="/prime" className="text-muted hover:text-gold">
             Prime
           </Link>

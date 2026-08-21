@@ -1,21 +1,15 @@
 import Link from "next/link"
 import { MatchSetup } from "@/components/simulator/MatchSetup"
 import { TeamCard } from "@/components/teams/TeamCard"
-import { FEATURED_MATCHUPS, HOMEPAGE_TEAMS, vsPath } from "@/data/matchups"
+import { FEATURED_MATCHUPS, HOMEPAGE_NATIONS, HOMEPAGE_TEAMS, vsPath } from "@/data/matchups"
 import { primeEntities } from "@/data/prime"
-import { getTeam, teams } from "@/data/teams"
+import { getTeam, teams, toTeamOption } from "@/data/teams"
 import { PixelButton } from "@/components/ui/PixelButton"
 
 export default function HomePage() {
-  const options = teams.map((team) => ({
-    id: team.id,
-    clubId: team.clubId,
-    clubName: team.clubName,
-    clubCode: team.clubCode,
-    season: team.season,
-    displaySeason: team.displaySeason,
-  }))
+  const options = teams.map(toTeamOption)
   const legendary = HOMEPAGE_TEAMS.map((id) => getTeam(id)).filter(Boolean)
+  const nations = HOMEPAGE_NATIONS.map((id) => getTeam(id)).filter(Boolean)
 
   return (
     <div className="grid gap-12">
@@ -23,7 +17,20 @@ export default function HomePage() {
         <p className="font-display text-[10px] uppercase tracking-[0.28em] text-gold">
           ██████ Football Match Simulator ██████
         </p>
-        <h1 className="font-display text-lg uppercase leading-relaxed tracking-[0.08em] text-text sm:text-2xl">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              name: "Football Match Simulator",
+              applicationCategory: "GameApplication",
+              description:
+                "Simulate historical football teams from any era. Pick a squad, pick a season, settle the debate.",
+            }),
+          }}
+        />
+        <h1 className="font-display text-[15px] uppercase leading-relaxed tracking-[0.08em] text-text sm:text-2xl">
           Football Match Simulator
         </h1>
         <p className="text-sm text-muted sm:text-base">Legendary teams. Different eras. One match.</p>
@@ -48,16 +55,33 @@ export default function HomePage() {
           )}
         </div>
         <div>
-          <PixelButton href="/teams">All Historical Teams</PixelButton>
+          <PixelButton href="/teams">All Club Teams</PixelButton>
         </div>
       </section>
 
       <section className="grid gap-4">
         <h2 className="font-display text-[11px] uppercase tracking-[0.18em] text-gold">
-          Popular Dream Matches
+          National Teams
         </h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {nations.map((team) => (team ? <TeamCard key={team.id} team={team} /> : null))}
+        </div>
+        <div>
+          <PixelButton href="/national-teams">All National Teams</PixelButton>
+        </div>
+      </section>
+
+      <section className="grid gap-4">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <h2 className="font-display text-[11px] uppercase tracking-[0.18em] text-gold">
+            Popular Dream Matches
+          </h2>
+          <PixelButton href="/vs" variant="ghost">
+            All matchups
+          </PixelButton>
+        </div>
         <div className="grid gap-3">
-          {FEATURED_MATCHUPS.slice(0, 5).map(([homeId, awayId]) => {
+          {FEATURED_MATCHUPS.slice(0, 8).map(([homeId, awayId]) => {
             const home = getTeam(homeId)
             const away = getTeam(awayId)
             if (!home || !away) return null

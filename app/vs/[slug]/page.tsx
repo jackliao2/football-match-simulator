@@ -6,11 +6,13 @@ import { MonteCarloResults } from "@/components/simulator/MonteCarloResults"
 import { TeamRatings } from "@/components/teams/TeamRatings"
 import { PixelButton } from "@/components/ui/PixelButton"
 import { allVsPairs } from "@/data/matchups"
-import { getTeam, teams } from "@/data/teams"
+import { getTeam, teams, toTeamOption } from "@/data/teams"
 import { parseVsSlug } from "@/lib/match-id"
+import { teamPath } from "@/lib/paths"
+import { absoluteUrl } from "@/lib/site"
 import { simulateMany } from "@/lib/simulation"
 
-const VS_RUNS = 1000
+const VS_RUNS = 400
 
 export const dynamicParams = false
 
@@ -29,9 +31,14 @@ export async function generateMetadata({
   if (!home || !away) return { title: "Dream Match" }
   const title = `${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason} — Match Simulator`
   return {
-    title: { absolute: `${title}` },
+    title: { absolute: title },
     description: `Simulate ${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}. Model probabilities, squads and a football match simulator — not a recorded historical result.`,
     alternates: { canonical: `/vs/${slug}` },
+    openGraph: {
+      title,
+      description: `Simulate this dream match. Model probabilities, not a recorded historical result.`,
+      url: absoluteUrl(`/vs/${slug}`),
+    },
   }
 }
 
@@ -44,14 +51,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
   if (!home || !away) notFound()
 
   const model = simulateMany(home, away, VS_RUNS, `vs:${slug}`)
-  const options = teams.map((team) => ({
-    id: team.id,
-    clubId: team.clubId,
-    clubName: team.clubName,
-    clubCode: team.clubCode,
-    season: team.season,
-    displaySeason: team.displaySeason,
-  }))
+  const options = teams.map(toTeamOption)
 
   return (
     <div className="grid gap-8">
@@ -59,7 +59,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
         <p className="font-display text-[10px] uppercase tracking-[0.2em] text-gold">
           Dream Match Simulator
         </p>
-        <h1 className="font-display text-lg uppercase leading-relaxed tracking-[0.06em] sm:text-2xl">
+        <h1 className="font-display text-[13px] uppercase leading-relaxed tracking-[0.06em] sm:text-xl md:text-2xl">
           {home.clubName} {home.displaySeason} vs {away.clubName} {away.displaySeason}
         </h1>
         <p className="max-w-3xl text-sm leading-7 text-muted">
@@ -70,14 +70,14 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
 
       <div className="grid gap-3 sm:grid-cols-2">
         <Link
-          href={`/teams/${home.clubId}/${home.season}`}
+          href={teamPath(home)}
           className="border-2 border-line bg-panel p-4 no-underline hover:border-gold"
         >
           <div className="font-display text-[11px] uppercase">{home.clubName}</div>
           <div className="text-sm text-muted">{home.displaySeason} squad</div>
         </Link>
         <Link
-          href={`/teams/${away.clubId}/${away.season}`}
+          href={teamPath(away)}
           className="border-2 border-line bg-panel p-4 no-underline hover:border-gold"
         >
           <div className="font-display text-[11px] uppercase">{away.clubName}</div>

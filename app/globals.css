@@ -60,6 +60,11 @@ select {
   color: var(--color-text);
 }
 
+optgroup {
+  color: var(--color-gold);
+  font-style: normal;
+}
+
 .pixel-border {
   box-shadow:
     4px 4px 0 0 #000,

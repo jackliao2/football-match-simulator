@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { TeamCard } from "@/components/teams/TeamCard"
+import { PixelButton } from "@/components/ui/PixelButton"
 import { clubs } from "@/data/clubs"
 import { getTeamsByClub } from "@/data/teams"
 
@@ -21,6 +22,9 @@ export default function TeamsPage() {
           Every page is a squad, lineup, formation and ratings cluster for that club and season —
           then a doorway into the match simulator.
         </p>
+        <PixelButton href="/national-teams" variant="ghost" className="w-fit">
+          National teams
+        </PixelButton>
       </header>
       {clubs.map((club) => {
         const clubTeams = getTeamsByClub(club.id)

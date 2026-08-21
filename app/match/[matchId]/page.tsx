@@ -11,6 +11,8 @@ import { PixelButton } from "@/components/ui/PixelButton"
 import { getTeam } from "@/data/teams"
 import { vsPath } from "@/data/matchups"
 import { parseMatchId } from "@/lib/match-id"
+import { teamPath } from "@/lib/paths"
+import { absoluteUrl } from "@/lib/site"
 import { simulateMatch } from "@/lib/simulation"
 
 export const dynamicParams = true
@@ -30,6 +32,11 @@ export async function generateMetadata({
     title,
     description: `Simulated football match: ${title}. Seed ${parsed.seed}. Replay it or run 100 matches.`,
     robots: { index: false, follow: true },
+    openGraph: {
+      title,
+      description: `Simulated match · seed ${parsed.seed}`,
+      url: absoluteUrl(`/match/${matchId}`),
+    },
   }
 }
 
@@ -55,7 +62,7 @@ export default async function MatchPage({ params }: PageProps<"/match/[matchId]"
         <span className="px-2">/</span>
         Simulated match
       </p>
-      <h1 className="font-display text-base uppercase leading-relaxed tracking-[0.08em] sm:text-xl">
+      <h1 className="font-display text-[13px] uppercase leading-relaxed tracking-[0.08em] sm:text-xl">
         {match.homeTeam} vs {match.awayTeam}
       </h1>
       <MatchResult match={match} home={home} away={away} />
@@ -73,10 +80,10 @@ export default async function MatchPage({ params }: PageProps<"/match/[matchId]"
       ) : null}
       <CommentaryPanel matchId={match.id} />
       <div className="flex flex-wrap gap-3">
-        <PixelButton href={`/teams/${home.clubId}/${home.season}`}>
+        <PixelButton href={teamPath(home)}>
           {home.clubName} {home.displaySeason}
         </PixelButton>
-        <PixelButton href={`/teams/${away.clubId}/${away.season}`}>
+        <PixelButton href={teamPath(away)}>
           {away.clubName} {away.displaySeason}
         </PixelButton>
         <PixelButton href={vsPath(home.id, away.id)} variant="ghost">

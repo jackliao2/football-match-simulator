@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { MatchSetup } from "@/components/simulator/MatchSetup"
 import { defaultOpponent } from "@/data/matchups"
-import { getTeam, teams } from "@/data/teams"
+import { getTeam, teams, toTeamOption } from "@/data/teams"
 
 export const metadata: Metadata = {
   title: "Simulate a Football Match",
@@ -22,19 +22,12 @@ export default async function SimulatePage({
       ? requestedAway
       : defaultOpponent(home)
 
-  const options = teams.map((team) => ({
-    id: team.id,
-    clubId: team.clubId,
-    clubName: team.clubName,
-    clubCode: team.clubCode,
-    season: team.season,
-    displaySeason: team.displaySeason,
-  }))
+  const options = teams.map(toTeamOption)
 
   return (
-    <div className="mx-auto grid max-w-3xl gap-8">
+    <div className="mx-auto grid max-w-5xl gap-8">
       <header className="grid gap-3 text-center">
-        <h1 className="font-display text-lg uppercase tracking-[0.08em] sm:text-xl">
+        <h1 className="font-display text-[13px] uppercase tracking-[0.08em] sm:text-xl">
           Simulate Match
         </h1>
         <p className="text-sm text-muted">

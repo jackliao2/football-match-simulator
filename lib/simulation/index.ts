@@ -156,14 +156,14 @@ export function simulateMany(
     scoreCounts.set(key, (scoreCounts.get(key) ?? 0) + 1)
   }
 
-  let mostCommonScore = "0-0"
-  let most = -1
-  for (const [score, count] of scoreCounts) {
-    if (count > most) {
-      most = count
-      mostCommonScore = score
-    }
-  }
+  const scorelines = [...scoreCounts.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5)
+    .map(([score, count]) => ({
+      score,
+      count,
+      pct: round1((count / runs) * 100),
+    }))
 
   return {
     runs,
@@ -177,7 +177,8 @@ export function simulateMany(
     awayWinPct: round1((awayWins / runs) * 100),
     avgHomeGoals: round2(homeGoals / runs),
     avgAwayGoals: round2(awayGoals / runs),
-    mostCommonScore,
+    mostCommonScore: scorelines[0]?.score ?? "0-0",
+    scorelines,
   }
 }
 

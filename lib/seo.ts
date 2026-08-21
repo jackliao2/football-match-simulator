@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { teamPath } from "@/lib/paths"
 import { SITE, absoluteUrl } from "@/lib/site"
 import type { HistoricalTeam } from "@/types"
 
@@ -16,6 +17,7 @@ export const defaultMetadata: Metadata = {
     "simulate football match",
     "historical football teams",
     "legendary squads",
+    "world cup squads",
   ],
   openGraph: {
     type: "website",
@@ -36,7 +38,7 @@ export const defaultMetadata: Metadata = {
 }
 
 export function teamMetadata(team: HistoricalTeam): Metadata {
-  const path = `/teams/${team.clubId}/${team.season}`
+  const path = teamPath(team)
   return {
     title: { absolute: `${team.seoTitle} | Football Match Simulator` },
     description: team.seoDescription,

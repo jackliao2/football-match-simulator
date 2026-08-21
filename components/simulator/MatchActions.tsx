@@ -59,6 +59,13 @@ export function MatchActions({
           {copied ? "Copied" : "Share Match"}
         </PixelButton>
       </div>
+      <PixelButton
+        variant="ghost"
+        className="w-full"
+        onClick={() => router.push(`/match/${buildMatchId(away.id, home.id, createSeed())}`)}
+      >
+        Reverse fixture
+      </PixelButton>
       {batch ? <MonteCarloResults result={batch} /> : null}
     </div>
   )

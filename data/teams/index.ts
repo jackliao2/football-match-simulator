@@ -14,7 +14,14 @@ import {
   manchesterUnited199899,
   manchesterUnited200708,
 } from "@/data/teams/manchester-united"
+import { argentina1986, argentina2022 } from "@/data/teams/argentina"
+import { brazil1970, brazil2002 } from "@/data/teams/brazil"
+import { france1998, france2018 } from "@/data/teams/france"
+import { germany2014 } from "@/data/teams/germany"
+import { italy2006 } from "@/data/teams/italy"
+import { netherlands1974 } from "@/data/teams/netherlands"
 import { realMadrid201314, realMadrid201617 } from "@/data/teams/real-madrid"
+import { spain2010 } from "@/data/teams/spain"
 
 export const teams: HistoricalTeam[] = [
   barcelona200809,
@@ -32,6 +39,16 @@ export const teams: HistoricalTeam[] = [
   bayernMunich201213,
   bayernMunich201920,
   manchesterCity202223,
+  brazil1970,
+  brazil2002,
+  argentina1986,
+  argentina2022,
+  france1998,
+  france2018,
+  spain2010,
+  germany2014,
+  italy2006,
+  netherlands1974,
 ]
 
 function assertTeamData(catalog: HistoricalTeam[]) {
@@ -72,5 +89,29 @@ export function getTeamsByClub(clubId: string): HistoricalTeam[] {
 }
 
 export function allClubIds(): string[] {
-  return [...new Set(teams.map((team) => team.clubId))]
+  return [...new Set(teams.filter((team) => team.kind !== "nation").map((team) => team.clubId))]
+}
+
+export function allNationIds(): string[] {
+  return [...new Set(teams.filter((team) => team.kind === "nation").map((team) => team.clubId))]
+}
+
+export function clubSeasonTeams() {
+  return teams.filter((team) => team.kind !== "nation")
+}
+
+export function nationSeasonTeams() {
+  return teams.filter((team) => team.kind === "nation")
+}
+
+export function toTeamOption(team: HistoricalTeam) {
+  return {
+    id: team.id,
+    clubId: team.clubId,
+    clubName: team.clubName,
+    clubCode: team.clubCode,
+    season: team.season,
+    displaySeason: team.displaySeason,
+    kind: team.kind,
+  }
 }

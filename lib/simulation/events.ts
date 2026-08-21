@@ -3,18 +3,28 @@ import { displayMinute } from "@/lib/format"
 import { chance, pickWeighted, poisson, randInt, type Rng } from "@/lib/simulation/random"
 import { assistWeight, bench, penaltyTaker, scoringWeight, starters } from "@/lib/simulation/ratings"
 
-function uniqueMinute(rng: Rng, used: Set<number>): number {
+function uniqueMinute(rng: Rng, used: Set<number>, min = 1, max = 90): number {
   for (let attempt = 0; attempt < 24; attempt++) {
-    const extra = chance(rng, 0.05)
-    const minute = extra ? 90 + randInt(rng, 1, 5) : randInt(rng, 1, 90)
+    const extra = max >= 90 && chance(rng, 0.05)
+    const minute = extra ? 90 + randInt(rng, 1, 5) : randInt(rng, min, Math.min(90, max))
     if (!used.has(minute)) {
       used.add(minute)
       return minute
     }
   }
-  const fallback = randInt(rng, 1, 90)
+  const fallback = randInt(rng, min, Math.min(90, max))
   used.add(fallback)
   return fallback
+}
+
+function positionGroup(position: string): string {
+  if (position === "GK") return "gk"
+  if (["CB", "LCB", "RCB"].includes(position)) return "cb"
+  if (["LB", "RB", "LWB", "RWB"].includes(position)) return "fb"
+  if (["ST", "CF", "SS"].includes(position)) return "st"
+  if (["LW", "RW", "LAM", "RAM", "LM", "RM"].includes(position)) return "wing"
+  if (position === "CAM") return "cam"
+  return "mid"
 }
 
 function event(
@@ -110,20 +120,31 @@ export function assignSubstitutions(
   usedMinutes: Set<number>,
 ): MatchEvent[] {
   const xi = starters(team).filter((player) => player.position !== "GK")
-  const available = bench(team)
+  const available = [...bench(team)]
   if (xi.length === 0 || available.length === 0) return []
 
   const count = Math.min(3, available.length)
   const outgoing = [...xi].sort((a, b) => a.overall - b.overall)
-  const incoming = [...available].sort((a, b) => b.overall - a.overall)
   const events: MatchEvent[] = []
+  const usedOut = new Set<string>()
+  const usedIn = new Set<string>()
 
   for (let i = 0; i < count; i++) {
-    const playerOut = outgoing[i]
-    const playerIn = incoming[i]
-    if (!playerOut || !playerIn) break
-    const minute = 55 + randInt(rng, 0, 32)
-    usedMinutes.add(minute)
+    const playerOut = outgoing.find((player) => !usedOut.has(player.id))
+    if (!playerOut) break
+    usedOut.add(playerOut.id)
+    const group = positionGroup(playerOut.position)
+    const sameGroup = available.filter(
+      (player) => !usedIn.has(player.id) && positionGroup(player.position) === group,
+    )
+    const pool =
+      sameGroup.length > 0
+        ? sameGroup
+        : available.filter((player) => !usedIn.has(player.id))
+    if (pool.length === 0) break
+    const playerIn = [...pool].sort((a, b) => b.overall - a.overall)[0]!
+    usedIn.add(playerIn.id)
+    const minute = uniqueMinute(rng, usedMinutes, 55, 88)
     events.push(
       event(minute, "sub", side, playerIn.name, {
         playerIn: playerIn.name,
@@ -174,9 +195,9 @@ export function shotProfile(
   rng: Rng,
 ): { shots: number; shotsOnTarget: number } {
   const conversion = 0.09 + (finishingQuality / 100) * 0.05
-  let shots = Math.max(goals, Math.round(xg / conversion + randInt(rng, -2, 3)))
+  let shots = Math.max(goals + 2, Math.round(xg / conversion + randInt(rng, -1, 3)))
   shots = Math.max(goals, Math.min(28, shots))
-  const extraOnTarget = poisson(Math.max(0.4, xg * 1.05), rng, 8)
+  const extraOnTarget = 1 + poisson(Math.max(0.6, xg * 0.85), rng, 6)
   const shotsOnTarget = Math.max(goals, Math.min(shots, goals + extraOnTarget))
   return { shots, shotsOnTarget }
 }

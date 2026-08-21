@@ -93,6 +93,48 @@ export const primeEntities: PrimeEntity[] = [
       },
     ],
   },
+  {
+    slug: "brazil",
+    name: "Brazil",
+    kind: "club",
+    title: "When Was Brazil's Prime?",
+    description:
+      "1970 or 2002? Pelé's third World Cup, or Ronaldo, Rivaldo and Ronaldinho in Japan and Korea. Both sides are playable.",
+    seoTitle: "Prime Brazil — When Was Brazil's Prime?",
+    seoDescription:
+      "When was Brazil's prime? Compare the 1970 World Cup winners and the 2002 Ronaldo side, then simulate each legendary squad.",
+    candidates: [
+      {
+        teamId: "brazil-1970",
+        argument: "The aesthetic peak. Pelé, Jairzinho, Tostão and a 4–1 final against Italy.",
+      },
+      {
+        teamId: "brazil-2002",
+        argument: "The three R's. Ronaldo's redemption World Cup, and a fifth star on the shirt.",
+      },
+    ],
+  },
+  {
+    slug: "argentina",
+    name: "Argentina",
+    kind: "club",
+    title: "When Was Argentina's Prime?",
+    description:
+      "Maradona in Mexico, or Messi in Qatar. Two captains, two World Cups, one endless argument.",
+    seoTitle: "Prime Argentina — When Was Argentina's Prime?",
+    seoDescription:
+      "When was Argentina's prime? Compare the 1986 Maradona side and the 2022 Messi World Cup winners, then simulate each squad.",
+    candidates: [
+      {
+        teamId: "argentina-1986",
+        argument: "The Hand of God, the Goal of the Century, and a World Cup built around one player.",
+      },
+      {
+        teamId: "argentina-2022",
+        argument: "Messi's tournament. Lusail, penalties, and the ending the story needed.",
+      },
+    ],
+  },
 ]
 
 export function getPrimeEntity(slug: string): PrimeEntity | undefined {

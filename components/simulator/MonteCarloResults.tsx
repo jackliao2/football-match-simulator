@@ -47,6 +47,21 @@ export function MonteCarloResults({ result }: { result: MonteCarloResult }) {
             <span>{result.mostCommonScore.replace("-", "–")}</span>
           </div>
         </div>
+        {result.scorelines.length > 1 ? (
+          <div className="border-t-2 border-line pt-4">
+            <p className="mb-2 font-display text-[10px] uppercase tracking-[0.16em] text-muted">
+              Common scorelines
+            </p>
+            <ul className="grid gap-1 font-mono text-sm">
+              {result.scorelines.map((line) => (
+                <li key={line.score} className="flex justify-between">
+                  <span>{line.score.replace("-", "–")}</span>
+                  <span className="text-muted">{line.pct}%</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
       </div>
     </PixelCard>
   )

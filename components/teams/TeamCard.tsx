@@ -1,10 +1,11 @@
 import Link from "next/link"
 import type { HistoricalTeam } from "@/types"
+import { teamPath } from "@/lib/paths"
 
 export function TeamCard({ team }: { team: HistoricalTeam }) {
   return (
     <Link
-      href={`/teams/${team.clubId}/${team.season}`}
+      href={teamPath(team)}
       className="block border-2 border-line bg-panel p-4 no-underline shadow-[4px_4px_0_0_#000] transition-transform hover:-translate-x-px hover:-translate-y-px hover:border-gold"
     >
       <div className="flex items-start justify-between gap-3">
