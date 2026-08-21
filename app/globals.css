@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-ink: #070907;
+  --color-panel: #101610;
+  --color-panel-2: #182018;
+  --color-line: #2a462a;
+  --color-line-hi: #5c8a48;
+  --color-text: #d7ead0;
+  --color-muted: #7e9876;
+  --color-gold: #d4b45a;
+  --color-gold-2: #f0d57a;
+  --color-pitch: #163216;
+  --color-pitch-2: #1c3c1c;
+  --color-danger: #c45c4a;
+  --color-home: #8fbf4a;
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+}
+
+html {
+  background: var(--color-ink);
+  color: var(--color-text);
+}
+
+body {
+  min-height: 100dvh;
+  background:
+    radial-gradient(1200px 500px at 50% -10%, rgba(212, 180, 90, 0.08), transparent 55%),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.015) 0px,
+      rgba(255, 255, 255, 0.015) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    var(--color-ink);
+  color: var(--color-text);
+  font-family: var(--font-mono), ui-monospace, "Cascadia Code", monospace;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+select,
+button,
+input {
+  font: inherit;
+}
+
+select {
+  background-color: var(--color-panel);
+  color: var(--color-text);
+}
+
+.pixel-border {
+  box-shadow:
+    4px 4px 0 0 #000,
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.pitch-grid {
+  background-image:
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.05) 0 0),
+    repeating-linear-gradient(
+      to bottom,
+      #163216 0px,
+      #163216 36px,
+      #1a381a 36px,
+      #1a381a 72px
+    );
+  background-size:
+    100% 50%,
+    18% 18%,
+    100% 100%;
+  background-position:
+    0 50%,
+    50% 50%,
+    0 0;
+  background-repeat: no-repeat, no-repeat, repeat;
+}
+
+.pitch-grid::before {
+  content: "";
+  position: absolute;
+  inset: 8% 6%;
+  border: 1px solid rgba(232, 240, 220, 0.28);
+  pointer-events: none;
+}
+
+.pitch-grid::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 8%;
+  bottom: 8%;
+  width: 1px;
+  background: rgba(232, 240, 220, 0.22);
+  pointer-events: none;
+}
