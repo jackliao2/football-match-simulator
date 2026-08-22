@@ -1,0 +1,20 @@
+export function OvrStamp({
+  value,
+  size = "lg",
+}: {
+  value: number
+  size?: "md" | "lg" | "xl"
+}) {
+  const number =
+    size === "xl"
+      ? "text-5xl sm:text-6xl"
+      : size === "lg"
+        ? "text-4xl sm:text-5xl"
+        : "text-3xl"
+  return (
+    <div className="flex flex-col items-end leading-none">
+      <span className={`font-display tracking-tight text-gold ${number}`}>{value}</span>
+      <span className="mt-1 font-display text-[8px] tracking-[0.28em] text-muted">OVR</span>
+    </div>
+  )
+}

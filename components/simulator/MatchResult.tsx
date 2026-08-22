@@ -1,4 +1,5 @@
-import { TeamBadge } from "@/components/teams/TeamCard"
+import { PixelCrest } from "@/components/teams/PixelCrest"
+import { OvrStamp } from "@/components/ui/OvrStamp"
 import type { HistoricalTeam, SimulatedMatch } from "@/types"
 
 export function MatchResult({
@@ -27,8 +28,8 @@ export function MatchResult({
         </span>
         <span className="font-mono text-xs uppercase tracking-wider text-muted">{resultLabel}</span>
       </div>
-      <div className="grid gap-6 p-4 sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:p-6">
-        <TeamBadge code={home.clubCode} name={home.clubName} season={home.displaySeason} />
+      <div className="grid gap-6 p-4 sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:p-5">
+        <ResultTeam team={home} />
         <div className="text-center">
           <div className="font-display text-3xl tracking-[0.2em] text-gold sm:text-4xl">
             {match.score.home} – {match.score.away}
@@ -36,7 +37,7 @@ export function MatchResult({
           <div className="mt-2 font-mono text-xs uppercase tracking-[0.16em] text-muted">Final</div>
         </div>
         <div className="sm:justify-self-end">
-          <TeamBadge code={away.clubCode} name={away.clubName} season={away.displaySeason} />
+          <ResultTeam team={away} />
         </div>
       </div>
       {match.scorers.length > 0 ? (
@@ -70,5 +71,18 @@ export function MatchResult({
         <p className="border-t-2 border-line px-4 py-3 text-sm text-muted">No goals in this simulation.</p>
       )}
     </section>
+  )
+}
+
+function ResultTeam({ team }: { team: HistoricalTeam }) {
+  return (
+    <div className="flex items-center gap-3">
+      <PixelCrest clubId={team.clubId} size={44} />
+      <div className="min-w-0">
+        <div className="font-display text-[10px] uppercase tracking-wide">{team.clubName}</div>
+        <div className="font-mono text-xs text-muted">{team.displaySeason}</div>
+      </div>
+      <OvrStamp value={team.overallRating} size="md" />
+    </div>
   )
 }

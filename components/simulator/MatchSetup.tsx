@@ -2,10 +2,11 @@
 
 import { useMemo, useState } from "react"
 import { startMatch } from "@/app/actions"
+import { ClubPicker } from "@/components/simulator/ClubPicker"
+import { CompactSquad } from "@/components/teams/SquadPanel"
+import { PixelCrest } from "@/components/teams/PixelCrest"
 import { PixelButton } from "@/components/ui/PixelButton"
-import { PixelCard } from "@/components/ui/PixelCard"
-import { TeamBadge } from "@/components/teams/TeamCard"
-import { SquadPanel } from "@/components/teams/SquadPanel"
+import { OvrStamp } from "@/components/ui/OvrStamp"
 import { track } from "@/lib/analytics"
 import type { SquadMember, StarPlayer } from "@/lib/stars"
 import type { TeamKind } from "@/types"
@@ -46,6 +47,7 @@ export function MatchSetup({
   const [awayClub, setAwayClub] = useState(awayDefault.clubId)
   const [homeId, setHomeId] = useState(homeDefault.id)
   const [awayId, setAwayId] = useState(awayDefault.id)
+  const [picker, setPicker] = useState<"home" | "away" | null>(null)
 
   const homeSeasons = teams.filter((team) => team.clubId === homeClub)
   const awaySeasons = teams.filter((team) => team.clubId === awayClub)
@@ -55,16 +57,18 @@ export function MatchSetup({
 
   function changeClub(side: "home" | "away", clubId: string) {
     const seasons = teams.filter((team) => team.clubId === clubId)
-    const next = seasons[0]
-    if (!next) return
+    const preferred =
+      seasons.find((team) => team.id === (side === "home" ? homeId : awayId)) ?? seasons[0]
+    if (!preferred) return
     track("team_selected", { clubId, side })
     if (side === "home") {
       setHomeClub(clubId)
-      setHomeId(next.id)
+      setHomeId(preferred.id)
     } else {
       setAwayClub(clubId)
-      setAwayId(next.id)
+      setAwayId(preferred.id)
     }
+    setPicker(null)
   }
 
   function changeSeason(side: "home" | "away", teamId: string) {
@@ -83,46 +87,38 @@ export function MatchSetup({
   }
 
   return (
-    <PixelCard className="w-full">
+    <div className="w-full border-2 border-line bg-panel pixel-border">
       <form
         action={startMatch}
         onSubmit={() => track("simulator_started", { home: home.id, away: away.id })}
-        className="grid gap-6 p-4 sm:p-6"
+        className="grid gap-4 p-3 sm:p-4"
       >
-        <div className="grid gap-6 lg:grid-cols-[1fr_auto_1fr] lg:items-start">
+        <div className="grid gap-4 lg:grid-cols-[1fr_auto_1fr] lg:items-stretch">
           <TeamColumn
-            label="Home Team"
-            clubs={clubs}
-            nations={nations}
+            label="Home"
             seasons={homeSeasons}
-            clubId={homeClub}
-            teamId={home.id}
             team={home}
-            onClub={(value) => changeClub("home", value)}
+            onOpenPicker={() => setPicker("home")}
             onSeason={(value) => changeSeason("home", value)}
             name="home"
           />
 
-          <div className="flex flex-col items-center justify-center gap-3 lg:pt-16">
-            <div className="font-display text-xs tracking-[0.4em] text-gold">VS</div>
+          <div className="flex flex-row items-center justify-center gap-3 lg:flex-col">
+            <div className="font-display text-[10px] tracking-[0.4em] text-gold">VS</div>
             <button
               type="button"
               onClick={swapSides}
-              className="border-2 border-line px-3 py-2 font-display text-[9px] uppercase tracking-[0.16em] text-muted hover:border-gold hover:text-gold"
+              className="border border-line px-2 py-1 font-display text-[8px] uppercase tracking-[0.16em] text-muted hover:border-gold hover:text-gold"
             >
               Swap
             </button>
           </div>
 
           <TeamColumn
-            label="Away Team"
-            clubs={clubs}
-            nations={nations}
+            label="Away"
             seasons={awaySeasons}
-            clubId={awayClub}
-            teamId={away.id}
             team={away}
-            onClub={(value) => changeClub("away", value)}
+            onOpenPicker={() => setPicker("away")}
             onSeason={(value) => changeSeason("away", value)}
             name="away"
           />
@@ -136,7 +132,17 @@ export function MatchSetup({
           Simulate Match
         </PixelButton>
       </form>
-    </PixelCard>
+
+      {picker ? (
+        <ClubPicker
+          clubs={clubs}
+          nations={nations}
+          currentId={picker === "home" ? homeClub : awayClub}
+          onSelect={(clubId) => changeClub(picker, clubId)}
+          onClose={() => setPicker(null)}
+        />
+      ) : null}
+    </div>
   )
 }
 
@@ -150,74 +156,62 @@ function uniqueOrgs(teams: TeamOption[], kind: TeamKind): TeamOption[] {
 
 function TeamColumn({
   label,
-  clubs,
-  nations,
   seasons,
-  clubId,
-  teamId,
   team,
-  onClub,
+  onOpenPicker,
   onSeason,
   name,
 }: {
   label: string
-  clubs: TeamOption[]
-  nations: TeamOption[]
   seasons: TeamOption[]
-  clubId: string
-  teamId: string
   team: TeamOption
-  onClub: (clubId: string) => void
+  onOpenPicker: () => void
   onSeason: (teamId: string) => void
   name: "home" | "away"
 }) {
   return (
-    <div className="grid gap-3">
-      <div className="flex items-center justify-between gap-3">
-        <div className="font-display text-[10px] uppercase tracking-[0.18em] text-muted">{label}</div>
-        <span className="font-mono text-xs text-gold">OVR {team.overallRating}</span>
-      </div>
-      <TeamBadge code={team.clubCode} name={team.clubName} season={team.displaySeason} />
-      <label className="grid gap-1 text-xs uppercase tracking-[0.12em] text-muted">
-        Team
-        <select
-          value={clubId}
-          onChange={(event) => onClub(event.target.value)}
-          className="border-2 border-line bg-panel-2 px-3 py-3 text-sm uppercase tracking-wide text-text outline-none focus:border-gold"
-        >
-          <optgroup label="Clubs">
-            {clubs.map((club) => (
-              <option key={club.clubId} value={club.clubId}>
-                {club.clubName}
-              </option>
-            ))}
-          </optgroup>
-          {nations.length > 0 ? (
-            <optgroup label="National teams">
-              {nations.map((nation) => (
-                <option key={nation.clubId} value={nation.clubId}>
-                  {nation.clubName}
-                </option>
-              ))}
-            </optgroup>
-          ) : null}
-        </select>
-      </label>
-      <label className="grid gap-1 text-xs uppercase tracking-[0.12em] text-muted">
-        Season
-        <select
-          value={teamId}
-          onChange={(event) => onSeason(event.target.value)}
-          className="border-2 border-line bg-panel-2 px-3 py-3 text-sm uppercase tracking-wide text-text outline-none focus:border-gold"
-        >
-          {seasons.map((season) => (
-            <option key={season.id} value={season.id}>
-              {season.displaySeason}
-            </option>
-          ))}
-        </select>
-      </label>
-      <SquadPanel squad={team.squad} teamOvr={team.overallRating} />
+    <div className="flex flex-col gap-3 border-2 border-line bg-ink/30 p-3">
+      <div className="font-display text-[8px] uppercase tracking-[0.2em] text-muted">{label}</div>
+      <button
+        type="button"
+        onClick={onOpenPicker}
+        className="flex items-center gap-3 text-left hover:border-gold"
+      >
+        <PixelCrest clubId={team.clubId} size={56} />
+        <span className="min-w-0 flex-1">
+          <span className="block font-display text-[10px] uppercase leading-tight tracking-wide text-text">
+            {team.clubName}
+          </span>
+          <span className="mt-1 block font-mono text-[10px] text-muted">Change team ▾</span>
+        </span>
+        <OvrStamp value={team.overallRating} size="lg" />
+      </button>
+
+      {seasons.length > 1 ? (
+        <div className="flex flex-wrap gap-1">
+          {seasons.map((season) => {
+            const active = season.id === team.id
+            return (
+              <button
+                key={season.id}
+                type="button"
+                onClick={() => onSeason(season.id)}
+                className={`border px-2 py-1 font-mono text-[11px] ${
+                  active
+                    ? "border-gold bg-panel-2 text-gold"
+                    : "border-line text-muted hover:border-line-hi hover:text-text"
+                }`}
+              >
+                {season.displaySeason}
+              </button>
+            )
+          })}
+        </div>
+      ) : (
+        <p className="font-mono text-xs text-muted">{team.displaySeason}</p>
+      )}
+
+      <CompactSquad squad={team.squad} />
       <input type="hidden" name={name} value={team.id} />
     </div>
   )

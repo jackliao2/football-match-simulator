@@ -42,6 +42,50 @@ export function SquadPanel({
   )
 }
 
+export function CompactSquad({
+  squad,
+  showBench = true,
+}: {
+  squad: SquadMember[]
+  showBench?: boolean
+}) {
+  const xi = squad.filter((player) => player.starter)
+  const bench = squad.filter((player) => !player.starter)
+
+  return (
+    <div className="grid gap-2">
+      <p className="font-display text-[8px] uppercase tracking-[0.16em] text-muted">Starting XI</p>
+      <ul className="grid grid-cols-2 gap-x-3 gap-y-0.5">
+        {xi.map((player) => (
+          <MiniRow key={player.id} player={player} />
+        ))}
+      </ul>
+      {showBench && bench.length > 0 ? (
+        <>
+          <p className="font-display text-[8px] uppercase tracking-[0.16em] text-muted">Bench</p>
+          <ul className="grid grid-cols-2 gap-x-3 gap-y-0.5">
+            {bench.map((player) => (
+              <MiniRow key={player.id} player={player} dim />
+            ))}
+          </ul>
+        </>
+      ) : null}
+    </div>
+  )
+}
+
+function MiniRow({ player, dim }: { player: SquadMember; dim?: boolean }) {
+  return (
+    <li className="flex items-baseline justify-between gap-1 font-mono text-[11px] leading-5">
+      <span className={`min-w-0 truncate ${dim ? "text-muted" : "text-text"}`}>
+        <span className="mr-1 text-[9px] text-muted">{player.position}</span>
+        {player.shortName}
+      </span>
+      <span className={`shrink-0 ${ovrTone(player.overall)}`}>{player.overall}</span>
+    </li>
+  )
+}
+
 function PlayerRow({ player, dim }: { player: SquadMember; dim?: boolean }) {
   return (
     <li className="grid grid-cols-[2.6rem_1fr_2.1rem] items-center gap-2 border-b border-line/80 px-3 py-1.5 font-mono text-xs last:border-b-0">

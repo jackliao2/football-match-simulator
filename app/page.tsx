@@ -12,8 +12,8 @@ export default function HomePage() {
   const nations = HOMEPAGE_NATIONS.map((id) => getTeam(id)).filter(Boolean)
 
   return (
-    <div className="grid gap-12">
-      <section className="grid gap-4 text-center">
+    <div className="grid gap-10">
+      <section className="grid gap-2 text-center">
         <p className="font-display text-[10px] uppercase tracking-[0.28em] text-gold">
           ██████ Football Match Simulator ██████
         </p>

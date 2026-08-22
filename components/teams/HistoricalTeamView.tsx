@@ -9,6 +9,8 @@ import { FEATURED_MATCHUPS, defaultOpponent, vsPath } from "@/data/matchups"
 import { getPrimeEntity } from "@/data/prime"
 import { getTeam, getTeamsByClub, teams } from "@/data/teams"
 import { orgIndexPath, orgPath, teamPath } from "@/lib/paths"
+import { PixelCrest } from "@/components/teams/PixelCrest"
+import { OvrStamp } from "@/components/ui/OvrStamp"
 import type { HistoricalTeam } from "@/types"
 
 export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
@@ -56,10 +58,16 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
             {team.clubName}
           </Link>
         </p>
-        <h1 className="font-display text-[13px] uppercase leading-relaxed tracking-[0.08em] sm:text-xl md:text-2xl">
-          {team.clubName} {team.displaySeason}
-        </h1>
-        <p className="text-sm text-muted">Squad, Starting XI, Formation & Team Ratings</p>
+        <div className="flex items-start gap-4">
+          <PixelCrest clubId={team.clubId} size={72} />
+          <div className="min-w-0 flex-1">
+            <h1 className="font-display text-[13px] uppercase leading-relaxed tracking-[0.08em] sm:text-xl md:text-2xl">
+              {team.clubName} {team.displaySeason}
+            </h1>
+            <p className="text-sm text-muted">Squad, Starting XI, Formation & Team Ratings</p>
+          </div>
+          <OvrStamp value={team.overallRating} size="xl" />
+        </div>
         <p className="max-w-3xl text-sm leading-7 text-text">{team.summary}</p>
       </header>
 

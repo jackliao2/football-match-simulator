@@ -26,7 +26,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={`${display.variable} ${mono.variable} h-full`}>
       <body className="flex min-h-full flex-col font-mono antialiased">
         <SiteHeader />
-        <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:py-10">{children}</main>
+        <main className="mx-auto w-full max-w-6xl flex-1 px-3 py-5 sm:px-4 sm:py-8">{children}</main>
         <SiteFooter />
       </body>
     </html>
