@@ -25,7 +25,7 @@ export default async function SimulatePage({
   const options = teams.map(toTeamOption)
 
   return (
-    <div className="mx-auto grid max-w-6xl gap-5">
+    <div className="mx-auto grid max-w-7xl gap-5">
       <header className="grid gap-1.5 text-center">
         <h1 className="font-display text-[13px] uppercase tracking-[0.08em] sm:text-xl">
           Simulate Match

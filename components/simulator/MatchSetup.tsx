@@ -4,7 +4,7 @@ import { useMemo, useState } from "react"
 import { startMatch } from "@/app/actions"
 import { ClubPicker } from "@/components/simulator/ClubPicker"
 import { MonteCarloResults } from "@/components/simulator/MonteCarloResults"
-import { CompactSquad } from "@/components/teams/SquadPanel"
+import { FaceOffSquad } from "@/components/teams/SquadPanel"
 import { PixelCrest } from "@/components/teams/PixelCrest"
 import { PixelButton } from "@/components/ui/PixelButton"
 import { OvrStamp } from "@/components/ui/OvrStamp"
@@ -145,78 +145,90 @@ export function MatchSetup({
   }
 
   return (
-    <div className="w-full border-2 border-line bg-panel pixel-border">
+    <div className="w-full">
       <form
         action={startMatch}
         onSubmit={() => track("simulator_started", { home: home.id, away: away.id })}
-        className="grid gap-3 p-3 sm:gap-4 sm:p-4"
+        className="grid gap-3"
       >
-        <div className="grid gap-3 lg:grid-cols-[1fr_auto_1fr] lg:items-stretch">
+        <div className="faceoff-board">
           <TeamColumn
             label="Home"
+            side="home"
             seasons={homeSeasons}
             team={home}
+            squad={homeSquad}
             onOpenPicker={() => setPicker("home")}
             onSeason={(value) => changeSeason("home", value)}
             name="home"
           />
 
-          <div className="flex flex-row items-center justify-center gap-3 lg:flex-col lg:px-1">
-            <div className="font-display text-[11px] tracking-[0.4em] text-gold">VS</div>
-            <button
-              type="button"
-              onClick={swapSides}
-              className="border-2 border-line px-3 py-2 font-display text-[9px] uppercase tracking-[0.16em] text-muted hover:border-gold hover:text-gold"
-            >
-              Swap
-            </button>
+          <div className="faceoff-rail">
+            <div className="faceoff-rail-inner">
+              <div className="faceoff-vs grid gap-2 text-center">
+                <div className="font-display text-[14px] tracking-[0.38em] text-gold md:text-[16px]">VS</div>
+                <button
+                  type="button"
+                  onClick={swapSides}
+                  className="border border-line px-2 py-1 font-display text-[8px] uppercase tracking-[0.16em] text-muted hover:border-gold hover:text-gold"
+                >
+                  Swap
+                </button>
+              </div>
+              {sameTeam ? (
+                <p className="text-center font-mono text-[10px] leading-4 text-danger">Pick two different teams.</p>
+              ) : null}
+              <PixelButton
+                type="submit"
+                variant="primary"
+                size="sm"
+                disabled={sameTeam}
+                className="faceoff-action w-full leading-tight"
+              >
+                Simulate Match
+              </PixelButton>
+              <PixelButton
+                type="button"
+                size="sm"
+                disabled={sameTeam || running}
+                className="faceoff-action w-full leading-tight"
+                onClick={simulateHundred}
+              >
+                {running ? "Running…" : "Simulate 100"}
+              </PixelButton>
+              <PixelButton
+                type="button"
+                variant="ghost"
+                size="sm"
+                disabled={sameTeam || analysisLoading}
+                className="faceoff-action w-full leading-tight"
+                onClick={runAnalysis}
+              >
+                {analysisLoading ? "Writing…" : "AI Analysis"}
+              </PixelButton>
+              <p className="hidden text-center font-mono text-[8px] uppercase leading-4 tracking-[0.08em] text-muted md:block">
+                Hover OVR for PAC SHO PAS DRI DEF PHY
+              </p>
+            </div>
           </div>
 
           <TeamColumn
             label="Away"
+            side="away"
             seasons={awaySeasons}
             team={away}
+            squad={awaySquad}
             onOpenPicker={() => setPicker("away")}
             onSeason={(value) => changeSeason("away", value)}
             name="away"
           />
         </div>
-
-        {sameTeam ? (
-          <p className="text-center text-sm text-danger">Pick two different historical teams.</p>
-        ) : null}
-
-        <div className="grid gap-2 sm:grid-cols-[1.4fr_1fr_1fr]">
-          <PixelButton type="submit" variant="primary" size="lg" disabled={sameTeam} className="w-full">
-            Simulate Match
-          </PixelButton>
-          <PixelButton
-            type="button"
-            disabled={sameTeam || running}
-            className="w-full"
-            onClick={simulateHundred}
-          >
-            {running ? "Running…" : "Simulate 100"}
-          </PixelButton>
-          <PixelButton
-            type="button"
-            variant="ghost"
-            disabled={sameTeam || analysisLoading}
-            className="w-full"
-            onClick={runAnalysis}
-          >
-            {analysisLoading ? "Writing…" : "AI Analysis"}
-          </PixelButton>
-        </div>
-        <p className="text-center font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
-          Hover any OVR for PAC SHO PAS DRI DEF PHY
-        </p>
       </form>
 
-      {analysisError ? <p className="px-4 pb-3 text-sm text-danger">{analysisError}</p> : null}
+      {analysisError ? <p className="mt-3 text-sm text-danger">{analysisError}</p> : null}
 
       {analysis ? (
-        <section className="border-t-2 border-line bg-ink/40 px-4 py-4 sm:px-5">
+        <section className="mt-3 border-2 border-line bg-panel px-4 py-4 sm:px-5">
           <div className="mb-3 flex items-end justify-between gap-3">
             <h2 className="font-display text-[10px] uppercase tracking-[0.16em] text-gold">
               Pre-match analysis
@@ -230,15 +242,10 @@ export function MatchSetup({
       ) : null}
 
       {batch ? (
-        <div className="border-t-2 border-line p-3 sm:p-4">
+        <div className="mt-3">
           <MonteCarloResults result={batch} />
         </div>
       ) : null}
-
-      <div className="grid gap-4 border-t-2 border-line p-3 sm:p-4 lg:grid-cols-2">
-        <CompactSquad squad={homeSquad} />
-        <CompactSquad squad={awaySquad} />
-      </div>
 
       {picker ? (
         <ClubPicker
@@ -263,54 +270,71 @@ function uniqueOrgs(teams: TeamOption[], kind: TeamKind): TeamOption[] {
 
 function TeamColumn({
   label,
+  side,
   seasons,
   team,
+  squad,
   onOpenPicker,
   onSeason,
   name,
 }: {
   label: string
+  side: "home" | "away"
   seasons: TeamOption[]
   team: TeamOption
+  squad: SquadMember[]
   onOpenPicker: () => void
   onSeason: (teamId: string) => void
   name: "home" | "away"
 }) {
+  const away = side === "away"
+
   return (
-    <div className="flex flex-col gap-2 border-2 border-line bg-ink/30 p-3">
-      <div className="font-display text-[8px] uppercase tracking-[0.2em] text-muted">{label}</div>
+    <article className={`faceoff-card ${side} ${away ? "faceoff-away" : "faceoff-home"} p-3`}>
+      <div
+        className={`font-display text-[8px] uppercase tracking-[0.22em] ${
+          away ? "text-right text-danger" : "text-gold"
+        }`}
+      >
+        {label}
+      </div>
+
       <button
         type="button"
         onClick={onOpenPicker}
-        className="flex items-center gap-3 text-left"
+        className={`flex items-center gap-2.5 text-left ${away ? "flex-row-reverse text-right" : ""}`}
       >
-        <PixelCrest clubId={team.clubId} size={52} />
+        <PixelCrest clubId={team.clubId} size={48} />
         <span className="min-w-0 flex-1">
-          <span className="block font-display text-[10px] uppercase leading-tight tracking-wide text-text">
+          <span className="block font-display text-[9px] uppercase leading-tight tracking-wide text-text sm:text-[10px]">
             {team.clubName}
           </span>
           <span className="mt-1 block font-mono text-[11px] text-muted">{team.displaySeason}</span>
         </span>
-        <OvrStamp value={team.overallRating} size="lg" />
+        <OvrStamp value={team.overallRating} size="md" align={away ? "left" : "right"} />
       </button>
 
       <button
         type="button"
         onClick={onOpenPicker}
-        className="w-full border-2 border-gold bg-ink py-2.5 font-display text-[10px] uppercase tracking-[0.22em] text-gold shadow-[3px_3px_0_0_#000] hover:bg-gold hover:text-ink"
+        className={`w-full border-2 py-2 font-display text-[9px] uppercase tracking-[0.18em] shadow-[3px_3px_0_0_#000] sm:text-[10px] ${
+          away
+            ? "border-danger bg-ink text-danger hover:bg-danger hover:text-ink"
+            : "border-gold bg-ink text-gold hover:bg-gold hover:text-ink"
+        }`}
       >
         Change team
       </button>
 
-      <p className="font-mono text-[11px] leading-5 text-muted">
-        <span className="text-gold">Coach</span> {team.manager}
+      <p className={`font-mono text-[11px] leading-5 text-muted ${away ? "text-right" : ""}`}>
+        <span className={away ? "text-danger" : "text-gold"}>Coach</span> {team.manager}
         <span className="mx-2 text-line-hi">·</span>
         {team.formation}
       </p>
 
       {team.styleTags.length > 0 ? (
-        <div className="flex flex-wrap gap-1">
-          {team.styleTags.slice(0, 3).map((tag) => (
+        <div className={`flex flex-wrap gap-1 ${away ? "justify-end" : ""}`}>
+          {team.styleTags.slice(0, 2).map((tag) => (
             <span
               key={tag}
               className="border border-line px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-muted"
@@ -322,7 +346,7 @@ function TeamColumn({
       ) : null}
 
       {seasons.length > 1 ? (
-        <div className="flex flex-wrap gap-1">
+        <div className={`flex flex-wrap gap-1 ${away ? "justify-end" : ""}`}>
           {seasons.map((season) => {
             const active = season.id === team.id
             return (
@@ -332,7 +356,9 @@ function TeamColumn({
                 onClick={() => onSeason(season.id)}
                 className={`border px-2 py-1 font-mono text-[11px] ${
                   active
-                    ? "border-gold bg-panel-2 text-gold"
+                    ? away
+                      ? "border-danger bg-panel-2 text-danger"
+                      : "border-gold bg-panel-2 text-gold"
                     : "border-line text-muted hover:border-line-hi hover:text-text"
                 }`}
               >
@@ -343,7 +369,10 @@ function TeamColumn({
         </div>
       ) : null}
 
+      <div className="mt-1 border-t border-line/80 pt-2">
+        <FaceOffSquad squad={squad} align={away ? "right" : "left"} />
+      </div>
       <input type="hidden" name={name} value={team.id} />
-    </div>
+    </article>
   )
 }

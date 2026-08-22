@@ -76,6 +76,79 @@ export function CompactSquad({
   )
 }
 
+export function FaceOffSquad({
+  squad,
+  align = "left",
+}: {
+  squad: SquadMember[]
+  align?: "left" | "right"
+}) {
+  const xi = squad.filter((player) => player.starter)
+  const bench = squad.filter((player) => !player.starter)
+  const right = align === "right"
+
+  return (
+    <div className="grid gap-2">
+      <p
+        className={`font-display text-[8px] uppercase tracking-[0.16em] text-muted ${right ? "text-right" : ""}`}
+      >
+        Starting XI
+      </p>
+      <ul className="grid gap-px">
+        {xi.map((player) => (
+          <FaceRow key={player.id} player={player} align={align} />
+        ))}
+      </ul>
+      {bench.length > 0 ? (
+        <>
+          <p
+            className={`mt-1 border-t border-line/80 pt-2 font-display text-[8px] uppercase tracking-[0.16em] text-muted ${right ? "text-right" : ""}`}
+          >
+            Bench
+          </p>
+          <ul className="grid gap-px">
+            {bench.map((player) => (
+              <FaceRow key={player.id} player={player} align={align} dim />
+            ))}
+          </ul>
+        </>
+      ) : null}
+    </div>
+  )
+}
+
+function FaceRow({
+  player,
+  dim,
+  align,
+}: {
+  player: SquadMember
+  dim?: boolean
+  align: "left" | "right"
+}) {
+  const tone = dim ? "text-muted" : "text-text"
+  const meta = (
+    <>
+      <PixelFlag code={player.nation} size={13} />
+      <span className="w-7 shrink-0 text-[9px] tracking-wider text-muted">{player.position}</span>
+    </>
+  )
+  const name = <span className={`min-w-0 flex-1 truncate ${tone}`}>{player.shortName}</span>
+  const ovr = <StatTip overall={player.overall} stats={player.stats} size="sm" />
+
+  return (
+    <li
+      className={`relative z-0 flex items-center gap-1.5 whitespace-nowrap py-0.5 font-mono text-[11px] leading-5 hover:z-20 hover:bg-white/5 focus-within:z-20 ${
+        align === "right" ? "flex-row-reverse text-right" : ""
+      }`}
+    >
+      {meta}
+      {name}
+      {ovr}
+    </li>
+  )
+}
+
 function MiniRow({ player, dim }: { player: SquadMember; dim?: boolean }) {
   return (
     <li className="relative z-0 flex items-center justify-between gap-1 font-mono text-[11px] leading-5 hover:z-20 focus-within:z-20">
