@@ -1,6 +1,7 @@
 import { PixelFlag } from "@/components/teams/PixelFlag"
-import { StatTip } from "@/components/teams/StatTip"
-import { type SquadMember } from "@/lib/stars"
+import { StatStrip, StatTip } from "@/components/teams/StatTip"
+import { statsSummary } from "@/lib/player-stats"
+import { ovrTone, type SquadMember } from "@/lib/stars"
 
 export function SquadPanel({
   squad,
@@ -76,39 +77,26 @@ export function CompactSquad({
   )
 }
 
-export function FaceOffSquad({
-  squad,
-  align = "left",
-}: {
-  squad: SquadMember[]
-  align?: "left" | "right"
-}) {
+export function FaceOffSquad({ squad }: { squad: SquadMember[] }) {
   const xi = squad.filter((player) => player.starter)
   const bench = squad.filter((player) => !player.starter)
-  const away = align === "right"
 
   return (
-    <div className="grid gap-1.5">
-      <p
-        className={`font-display text-[9px] uppercase tracking-[0.18em] text-gold ${away ? "text-right" : ""}`}
-      >
-        Starting XI
-      </p>
-      <ul className="grid gap-[3px]">
+    <div className="grid gap-1">
+      <p className="px-1 font-display text-[8px] uppercase tracking-[0.16em] text-gold">XI</p>
+      <ul className="grid gap-px">
         {xi.map((player) => (
-          <FaceRow key={player.id} player={player} align={align} />
+          <FaceRow key={player.id} player={player} />
         ))}
       </ul>
       {bench.length > 0 ? (
         <>
-          <p
-            className={`mt-2 font-display text-[9px] uppercase tracking-[0.18em] text-muted ${away ? "text-right" : ""}`}
-          >
+          <p className="mt-1.5 px-1 font-display text-[8px] uppercase tracking-[0.16em] text-muted">
             Bench
           </p>
-          <ul className="grid gap-[3px]">
+          <ul className="grid grid-cols-1 gap-px sm:grid-cols-2 sm:gap-x-2">
             {bench.map((player) => (
-              <FaceRow key={player.id} player={player} align={align} dim />
+              <FaceRow key={player.id} player={player} dim compact />
             ))}
           </ul>
         </>
@@ -120,47 +108,41 @@ export function FaceOffSquad({
 function FaceRow({
   player,
   dim,
-  align,
+  compact,
 }: {
   player: SquadMember
   dim?: boolean
-  align: "left" | "right"
+  compact?: boolean
 }) {
-  const away = align === "right"
-  const name = (
-    <span className={`min-w-0 truncate font-mono text-[13px] font-medium leading-none ${dim ? "text-muted" : "text-text"}`}>
-      {player.shortName}
-    </span>
-  )
-  const pos = (
-    <span className="font-mono text-[10px] font-medium tracking-wider text-gold">{player.position}</span>
-  )
-  const flag = <PixelFlag code={player.nation} size={14} />
-  const ovr = (
-    <span className={away ? "justify-self-start" : "justify-self-end"}>
-      <StatTip overall={player.overall} stats={player.stats} size="md" />
-    </span>
-  )
-
   return (
     <li
-      className={`faceoff-player relative z-0 hover:z-20 hover:bg-white/10 focus-within:z-20 ${away ? "away" : "home"}`}
+      tabIndex={0}
+      title={statsSummary(player.stats)}
+      className="faceoff-player group relative z-0 cursor-help outline-none hover:z-20 focus:z-20"
     >
-      {away ? (
-        <>
-          {ovr}
-          {name}
-          {pos}
-          {flag}
-        </>
-      ) : (
-        <>
-          {flag}
-          {pos}
-          {name}
-          {ovr}
-        </>
-      )}
+      <span className="font-mono text-[10px] font-medium tracking-wider text-gold">{player.position}</span>
+      <span className="relative min-w-0">
+        <span
+          className={`flex min-w-0 items-center gap-1.5 group-hover:invisible group-focus:invisible ${
+            dim ? "text-muted" : "text-text"
+          }`}
+        >
+          <span className={`min-w-0 truncate font-mono leading-none ${compact ? "text-xs" : "text-[13px] font-medium"}`}>
+            {player.name}
+          </span>
+        </span>
+        <span className="absolute inset-0 hidden items-center group-hover:flex group-focus:flex">
+          <StatStrip stats={player.stats} />
+        </span>
+      </span>
+      <span className="flex justify-center">
+        <PixelFlag code={player.nation} size={compact ? 12 : 14} />
+      </span>
+      <span
+        className={`justify-self-end font-mono text-[13px] font-medium tabular-nums leading-none ${ovrTone(player.overall)}`}
+      >
+        {player.overall}
+      </span>
     </li>
   )
 }

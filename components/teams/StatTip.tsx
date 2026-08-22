@@ -1,6 +1,19 @@
 import { statTone, statsSummary, type FaceStats } from "@/lib/player-stats"
 import { ovrTone } from "@/lib/stars"
 
+export function StatStrip({ stats }: { stats: FaceStats }) {
+  return (
+    <span className="flex flex-wrap items-center gap-x-2 gap-y-0.5 font-mono text-[10px] leading-none sm:gap-x-2.5 sm:text-[11px]">
+      {stats.items.map((item) => (
+        <span key={item.key} className="inline-flex items-baseline gap-1">
+          <span className="text-[9px] tracking-wider text-muted">{item.key}</span>
+          <span className={`tabular-nums ${statTone(item.value)}`}>{item.value}</span>
+        </span>
+      ))}
+    </span>
+  )
+}
+
 export function StatTip({
   overall,
   stats,
