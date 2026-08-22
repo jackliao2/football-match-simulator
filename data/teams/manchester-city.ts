@@ -54,7 +54,7 @@ export const manchesterCity202223: HistoricalTeam = makeTeam({
     pl("Rico Lewis", "LEWIS", "RB", 78),
     pl("Kalvin Phillips", "PHILLIPS", "CDM", 78),
     pl("Stefan Ortega", "ORTEGA", "GK", 78),
-    pl("Cole Palmer", "PALMER", "CAM", 76),
+    pl("Cole Palmer", "PALMER", "CAM", 74),
   ],
   achievements: [
     "Premier League champions",

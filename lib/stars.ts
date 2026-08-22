@@ -34,3 +34,27 @@ export function toStarPlayer(player: Player): StarPlayer {
     overall: player.overall,
   }
 }
+
+export interface SquadMember extends StarPlayer {
+  starter: boolean
+}
+
+export function teamSquad(team: HistoricalTeam): SquadMember[] {
+  const starting = new Set(team.startingXI)
+  const xi = team.startingXI
+    .map((id) => team.players.find((player) => player.id === id))
+    .filter((player): player is Player => Boolean(player))
+    .map((player) => ({ ...toStarPlayer(player), starter: true }))
+  const bench = team.players
+    .filter((player) => !starting.has(player.id))
+    .sort((a, b) => b.overall - a.overall)
+    .map((player) => ({ ...toStarPlayer(player), starter: false }))
+  return [...xi, ...bench]
+}
+
+export function ovrTone(overall: number): string {
+  if (overall >= 94) return "text-gold-2"
+  if (overall >= 88) return "text-gold"
+  if (overall >= 82) return "text-text"
+  return "text-muted"
+}

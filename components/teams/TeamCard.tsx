@@ -19,7 +19,7 @@ export function TeamCard({ team }: { team: HistoricalTeam }) {
         {team.clubName}
       </h3>
       <p className="mt-1 font-mono text-sm text-muted">{team.displaySeason}</p>
-      <StarPlayers team={team} count={5} variant="compact" />
+      <StarPlayers team={team} count={8} variant="compact" />
     </Link>
   )
 }

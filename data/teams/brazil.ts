@@ -116,7 +116,7 @@ export const brazil2002: HistoricalTeam = makeTeam({
     pl("Rivaldo", "RIVALDO", "CAM", 92, { finishing: 90, chanceCreation: 92, attack: 91 }),
     pl("Ronaldinho", "RONALDINHO", "CAM", 91, { creativity: 95, chanceCreation: 94, attack: 88 }),
     pl("Ronaldo", "RONALDO", "ST", 96, { finishing: 97, attack: 96, physical: 90 }),
-    pl("Kaká", "KAKA", "CAM", 80),
+    pl("Kaká", "KAKA", "CAM", 78),
     pl("Denílson", "DENILSON", "LW", 80),
     pl("Edílson", "EDILSON", "ST", 80),
     pl("Juninho Paulista", "JUNINHO", "CAM", 82),

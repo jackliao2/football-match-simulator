@@ -104,9 +104,9 @@ export const bayernMunich201920: HistoricalTeam = makeTeam({
     "manuel-neuer",
   ],
   players: [
-    pl("Manuel Neuer", "NEUER", "GK", 91, { passing: 86 }),
+    pl("Manuel Neuer", "NEUER", "GK", 90, { passing: 86 }),
     pl("Benjamin Pavard", "PAVARD", "RB", 84),
-    pl("Jérôme Boateng", "BOATENG", "CB", 84),
+    pl("Jérôme Boateng", "BOATENG", "CB", 82),
     pl("David Alaba", "ALABA", "CB", 87, { passing: 88, defending: 84 }),
     pl("Alphonso Davies", "DAVIES", "LB", 86, { attack: 84, physical: 92 }),
     pl("Joshua Kimmich", "KIMMICH", "CDM", 90, { passing: 91, chanceCreation: 86, defending: 84 }),

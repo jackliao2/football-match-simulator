@@ -104,7 +104,7 @@ export const liverpool201819: HistoricalTeam = makeTeam({
   ],
   players: [
     pl("Alisson", "ALISSON", "GK", 92),
-    pl("Trent Alexander-Arnold", "TAA", "RB", 88, { chanceCreation: 90, passing: 89, attack: 84 }),
+    pl("Trent Alexander-Arnold", "TAA", "RB", 87, { chanceCreation: 89, passing: 88, attack: 84 }),
     pl("Joël Matip", "MATIP", "CB", 84),
     pl("Virgil van Dijk", "VAN DIJK", "CB", 94, { defending: 95, physical: 93, passing: 86 }),
     pl("Andrew Robertson", "ROBERTSON", "LB", 88, { attack: 84, chanceCreation: 86 }),

@@ -5,9 +5,9 @@ import { startMatch } from "@/app/actions"
 import { PixelButton } from "@/components/ui/PixelButton"
 import { PixelCard } from "@/components/ui/PixelCard"
 import { TeamBadge } from "@/components/teams/TeamCard"
-import { StarPlayers } from "@/components/teams/StarPlayers"
+import { SquadPanel } from "@/components/teams/SquadPanel"
 import { track } from "@/lib/analytics"
-import type { StarPlayer } from "@/lib/stars"
+import type { SquadMember, StarPlayer } from "@/lib/stars"
 import type { TeamKind } from "@/types"
 
 export interface TeamOption {
@@ -18,7 +18,9 @@ export interface TeamOption {
   season: string
   displaySeason: string
   kind: TeamKind
+  overallRating: number
   stars: StarPlayer[]
+  squad: SquadMember[]
 }
 
 export function MatchSetup({
@@ -101,7 +103,7 @@ export function MatchSetup({
             name="home"
           />
 
-          <div className="flex flex-col items-center justify-center gap-3 pt-2">
+          <div className="flex flex-col items-center justify-center gap-3 lg:pt-16">
             <div className="font-display text-xs tracking-[0.4em] text-gold">VS</div>
             <button
               type="button"
@@ -171,7 +173,10 @@ function TeamColumn({
 }) {
   return (
     <div className="grid gap-3">
-      <div className="font-display text-[10px] uppercase tracking-[0.18em] text-muted">{label}</div>
+      <div className="flex items-center justify-between gap-3">
+        <div className="font-display text-[10px] uppercase tracking-[0.18em] text-muted">{label}</div>
+        <span className="font-mono text-xs text-gold">OVR {team.overallRating}</span>
+      </div>
       <TeamBadge code={team.clubCode} name={team.clubName} season={team.displaySeason} />
       <label className="grid gap-1 text-xs uppercase tracking-[0.12em] text-muted">
         Team
@@ -212,7 +217,7 @@ function TeamColumn({
           ))}
         </select>
       </label>
-      <StarPlayers stars={team.stars} variant="setup" />
+      <SquadPanel squad={team.squad} teamOvr={team.overallRating} />
       <input type="hidden" name={name} value={team.id} />
     </div>
   )

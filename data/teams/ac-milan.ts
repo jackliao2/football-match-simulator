@@ -49,7 +49,7 @@ export const acMilan200607: HistoricalTeam = makeTeam({
     pl("Cafu", "CAFU", "RB", 84),
     pl("Kakha Kaladze", "KALADZE", "CB", 82),
     pl("Alberto Gilardino", "GILARDINO", "ST", 84, { finishing: 86 }),
-    pl("Ronaldo", "RONALDO", "ST", 83, { finishing: 86 }),
+    pl("Ronaldo", "RONALDO", "ST", 80, { finishing: 84 }),
     pl("Yoann Gourcuff", "GOURCUFF", "CAM", 80),
     pl("Serginho", "SERGINHO", "LB", 78),
     pl("Daniele Bonera", "BONERA", "CB", 78),

@@ -1,4 +1,4 @@
-import { teamStars, type StarPlayer } from "@/lib/stars"
+import { ovrTone, teamStars, type StarPlayer } from "@/lib/stars"
 import type { HistoricalTeam } from "@/types"
 
 function OvrBar({ value }: { value: number }) {
@@ -38,7 +38,7 @@ export function StarPlayers({
               <span className="text-text">{player.shortName}</span>
               <span className="ml-2 text-[10px] uppercase tracking-wider">{player.position}</span>
             </span>
-            <span className="text-gold">{player.overall}</span>
+            <span className={ovrTone(player.overall)}>{player.overall}</span>
           </li>
         ))}
       </ul>
@@ -59,7 +59,7 @@ export function StarPlayers({
             >
               <span className="text-muted">{player.position}</span>
               <span className="truncate">{player.name}</span>
-              <span className="text-right text-gold">{player.overall}</span>
+              <span className={`text-right ${ovrTone(player.overall)}`}>{player.overall}</span>
             </li>
           ))}
         </ul>

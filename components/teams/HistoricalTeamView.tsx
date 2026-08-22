@@ -72,7 +72,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
         Simulate {team.clubName} {team.displaySeason}
       </PixelButton>
 
-      <StarPlayers team={team} count={8} />
+      <StarPlayers team={team} count={11} />
       <Formation team={team} />
       <SquadList team={team} />
       <TeamRatings team={team} />

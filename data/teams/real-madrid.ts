@@ -35,8 +35,8 @@ export const realMadrid201314: HistoricalTeam = makeTeam({
     "iker-casillas",
   ],
   players: [
-    pl("Iker Casillas", "CASILLAS", "GK", 88),
-    pl("Dani Carvajal", "CARVAJAL", "RB", 84),
+    pl("Iker Casillas", "CASILLAS", "GK", 86),
+    pl("Dani Carvajal", "CARVAJAL", "RB", 81),
     pl("Sergio Ramos", "RAMOS", "CB", 91, { defending: 90, physical: 90, finishing: 72 }),
     pl("Pepe", "PEPE", "CB", 87, { defending: 89, physical: 90 }),
     pl("Marcelo", "MARCELO", "LB", 88, { attack: 86, chanceCreation: 84 }),

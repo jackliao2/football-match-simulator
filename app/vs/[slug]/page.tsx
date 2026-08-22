@@ -89,8 +89,8 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
       <MonteCarloResults result={model} />
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <StarPlayers team={home} count={8} title={`${home.clubName} stars`} />
-        <StarPlayers team={away} count={8} title={`${away.clubName} stars`} />
+        <StarPlayers team={home} count={11} title={`${home.clubName} stars`} />
+        <StarPlayers team={away} count={11} title={`${away.clubName} stars`} />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
