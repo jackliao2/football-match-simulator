@@ -1,3 +1,5 @@
+import { StatTip } from "@/components/teams/StatTip"
+import { faceStats } from "@/lib/player-stats"
 import { slotsForFormation } from "@/lib/formations"
 import type { HistoricalTeam } from "@/types"
 
@@ -15,7 +17,9 @@ export function Formation({ team }: { team: HistoricalTeam }) {
         <span className="font-display text-[10px] uppercase tracking-[0.16em] text-gold">
           Formation {team.formation}
         </span>
-        <span className="font-mono text-xs text-muted">{team.manager}</span>
+        <span className="font-mono text-xs text-muted">
+          <span className="text-gold">Coach</span> {team.manager}
+        </span>
       </div>
       <div className="pitch-grid relative min-h-[28rem] w-full sm:min-h-[32rem]">
         {eleven.map(({ player, slot }, index) =>
@@ -29,7 +33,9 @@ export function Formation({ team }: { team: HistoricalTeam }) {
                 <div className="font-display text-[8px] leading-tight tracking-wide text-gold sm:text-[9px]">
                   {player.shortName}
                 </div>
-                <div className="font-mono text-[10px] text-muted">{player.overall}</div>
+                <div className="font-mono text-[10px] text-muted">
+                  <StatTip overall={player.overall} stats={faceStats(player)} size="sm" />
+                </div>
               </div>
             </div>
           ) : null,

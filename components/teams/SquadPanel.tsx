@@ -1,4 +1,6 @@
-import { ovrTone, type SquadMember } from "@/lib/stars"
+import { PixelFlag } from "@/components/teams/PixelFlag"
+import { StatTip } from "@/components/teams/StatTip"
+import { type SquadMember } from "@/lib/stars"
 
 export function SquadPanel({
   squad,
@@ -16,8 +18,8 @@ export function SquadPanel({
         <span className="font-display text-[9px] uppercase tracking-[0.16em] text-gold">Squad</span>
         <span className="font-mono text-xs text-gold">OVR {teamOvr}</span>
       </div>
-      <div className="squad-scroll max-h-[22rem] overflow-y-auto">
-        <p className="sticky top-0 bg-panel px-3 py-1.5 font-display text-[8px] uppercase tracking-[0.14em] text-muted">
+      <div className="squad-scroll max-h-[22rem] overflow-y-auto overflow-x-visible">
+        <p className="sticky top-0 z-10 bg-panel px-3 py-1.5 font-display text-[8px] uppercase tracking-[0.14em] text-muted">
           Starting XI
         </p>
         <ul>
@@ -27,7 +29,7 @@ export function SquadPanel({
         </ul>
         {bench.length > 0 ? (
           <>
-            <p className="sticky top-0 border-t border-line bg-panel px-3 py-1.5 font-display text-[8px] uppercase tracking-[0.14em] text-muted">
+            <p className="sticky top-0 z-10 border-t border-line bg-panel px-3 py-1.5 font-display text-[8px] uppercase tracking-[0.14em] text-muted">
               Bench
             </p>
             <ul>
@@ -76,22 +78,26 @@ export function CompactSquad({
 
 function MiniRow({ player, dim }: { player: SquadMember; dim?: boolean }) {
   return (
-    <li className="flex items-baseline justify-between gap-1 font-mono text-[11px] leading-5">
-      <span className={`min-w-0 truncate ${dim ? "text-muted" : "text-text"}`}>
-        <span className="mr-1 text-[9px] text-muted">{player.position}</span>
-        {player.shortName}
+    <li className="relative z-0 flex items-center justify-between gap-1 font-mono text-[11px] leading-5 hover:z-20 focus-within:z-20">
+      <span className={`flex min-w-0 items-center gap-1 ${dim ? "text-muted" : "text-text"}`}>
+        <PixelFlag code={player.nation} size={13} />
+        <span className="shrink-0 text-[9px] text-muted">{player.position}</span>
+        <span className="truncate">{player.shortName}</span>
       </span>
-      <span className={`shrink-0 ${ovrTone(player.overall)}`}>{player.overall}</span>
+      <StatTip overall={player.overall} stats={player.stats} size="sm" />
     </li>
   )
 }
 
 function PlayerRow({ player, dim }: { player: SquadMember; dim?: boolean }) {
   return (
-    <li className="grid grid-cols-[2.6rem_1fr_2.1rem] items-center gap-2 border-b border-line/80 px-3 py-1.5 font-mono text-xs last:border-b-0">
+    <li className="relative z-0 grid grid-cols-[1.1rem_2.4rem_1fr_2.1rem] items-center gap-2 border-b border-line/80 px-3 py-1.5 font-mono text-xs last:border-b-0 hover:z-20 hover:bg-panel-2/70 focus-within:z-20">
+      <PixelFlag code={player.nation} size={14} />
       <span className="text-muted">{player.position}</span>
       <span className={`truncate ${dim ? "text-muted" : "text-text"}`}>{player.name}</span>
-      <span className={`text-right ${ovrTone(player.overall)}`}>{player.overall}</span>
+      <span className="text-right">
+        <StatTip overall={player.overall} stats={player.stats} size="sm" />
+      </span>
     </li>
   )
 }

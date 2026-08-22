@@ -25,14 +25,13 @@ export default async function SimulatePage({
   const options = teams.map(toTeamOption)
 
   return (
-    <div className="mx-auto grid max-w-6xl gap-8">
-      <header className="grid gap-3 text-center">
+    <div className="mx-auto grid max-w-6xl gap-5">
+      <header className="grid gap-1.5 text-center">
         <h1 className="font-display text-[13px] uppercase tracking-[0.08em] sm:text-xl">
           Simulate Match
         </h1>
         <p className="text-sm text-muted">
-          Choose two historical teams. The simulation engine decides the result. AI is optional
-          commentary, not the referee.
+          Choose two historical teams. The engine decides the result.
         </p>
       </header>
       <MatchSetup teams={options} defaultHome={home} defaultAway={away} />

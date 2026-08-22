@@ -1,5 +1,6 @@
 import type { HistoricalTeam, Player } from "@/types"
 import { slugify } from "@/lib/format"
+import { nationOf } from "@/lib/nationality"
 
 type RatingOverrides = Partial<
   Pick<
@@ -12,6 +13,7 @@ type RatingOverrides = Partial<
     | "goalkeeping"
     | "finishing"
     | "chanceCreation"
+    | "nation"
   >
 >
 
@@ -144,10 +146,16 @@ export function makeTeam(input: TeamInput): HistoricalTeam {
         input.chemistryRating * 0.1,
     )
 
+  const kind = input.kind ?? "club"
+  const hint = { kind, clubId: input.clubId }
   return {
     ...input,
-    kind: input.kind ?? "club",
+    kind,
     id: `${input.clubId}-${input.season}`,
     overallRating,
+    players: input.players.map((player) => ({
+      ...player,
+      nation: player.nation ?? nationOf(player.name, hint),
+    })),
   }
 }

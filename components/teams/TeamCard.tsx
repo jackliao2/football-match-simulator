@@ -19,6 +19,9 @@ export function TeamCard({ team }: { team: HistoricalTeam }) {
             {team.clubName}
           </h3>
           <p className="font-mono text-xs text-muted">{team.displaySeason}</p>
+          <p className="mt-0.5 font-mono text-[11px] text-muted">
+            <span className="text-gold">Coach</span> {team.manager}
+          </p>
         </div>
         <OvrStamp value={team.overallRating} size="md" />
       </div>

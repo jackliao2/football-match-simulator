@@ -12,6 +12,7 @@ export interface Player {
   goalkeeping?: number
   finishing?: number
   chanceCreation?: number
+  nation?: string
 }
 
 export type TeamKind = "club" | "nation"

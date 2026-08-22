@@ -81,6 +81,9 @@ function ResultTeam({ team }: { team: HistoricalTeam }) {
       <div className="min-w-0">
         <div className="font-display text-[10px] uppercase tracking-wide">{team.clubName}</div>
         <div className="font-mono text-xs text-muted">{team.displaySeason}</div>
+        <div className="font-mono text-[11px] text-muted">
+          <span className="text-gold">Coach</span> {team.manager}
+        </div>
       </div>
       <OvrStamp value={team.overallRating} size="md" />
     </div>

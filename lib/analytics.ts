@@ -5,6 +5,7 @@ export type AnalyticsEvent =
   | "simulate_again"
   | "simulate_100"
   | "ai_report_generated"
+  | "ai_analysis"
   | "match_shared"
   | "team_selected"
   | "season_selected"

@@ -1,5 +1,10 @@
 export interface CommentaryProvider {
   generateMatchReport(prompt: string, payload: unknown): Promise<string>
+  generate(
+    prompt: string,
+    payload: unknown,
+    options?: { maxTokens?: number; temperature?: number },
+  ): Promise<string>
 }
 
 interface ChatCompletionsResponse {
@@ -28,7 +33,11 @@ export function isAiConfigured(): boolean {
 export class OpenAICompatibleProvider implements CommentaryProvider {
   constructor(private readonly config: { apiKey: string; baseUrl: string; model: string }) {}
 
-  async generateMatchReport(prompt: string, payload: unknown): Promise<string> {
+  async generate(
+    prompt: string,
+    payload: unknown,
+    options?: { maxTokens?: number; temperature?: number },
+  ): Promise<string> {
     const response = await fetch(`${this.config.baseUrl}/chat/completions`, {
       method: "POST",
       headers: {
@@ -37,8 +46,8 @@ export class OpenAICompatibleProvider implements CommentaryProvider {
       },
       body: JSON.stringify({
         model: this.config.model,
-        temperature: 0.7,
-        max_tokens: 900,
+        temperature: options?.temperature ?? 0.7,
+        max_tokens: options?.maxTokens ?? 900,
         messages: [
           { role: "system", content: prompt },
           { role: "user", content: JSON.stringify(payload) },
@@ -55,6 +64,10 @@ export class OpenAICompatibleProvider implements CommentaryProvider {
     const text = data.choices?.[0]?.message?.content?.trim()
     if (!text) throw new Error("AI provider returned an empty report")
     return text
+  }
+
+  generateMatchReport(prompt: string, payload: unknown): Promise<string> {
+    return this.generate(prompt, payload, { maxTokens: 900 })
   }
 }
 

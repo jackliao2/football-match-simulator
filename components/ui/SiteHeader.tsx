@@ -15,7 +15,7 @@ export function SiteHeader() {
   const pathname = usePathname()
   return (
     <header className="border-b-2 border-line bg-ink/90">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-4">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3">
         <Link href="/" className="flex items-center gap-3 no-underline">
           <span className="border-2 border-gold bg-panel px-2 py-1 font-display text-[10px] text-gold">
             {SITE.shortName}

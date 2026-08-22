@@ -115,7 +115,11 @@ export function toTeamOption(team: HistoricalTeam) {
     displaySeason: team.displaySeason,
     kind: team.kind,
     overallRating: team.overallRating,
+    manager: team.manager,
+    formation: team.formation,
+    styleTags: team.styleTags,
     stars: teamStars(team, 6),
     squad: teamSquad(team),
+    team,
   }
 }

@@ -3,13 +3,16 @@
 import { useMemo, useState } from "react"
 import { startMatch } from "@/app/actions"
 import { ClubPicker } from "@/components/simulator/ClubPicker"
+import { MonteCarloResults } from "@/components/simulator/MonteCarloResults"
 import { CompactSquad } from "@/components/teams/SquadPanel"
 import { PixelCrest } from "@/components/teams/PixelCrest"
 import { PixelButton } from "@/components/ui/PixelButton"
 import { OvrStamp } from "@/components/ui/OvrStamp"
 import { track } from "@/lib/analytics"
-import type { SquadMember, StarPlayer } from "@/lib/stars"
-import type { TeamKind } from "@/types"
+import { createSeed } from "@/lib/match-id"
+import { simulateMany } from "@/lib/simulation"
+import { teamSquad, type SquadMember, type StarPlayer } from "@/lib/stars"
+import type { HistoricalTeam, MonteCarloResult, TeamKind } from "@/types"
 
 export interface TeamOption {
   id: string
@@ -20,8 +23,12 @@ export interface TeamOption {
   displaySeason: string
   kind: TeamKind
   overallRating: number
+  manager: string
+  formation: string
+  styleTags: string[]
   stars: StarPlayer[]
   squad: SquadMember[]
+  team: HistoricalTeam
 }
 
 export function MatchSetup({
@@ -48,12 +55,20 @@ export function MatchSetup({
   const [homeId, setHomeId] = useState(homeDefault.id)
   const [awayId, setAwayId] = useState(awayDefault.id)
   const [picker, setPicker] = useState<"home" | "away" | null>(null)
+  const [running, setRunning] = useState(false)
+  const [batch, setBatch] = useState<MonteCarloResult | null>(null)
+  const [analysis, setAnalysis] = useState<string | null>(null)
+  const [analysisSource, setAnalysisSource] = useState<"ai" | "template" | null>(null)
+  const [analysisLoading, setAnalysisLoading] = useState(false)
+  const [analysisError, setAnalysisError] = useState<string | null>(null)
 
   const homeSeasons = teams.filter((team) => team.clubId === homeClub)
   const awaySeasons = teams.filter((team) => team.clubId === awayClub)
   const home = teams.find((team) => team.id === homeId) ?? homeSeasons[0]!
   const away = teams.find((team) => team.id === awayId) ?? awaySeasons[0]!
   const sameTeam = home.id === away.id
+  const homeSquad = home.squad.length > 0 ? home.squad : teamSquad(home.team)
+  const awaySquad = away.squad.length > 0 ? away.squad : teamSquad(away.team)
 
   function changeClub(side: "home" | "away", clubId: string) {
     const seasons = teams.filter((team) => team.clubId === clubId)
@@ -69,12 +84,16 @@ export function MatchSetup({
       setAwayId(preferred.id)
     }
     setPicker(null)
+    setBatch(null)
+    setAnalysis(null)
   }
 
   function changeSeason(side: "home" | "away", teamId: string) {
     track("season_selected", { teamId, side })
     if (side === "home") setHomeId(teamId)
     else setAwayId(teamId)
+    setBatch(null)
+    setAnalysis(null)
   }
 
   function swapSides() {
@@ -84,6 +103,45 @@ export function MatchSetup({
     setAwayId(homeId)
     setHomeClub(nextHomeClub)
     setHomeId(nextHomeId)
+    setBatch(null)
+    setAnalysis(null)
+  }
+
+  function simulateHundred() {
+    if (sameTeam) return
+    setRunning(true)
+    track("simulate_100", { home: home.id, away: away.id })
+    const result = simulateMany(home.team, away.team, 100, createSeed())
+    setBatch(result)
+    setRunning(false)
+  }
+
+  async function runAnalysis() {
+    if (sameTeam) return
+    setAnalysisLoading(true)
+    setAnalysisError(null)
+    track("ai_analysis", { home: home.id, away: away.id })
+    try {
+      const response = await fetch("/api/analysis", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ homeId: home.id, awayId: away.id }),
+      })
+      const data = (await response.json()) as {
+        report?: string
+        source?: "ai" | "template"
+        error?: string
+      }
+      if (!response.ok || !data.report) {
+        throw new Error(data.error ?? "Could not generate analysis")
+      }
+      setAnalysis(data.report)
+      setAnalysisSource(data.source ?? "template")
+    } catch (err) {
+      setAnalysisError(err instanceof Error ? err.message : "Could not generate analysis")
+    } finally {
+      setAnalysisLoading(false)
+    }
   }
 
   return (
@@ -91,9 +149,9 @@ export function MatchSetup({
       <form
         action={startMatch}
         onSubmit={() => track("simulator_started", { home: home.id, away: away.id })}
-        className="grid gap-4 p-3 sm:p-4"
+        className="grid gap-3 p-3 sm:gap-4 sm:p-4"
       >
-        <div className="grid gap-4 lg:grid-cols-[1fr_auto_1fr] lg:items-stretch">
+        <div className="grid gap-3 lg:grid-cols-[1fr_auto_1fr] lg:items-stretch">
           <TeamColumn
             label="Home"
             seasons={homeSeasons}
@@ -103,12 +161,12 @@ export function MatchSetup({
             name="home"
           />
 
-          <div className="flex flex-row items-center justify-center gap-3 lg:flex-col">
-            <div className="font-display text-[10px] tracking-[0.4em] text-gold">VS</div>
+          <div className="flex flex-row items-center justify-center gap-3 lg:flex-col lg:px-1">
+            <div className="font-display text-[11px] tracking-[0.4em] text-gold">VS</div>
             <button
               type="button"
               onClick={swapSides}
-              className="border border-line px-2 py-1 font-display text-[8px] uppercase tracking-[0.16em] text-muted hover:border-gold hover:text-gold"
+              className="border-2 border-line px-3 py-2 font-display text-[9px] uppercase tracking-[0.16em] text-muted hover:border-gold hover:text-gold"
             >
               Swap
             </button>
@@ -128,10 +186,59 @@ export function MatchSetup({
           <p className="text-center text-sm text-danger">Pick two different historical teams.</p>
         ) : null}
 
-        <PixelButton type="submit" variant="primary" size="lg" disabled={sameTeam} className="w-full">
-          Simulate Match
-        </PixelButton>
+        <div className="grid gap-2 sm:grid-cols-[1.4fr_1fr_1fr]">
+          <PixelButton type="submit" variant="primary" size="lg" disabled={sameTeam} className="w-full">
+            Simulate Match
+          </PixelButton>
+          <PixelButton
+            type="button"
+            disabled={sameTeam || running}
+            className="w-full"
+            onClick={simulateHundred}
+          >
+            {running ? "Running…" : "Simulate 100"}
+          </PixelButton>
+          <PixelButton
+            type="button"
+            variant="ghost"
+            disabled={sameTeam || analysisLoading}
+            className="w-full"
+            onClick={runAnalysis}
+          >
+            {analysisLoading ? "Writing…" : "AI Analysis"}
+          </PixelButton>
+        </div>
+        <p className="text-center font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
+          Hover any OVR for PAC SHO PAS DRI DEF PHY
+        </p>
       </form>
+
+      {analysisError ? <p className="px-4 pb-3 text-sm text-danger">{analysisError}</p> : null}
+
+      {analysis ? (
+        <section className="border-t-2 border-line bg-ink/40 px-4 py-4 sm:px-5">
+          <div className="mb-3 flex items-end justify-between gap-3">
+            <h2 className="font-display text-[10px] uppercase tracking-[0.16em] text-gold">
+              Pre-match analysis
+            </h2>
+            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted">
+              {analysisSource === "ai" ? "LLM brief" : "Local brief"}
+            </span>
+          </div>
+          <div className="whitespace-pre-wrap text-sm leading-7 text-text">{analysis}</div>
+        </section>
+      ) : null}
+
+      {batch ? (
+        <div className="border-t-2 border-line p-3 sm:p-4">
+          <MonteCarloResults result={batch} />
+        </div>
+      ) : null}
+
+      <div className="grid gap-4 border-t-2 border-line p-3 sm:p-4 lg:grid-cols-2">
+        <CompactSquad squad={homeSquad} />
+        <CompactSquad squad={awaySquad} />
+      </div>
 
       {picker ? (
         <ClubPicker
@@ -170,22 +277,49 @@ function TeamColumn({
   name: "home" | "away"
 }) {
   return (
-    <div className="flex flex-col gap-3 border-2 border-line bg-ink/30 p-3">
+    <div className="flex flex-col gap-2 border-2 border-line bg-ink/30 p-3">
       <div className="font-display text-[8px] uppercase tracking-[0.2em] text-muted">{label}</div>
       <button
         type="button"
         onClick={onOpenPicker}
-        className="flex items-center gap-3 text-left hover:border-gold"
+        className="flex items-center gap-3 text-left"
       >
-        <PixelCrest clubId={team.clubId} size={56} />
+        <PixelCrest clubId={team.clubId} size={52} />
         <span className="min-w-0 flex-1">
           <span className="block font-display text-[10px] uppercase leading-tight tracking-wide text-text">
             {team.clubName}
           </span>
-          <span className="mt-1 block font-mono text-[10px] text-muted">Change team ▾</span>
+          <span className="mt-1 block font-mono text-[11px] text-muted">{team.displaySeason}</span>
         </span>
         <OvrStamp value={team.overallRating} size="lg" />
       </button>
+
+      <button
+        type="button"
+        onClick={onOpenPicker}
+        className="w-full border-2 border-gold bg-ink py-2.5 font-display text-[10px] uppercase tracking-[0.22em] text-gold shadow-[3px_3px_0_0_#000] hover:bg-gold hover:text-ink"
+      >
+        Change team
+      </button>
+
+      <p className="font-mono text-[11px] leading-5 text-muted">
+        <span className="text-gold">Coach</span> {team.manager}
+        <span className="mx-2 text-line-hi">·</span>
+        {team.formation}
+      </p>
+
+      {team.styleTags.length > 0 ? (
+        <div className="flex flex-wrap gap-1">
+          {team.styleTags.slice(0, 3).map((tag) => (
+            <span
+              key={tag}
+              className="border border-line px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-muted"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      ) : null}
 
       {seasons.length > 1 ? (
         <div className="flex flex-wrap gap-1">
@@ -207,11 +341,8 @@ function TeamColumn({
             )
           })}
         </div>
-      ) : (
-        <p className="font-mono text-xs text-muted">{team.displaySeason}</p>
-      )}
+      ) : null}
 
-      <CompactSquad squad={team.squad} />
       <input type="hidden" name={name} value={team.id} />
     </div>
   )

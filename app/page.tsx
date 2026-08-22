@@ -12,11 +12,8 @@ export default function HomePage() {
   const nations = HOMEPAGE_NATIONS.map((id) => getTeam(id)).filter(Boolean)
 
   return (
-    <div className="grid gap-10">
-      <section className="grid gap-2 text-center">
-        <p className="font-display text-[10px] uppercase tracking-[0.28em] text-gold">
-          ██████ Football Match Simulator ██████
-        </p>
+    <div className="grid gap-7">
+      <section className="grid gap-1.5 text-center">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -30,11 +27,10 @@ export default function HomePage() {
             }),
           }}
         />
-        <h1 className="font-display text-[15px] uppercase leading-relaxed tracking-[0.08em] text-text sm:text-2xl">
+        <h1 className="font-display text-[13px] uppercase leading-relaxed tracking-[0.08em] text-text sm:text-xl">
           Football Match Simulator
         </h1>
-        <p className="text-sm text-muted sm:text-base">Legendary teams. Different eras. One match.</p>
-        <p className="font-display text-[11px] uppercase tracking-[0.16em] text-gold">
+        <p className="font-display text-[10px] uppercase tracking-[0.16em] text-gold">
           Pick a team. Pick an era. Settle the debate.
         </p>
       </section>

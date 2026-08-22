@@ -1,17 +1,7 @@
-import { ovrTone, teamStars, type StarPlayer } from "@/lib/stars"
+import { PixelFlag } from "@/components/teams/PixelFlag"
+import { StatTip } from "@/components/teams/StatTip"
+import { teamStars, type StarPlayer } from "@/lib/stars"
 import type { HistoricalTeam } from "@/types"
-
-function OvrBar({ value }: { value: number }) {
-  const blocks = 12
-  const filled = Math.max(0, Math.min(blocks, Math.round((value / 99) * blocks)))
-  return (
-    <span aria-hidden className="flex min-w-[5rem] gap-[2px]">
-      {Array.from({ length: blocks }, (_, i) => (
-        <span key={i} className={`h-2.5 flex-1 ${i < filled ? "bg-home" : "bg-line"}`} />
-      ))}
-    </span>
-  )
-}
 
 export function StarPlayers({
   team,
@@ -31,15 +21,9 @@ export function StarPlayers({
 
   if (variant === "compact") {
     return (
-      <ul className="mt-3 grid gap-1 font-mono text-xs">
+      <ul className="mt-3 grid gap-1">
         {list.map((player) => (
-          <li key={player.id} className="flex items-center justify-between gap-2">
-            <span className="truncate text-muted">
-              <span className="text-text">{player.shortName}</span>
-              <span className="ml-2 text-[10px] uppercase tracking-wider">{player.position}</span>
-            </span>
-            <span className={ovrTone(player.overall)}>{player.overall}</span>
-          </li>
+          <StarRow key={player.id} player={player} compact />
         ))}
       </ul>
     )
@@ -53,14 +37,7 @@ export function StarPlayers({
         </div>
         <ul>
           {list.map((player) => (
-            <li
-              key={player.id}
-              className="grid grid-cols-[2.5rem_1fr_2.25rem] items-center gap-2 border-b border-line px-3 py-1.5 last:border-b-0 font-mono text-xs"
-            >
-              <span className="text-muted">{player.position}</span>
-              <span className="truncate">{player.name}</span>
-              <span className={`text-right ${ovrTone(player.overall)}`}>{player.overall}</span>
-            </li>
+            <StarRow key={player.id} player={player} />
           ))}
         </ul>
       </div>
@@ -68,27 +45,55 @@ export function StarPlayers({
   }
 
   return (
-    <section className="border-2 border-line bg-panel">
+    <section className="border-2 border-line bg-panel pixel-border">
       <div className="flex items-center justify-between border-b-2 border-line bg-panel-2 px-4 py-3">
         <h2 className="font-display text-[10px] uppercase tracking-[0.16em] text-gold">{title}</h2>
-        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted">OVR 综合</span>
+        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted">
+          OVR · hover stats
+        </span>
       </div>
       <ul>
         {list.map((player, index) => (
-          <li
-            key={player.id}
-            className="grid grid-cols-[1.5rem_2.75rem_1fr_2.5rem] items-center gap-2 border-b border-line px-4 py-2.5 last:border-b-0 sm:grid-cols-[1.5rem_3rem_1fr_2.5rem_minmax(5rem,1fr)] sm:gap-3"
-          >
-            <span className="font-mono text-xs text-muted">{index + 1}</span>
-            <span className="font-mono text-xs text-muted">{player.position}</span>
-            <span className="truncate text-sm">{player.name}</span>
-            <span className="text-right font-mono text-base text-gold">{player.overall}</span>
-            <span className="hidden sm:block">
-              <OvrBar value={player.overall} />
-            </span>
-          </li>
+          <StarRow key={player.id} player={player} rank={index + 1} />
         ))}
       </ul>
     </section>
+  )
+}
+
+function StarRow({
+  player,
+  rank,
+  compact,
+}: {
+  player: StarPlayer
+  rank?: number
+  compact?: boolean
+}) {
+  if (compact) {
+    return (
+      <li className="relative z-0 flex items-center gap-2 hover:z-20 focus-within:z-20">
+        <PixelFlag code={player.nation} size={14} />
+        <span className="w-7 shrink-0 font-mono text-[10px] text-muted">{player.position}</span>
+        <span className="min-w-0 flex-1 truncate text-xs">{player.shortName}</span>
+        <StatTip overall={player.overall} stats={player.stats} size="sm" />
+      </li>
+    )
+  }
+
+  return (
+    <li className="relative z-0 grid grid-cols-[1.6rem_1.15rem_2.4rem_1fr_2.4rem] items-center gap-2 border-b border-line/80 px-3 py-2.5 last:border-b-0 hover:z-20 hover:bg-panel-2/80 focus-within:z-20 sm:grid-cols-[1.75rem_1.25rem_2.6rem_1fr_2.6rem] sm:px-4">
+      {rank != null ? (
+        <span className="font-mono text-[11px] text-muted">{String(rank).padStart(2, "0")}</span>
+      ) : (
+        <span />
+      )}
+      <PixelFlag code={player.nation} size={16} />
+      <span className="font-mono text-[10px] tracking-wider text-gold">{player.position}</span>
+      <span className="truncate text-sm">{player.name}</span>
+      <span className="text-right">
+        <StatTip overall={player.overall} stats={player.stats} size="md" />
+      </span>
+    </li>
   )
 }

@@ -64,7 +64,11 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
             <h1 className="font-display text-[13px] uppercase leading-relaxed tracking-[0.08em] sm:text-xl md:text-2xl">
               {team.clubName} {team.displaySeason}
             </h1>
-            <p className="text-sm text-muted">Squad, Starting XI, Formation & Team Ratings</p>
+            <p className="mt-1 font-mono text-sm text-muted">
+              <span className="text-gold">Coach</span> {team.manager}
+              <span className="mx-2 text-line-hi">·</span>
+              {team.formation}
+            </p>
           </div>
           <OvrStamp value={team.overallRating} size="xl" />
         </div>

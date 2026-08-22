@@ -1,3 +1,5 @@
+import { faceStats, type FaceStats } from "@/lib/player-stats"
+import { nationOf } from "@/lib/nationality"
 import type { HistoricalTeam, Player } from "@/types"
 
 export interface StarPlayer {
@@ -6,6 +8,20 @@ export interface StarPlayer {
   shortName: string
   position: string
   overall: number
+  nation: string
+  stats: FaceStats
+}
+
+export function toStarPlayer(player: Player, team?: HistoricalTeam): StarPlayer {
+  return {
+    id: player.id,
+    name: player.name,
+    shortName: player.shortName,
+    position: player.position,
+    overall: player.overall,
+    nation: player.nation ?? nationOf(player.name, team),
+    stats: faceStats(player),
+  }
 }
 
 export function teamStars(team: HistoricalTeam, count = 6): StarPlayer[] {
@@ -16,23 +32,7 @@ export function teamStars(team: HistoricalTeam, count = 6): StarPlayer[] {
       return Number(starting.has(b.id)) - Number(starting.has(a.id))
     })
     .slice(0, count)
-    .map((player) => ({
-      id: player.id,
-      name: player.name,
-      shortName: player.shortName,
-      position: player.position,
-      overall: player.overall,
-    }))
-}
-
-export function toStarPlayer(player: Player): StarPlayer {
-  return {
-    id: player.id,
-    name: player.name,
-    shortName: player.shortName,
-    position: player.position,
-    overall: player.overall,
-  }
+    .map((player) => toStarPlayer(player, team))
 }
 
 export interface SquadMember extends StarPlayer {
@@ -44,11 +44,11 @@ export function teamSquad(team: HistoricalTeam): SquadMember[] {
   const xi = team.startingXI
     .map((id) => team.players.find((player) => player.id === id))
     .filter((player): player is Player => Boolean(player))
-    .map((player) => ({ ...toStarPlayer(player), starter: true }))
+    .map((player) => ({ ...toStarPlayer(player, team), starter: true }))
   const bench = team.players
     .filter((player) => !starting.has(player.id))
     .sort((a, b) => b.overall - a.overall)
-    .map((player) => ({ ...toStarPlayer(player), starter: false }))
+    .map((player) => ({ ...toStarPlayer(player, team), starter: false }))
   return [...xi, ...bench]
 }
 
