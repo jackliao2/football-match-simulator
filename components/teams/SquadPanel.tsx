@@ -1,6 +1,5 @@
 import { PixelFlag } from "@/components/teams/PixelFlag"
 import { StatStrip, StatTip } from "@/components/teams/StatTip"
-import { statsSummary } from "@/lib/player-stats"
 import { ovrTone, type SquadMember } from "@/lib/stars"
 
 export function SquadPanel({
@@ -117,32 +116,30 @@ function FaceRow({
   return (
     <li
       tabIndex={0}
-      title={statsSummary(player.stats)}
-      className="faceoff-player group relative z-0 cursor-help outline-none hover:z-20 focus:z-20"
+      className="group relative z-0 cursor-help outline-none hover:z-30 focus-within:z-30"
     >
-      <span className="font-mono text-[10px] font-medium tracking-wider text-gold">{player.position}</span>
-      <span className="relative min-w-0">
+      <div className="faceoff-player">
+        <span className="font-mono text-[10px] font-medium tracking-wider text-gold">{player.position}</span>
         <span
-          className={`flex min-w-0 items-center gap-1.5 group-hover:invisible group-focus:invisible ${
+          className={`min-w-0 truncate font-mono leading-none ${compact ? "text-xs" : "text-[13px] font-medium"} ${
             dim ? "text-muted" : "text-text"
           }`}
         >
-          <span className={`min-w-0 truncate font-mono leading-none ${compact ? "text-xs" : "text-[13px] font-medium"}`}>
-            {player.name}
-          </span>
+          {player.name}
         </span>
-        <span className="absolute inset-0 hidden items-center group-hover:flex group-focus:flex">
-          <StatStrip stats={player.stats} />
+        <span className="flex justify-center">
+          <PixelFlag code={player.nation} size={compact ? 12 : 14} />
         </span>
-      </span>
-      <span className="flex justify-center">
-        <PixelFlag code={player.nation} size={compact ? 12 : 14} />
-      </span>
-      <span
-        className={`justify-self-end font-mono text-[13px] font-medium tabular-nums leading-none ${ovrTone(player.overall)}`}
-      >
-        {player.overall}
-      </span>
+        <span
+          className={`justify-self-end font-mono text-[13px] font-medium tabular-nums leading-none ${ovrTone(player.overall)}`}
+        >
+          {player.overall}
+        </span>
+      </div>
+      <div className="pointer-events-none absolute top-[calc(100%-2px)] right-0 left-0 z-30 hidden border border-gold bg-ink px-2 py-2 shadow-[4px_4px_0_0_#000] group-hover:block group-focus:block">
+        <p className="mb-1.5 truncate font-mono text-xs text-text">{player.name}</p>
+        <StatStrip stats={player.stats} />
+      </div>
     </li>
   )
 }

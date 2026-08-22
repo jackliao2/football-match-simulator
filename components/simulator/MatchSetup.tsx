@@ -6,7 +6,6 @@ import { ClubPicker } from "@/components/simulator/ClubPicker"
 import { MonteCarloResults } from "@/components/simulator/MonteCarloResults"
 import { FaceOffSquad } from "@/components/teams/SquadPanel"
 import { PixelCrest } from "@/components/teams/PixelCrest"
-import { ArcadeButton } from "@/components/ui/ArcadeButton"
 import { OvrStamp } from "@/components/ui/OvrStamp"
 import { track } from "@/lib/analytics"
 import { createSeed } from "@/lib/match-id"
@@ -165,25 +164,33 @@ export function MatchSetup({
 
           <div className="faceoff-rail">
             <div className="faceoff-rail-inner">
-              <div className="grid gap-2">
-                <div className="arcade-vs">VS</div>
-                <button type="button" onClick={swapSides} className="arcade-swap">
-                  Swap
-                </button>
-              </div>
+              <div className="faceoff-vs">VS</div>
+              <button type="button" onClick={swapSides} className="rail-swap">
+                Swap
+              </button>
               {sameTeam ? (
                 <p className="text-center font-mono text-[11px] leading-4 text-danger">Pick two different teams.</p>
               ) : null}
-              <ArcadeButton type="submit" tone="gold" disabled={sameTeam}>
+              <button type="submit" disabled={sameTeam} className="rail-btn rail-btn-primary">
                 Simulate
-              </ArcadeButton>
-              <ArcadeButton tone="steel" disabled={sameTeam || running} onClick={simulateHundred}>
+              </button>
+              <button
+                type="button"
+                disabled={sameTeam || running}
+                className="rail-btn"
+                onClick={simulateHundred}
+              >
                 {running ? "Running…" : "100 Matches"}
-              </ArcadeButton>
-              <ArcadeButton tone="ghost" disabled={sameTeam || analysisLoading} onClick={runAnalysis}>
+              </button>
+              <button
+                type="button"
+                disabled={sameTeam || analysisLoading}
+                className="rail-btn"
+                onClick={runAnalysis}
+              >
                 {analysisLoading ? "Writing…" : "AI Analysis"}
-              </ArcadeButton>
-              <p className="arcade-hint">Hover a player for PAC SHO PAS DRI DEF PHY</p>
+              </button>
+              <p className="rail-hint">Hover a player for PAC SHO PAS DRI DEF PHY</p>
             </div>
           </div>
 
