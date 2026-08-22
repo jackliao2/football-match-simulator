@@ -13,7 +13,7 @@ export default function HomePage() {
 
   return (
     <div className="grid gap-5">
-      <section className="grid gap-1 text-center">
+      <section className="grid gap-2 text-center">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -27,9 +27,15 @@ export default function HomePage() {
             }),
           }}
         />
-        <h1 className="font-display text-[11px] uppercase leading-relaxed tracking-[0.08em] text-text sm:text-sm">
+        <p className="font-display text-[9px] uppercase tracking-[0.28em] text-gold">
+          Legendary sides · Any era
+        </p>
+        <h1 className="font-mono text-2xl font-semibold tracking-tight text-text sm:text-3xl">
           Football Match Simulator
         </h1>
+        <p className="font-mono text-sm text-muted sm:text-base">
+          Pick a team. Pick an era. Settle the debate.
+        </p>
       </section>
 
       <MatchSetup

@@ -287,16 +287,17 @@ function TeamColumn({
           <span className="mt-0.5 block truncate font-mono text-lg font-semibold leading-6 tracking-tight text-text sm:text-xl sm:leading-7">
             {team.clubName}
           </span>
-          <span className={`mt-0.5 flex items-center gap-2 ${away ? "justify-end" : ""}`}>
-            <span className="min-w-0 truncate font-mono text-xs text-muted sm:text-sm">
-              {team.manager}
-              <span className="mx-1.5 text-line-hi">·</span>
-              {team.formation}
-            </span>
-            <span className={`shrink-0 font-mono text-[11px] ${accent} group-hover:underline`}>Change ▾</span>
+          <span className="mt-0.5 block truncate font-mono text-xs text-muted sm:text-sm">
+            {team.manager}
+            <span className="mx-1.5 text-line-hi">·</span>
+            {team.formation}
           </span>
         </span>
         <OvrStamp value={team.overallRating} size="md" align={away ? "left" : "right"} />
+      </button>
+
+      <button type="button" onClick={onOpenPicker} className="faceoff-change">
+        Change team ▾
       </button>
 
       <div className={`faceoff-seasons ${away ? "justify-end" : ""}`}>

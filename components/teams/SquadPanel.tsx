@@ -89,16 +89,16 @@ export function FaceOffSquad({ squad }: { squad: SquadMember[] }) {
         ))}
       </ul>
       {bench.length > 0 ? (
-        <>
-          <p className="mt-1.5 px-1 font-display text-[8px] uppercase tracking-[0.16em] text-muted">
-            Bench
-          </p>
-          <ul className="grid grid-cols-1 gap-px sm:grid-cols-2 sm:gap-x-2">
+        <details className="mt-1.5">
+          <summary className="cursor-pointer list-none px-1 font-display text-[8px] uppercase tracking-[0.16em] text-muted hover:text-gold">
+            Bench · {bench.length} ▾
+          </summary>
+          <ul className="mt-1 grid gap-px">
             {bench.map((player) => (
-              <FaceRow key={player.id} player={player} dim compact />
+              <FaceRow key={player.id} player={player} dim />
             ))}
           </ul>
-        </>
+        </details>
       ) : null}
     </div>
   )

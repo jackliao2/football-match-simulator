@@ -109,7 +109,7 @@ optgroup {
 
 .faceoff-card {
   display: grid;
-  grid-template-rows: 5.4rem 2.5rem minmax(0, 1fr);
+  grid-template-rows: 4.7rem 2.35rem 2.5rem minmax(0, 1fr);
   min-width: 0;
   border: 2px solid #3a5230;
   background:
@@ -140,6 +140,37 @@ optgroup {
   padding: 0.7rem 0.8rem 0.45rem;
 }
 
+.faceoff-change {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0.8rem;
+  border: 1px solid var(--color-gold);
+  background: rgba(212, 180, 90, 0.1);
+  color: var(--color-gold);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.faceoff-card.away .faceoff-change {
+  border-color: var(--color-danger);
+  background: rgba(196, 92, 74, 0.12);
+  color: var(--color-danger);
+}
+
+.faceoff-change:hover {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+.faceoff-card.away .faceoff-change:hover {
+  background: var(--color-danger);
+  color: var(--color-ink);
+}
+
 .faceoff-seasons {
   display: flex;
   flex-wrap: nowrap;
@@ -156,6 +187,14 @@ optgroup {
   overflow: visible;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   padding: 0.45rem 0.55rem 0.65rem;
+}
+
+.faceoff-squad summary {
+  list-style: none;
+}
+
+.faceoff-squad summary::-webkit-details-marker {
+  display: none;
 }
 
 .faceoff-rail-inner {
