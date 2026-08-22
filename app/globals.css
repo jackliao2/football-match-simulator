@@ -79,7 +79,7 @@ optgroup {
 
 .faceoff-board {
   display: grid;
-  gap: 0.65rem;
+  gap: 0.75rem;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   grid-template-areas:
     "rail rail"
@@ -87,12 +87,11 @@ optgroup {
   align-items: start;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 900px) {
   .faceoff-board {
-    gap: 0.85rem;
-    grid-template-columns: minmax(0, 1fr) 12.25rem minmax(0, 1fr);
+    gap: 1rem;
+    grid-template-columns: minmax(0, 1fr) 17.5rem minmax(0, 1fr);
     grid-template-areas: "home rail away";
-    align-items: stretch;
   }
 }
 
@@ -111,71 +110,69 @@ optgroup {
 .faceoff-card {
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
-  height: 100%;
+  gap: 0.75rem;
   min-width: 0;
-  border: 2px solid var(--color-line);
-  background: #0c120c;
+  border: 2px solid #3a5230;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 28%),
+    #0b100b;
+  box-shadow: 5px 5px 0 0 #000;
 }
 
 .faceoff-card.home {
+  border-color: #5a6e3a;
   box-shadow:
-    4px 4px 0 0 #000,
-    inset 4px 0 0 var(--color-gold);
-  background:
-    linear-gradient(180deg, rgba(212, 180, 90, 0.07), transparent 38%),
-    #0c120c;
+    5px 5px 0 0 #000,
+    inset 6px 0 0 var(--color-gold);
 }
 
 .faceoff-card.away {
+  border-color: #6a3a34;
   box-shadow:
-    4px 4px 0 0 #000,
-    inset -4px 0 0 var(--color-danger);
-  background:
-    linear-gradient(180deg, rgba(196, 92, 74, 0.1), transparent 38%),
-    #120c0c;
+    5px 5px 0 0 #000,
+    inset -6px 0 0 var(--color-danger);
 }
 
 .faceoff-rail-inner {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 0.55rem;
-  height: 100%;
+  gap: 0.75rem;
   border: 2px solid var(--color-gold);
   background:
-    linear-gradient(180deg, rgba(212, 180, 90, 0.1), transparent 42%),
-    #070907;
-  padding: 0.85rem 0.65rem;
+    radial-gradient(120% 80% at 50% 0%, rgba(212, 180, 90, 0.16), transparent 55%),
+    #080a08;
+  padding: 1.15rem 0.9rem;
   box-shadow:
-    4px 4px 0 0 #000,
-    inset 0 0 0 1px rgba(240, 213, 122, 0.1);
+    5px 5px 0 0 #000,
+    inset 0 0 0 1px rgba(240, 213, 122, 0.12);
 }
 
-@media (max-width: 767px) {
-  .faceoff-rail-inner {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    padding: 0.7rem;
-  }
-
-  .faceoff-rail-inner .faceoff-vs {
-    width: 100%;
-  }
-
-  .faceoff-rail-inner .faceoff-action {
-    flex: 1 1 30%;
-    min-width: 6.5rem;
-  }
-}
-
-@media (min-width: 768px) {
+@media (min-width: 900px) {
   .faceoff-rail-inner {
     position: sticky;
-    top: 4.5rem;
+    top: 4.75rem;
+    min-height: 22rem;
+    justify-content: center;
   }
+}
+
+.faceoff-player {
+  display: grid;
+  align-items: center;
+  gap: 0.45rem 0.55rem;
+  min-height: 2rem;
+  padding: 0.35rem 0.45rem;
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.faceoff-player.home {
+  grid-template-columns: 16px 2.1rem minmax(0, 1fr) 2rem;
+}
+
+.faceoff-player.away {
+  grid-template-columns: 2rem minmax(0, 1fr) 2.1rem 16px;
+  text-align: right;
 }
 
 .pitch-grid {

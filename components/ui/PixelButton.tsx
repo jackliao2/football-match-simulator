@@ -14,6 +14,7 @@ const sizes = {
   sm: "px-2 py-2.5 text-[8px] sm:text-[9px]",
   md: "px-4 py-3 text-[10px] sm:text-[11px]",
   lg: "px-5 py-4 text-[11px] sm:text-xs",
+  xl: "px-3 py-5 text-[11px] sm:text-[12px]",
 } as const
 
 const base =
