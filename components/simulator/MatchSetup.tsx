@@ -6,7 +6,7 @@ import { ClubPicker } from "@/components/simulator/ClubPicker"
 import { MonteCarloResults } from "@/components/simulator/MonteCarloResults"
 import { FaceOffSquad } from "@/components/teams/SquadPanel"
 import { PixelCrest } from "@/components/teams/PixelCrest"
-import { PixelButton } from "@/components/ui/PixelButton"
+import { ArcadeButton } from "@/components/ui/ArcadeButton"
 import { OvrStamp } from "@/components/ui/OvrStamp"
 import { track } from "@/lib/analytics"
 import { createSeed } from "@/lib/match-id"
@@ -165,50 +165,25 @@ export function MatchSetup({
 
           <div className="faceoff-rail">
             <div className="faceoff-rail-inner">
-              <div className="text-center">
-                <div className="font-display text-xl tracking-[0.28em] text-gold">VS</div>
-                <button
-                  type="button"
-                  onClick={swapSides}
-                  className="mt-1 font-mono text-[11px] text-muted hover:text-gold"
-                >
+              <div className="grid gap-2">
+                <div className="arcade-vs">VS</div>
+                <button type="button" onClick={swapSides} className="arcade-swap">
                   Swap
                 </button>
               </div>
               {sameTeam ? (
                 <p className="text-center font-mono text-[11px] leading-4 text-danger">Pick two different teams.</p>
               ) : null}
-              <PixelButton
-                type="submit"
-                variant="primary"
-                size="lg"
-                disabled={sameTeam}
-                className="w-full leading-snug"
-              >
+              <ArcadeButton type="submit" tone="gold" disabled={sameTeam}>
                 Simulate
-              </PixelButton>
-              <PixelButton
-                type="button"
-                size="md"
-                disabled={sameTeam || running}
-                className="w-full leading-snug"
-                onClick={simulateHundred}
-              >
+              </ArcadeButton>
+              <ArcadeButton tone="steel" disabled={sameTeam || running} onClick={simulateHundred}>
                 {running ? "Running…" : "100 Matches"}
-              </PixelButton>
-              <PixelButton
-                type="button"
-                variant="ghost"
-                size="md"
-                disabled={sameTeam || analysisLoading}
-                className="w-full leading-snug"
-                onClick={runAnalysis}
-              >
+              </ArcadeButton>
+              <ArcadeButton tone="ghost" disabled={sameTeam || analysisLoading} onClick={runAnalysis}>
                 {analysisLoading ? "Writing…" : "AI Analysis"}
-              </PixelButton>
-              <p className="text-center font-mono text-[10px] leading-4 text-muted">
-                Hover a player for PAC SHO PAS DRI DEF PHY
-              </p>
+              </ArcadeButton>
+              <p className="arcade-hint">Hover a player for PAC SHO PAS DRI DEF PHY</p>
             </div>
           </div>
 
