@@ -3,6 +3,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { MatchSetup } from "@/components/simulator/MatchSetup"
 import { MonteCarloResults } from "@/components/simulator/MonteCarloResults"
+import { StarPlayers } from "@/components/teams/StarPlayers"
 import { TeamRatings } from "@/components/teams/TeamRatings"
 import { PixelButton } from "@/components/ui/PixelButton"
 import { allVsPairs } from "@/data/matchups"
@@ -86,6 +87,11 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
       </div>
 
       <MonteCarloResults result={model} />
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        <StarPlayers team={home} count={8} title={`${home.clubName} stars`} />
+        <StarPlayers team={away} count={8} title={`${away.clubName} stars`} />
+      </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
         <TeamRatings team={home} />

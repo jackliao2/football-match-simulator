@@ -1,6 +1,7 @@
 import Link from "next/link"
 import type { HistoricalTeam } from "@/types"
 import { teamPath } from "@/lib/paths"
+import { StarPlayers } from "@/components/teams/StarPlayers"
 
 export function TeamCard({ team }: { team: HistoricalTeam }) {
   return (
@@ -12,13 +13,13 @@ export function TeamCard({ team }: { team: HistoricalTeam }) {
         <span className="border border-line-hi px-2 py-1 font-display text-[10px] text-gold">
           [ {team.clubCode} ]
         </span>
-        <span className="font-mono text-xs text-gold">{team.overallRating}</span>
+        <span className="font-mono text-xs text-gold">OVR {team.overallRating}</span>
       </div>
       <h3 className="mt-3 font-display text-[11px] uppercase leading-relaxed tracking-wide text-text">
         {team.clubName}
       </h3>
       <p className="mt-1 font-mono text-sm text-muted">{team.displaySeason}</p>
-      <p className="mt-3 line-clamp-2 text-xs leading-5 text-muted">{team.styleTags.slice(0, 3).join(" · ")}</p>
+      <StarPlayers team={team} count={5} variant="compact" />
     </Link>
   )
 }

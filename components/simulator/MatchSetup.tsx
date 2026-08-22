@@ -5,7 +5,9 @@ import { startMatch } from "@/app/actions"
 import { PixelButton } from "@/components/ui/PixelButton"
 import { PixelCard } from "@/components/ui/PixelCard"
 import { TeamBadge } from "@/components/teams/TeamCard"
+import { StarPlayers } from "@/components/teams/StarPlayers"
 import { track } from "@/lib/analytics"
+import type { StarPlayer } from "@/lib/stars"
 import type { TeamKind } from "@/types"
 
 export interface TeamOption {
@@ -16,6 +18,7 @@ export interface TeamOption {
   season: string
   displaySeason: string
   kind: TeamKind
+  stars: StarPlayer[]
 }
 
 export function MatchSetup({
@@ -209,6 +212,7 @@ function TeamColumn({
           ))}
         </select>
       </label>
+      <StarPlayers stars={team.stars} variant="setup" />
       <input type="hidden" name={name} value={team.id} />
     </div>
   )

@@ -3,6 +3,7 @@ import { TrackOnMount } from "@/components/TrackOnMount"
 import { PixelButton } from "@/components/ui/PixelButton"
 import { Formation } from "@/components/teams/Formation"
 import { SquadList } from "@/components/teams/SquadList"
+import { StarPlayers } from "@/components/teams/StarPlayers"
 import { TeamRatings } from "@/components/teams/TeamRatings"
 import { FEATURED_MATCHUPS, defaultOpponent, vsPath } from "@/data/matchups"
 import { getPrimeEntity } from "@/data/prime"
@@ -25,7 +26,6 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
     .filter((item) => item.id !== team.id && !battles.some((battle) => battle.id === item.id))
     .slice(0, 2)
   const popular = [...battles, ...extraOpponents].slice(0, 4)
-  const keyPlayers = [...team.players].sort((a, b) => b.overall - a.overall).slice(0, 6)
   const indexLabel = team.kind === "nation" ? "National teams" : "Teams"
 
   return (
@@ -72,29 +72,10 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
         Simulate {team.clubName} {team.displaySeason}
       </PixelButton>
 
+      <StarPlayers team={team} count={8} />
       <Formation team={team} />
       <SquadList team={team} />
-
-      <div className="grid gap-6 lg:grid-cols-2">
-        <TeamRatings team={team} />
-        <section className="border-2 border-line bg-panel">
-          <h2 className="border-b-2 border-line bg-panel-2 px-4 py-3 font-display text-[10px] uppercase tracking-[0.16em] text-gold">
-            Key Players
-          </h2>
-          <ul>
-            {keyPlayers.map((player) => (
-              <li
-                key={player.id}
-                className="grid grid-cols-[3rem_1fr_3rem] gap-2 border-b border-line px-4 py-2 last:border-b-0"
-              >
-                <span className="text-xs text-muted">{player.position}</span>
-                <span>{player.name}</span>
-                <span className="text-right text-gold">{player.overall}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      </div>
+      <TeamRatings team={team} />
 
       <section className="border-2 border-line bg-panel">
         <h2 className="border-b-2 border-line bg-panel-2 px-4 py-3 font-display text-[10px] uppercase tracking-[0.16em] text-gold">

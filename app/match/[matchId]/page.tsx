@@ -7,6 +7,7 @@ import { MatchActions } from "@/components/simulator/MatchActions"
 import { MatchResult } from "@/components/simulator/MatchResult"
 import { MatchStats } from "@/components/simulator/MatchStats"
 import { MatchTimeline } from "@/components/simulator/MatchTimeline"
+import { StarPlayers } from "@/components/teams/StarPlayers"
 import { PixelButton } from "@/components/ui/PixelButton"
 import { getTeam } from "@/data/teams"
 import { vsPath } from "@/data/matchups"
@@ -66,6 +67,10 @@ export default async function MatchPage({ params }: PageProps<"/match/[matchId]"
         {match.homeTeam} vs {match.awayTeam}
       </h1>
       <MatchResult match={match} home={home} away={away} />
+      <div className="grid gap-6 lg:grid-cols-2">
+        <StarPlayers team={home} count={6} title={`${home.clubName} stars`} />
+        <StarPlayers team={away} count={6} title={`${away.clubName} stars`} />
+      </div>
       <MatchActions home={home} away={away} />
       <div className="grid gap-6 lg:grid-cols-2">
         <MatchTimeline match={match} />

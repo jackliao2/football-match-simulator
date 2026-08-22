@@ -1,3 +1,4 @@
+import { teamStars } from "@/lib/stars"
 import type { HistoricalTeam } from "@/types"
 import { acMilan200607 } from "@/data/teams/ac-milan"
 import { arsenal200304 } from "@/data/teams/arsenal"
@@ -113,5 +114,6 @@ export function toTeamOption(team: HistoricalTeam) {
     season: team.season,
     displaySeason: team.displaySeason,
     kind: team.kind,
+    stars: teamStars(team, 6),
   }
 }
