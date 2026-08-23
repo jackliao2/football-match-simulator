@@ -5,7 +5,8 @@ import { MatchSetup } from "@/components/simulator/MatchSetup"
 import { MonteCarloResults } from "@/components/simulator/MonteCarloResults"
 import { StarPlayers } from "@/components/teams/StarPlayers"
 import { TeamRatings } from "@/components/teams/TeamRatings"
-import { PixelButton } from "@/components/ui/PixelButton"
+import { PixelCrest } from "@/components/teams/PixelCrest"
+import { PageHeader } from "@/components/ui/PageHeader"
 import { allVsPairs } from "@/data/matchups"
 import { getTeam, teams, toTeamOption } from "@/data/teams"
 import { parseVsSlug } from "@/lib/match-id"
@@ -33,7 +34,7 @@ export async function generateMetadata({
   const title = `${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason} — Match Simulator`
   return {
     title: { absolute: title },
-    description: `Simulate ${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}. Model probabilities, squads and a football match simulator — not a recorded historical result.`,
+    description: `Simulate ${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}. Model probabilities from ${VS_RUNS} runs, squads and a football match simulator — not a recorded historical result.`,
     alternates: { canonical: `/vs/${slug}` },
     openGraph: {
       title,
@@ -55,54 +56,60 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
   const options = teams.map(toTeamOption)
 
   return (
-    <div className="grid gap-8">
-      <header className="grid gap-3">
-        <p className="font-display text-[10px] uppercase tracking-[0.2em] text-gold">
-          Dream Match Simulator
-        </p>
-        <h1 className="font-display text-[13px] uppercase leading-relaxed tracking-[0.06em] sm:text-xl md:text-2xl">
-          {home.clubName} {home.displaySeason} vs {away.clubName} {away.displaySeason}
-        </h1>
-        <p className="max-w-3xl text-sm leading-7 text-muted">
-          This page does not pick a winner. Simulate the match yourself. The percentages below are
-          model output from {VS_RUNS.toLocaleString()} seeded runs, not a historical result.
-        </p>
-      </header>
+    <div className="grid gap-6">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            name: `${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}`,
+            url: absoluteUrl(`/vs/${slug}`),
+            description: `Football match simulator matchup. Model output from ${VS_RUNS} seeded runs.`,
+          }),
+        }}
+      />
+      <PageHeader
+        kicker="Dream match simulator"
+        title={`${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}`}
+        lead={`This page does not pick a winner. Simulate it yourself. The percentages are model output from ${VS_RUNS.toLocaleString()} seeded runs, not a historical result.`}
+        crumbs={[{ href: "/vs", label: "Dream matches" }]}
+      />
 
       <div className="grid gap-3 sm:grid-cols-2">
-        <Link
-          href={teamPath(home)}
-          className="border-2 border-line bg-panel p-4 no-underline hover:border-gold"
-        >
-          <div className="font-display text-[11px] uppercase">{home.clubName}</div>
-          <div className="text-sm text-muted">{home.displaySeason} squad</div>
+        <Link href={teamPath(home)} className="result-panel flex items-center gap-3 p-3 no-underline hover:border-gold">
+          <PixelCrest clubId={home.clubId} size={40} />
+          <span>
+            <span className="block font-mono text-sm font-semibold">{home.clubName}</span>
+            <span className="font-mono text-xs text-gold">{home.displaySeason} squad</span>
+          </span>
         </Link>
-        <Link
-          href={teamPath(away)}
-          className="border-2 border-line bg-panel p-4 no-underline hover:border-gold"
-        >
-          <div className="font-display text-[11px] uppercase">{away.clubName}</div>
-          <div className="text-sm text-muted">{away.displaySeason} squad</div>
+        <Link href={teamPath(away)} className="result-panel flex items-center gap-3 p-3 no-underline hover:border-gold">
+          <PixelCrest clubId={away.clubId} size={40} />
+          <span>
+            <span className="block font-mono text-sm font-semibold">{away.clubName}</span>
+            <span className="font-mono text-xs text-gold">{away.displaySeason} squad</span>
+          </span>
         </Link>
       </div>
 
       <MonteCarloResults result={model} />
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-4 lg:grid-cols-2">
         <StarPlayers team={home} count={11} title={`${home.clubName} stars`} />
         <StarPlayers team={away} count={11} title={`${away.clubName} stars`} />
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-4 lg:grid-cols-2">
         <TeamRatings team={home} />
         <TeamRatings team={away} />
       </div>
 
       <MatchSetup teams={options} defaultHome={home.id} defaultAway={away.id} />
 
-      <PixelButton href="/simulate" variant="ghost" className="w-fit">
-        Choose different teams
-      </PixelButton>
+      <Link href="/simulate" className="font-mono text-sm text-gold hover:text-gold-2">
+        Choose different teams →
+      </Link>
     </div>
   )
 }

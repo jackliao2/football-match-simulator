@@ -1,16 +1,17 @@
 import Link from "next/link"
 import { TrackOnMount } from "@/components/TrackOnMount"
-import { PixelButton } from "@/components/ui/PixelButton"
 import { Formation } from "@/components/teams/Formation"
 import { SquadList } from "@/components/teams/SquadList"
 import { StarPlayers } from "@/components/teams/StarPlayers"
 import { TeamRatings } from "@/components/teams/TeamRatings"
+import { PixelCrest } from "@/components/teams/PixelCrest"
+import { MatchupRow } from "@/components/ui/MatchupRow"
+import { OvrStamp } from "@/components/ui/OvrStamp"
 import { FEATURED_MATCHUPS, defaultOpponent, vsPath } from "@/data/matchups"
 import { getPrimeEntity } from "@/data/prime"
 import { getTeam, getTeamsByClub, teams } from "@/data/teams"
 import { orgIndexPath, orgPath, teamPath } from "@/lib/paths"
-import { PixelCrest } from "@/components/teams/PixelCrest"
-import { OvrStamp } from "@/components/ui/OvrStamp"
+import { absoluteUrl } from "@/lib/site"
 import type { HistoricalTeam } from "@/types"
 
 export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
@@ -31,7 +32,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
   const indexLabel = team.kind === "nation" ? "National teams" : "Teams"
 
   return (
-    <div className="grid gap-8">
+    <div className="grid gap-6">
       <TrackOnMount event="team_page_view" payload={{ teamId: team.id, club: team.clubId }} />
       <script
         type="application/ld+json"
@@ -41,116 +42,106 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
             "@type": "SportsTeam",
             name: `${team.clubName} ${team.displaySeason}`,
             sport: "Soccer",
+            url: absoluteUrl(teamPath(team)),
             athlete: team.players.map((player) => ({
               "@type": "Person",
               name: player.name,
             })),
+            coach: { "@type": "Person", name: team.manager },
           }),
         }}
       />
       <header className="grid gap-3">
-        <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted">
+        <p className="font-mono text-xs text-muted">
           <Link href={orgIndexPath(team.kind)} className="hover:text-gold">
             {indexLabel}
           </Link>
-          <span className="px-2">/</span>
+          <span className="px-2 text-line-hi">/</span>
           <Link href={orgPath(team.kind, team.clubId)} className="hover:text-gold">
             {team.clubName}
           </Link>
         </p>
+        <p className="font-display text-[9px] uppercase tracking-[0.28em] text-gold">
+          {team.kind === "nation" ? "World Cup squad" : "Historical squad"}
+        </p>
         <div className="flex items-start gap-4">
-          <PixelCrest clubId={team.clubId} size={72} />
+          <PixelCrest clubId={team.clubId} size={64} />
           <div className="min-w-0 flex-1">
-            <h1 className="font-mono text-lg font-semibold leading-snug tracking-tight sm:text-2xl">
+            <h1 className="font-mono text-xl font-semibold leading-snug tracking-tight sm:text-3xl">
               {team.clubName} {team.displaySeason}
             </h1>
             <p className="mt-1 font-mono text-sm text-muted">
-              <span className="text-gold">Coach</span> {team.manager}
+              {team.manager}
               <span className="mx-2 text-line-hi">·</span>
               {team.formation}
             </p>
           </div>
           <OvrStamp value={team.overallRating} size="xl" />
         </div>
-        <p className="max-w-3xl text-sm leading-7 text-text">{team.summary}</p>
+        <p className="max-w-3xl font-mono text-sm leading-6 text-muted">{team.summary}</p>
+        <Link
+          href={`/simulate?home=${team.id}&away=${opponentId}`}
+          className="rail-btn rail-btn-primary rail-btn-inline"
+        >
+          Simulate this team
+        </Link>
       </header>
-
-      <PixelButton
-        href={`/simulate?home=${team.id}&away=${opponentId}`}
-        variant="primary"
-        size="lg"
-        className="w-full sm:w-fit"
-      >
-        Simulate {team.clubName} {team.displaySeason}
-      </PixelButton>
 
       <StarPlayers team={team} count={11} />
       <Formation team={team} />
       <SquadList team={team} />
       <TeamRatings team={team} />
 
-      <section className="border-2 border-line bg-panel">
-        <h2 className="border-b-2 border-line bg-panel-2 px-4 py-3 font-display text-[10px] uppercase tracking-[0.16em] text-gold">
-          Playing Style
+      <section className="result-panel">
+        <h2 className="border-b border-white/10 px-3 py-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
+          Style
         </h2>
-        <div className="flex flex-wrap gap-2 p-4">
+        <div className="flex flex-wrap gap-1.5 p-3">
           {team.styleTags.map((tag) => (
-            <span key={tag} className="border border-line-hi px-3 py-2 text-xs uppercase tracking-wider">
+            <span key={tag} className="border border-white/15 px-2 py-1 font-mono text-[11px] text-muted">
               {tag}
             </span>
           ))}
         </div>
       </section>
 
-      <section className="border-2 border-line bg-panel">
-        <h2 className="border-b-2 border-line bg-panel-2 px-4 py-3 font-display text-[10px] uppercase tracking-[0.16em] text-gold">
-          Season Achievements
+      <section className="result-panel">
+        <h2 className="border-b border-white/10 px-3 py-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
+          Achievements
         </h2>
-        <ul className="list-disc px-8 py-4 text-sm leading-7">
+        <ul className="grid gap-1 px-3 py-2 font-mono text-[12px] leading-5">
           {team.achievements.map((item) => (
-            <li key={item}>{item}</li>
+            <li key={item} className="text-muted">
+              {item}
+            </li>
           ))}
         </ul>
       </section>
 
-      <section className="grid gap-3">
-        <h2 className="font-display text-[11px] uppercase tracking-[0.16em] text-gold">
-          Popular Battles
-        </h2>
-        <div className="grid gap-3">
+      {popular.length > 0 ? (
+        <section className="grid gap-2">
+          <h2 className="font-mono text-lg font-semibold tracking-tight">Popular matchups</h2>
           {popular.map((other) => (
-            <Link
-              key={other.id}
-              href={vsPath(team.id, other.id)}
-              className="flex flex-wrap items-center justify-between gap-2 border-2 border-line bg-panel p-4 no-underline hover:border-gold"
-            >
-              <span>
-                {team.clubName} {team.displaySeason}
-              </span>
-              <span className="font-display text-[10px] text-gold">VS</span>
-              <span>
-                {other.clubName} {other.displaySeason}
-              </span>
-            </Link>
+            <MatchupRow key={other.id} href={vsPath(team.id, other.id)} home={team} away={other} />
           ))}
-        </div>
-      </section>
+        </section>
+      ) : null}
 
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-sm">
         {siblings.map((item) => (
-          <PixelButton key={item.id} href={teamPath(item)}>
+          <Link key={item.id} href={teamPath(item)} className="text-gold hover:text-gold-2">
             {item.displaySeason}
-          </PixelButton>
+          </Link>
         ))}
         {prime ? (
-          <PixelButton href={`/prime/${team.clubId}`} variant="ghost">
+          <Link href={`/prime/${team.clubId}`} className="text-muted hover:text-gold">
             Prime {team.clubName}
-          </PixelButton>
+          </Link>
         ) : null}
         {opponent ? (
-          <PixelButton href={teamPath(opponent)} variant="ghost">
+          <Link href={teamPath(opponent)} className="text-muted hover:text-gold">
             {opponent.clubName} {opponent.displaySeason}
-          </PixelButton>
+          </Link>
         ) : null}
       </div>
     </div>

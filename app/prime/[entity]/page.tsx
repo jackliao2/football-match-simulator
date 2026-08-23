@@ -1,11 +1,13 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { PixelButton } from "@/components/ui/PixelButton"
 import { TeamCard } from "@/components/teams/TeamCard"
+import { PageHeader } from "@/components/ui/PageHeader"
 import { getPrimeEntity, primeEntities } from "@/data/prime"
 import { getTeam } from "@/data/teams"
 import { vsPath } from "@/data/matchups"
+import { teamPath } from "@/lib/paths"
+import { absoluteUrl } from "@/lib/site"
 
 export const dynamicParams = false
 
@@ -23,6 +25,11 @@ export async function generateMetadata({
     title: { absolute: `${page.seoTitle} | Football Match Simulator` },
     description: page.seoDescription,
     alternates: { canonical: `/prime/${page.slug}` },
+    openGraph: {
+      title: page.seoTitle,
+      description: page.seoDescription,
+      url: absoluteUrl(`/prime/${page.slug}`),
+    },
   }
 }
 
@@ -40,33 +47,31 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
   const second = candidates[1]?.team
 
   return (
-    <div className="grid gap-8">
-      <header className="grid gap-3">
-        <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted">
-          <Link href="/prime" className="hover:text-gold">
-            Prime
-          </Link>
-        </p>
-        <h1 className="font-display text-lg uppercase leading-relaxed tracking-[0.08em] sm:text-2xl">
-          {page.title}
-        </h1>
-        <p className="max-w-3xl text-sm leading-7 text-muted">{page.description}</p>
-      </header>
+    <div className="grid gap-6">
+      <PageHeader
+        kicker="Prime"
+        title={page.title}
+        lead={page.description}
+        crumbs={[{ href: "/prime", label: "Prime" }]}
+      />
 
       <div className="grid gap-4">
         {candidates.map((candidate, index) => (
-          <article key={candidate.teamId} className="grid gap-4 border-2 border-line bg-panel p-4 sm:grid-cols-[1fr_16rem] sm:items-center">
+          <article key={candidate.teamId} className="result-panel grid gap-4 p-4 sm:grid-cols-[1fr_16rem] sm:items-center">
             <div>
-              <p className="font-display text-[10px] text-gold">Candidate {index + 1}</p>
-              <h2 className="mt-2 font-display text-[12px] uppercase tracking-wide">
+              <p className="font-display text-[8px] uppercase tracking-[0.18em] text-gold">
+                Candidate {index + 1}
+              </p>
+              <h2 className="mt-2 font-mono text-base font-semibold tracking-tight">
                 {candidate.team.clubName} {candidate.team.displaySeason}
               </h2>
-              <p className="mt-3 text-sm leading-7 text-muted">{candidate.argument}</p>
-              <div className="mt-4">
-                <PixelButton href={`/teams/${candidate.team.clubId}/${candidate.team.season}`}>
-                  Open squad page
-                </PixelButton>
-              </div>
+              <p className="mt-3 text-sm leading-6 text-muted">{candidate.argument}</p>
+              <Link
+                href={teamPath(candidate.team)}
+                className="mt-3 inline-block font-mono text-sm text-gold hover:text-gold-2"
+              >
+                Open squad page →
+              </Link>
             </div>
             <TeamCard team={candidate.team} />
           </article>
@@ -74,16 +79,14 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
       </div>
 
       {first && second ? (
-        <section className="grid gap-3 border-2 border-gold bg-panel p-4">
-          <h2 className="font-display text-[11px] uppercase tracking-[0.16em] text-gold">
-            Settle it in the simulator
-          </h2>
-          <p className="text-sm text-muted">
+        <section className="result-panel p-4">
+          <h2 className="font-mono text-base font-semibold tracking-tight">Settle it in the simulator</h2>
+          <p className="mt-2 font-mono text-sm text-muted">
             {first.clubName} {first.displaySeason} vs {second.clubName} {second.displaySeason}
           </p>
-          <PixelButton href={vsPath(first.id, second.id)} variant="primary" className="w-fit">
-            Open this dream match
-          </PixelButton>
+          <Link href={vsPath(first.id, second.id)} className="mt-3 inline-block font-mono text-sm text-gold hover:text-gold-2">
+            Open this dream match →
+          </Link>
         </section>
       ) : null}
     </div>

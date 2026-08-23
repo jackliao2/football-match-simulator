@@ -46,11 +46,9 @@ export function StarPlayers({
 
   return (
     <section className="result-panel">
-      <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
-        <h2 className="font-mono text-lg font-semibold tracking-tight">{title}</h2>
-        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted">
-          OVR · hover stats
-        </span>
+      <div className="flex items-center justify-between border-b border-white/10 px-3 py-2">
+        <h2 className="font-display text-[8px] uppercase tracking-[0.18em] text-gold">{title}</h2>
+        <span className="font-mono text-[10px] text-muted">OVR</span>
       </div>
       <ul>
         {list.map((player, index) => (

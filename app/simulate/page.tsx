@@ -1,14 +1,17 @@
 import type { Metadata } from "next"
 import { MatchSetup } from "@/components/simulator/MatchSetup"
+import { PageHeader } from "@/components/ui/PageHeader"
 import { defaultOpponent } from "@/data/matchups"
 import { getTeam, teams, toTeamOption } from "@/data/teams"
+import { pageMetadata } from "@/lib/seo"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Simulate a Football Match",
   description:
-    "Pick two historical football teams from any era and simulate a match. See scorers, xG, possession and 100-match probabilities.",
-  alternates: { canonical: "/simulate" },
-}
+    "Pick two historical football teams from any era and simulate a match. See scorers, xG, possession and 100-match probabilities. The engine decides — AI is optional commentary.",
+  path: "/simulate",
+  keywords: ["simulate football match", "football match simulator", "historical football simulator"],
+})
 
 export default async function SimulatePage({
   searchParams,
@@ -25,15 +28,12 @@ export default async function SimulatePage({
   const options = teams.map(toTeamOption)
 
   return (
-    <div className="mx-auto grid max-w-7xl gap-5">
-      <header className="grid gap-1.5 text-center">
-        <h1 className="font-display text-[13px] uppercase tracking-[0.08em] sm:text-xl">
-          Simulate Match
-        </h1>
-        <p className="text-sm text-muted">
-          Choose two historical teams. The engine decides the result.
-        </p>
-      </header>
+    <div className="grid gap-5">
+      <PageHeader
+        kicker="Match engine"
+        title="Simulate a football match"
+        lead="Choose two historical teams. The simulation engine decides the score."
+      />
       <MatchSetup teams={options} defaultHome={home} defaultAway={away} />
     </div>
   )

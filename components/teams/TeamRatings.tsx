@@ -1,12 +1,13 @@
 import { RatingBar } from "@/components/ui/RatingBar"
-import { PixelCard, PixelCardHeader } from "@/components/ui/PixelCard"
 import type { HistoricalTeam } from "@/types"
 
 export function TeamRatings({ team }: { team: HistoricalTeam }) {
   return (
-    <PixelCard>
-      <PixelCardHeader>Team Ratings</PixelCardHeader>
-      <div className="space-y-3 p-4">
+    <section className="result-panel">
+      <h2 className="border-b border-white/10 px-3 py-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
+        Ratings
+      </h2>
+      <div className="grid gap-1 px-3 py-2">
         <RatingBar label="Attack" value={team.attackRating} />
         <RatingBar label="Midfield" value={team.midfieldRating} />
         <RatingBar label="Defence" value={team.defenseRating} />
@@ -14,6 +15,6 @@ export function TeamRatings({ team }: { team: HistoricalTeam }) {
         <RatingBar label="Chemistry" value={team.chemistryRating} />
         <RatingBar label="Overall" value={team.overallRating} />
       </div>
-    </PixelCard>
+    </section>
   )
 }

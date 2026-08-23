@@ -2,10 +2,11 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { TeamCard } from "@/components/teams/TeamCard"
-import { PixelButton } from "@/components/ui/PixelButton"
+import { PageHeader } from "@/components/ui/PageHeader"
 import { getClub } from "@/data/clubs"
 import { getPrimeEntity } from "@/data/prime"
 import { allClubIds, getTeamsByClub } from "@/data/teams"
+import { pageMetadata } from "@/lib/seo"
 
 export const dynamicParams = false
 
@@ -19,11 +20,15 @@ export async function generateMetadata({
   const { club } = await params
   const clubMeta = getClub(club)
   if (!clubMeta) return { title: "Club" }
-  return {
+  const seasons = getTeamsByClub(club)
+    .map((team) => team.displaySeason)
+    .join(", ")
+  return pageMetadata({
     title: `${clubMeta.name} Historical Squads`,
-    description: `Explore legendary ${clubMeta.name} squads by season, including lineup, formation and team ratings, then simulate them in a football match simulator.`,
-    alternates: { canonical: `/teams/${club}` },
-  }
+    description: `Explore legendary ${clubMeta.name} squads${seasons ? ` (${seasons})` : ""}. Lineup, formation and ratings, then simulate them in a football match simulator.`,
+    path: `/teams/${club}`,
+    keywords: [`${clubMeta.name} squad`, `${clubMeta.name} historical team`, "football match simulator"],
+  })
 }
 
 export default async function ClubPage({ params }: PageProps<"/teams/[club]">) {
@@ -34,31 +39,24 @@ export default async function ClubPage({ params }: PageProps<"/teams/[club]">) {
   const prime = getPrimeEntity(club)
 
   return (
-    <div className="grid gap-8">
-      <header className="grid gap-3">
-        <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted">
-          <Link href="/teams" className="text-muted hover:text-gold">
-            Teams
+    <div className="grid gap-6">
+      <PageHeader
+        kicker="Club squads"
+        title={`${clubMeta.name} historical squads`}
+        lead={`Historical ${clubMeta.name} teams in the simulator. Open a season for the starting XI, formation, ratings and a one-click match.`}
+        crumbs={[{ href: "/teams", label: "Teams" }]}
+      >
+        {prime ? (
+          <Link href={`/prime/${club}`} className="font-mono text-sm text-gold hover:text-gold-2">
+            When was {clubMeta.name}&apos;s prime? →
           </Link>
-        </p>
-        <h1 className="font-display text-lg uppercase tracking-[0.08em] sm:text-xl">
-          {clubMeta.name}
-        </h1>
-        <p className="max-w-2xl text-sm leading-6 text-muted">
-          Historical {clubMeta.name} squads in the simulator. Open a season for the starting XI,
-          formation, ratings and a one-click match.
-        </p>
-      </header>
+        ) : null}
+      </PageHeader>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {clubTeams.map((team) => (
           <TeamCard key={team.id} team={team} />
         ))}
       </div>
-      {prime ? (
-        <PixelButton href={`/prime/${club}`} className="w-fit">
-          When Was {clubMeta.name}&apos;s Prime?
-        </PixelButton>
-      ) : null}
     </div>
   )
 }

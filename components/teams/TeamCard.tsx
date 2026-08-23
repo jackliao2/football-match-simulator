@@ -8,20 +8,15 @@ import { OvrStamp } from "@/components/ui/OvrStamp"
 
 export function TeamCard({ team }: { team: HistoricalTeam }) {
   return (
-    <Link
-      href={teamPath(team)}
-      className="block border-2 border-line bg-panel p-3 no-underline shadow-[4px_4px_0_0_#000] transition-transform hover:-translate-x-px hover:-translate-y-px hover:border-gold"
-    >
+    <Link href={teamPath(team)} className="result-panel block p-3 no-underline hover:border-gold">
       <div className="flex items-start gap-3">
         <PixelCrest clubId={team.clubId} size={48} />
         <div className="min-w-0 flex-1">
-          <h3 className="font-display text-[10px] uppercase leading-relaxed tracking-wide text-text">
+          <h3 className="truncate font-mono text-base font-semibold tracking-tight text-text">
             {team.clubName}
           </h3>
-          <p className="font-mono text-xs text-muted">{team.displaySeason}</p>
-          <p className="mt-0.5 font-mono text-[11px] text-muted">
-            <span className="text-gold">Coach</span> {team.manager}
-          </p>
+          <p className="font-mono text-sm text-gold">{team.displaySeason}</p>
+          <p className="mt-0.5 truncate font-mono text-[11px] text-muted">{team.manager}</p>
         </div>
         <OvrStamp value={team.overallRating} size="md" />
       </div>

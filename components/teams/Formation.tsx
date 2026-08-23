@@ -12,14 +12,12 @@ export function Formation({ team }: { team: HistoricalTeam }) {
   }))
 
   return (
-    <div className="border-2 border-line bg-pitch">
-      <div className="flex items-center justify-between border-b-2 border-line bg-panel px-4 py-3">
-        <span className="font-display text-[10px] uppercase tracking-[0.16em] text-gold">
+    <div className="result-panel overflow-hidden">
+      <div className="flex items-center justify-between border-b border-white/10 px-3 py-2">
+        <span className="font-display text-[8px] uppercase tracking-[0.18em] text-gold">
           Formation {team.formation}
         </span>
-        <span className="font-mono text-xs text-muted">
-          <span className="text-gold">Coach</span> {team.manager}
-        </span>
+        <span className="font-mono text-xs text-muted">{team.manager}</span>
       </div>
       <div className="pitch-grid relative min-h-[20rem] w-full sm:min-h-[32rem]">
         {eleven.map(({ player, slot }, index) =>
