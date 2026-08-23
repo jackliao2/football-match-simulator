@@ -16,7 +16,7 @@ export const SITE = {
   shortName: "FMS",
   tagline: "Pick a team. Pick an era. Settle the debate.",
   description:
-    "Simulate football matches between legendary club sides and World Cup squads. Pick a historical team and season — the engine produces score, scorers, xG and events, not a chatbot guess.",
+    "Simulate football matches between legendary club sides and national teams — Barcelona, Real Madrid, Chelsea, Ajax, Brazil 1970, England 1966, Hungary 1954 and more. Pick a historical team and season. The engine produces score, scorers, xG and events, not a chatbot guess.",
   disclaimer:
     "Independent football simulation project. Not affiliated with or endorsed by any club, league, federation or player.",
 }

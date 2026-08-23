@@ -57,7 +57,7 @@ export default function HomePage() {
       </section>
 
       <section className="grid gap-4">
-        <h2 className="font-mono text-lg font-semibold tracking-tight">World Cup national teams</h2>
+        <h2 className="font-mono text-lg font-semibold tracking-tight">Legendary national teams</h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {nations.map((team) => (team ? <TeamCard key={team.id} team={team} /> : null))}
         </div>

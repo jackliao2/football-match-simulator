@@ -61,6 +61,22 @@ function fill(clubId: string, x: number, y: number): string {
     case "manchester-city":
       if ((x - 8) * (x - 8) + (y - 8) * (y - 8) <= 10) return "#1c2c5b"
       return "#6cabdd"
+    case "chelsea":
+      if (y >= 6 && y <= 9 && x >= 5 && x <= 10) return "#d4b45a"
+      return "#034694"
+    case "juventus":
+      return x % 2 === 0 ? "#111111" : "#f4f4f4"
+    case "ajax":
+      if (x >= 6 && x <= 9) return "#d50032"
+      return "#f4f4f4"
+    case "borussia-dortmund":
+      if (y >= 6 && y <= 9) return "#111111"
+      return "#fde100"
+    case "porto":
+      if (x >= 6 && x <= 9) return "#f4f4f4"
+      return "#003087"
+    case "atletico-madrid":
+      return x % 2 === 0 ? "#ce102d" : "#f4f4f4"
     case "brazil":
       if ((x - 8) * (x - 8) + (y - 8) * (y - 8) <= 3) return "#002776"
       if (Math.abs(x - 8) + Math.abs(y - 8) <= 5) return "#ffdf00"
@@ -87,6 +103,26 @@ function fill(clubId: string, x: number, y: number): string {
     case "netherlands":
       if (Math.abs(x - 8) < y - 2 && y < 9) return "#111111"
       return "#ff6c00"
+    case "england":
+      if (x === 7 || x === 8 || y === 7 || y === 8) return "#c8102e"
+      return "#f4f4f4"
+    case "portugal":
+      if (x <= 5) return "#006600"
+      if ((x - 8) * (x - 8) + (y - 8) * (y - 8) <= 6) return "#e8c547"
+      return "#ed1c24"
+    case "croatia":
+      return (x + y) % 2 === 0 ? "#c8102e" : "#f4f4f4"
+    case "uruguay":
+      if (y <= 3 && x <= 5) return "#e8c547"
+      return y % 2 === 0 ? "#7baad6" : "#f4f4f4"
+    case "belgium":
+      if (x <= 5) return "#111111"
+      if (x >= 10) return "#c8102e"
+      return "#f6d32d"
+    case "hungary":
+      if (y <= 5) return "#c8102e"
+      if (y <= 10) return "#f4f4f4"
+      return "#00843d"
     default:
       return "#5c8a48"
   }

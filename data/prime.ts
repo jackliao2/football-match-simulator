@@ -135,6 +135,69 @@ export const primeEntities: PrimeEntity[] = [
       },
     ],
   },
+  {
+    slug: "chelsea",
+    name: "Chelsea",
+    kind: "club",
+    title: "When Was Chelsea's Prime?",
+    description:
+      "Mourinho's 95-point first title side, or the battered 2012 team that won the Champions League in Munich. Two different Chels, both legendary.",
+    seoTitle: "Prime Chelsea — When Was Chelsea's Prime?",
+    seoDescription:
+      "When was Chelsea's prime? Compare the 2004/05 Mourinho title winners and the 2011/12 Munich Champions League side, then simulate each squad.",
+    candidates: [
+      {
+        teamId: "chelsea-2004-05",
+        argument: "The 95-point machine. Čech, Terry, Makelele, Lampard — Mourinho's first English title.",
+      },
+      {
+        teamId: "chelsea-2011-12",
+        argument: "The hard way. A stubborn cup side that parked, headed, and won Europe in Munich.",
+      },
+    ],
+  },
+  {
+    slug: "ac-milan",
+    name: "AC Milan",
+    kind: "club",
+    title: "When Was AC Milan's Prime?",
+    description:
+      "Sacchi's pressing 1988/89 European Cup winners, or Ancelotti's Christmas-tree side that won Athens in 2007. Both are playable.",
+    seoTitle: "Prime AC Milan — When Was Milan's Prime?",
+    seoDescription:
+      "When was AC Milan's prime? Compare Sacchi's 1988/89 European Cup winners and Ancelotti's 2006/07 Athens side, then simulate each squad.",
+    candidates: [
+      {
+        teamId: "ac-milan-1988-89",
+        argument: "Sacchi's machine. Baresi, Gullit, Van Basten, and a 4–0 final against Steaua.",
+      },
+      {
+        teamId: "ac-milan-2006-07",
+        argument: "Pirlo, Kaká, Nesta and Maldini. Athens, and a European Cup won the experienced way.",
+      },
+    ],
+  },
+  {
+    slug: "spain",
+    name: "Spain",
+    kind: "club",
+    title: "When Was Spain's Prime?",
+    description:
+      "The 2010 World Cup in South Africa, or the 2012 Euros side that beat Italy 4–0 in the final. Tiki-taka at two peaks.",
+    seoTitle: "Prime Spain — When Was Spain's Prime?",
+    seoDescription:
+      "When was Spain's prime? Compare the 2010 World Cup winners and the 2012 Euros side, then simulate each tiki-taka squad.",
+    candidates: [
+      {
+        teamId: "spain-2010",
+        argument: "Iniesta in extra time. Villa as the finisher, and a World Cup won the Barcelona way.",
+      },
+      {
+        teamId: "spain-2012",
+        argument: "False nine, 4–0 in the final, and the last night of the tiki-taka era.",
+      },
+    ],
+  },
 ]
 
 export function getPrimeEntity(slug: string): PrimeEntity | undefined {

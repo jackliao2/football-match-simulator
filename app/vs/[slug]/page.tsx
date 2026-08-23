@@ -16,7 +16,7 @@ import { simulateMany } from "@/lib/simulation"
 
 const VS_RUNS = 400
 
-export const dynamicParams = false
+export const dynamicParams = true
 
 export function generateStaticParams() {
   return allVsPairs().map(([a, b]) => ({ slug: `${a}-vs-${b}` }))

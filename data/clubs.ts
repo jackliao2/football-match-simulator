@@ -22,6 +22,24 @@ export const clubs: Club[] = [
     city: "Manchester",
     country: "England",
   },
+  { id: "chelsea", name: "Chelsea", code: "CHE", city: "London", country: "England" },
+  { id: "juventus", name: "Juventus", code: "JUV", city: "Turin", country: "Italy" },
+  { id: "ajax", name: "Ajax", code: "AJA", city: "Amsterdam", country: "Netherlands" },
+  {
+    id: "borussia-dortmund",
+    name: "Borussia Dortmund",
+    code: "BVB",
+    city: "Dortmund",
+    country: "Germany",
+  },
+  { id: "porto", name: "Porto", code: "FCP", city: "Porto", country: "Portugal" },
+  {
+    id: "atletico-madrid",
+    name: "Atlético Madrid",
+    code: "ATM",
+    city: "Madrid",
+    country: "Spain",
+  },
 ]
 
 export const nations: Club[] = [
@@ -32,6 +50,12 @@ export const nations: Club[] = [
   { id: "germany", name: "Germany", code: "GER", city: "Berlin", country: "Germany", kind: "nation" },
   { id: "italy", name: "Italy", code: "ITA", city: "Rome", country: "Italy", kind: "nation" },
   { id: "netherlands", name: "Netherlands", code: "NED", city: "Amsterdam", country: "Netherlands", kind: "nation" },
+  { id: "england", name: "England", code: "ENG", city: "London", country: "England", kind: "nation" },
+  { id: "portugal", name: "Portugal", code: "POR", city: "Lisbon", country: "Portugal", kind: "nation" },
+  { id: "croatia", name: "Croatia", code: "CRO", city: "Zagreb", country: "Croatia", kind: "nation" },
+  { id: "uruguay", name: "Uruguay", code: "URU", city: "Montevideo", country: "Uruguay", kind: "nation" },
+  { id: "belgium", name: "Belgium", code: "BEL", city: "Brussels", country: "Belgium", kind: "nation" },
+  { id: "hungary", name: "Hungary", code: "HUN", city: "Budapest", country: "Hungary", kind: "nation" },
 ]
 
 export const orgs: Club[] = [...clubs, ...nations]
