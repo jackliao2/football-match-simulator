@@ -21,7 +21,7 @@ export function Formation({ team }: { team: HistoricalTeam }) {
           <span className="text-gold">Coach</span> {team.manager}
         </span>
       </div>
-      <div className="pitch-grid relative min-h-[28rem] w-full sm:min-h-[32rem]">
+      <div className="pitch-grid relative min-h-[20rem] w-full sm:min-h-[32rem]">
         {eleven.map(({ player, slot }, index) =>
           player ? (
             <div

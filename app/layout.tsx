@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { IBM_Plex_Mono, Press_Start_2P } from "next/font/google"
 import { SiteFooter } from "@/components/ui/SiteFooter"
 import { SiteHeader } from "@/components/ui/SiteHeader"
@@ -20,6 +20,12 @@ const mono = IBM_Plex_Mono({
 })
 
 export const metadata: Metadata = defaultMetadata
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#070907",
+}
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

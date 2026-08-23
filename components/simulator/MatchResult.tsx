@@ -23,15 +23,19 @@ export function MatchResult({
 
   return (
     <ResultPanel kicker="Simulated result" aside={`Seed ${match.seed}`}>
-      <div className="grid gap-6 px-4 py-5 sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:px-5">
-        <ResultTeam team={home} />
-        <div className="text-center">
-          <div className="result-score text-4xl sm:text-5xl">
+      <div className="grid gap-3 px-3 py-3 sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:gap-6 sm:px-5 sm:py-5">
+        <div className="order-2 sm:order-1">
+          <ResultTeam team={home} />
+        </div>
+        <div className="order-1 text-center sm:order-2">
+          <div className="result-score text-3xl sm:text-5xl">
             {match.score.home}–{match.score.away}
           </div>
-          <div className="mt-2 font-mono text-xs tracking-[0.16em] text-muted uppercase">{resultLabel}</div>
+          <div className="mt-1 font-mono text-[11px] tracking-[0.16em] text-muted uppercase sm:mt-2 sm:text-xs">
+            {resultLabel}
+          </div>
         </div>
-        <div className="sm:justify-self-end">
+        <div className="order-3 sm:justify-self-end">
           <ResultTeam team={away} align="right" />
         </div>
       </div>
@@ -77,7 +81,7 @@ function ResultTeam({
   align?: "left" | "right"
 }) {
   return (
-    <div className={`flex items-center gap-3 ${align === "right" ? "flex-row-reverse text-right" : ""}`}>
+    <div className={`flex items-center gap-3 ${align === "right" ? "sm:flex-row-reverse sm:text-right" : ""}`}>
       <PixelCrest clubId={team.clubId} size={44} />
       <div className="min-w-0">
         <div className="truncate font-mono text-base font-semibold tracking-tight sm:text-lg">{team.clubName}</div>

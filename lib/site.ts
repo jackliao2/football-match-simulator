@@ -16,7 +16,7 @@ export const SITE = {
   shortName: "FMS",
   tagline: "Pick a team. Pick an era. Settle the debate.",
   description:
-    "Football match simulator for legendary historical teams. Pick a club, pick a season, and simulate dream matches across any era.",
+    "Simulate football matches between legendary club sides and World Cup squads. Pick a historical team and season — the engine produces score, scorers, xG and events, not a chatbot guess.",
   disclaimer:
     "Independent football simulation project. Not affiliated with or endorsed by any club, league, federation or player.",
 }

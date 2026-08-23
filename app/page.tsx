@@ -23,20 +23,18 @@ export default function HomePage() {
               name: "Football Match Simulator",
               applicationCategory: "GameApplication",
               description:
-                "Simulate historical football teams from any era. Pick a squad, pick a season, settle the debate.",
+                "Simulate football matches between legendary club sides and World Cup squads. Pick a historical team, pick a season, and the engine produces a score, scorers, xG and events.",
             }),
           }}
         />
         <p className="font-display text-[9px] uppercase tracking-[0.28em] text-gold">
           Historical football match simulator
         </p>
-        <h1 className="font-mono text-2xl font-semibold tracking-tight text-text sm:text-3xl">
+        <h1 className="font-mono text-xl font-semibold tracking-tight text-text sm:text-3xl">
           Football Match Simulator
         </h1>
-        <p className="mx-auto max-w-2xl font-mono text-sm leading-6 text-muted sm:text-base">
-          Simulate football matches between legendary club sides and World Cup squads. Pick a
-          historical team, pick a season, and the engine produces a score, scorers, xG and events
-          — not a chatbot guess.
+        <p className="mx-auto max-w-xl font-mono text-sm leading-6 text-muted">
+          Legendary clubs and World Cup squads. Pick a season. Simulate a match.
         </p>
       </section>
 

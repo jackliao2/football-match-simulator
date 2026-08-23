@@ -19,6 +19,7 @@
 }
 
 html {
+  overflow-x: clip;
   background: var(--color-ink);
   color: var(--color-text);
 }
@@ -54,6 +55,11 @@ select,
 button,
 input {
   font: inherit;
+}
+
+a,
+button {
+  touch-action: manipulation;
 }
 
 select {
@@ -400,4 +406,88 @@ optgroup {
   width: 1px;
   background: rgba(232, 240, 220, 0.22);
   pointer-events: none;
+}
+
+@media (max-width: 899px) {
+  .faceoff-board {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "rail"
+      "home"
+      "away";
+    gap: 0.55rem;
+  }
+
+  .faceoff-card {
+    grid-template-rows: auto auto auto auto;
+  }
+
+  .faceoff-identity {
+    padding: 0.55rem 0.55rem 0.4rem;
+    gap: 0.45rem;
+  }
+
+  .faceoff-change {
+    margin-inline: 0.55rem;
+    min-height: 2.5rem;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+
+  .faceoff-seasons {
+    padding-inline: 0.55rem;
+  }
+
+  .faceoff-squad {
+    padding: 0.4rem 0.4rem 0.55rem;
+  }
+
+  .faceoff-rail-inner {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    height: auto;
+    gap: 0.4rem;
+    padding: 0.65rem 0.5rem;
+  }
+
+  .faceoff-vs {
+    flex-direction: row;
+    width: 100%;
+    gap: 0.45rem;
+    font-size: 0.95rem;
+    letter-spacing: 0.28em;
+    text-indent: 0.28em;
+  }
+
+  .faceoff-vs::before,
+  .faceoff-vs::after {
+    width: 1.1rem;
+  }
+
+  .faceoff-rail-inner > .rail-btn {
+    flex: 1 1 30%;
+    min-width: 0;
+    padding: 0.7rem 0.2rem;
+    font-size: 8px;
+  }
+
+  .rail-swap {
+    margin-top: 0;
+  }
+
+  .rail-hint {
+    width: 100%;
+  }
+
+  .rail-btn-inline {
+    min-width: 0;
+    flex: 1 1 calc(50% - 0.35rem);
+  }
+
+  .faceoff-player {
+    grid-template-columns: 1.9rem minmax(0, 1fr) 1.85rem;
+    gap: 0.3rem;
+    padding: 0.16rem 0.28rem;
+  }
 }

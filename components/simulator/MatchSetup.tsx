@@ -235,7 +235,10 @@ export function MatchSetup({
               >
                 {analysisLoading ? "Writing…" : "AI Analysis"}
               </button>
-              <p className="rail-hint">Hover a player for PAC SHO PAS DRI DEF PHY</p>
+              <p className="rail-hint">
+                <span className="md:hidden">Tap a player for PAC SHO PAS DRI DEF PHY</span>
+                <span className="hidden md:inline">Hover a player for PAC SHO PAS DRI DEF PHY</span>
+              </p>
             </div>
           </div>
 

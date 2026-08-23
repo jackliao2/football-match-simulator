@@ -9,10 +9,10 @@ export function OvrStamp({
 }) {
   const number =
     size === "xl"
-      ? "text-5xl sm:text-6xl"
+      ? "text-4xl sm:text-6xl"
       : size === "lg"
-        ? "text-4xl sm:text-5xl"
-        : "text-3xl"
+        ? "text-3xl sm:text-5xl"
+        : "text-2xl sm:text-3xl"
   return (
     <div className={`flex flex-col leading-none ${align === "left" ? "items-start" : "items-end"}`}>
       <span className={`font-display tracking-tight text-gold ${number}`}>{value}</span>

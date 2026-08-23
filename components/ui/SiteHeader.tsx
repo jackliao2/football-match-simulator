@@ -15,26 +15,26 @@ export function SiteHeader() {
   const pathname = usePathname()
   return (
     <header className="border-b-2 border-line bg-ink/90">
-      <div className="mx-auto flex max-w-[90rem] flex-wrap items-center justify-between gap-3 px-4 py-3">
-        <Link href="/" className="flex items-center gap-3 no-underline">
-          <span className="border-2 border-gold bg-panel px-2 py-1 font-display text-[10px] text-gold">
+      <div className="mx-auto flex max-w-[90rem] items-center justify-between gap-2 px-3 py-2.5 sm:gap-3 sm:px-4 sm:py-3">
+        <Link href="/" className="flex min-w-0 items-center gap-2 no-underline sm:gap-3">
+          <span className="border-2 border-gold bg-panel px-2 py-1 font-display text-[9px] text-gold sm:text-[10px]">
             {SITE.shortName}
           </span>
-          <span className="flex flex-col">
+          <span className="hidden min-w-0 flex-col sm:flex">
             <span className="font-display text-[10px] uppercase tracking-[0.18em] text-text sm:text-[11px]">
               Football Match Simulator
             </span>
-            <span className="hidden text-[11px] text-muted sm:block">{SITE.tagline}</span>
+            <span className="hidden text-[11px] text-muted lg:block">{SITE.tagline}</span>
           </span>
         </Link>
-        <nav className="flex flex-wrap gap-1 sm:gap-2">
+        <nav className="flex shrink-0 gap-0.5 overflow-x-auto sm:gap-2">
           {links.map((link) => {
             const active = pathname === link.href || pathname.startsWith(`${link.href}/`)
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`border-2 px-3 py-2 font-display text-[10px] uppercase tracking-[0.14em] no-underline ${
+                className={`border-2 px-2 py-1.5 font-display text-[8px] uppercase tracking-[0.1em] no-underline sm:px-3 sm:py-2 sm:text-[10px] sm:tracking-[0.14em] ${
                   active
                     ? "border-gold text-gold"
                     : "border-transparent text-muted hover:border-line hover:text-gold"

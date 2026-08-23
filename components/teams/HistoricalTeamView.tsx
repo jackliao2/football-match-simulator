@@ -61,7 +61,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
         <div className="flex items-start gap-4">
           <PixelCrest clubId={team.clubId} size={72} />
           <div className="min-w-0 flex-1">
-            <h1 className="font-display text-[13px] uppercase leading-relaxed tracking-[0.08em] sm:text-xl md:text-2xl">
+            <h1 className="font-mono text-lg font-semibold leading-snug tracking-tight sm:text-2xl">
               {team.clubName} {team.displaySeason}
             </h1>
             <p className="mt-1 font-mono text-sm text-muted">
