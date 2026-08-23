@@ -1,4 +1,5 @@
 import { teamSquad, teamStars } from "@/lib/stars"
+import { trophiesFor } from "@/data/trophies"
 import type { HistoricalTeam } from "@/types"
 import { acMilan198889, acMilan200607 } from "@/data/teams/ac-milan"
 import { ajax199495, ajax201819 } from "@/data/teams/ajax"
@@ -41,7 +42,7 @@ import { portugal2004, portugal2016 } from "@/data/teams/portugal"
 import { spain2010, spain2012 } from "@/data/teams/spain"
 import { uruguay1950, uruguay2010 } from "@/data/teams/uruguay"
 
-export const teams: HistoricalTeam[] = [
+const RAW: HistoricalTeam[] = [
   barcelona200809,
   barcelona201011,
   barcelona201415,
@@ -119,6 +120,11 @@ export const teams: HistoricalTeam[] = [
   denmark1992,
   denmark1998,
 ]
+
+export const teams: HistoricalTeam[] = RAW.map((team) => ({
+  ...team,
+  trophies: trophiesFor(team.id),
+}))
 
 function assertTeamData(catalog: HistoricalTeam[]) {
   const seen = new Set<string>()

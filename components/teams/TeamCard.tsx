@@ -4,6 +4,7 @@ import { teamPath } from "@/lib/paths"
 import { teamSquad } from "@/lib/stars"
 import { CompactSquad } from "@/components/teams/SquadPanel"
 import { PixelCrest } from "@/components/teams/PixelCrest"
+import { TrophyBadges } from "@/components/teams/TrophyBadges"
 import { OvrStamp } from "@/components/ui/OvrStamp"
 
 export function TeamCard({ team }: { team: HistoricalTeam }) {
@@ -17,6 +18,11 @@ export function TeamCard({ team }: { team: HistoricalTeam }) {
           </h3>
           <p className="font-mono text-sm text-gold">{team.displaySeason}</p>
           <p className="mt-0.5 truncate font-mono text-[11px] text-muted">{team.manager}</p>
+          {team.trophies.length > 0 ? (
+            <div className="mt-1.5">
+              <TrophyBadges trophies={team.trophies} />
+            </div>
+          ) : null}
         </div>
         <OvrStamp value={team.overallRating} size="md" />
       </div>

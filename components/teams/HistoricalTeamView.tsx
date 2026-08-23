@@ -5,6 +5,7 @@ import { SquadList } from "@/components/teams/SquadList"
 import { StarPlayers } from "@/components/teams/StarPlayers"
 import { TeamRatings } from "@/components/teams/TeamRatings"
 import { PixelCrest } from "@/components/teams/PixelCrest"
+import { TrophyBadges } from "@/components/teams/TrophyBadges"
 import { MatchupRow } from "@/components/ui/MatchupRow"
 import { OvrStamp } from "@/components/ui/OvrStamp"
 import { FEATURED_MATCHUPS, defaultOpponent, vsPath } from "@/data/matchups"
@@ -75,6 +76,9 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
               <span className="mx-2 text-line-hi">·</span>
               {team.formation}
             </p>
+            <div className="mt-2">
+              <TrophyBadges trophies={team.trophies} />
+            </div>
           </div>
           <OvrStamp value={team.overallRating} size="xl" />
         </div>
@@ -102,6 +106,19 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
               {tag}
             </span>
           ))}
+        </div>
+      </section>
+
+      <section className="result-panel">
+        <h2 className="border-b border-white/10 px-3 py-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
+          Honours by this season
+        </h2>
+        <div className="px-3 py-3">
+          {team.trophies.length > 0 ? (
+            <TrophyBadges trophies={team.trophies} />
+          ) : (
+            <p className="font-mono text-[12px] text-muted">No World Cup, Euros, Copa, UCL or league title yet.</p>
+          )}
         </div>
       </section>
 

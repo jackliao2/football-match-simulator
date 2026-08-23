@@ -130,9 +130,10 @@ export function pl(
   }
 }
 
-type TeamInput = Omit<HistoricalTeam, "id" | "overallRating" | "kind"> & {
+type TeamInput = Omit<HistoricalTeam, "id" | "overallRating" | "kind" | "trophies"> & {
   overallRating?: number
   kind?: HistoricalTeam["kind"]
+  trophies?: HistoricalTeam["trophies"]
 }
 
 export function makeTeam(input: TeamInput): HistoricalTeam {
@@ -153,6 +154,7 @@ export function makeTeam(input: TeamInput): HistoricalTeam {
     kind,
     id: `${input.clubId}-${input.season}`,
     overallRating,
+    trophies: input.trophies ?? [],
     players: input.players.map((player) => ({
       ...player,
       nation: player.nation ?? nationOf(player.name, hint),

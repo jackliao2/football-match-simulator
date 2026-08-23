@@ -8,6 +8,7 @@ import { MatchTimeline } from "@/components/simulator/MatchTimeline"
 import { MonteCarloResults } from "@/components/simulator/MonteCarloResults"
 import { FaceOffSquad } from "@/components/teams/SquadPanel"
 import { PixelCrest } from "@/components/teams/PixelCrest"
+import { TrophyBadges } from "@/components/teams/TrophyBadges"
 import { ResultPanel } from "@/components/ui/ResultPanel"
 import { OvrStamp } from "@/components/ui/OvrStamp"
 import { track } from "@/lib/analytics"
@@ -383,6 +384,11 @@ function TeamColumn({
             <span className="mx-1.5 text-line-hi">·</span>
             {team.formation}
           </span>
+          {team.team.trophies.length > 0 ? (
+            <span className="mt-1.5 block">
+              <TrophyBadges trophies={team.team.trophies} align={away ? "right" : "left"} />
+            </span>
+          ) : null}
         </span>
         <OvrStamp value={team.overallRating} size="md" align={away ? "left" : "right"} />
       </button>

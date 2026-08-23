@@ -17,6 +17,14 @@ export interface Player {
 
 export type TeamKind = "club" | "nation"
 
+export type TrophyCode = "ucl" | "el" | "league" | "world-cup" | "euros" | "copa"
+
+export interface Trophy {
+  code: TrophyCode
+  label: string
+  count: number
+}
+
 export interface HistoricalTeam {
   id: string
   kind: TeamKind
@@ -42,6 +50,7 @@ export interface HistoricalTeam {
   aerialThreat: number
   players: Player[]
   startingXI: string[]
+  trophies: Trophy[]
   achievements: string[]
   styleTags: string[]
   summary: string
