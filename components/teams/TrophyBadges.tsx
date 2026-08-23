@@ -10,7 +10,7 @@ export function TrophyBadges({
   if (trophies.length === 0) return null
   return (
     <ul
-      className={`flex max-w-full flex-wrap gap-1 ${align === "right" ? "justify-end" : ""}`}
+      className={`flex max-w-full flex-nowrap gap-1 overflow-hidden ${align === "right" ? "justify-end" : ""}`}
     >
       {trophies.map((trophy) => (
         <li

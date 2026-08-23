@@ -163,7 +163,7 @@ a.result-panel:hover {
 
 .faceoff-card {
   display: grid;
-  grid-template-rows: auto 2.35rem auto minmax(0, 1fr);
+  grid-template-rows: 6rem 2.35rem 3.85rem minmax(0, 1fr);
   min-width: 0;
   border: 2px solid #3a5230;
   background:
@@ -188,13 +188,23 @@ a.result-panel:hover {
 
 .faceoff-identity-wrap {
   display: grid;
-  gap: 0.4rem;
+  grid-template-rows: 1fr 1.2rem;
+  gap: 0.35rem;
   min-width: 0;
-  padding: 0.7rem 0.8rem 0.5rem;
+  overflow: hidden;
+  padding: 0.65rem 0.8rem 0.4rem;
 }
 
 .trophy-slot {
-  min-height: 1.15rem;
+  display: flex;
+  align-items: center;
+  height: 1.2rem;
+  min-height: 1.2rem;
+  overflow: hidden;
+}
+
+.trophy-slot ul {
+  flex-wrap: nowrap;
 }
 
 @keyframes gold-sheen {
@@ -348,12 +358,18 @@ a.result-panel:hover {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  align-content: center;
-  gap: 0.35rem;
+  align-content: flex-start;
+  gap: 0.3rem;
   min-width: 0;
   overflow: hidden;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 0.35rem 0.8rem;
+  padding: 0.32rem 0.7rem;
+}
+
+.faceoff-seasons button {
+  padding: 0.18rem 0.42rem;
+  font-size: 11px;
+  line-height: 1.2;
 }
 
 .faceoff-squad {
@@ -543,7 +559,7 @@ a.result-panel:hover {
   }
 
   .faceoff-card {
-    grid-template-rows: auto auto auto auto;
+    grid-template-rows: 5.6rem auto 3.6rem minmax(0, 1fr);
   }
 
   .faceoff-identity-wrap {

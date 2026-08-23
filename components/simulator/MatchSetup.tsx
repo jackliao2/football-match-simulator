@@ -453,7 +453,7 @@ function TeamColumn({
               key={season.id}
               type="button"
               onClick={() => onSeason(season.id)}
-              className={`border px-2 py-1 font-mono text-xs sm:text-sm ${
+              className={`border font-mono ${
                 active
                   ? away
                     ? "border-danger bg-danger/15 text-danger"
