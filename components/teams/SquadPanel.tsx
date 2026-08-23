@@ -120,14 +120,12 @@ function FaceRow({
     >
       <div className="faceoff-player">
         <span className="font-mono text-[10px] font-medium tracking-wider text-gold">{player.position}</span>
-        <span
-          className={`min-w-0 truncate font-mono leading-none ${compact ? "text-xs" : "text-[13px] font-medium"} ${
-            dim ? "text-muted" : "text-text"
-          }`}
-        >
-          {player.name}
-        </span>
-        <span className="flex justify-center">
+        <span className={`flex min-w-0 items-center gap-1.5 ${dim ? "text-muted" : "text-text"}`}>
+          <span
+            className={`min-w-0 truncate font-mono leading-none ${compact ? "text-xs" : "text-[13px] font-medium"}`}
+          >
+            {player.name}
+          </span>
           <PixelFlag code={player.nation} size={compact ? 12 : 14} />
         </span>
         <span

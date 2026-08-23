@@ -147,6 +147,10 @@ export function MatchSetup({
     showResults("batch")
   }
 
+  function scrollToSetup() {
+    document.getElementById("setup")?.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
+
   async function shareMatch() {
     if (!match) return
     const url = absoluteUrl(`/match/${match.id}`)
@@ -191,7 +195,7 @@ export function MatchSetup({
   return (
     <div className="w-full">
       <div className="grid gap-3">
-        <div className="faceoff-board">
+        <div id="setup" className="faceoff-board result-anchor">
           <TeamColumn
             label="Home"
             side="home"
@@ -253,19 +257,46 @@ export function MatchSetup({
         {match ? (
           <div id="result-match" className="grid gap-4">
             <MatchResult match={match} home={home.team} away={away.team} />
+            <div className="flex flex-wrap gap-2">
+              <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={simulateOnce}>
+                Simulate again
+              </button>
+              <button
+                type="button"
+                className="rail-btn rail-btn-inline"
+                disabled={running}
+                onClick={simulateHundred}
+              >
+                {running ? "Running…" : "100 Matches"}
+              </button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>
+                Back to teams
+              </button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={shareMatch}>
+                {copied ? "Copied" : "Copy link"}
+              </button>
+            </div>
             <div className="grid gap-4 lg:grid-cols-2">
               <MatchStats match={match} />
-              <MatchTimeline match={match} />
+              <MatchTimeline match={match} home={home.team} away={away.team} />
             </div>
-            <button type="button" className="rail-btn w-full sm:w-auto" onClick={shareMatch}>
-              {copied ? "Copied" : "Copy match link"}
-            </button>
           </div>
         ) : null}
 
         {batch ? (
-          <div id="result-batch">
+          <div id="result-batch" className="grid gap-2">
             <MonteCarloResults result={batch} />
+            <div className="flex flex-wrap gap-2">
+              <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={simulateOnce}>
+                Simulate match
+              </button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={simulateHundred}>
+                Run 100 again
+              </button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>
+                Back to teams
+              </button>
+            </div>
           </div>
         ) : null}
 

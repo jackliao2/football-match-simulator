@@ -36,13 +36,13 @@ export function MatchResult({
         </div>
       </div>
       {match.scorers.length > 0 ? (
-        <div className="grid gap-4 border-t border-white/10 px-4 py-3 font-mono text-sm sm:grid-cols-2 sm:px-5">
+        <div className="grid gap-1 border-t border-white/10 px-3 py-2 font-mono text-[12px] leading-5 sm:grid-cols-2 sm:px-4">
           <ol>
             {homeGoals.length === 0 ? (
               <li className="text-muted">No goals</li>
             ) : (
               homeGoals.map((goal) => (
-                <li key={`h-${goal.minute}-${goal.player}`} className="py-1">
+                <li key={`h-${goal.minute}-${goal.player}`}>
                   <span className="text-gold">{goal.displayMinute}</span> {goal.player}
                   {goal.assist ? <span className="text-muted"> ({goal.assist})</span> : null}
                 </li>
@@ -54,7 +54,7 @@ export function MatchResult({
               <li className="text-muted">No goals</li>
             ) : (
               awayGoals.map((goal) => (
-                <li key={`a-${goal.minute}-${goal.player}`} className="py-1">
+                <li key={`a-${goal.minute}-${goal.player}`}>
                   {goal.assist ? <span className="text-muted">({goal.assist}) </span> : null}
                   {goal.player} <span className="text-gold">{goal.displayMinute}</span>
                 </li>
@@ -63,9 +63,7 @@ export function MatchResult({
           </ol>
         </div>
       ) : (
-        <p className="border-t border-white/10 px-4 py-3 font-mono text-sm text-muted sm:px-5">
-          No goals in this simulation.
-        </p>
+        <p className="border-t border-white/10 px-3 py-2 font-mono text-[12px] text-muted">No goals</p>
       )}
     </ResultPanel>
   )

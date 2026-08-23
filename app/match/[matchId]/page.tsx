@@ -76,7 +76,7 @@ export default async function MatchPage({ params }: PageProps<"/match/[matchId]"
       </div>
       <MatchActions home={home} away={away} />
       <div className="grid gap-6 lg:grid-cols-2">
-        <MatchTimeline match={match} />
+        <MatchTimeline match={match} home={home} away={away} />
         <MatchStats match={match} />
       </div>
       {match.tacticalNotes.length > 0 ? (

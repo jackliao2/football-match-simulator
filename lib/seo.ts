@@ -31,6 +31,7 @@ export const defaultMetadata: Metadata = {
     title: "Football Match Simulator — Legendary Teams From Any Era",
     description: SITE.description,
   },
+  alternates: { canonical: "/" },
   robots: {
     index: true,
     follow: true,

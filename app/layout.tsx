@@ -26,7 +26,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={`${display.variable} ${mono.variable} h-full`}>
       <body className="flex min-h-full flex-col font-mono antialiased">
         <SiteHeader />
-        <main className="mx-auto w-full max-w-7xl flex-1 px-3 py-3 sm:px-4 sm:py-4">{children}</main>
+        <div className="page-frame">
+          <aside className="page-rail" aria-hidden="true" />
+          <main className="min-w-0 flex-1 px-3 py-3 sm:px-4 sm:py-4">{children}</main>
+          <aside className="page-rail" aria-hidden="true" />
+        </div>
         <SiteFooter />
       </body>
     </html>
