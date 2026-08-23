@@ -10,7 +10,18 @@ export const metadata: Metadata = pageMetadata({
   description:
     "When was Barcelona's prime? Real Madrid's? Manchester United's? Messi's? Prime pages compare legendary seasons, then send you into the football match simulator.",
   path: "/prime",
-  keywords: ["barcelona prime", "real madrid prime", "manchester united prime", "messi prime"],
+  keywords: [
+    "prime barcelona",
+    "barcelona prime",
+    "barca prime",
+    "prime real madrid",
+    "real madrid prime",
+    "messi's prime",
+    "messi prime year",
+    "prime manchester united",
+    "prime brazil",
+    "football match simulator",
+  ],
 })
 
 export default function PrimeIndexPage() {

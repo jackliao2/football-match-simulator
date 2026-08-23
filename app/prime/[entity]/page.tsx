@@ -24,6 +24,12 @@ export async function generateMetadata({
   return {
     title: { absolute: `${page.seoTitle} | Football Match Simulator` },
     description: page.seoDescription,
+    keywords: [
+      page.title.toLowerCase(),
+      `prime ${page.name.toLowerCase()}`,
+      `${page.name.toLowerCase()} prime`,
+      "football match simulator",
+    ],
     alternates: { canonical: `/prime/${page.slug}` },
     openGraph: {
       title: page.seoTitle,

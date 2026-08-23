@@ -7,6 +7,8 @@ export function slugify(value: string): string {
     .replace(/ł/gi, "l")
     .replace(/đ/gi, "d")
     .replace(/ß/g, "ss")
+    .replace(/ı/g, "i")
+    .replace(/İ/g, "i")
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()

@@ -31,14 +31,23 @@ export async function generateMetadata({
   const home = getTeam(parsed.homeId)
   const away = getTeam(parsed.awayId)
   if (!home || !away) return { title: "Dream Match" }
-  const title = `${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason} — Match Simulator`
+  const matchup = `${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}`
+  const title = `Who Would Win: ${matchup}?`
+  const description = `Who would win ${matchup}? Simulate this dream football match. Model probabilities from ${VS_RUNS} runs in a football match simulator — not a recorded historical result.`
   return {
-    title: { absolute: title },
-    description: `Simulate ${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}. Model probabilities from ${VS_RUNS} runs, squads and a football match simulator — not a recorded historical result.`,
+    title: { absolute: `${title} | Football Match Simulator` },
+    description,
+    keywords: [
+      `who would win ${home.clubName} vs ${away.clubName}`,
+      `${home.clubName} vs ${away.clubName}`,
+      matchup,
+      "dream football match",
+      "football match simulator",
+    ],
     alternates: { canonical: `/vs/${slug}` },
     openGraph: {
       title,
-      description: `Simulate this dream match. Model probabilities, not a recorded historical result.`,
+      description,
       url: absoluteUrl(`/vs/${slug}`),
     },
   }

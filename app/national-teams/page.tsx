@@ -10,16 +10,20 @@ import { absoluteUrl } from "@/lib/site"
 export const metadata: Metadata = pageMetadata({
   title: "Historical National Teams",
   description:
-    "Simulate national teams from any era: England 1966 to 2021, Brazil 1970 and 1982, France 1984, Netherlands 1988, Italy 1994, Colombia, Denmark and more. Trophy or not — if the names are right, the side is here.",
+    "Simulate national teams from any era: Brazil 1970, Argentina 1986, England 1966, Spain 2010, plus 2026 current squads. World Cup and Euros sides as historical teams you can play.",
   path: "/national-teams",
   keywords: [
     "world cup squads",
+    "world cup simulator",
     "brazil 1970",
     "argentina 1986",
     "england 1966",
+    "spain 2010",
+    "france 1998",
     "hungary 1954",
     "portugal 2016",
     "croatia 2018",
+    "brazil 2026 squad",
     "historical national teams",
     "football match simulator",
   ],
@@ -51,7 +55,7 @@ export default function NationalTeamsPage() {
       <PageHeader
         kicker="World Cup sides"
         title="Historical national teams"
-        lead="World Cup and Euros squads as historical teams. Same engine as the clubs — pick a year, then simulate them against any era."
+        lead="World Cup and Euros squads plus 2026 current sides. Same engine as the clubs — pick a year, then simulate them against any era."
       >
         <Link href="/teams" className="font-mono text-sm text-gold hover:text-gold-2">
           Club teams →

@@ -97,8 +97,8 @@ export function MatchSetup({
     setAnalysisError(null)
   }
 
-  const homeSeasons = teams.filter((team) => team.clubId === homeClub)
-  const awaySeasons = teams.filter((team) => team.clubId === awayClub)
+  const homeSeasons = seasonsForClub(teams, homeClub)
+  const awaySeasons = seasonsForClub(teams, awayClub)
   const home = teams.find((team) => team.id === homeId) ?? homeSeasons[0]!
   const away = teams.find((team) => team.id === awayId) ?? awaySeasons[0]!
   const sameTeam = home.id === away.id
@@ -106,9 +106,12 @@ export function MatchSetup({
   const awaySquad = away.squad.length > 0 ? away.squad : teamSquad(away.team)
 
   function changeClub(side: "home" | "away", clubId: string) {
-    const seasons = teams.filter((team) => team.clubId === clubId)
-    const preferred =
-      seasons.find((team) => team.id === (side === "home" ? homeId : awayId)) ?? seasons[0]
+    if (clubId === (side === "home" ? homeClub : awayClub)) {
+      setPicker(null)
+      return
+    }
+    const seasons = seasonsForClub(teams, clubId)
+    const preferred = seasons[0]
     if (!preferred) return
     track("team_selected", { clubId, side })
     if (side === "home") {
@@ -378,10 +381,18 @@ export function MatchSetup({
   )
 }
 
+function seasonsForClub(teams: TeamOption[], clubId: string) {
+  return teams
+    .filter((team) => team.clubId === clubId)
+    .sort((a, b) => b.team.eraYear - a.team.eraYear)
+}
+
 function uniqueOrgs(teams: TeamOption[], kind: TeamKind): TeamOption[] {
   const map = new Map<string, TeamOption>()
   for (const team of teams) {
-    if (team.kind === kind && !map.has(team.clubId)) map.set(team.clubId, team)
+    if (team.kind !== kind) continue
+    const prev = map.get(team.clubId)
+    if (!prev || team.team.eraYear > prev.team.eraYear) map.set(team.clubId, team)
   }
   return [...map.values()]
 }

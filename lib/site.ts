@@ -16,7 +16,7 @@ export const SITE = {
   shortName: "FMS",
   tagline: "Pick a team. Pick an era. Settle the debate.",
   description:
-    "Simulate football matches between legendary club sides and national teams — Barcelona, Real Madrid, Chelsea, Ajax, Brazil 1970, England 1966, Hungary 1954 and more. Pick a historical team and season. The engine produces score, scorers, xG and events, not a chatbot guess.",
+    "Football match simulator online: pick a historical team or a current squad and simulate a custom football match. Barcelona 2009 squad vs Real Madrid 2017, Brazil 1970, Arsenal 2004, 2026 national sides — score, scorers, xG and who-would-win probabilities, not a chatbot guess.",
   disclaimer:
     "Independent football simulation project. Not affiliated with or endorsed by any club, league, federation or player.",
 }

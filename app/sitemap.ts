@@ -28,11 +28,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
-  const teamRoutes = teams.map((team) => ({
-    url: absoluteUrl(teamPath(team)),
-    changeFrequency: "monthly" as const,
-    priority: 0.85,
-  }))
+  const teamRoutes = teams.map((team) => {
+    const current = team.kind === "nation" ? team.eraYear >= 2026 : team.eraYear >= 2025
+    return {
+      url: absoluteUrl(teamPath(team)),
+      changeFrequency: current ? ("weekly" as const) : ("monthly" as const),
+      priority: current ? 0.9 : 0.85,
+    }
+  })
 
   const primeRoutes = primeEntities.map((entity) => ({
     url: absoluteUrl(`/prime/${entity.slug}`),

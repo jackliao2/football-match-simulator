@@ -13,6 +13,7 @@ import { FEATURED_MATCHUPS, defaultOpponent, vsPath } from "@/data/matchups"
 import { getPrimeEntity } from "@/data/prime"
 import { getTeam, getTeamsByClub, teams } from "@/data/teams"
 import { orgIndexPath, orgPath, teamPath } from "@/lib/paths"
+import { isCurrentSquad } from "@/lib/seo"
 import { absoluteUrl } from "@/lib/site"
 import type { HistoricalTeam } from "@/types"
 
@@ -32,6 +33,16 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
     .slice(0, 2)
   const popular = [...battles, ...extraOpponents].slice(0, 4)
   const indexLabel = team.kind === "nation" ? "National teams" : "Teams"
+  const current = isCurrentSquad(team)
+  const kicker = current
+    ? team.kind === "nation"
+      ? "Current national squad"
+      : "Current squad"
+    : team.kind === "nation"
+      ? "World Cup squad"
+      : "Historical squad"
+  const orgHref = orgPath(team.kind, team.clubId)
+  const orgIndexHref = orgIndexPath(team.kind)
 
   return (
     <div className="grid gap-6">
@@ -53,6 +64,25 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
           }),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: indexLabel, item: absoluteUrl(orgIndexHref) },
+              { "@type": "ListItem", position: 2, name: team.clubName, item: absoluteUrl(orgHref) },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: `${team.clubName} ${team.displaySeason}`,
+                item: absoluteUrl(teamPath(team)),
+              },
+            ],
+          }),
+        }}
+      />
       <header className="grid gap-3">
         <p className="font-mono text-xs text-muted">
           <Link href={orgIndexPath(team.kind)} className="hover:text-gold">
@@ -64,7 +94,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
           </Link>
         </p>
         <p className="font-display text-[9px] uppercase tracking-[0.28em] text-gold">
-          {team.kind === "nation" ? "World Cup squad" : "Historical squad"}
+          {kicker}
         </p>
         <div className={`flex items-start gap-4 ${eraGlow(team.trophies) ? "era-sheen" : ""}`}>
           <PixelCrest clubId={team.clubId} size={64} />
@@ -73,6 +103,9 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
               {team.clubName} {team.displaySeason}
             </h1>
             <p className="mt-1 font-mono text-sm text-muted">
+              Squad, starting XI, formation & team ratings
+            </p>
+            <p className="mt-0.5 font-mono text-xs text-muted">
               {team.manager}
               <span className="mx-2 text-line-hi">·</span>
               {team.formation}

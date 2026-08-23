@@ -10,14 +10,18 @@ import { absoluteUrl } from "@/lib/site"
 export const metadata: Metadata = pageMetadata({
   title: "Historical Football Teams",
   description:
-    "Browse historical football squads by club and season — Barcelona, Real Madrid, Chelsea, Ajax, Tottenham, PSG, Napoli, Juventus, Dortmund and more. Open a squad, then simulate a match.",
+    "Browse football squads by club and season — Barcelona 2009 squad, Real Madrid 2017 squad, Arsenal 2004 squad, Manchester United 2008 squad, plus every club's 2025/26 current squad. Open a lineup, then simulate a football match.",
   path: "/teams",
   keywords: [
     "historical football teams",
     "legendary football squads",
-    "barcelona 2008/09 squad",
-    "chelsea 2004/05 squad",
-    "ajax 1995 squad",
+    "barcelona 2009 squad",
+    "real madrid 2017 squad",
+    "arsenal 2004 squad",
+    "manchester united 2008 squad",
+    "liverpool 2005 squad",
+    "ac milan 2007 squad",
+    "barcelona 2025 squad",
     "football match simulator teams",
   ],
 })
@@ -50,7 +54,7 @@ export default function TeamsPage() {
       <PageHeader
         kicker="Club database"
         title="Historical football teams"
-        lead="Legendary club squads by season. Open a team for the starting XI, formation and ratings, then simulate a match against any era."
+        lead="Legendary club squads and current 2025/26 lineups. Open a team for the starting XI, formation and ratings, then simulate a football match against any era."
       >
         <Link href="/national-teams" className="font-mono text-sm text-gold hover:text-gold-2">
           World Cup national teams →

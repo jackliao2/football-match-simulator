@@ -26,6 +26,43 @@ import { parisSaintGermain201718, parisSaintGermain202223 } from "@/data/teams/p
 import { porto200304, porto201011 } from "@/data/teams/porto"
 import { realMadrid201314, realMadrid201617 } from "@/data/teams/real-madrid"
 import { tottenham201617, tottenham201819 } from "@/data/teams/tottenham"
+import {
+  acMilan202526,
+  ajax202526,
+  arsenal202526,
+  atleticoMadrid202526,
+  barcelona202526,
+  bayernMunich202526,
+  borussiaDortmund202526,
+  chelsea202526,
+  interMilan202526,
+  juventus202526,
+  liverpool202526,
+  manchesterCity202526,
+  manchesterUnited202526,
+  napoli202526,
+  parisSaintGermain202526,
+  porto202526,
+  realMadrid202526,
+  tottenham202526,
+} from "@/data/teams/current-clubs"
+import {
+  argentina2026,
+  belgium2026,
+  brazil2026,
+  colombia2026,
+  croatia2026,
+  denmark2026,
+  england2026,
+  france2026,
+  germany2026,
+  hungary2026,
+  italy2026,
+  netherlands2026,
+  portugal2026,
+  spain2026,
+  uruguay2026,
+} from "@/data/teams/current-nations"
 import { argentina1986, argentina2022 } from "@/data/teams/argentina"
 import { belgium1986, belgium2018 } from "@/data/teams/belgium"
 import {
@@ -89,6 +126,24 @@ const RAW: HistoricalTeam[] = [
   parisSaintGermain202223,
   napoli198687,
   napoli202223,
+  barcelona202526,
+  realMadrid202526,
+  manchesterUnited202526,
+  arsenal202526,
+  liverpool202526,
+  acMilan202526,
+  interMilan202526,
+  bayernMunich202526,
+  manchesterCity202526,
+  chelsea202526,
+  juventus202526,
+  ajax202526,
+  borussiaDortmund202526,
+  porto202526,
+  atleticoMadrid202526,
+  tottenham202526,
+  parisSaintGermain202526,
+  napoli202526,
   brazil1958,
   brazil1962,
   brazil1970,
@@ -133,6 +188,21 @@ const RAW: HistoricalTeam[] = [
   colombia2014,
   denmark1992,
   denmark1998,
+  brazil2026,
+  argentina2026,
+  france2026,
+  spain2026,
+  germany2026,
+  italy2026,
+  netherlands2026,
+  england2026,
+  portugal2026,
+  croatia2026,
+  uruguay2026,
+  belgium2026,
+  hungary2026,
+  colombia2026,
+  denmark2026,
 ]
 
 export const teams: HistoricalTeam[] = RAW.map((team) => ({
@@ -174,7 +244,9 @@ export function getTeamByClubSeason(clubId: string, season: string): HistoricalT
 }
 
 export function getTeamsByClub(clubId: string): HistoricalTeam[] {
-  return teams.filter((team) => team.clubId === clubId)
+  return teams
+    .filter((team) => team.clubId === clubId)
+    .sort((a, b) => b.eraYear - a.eraYear)
 }
 
 export function allClubIds(): string[] {

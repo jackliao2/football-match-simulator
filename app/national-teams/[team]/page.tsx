@@ -6,7 +6,7 @@ import { PageHeader } from "@/components/ui/PageHeader"
 import { getNation } from "@/data/clubs"
 import { getPrimeEntity } from "@/data/prime"
 import { allNationIds, getTeamsByClub } from "@/data/teams"
-import { pageMetadata } from "@/lib/seo"
+import { clubHubKeywords, pageMetadata } from "@/lib/seo"
 
 export const dynamicParams = false
 
@@ -20,14 +20,13 @@ export async function generateMetadata({
   const { team } = await params
   const nation = getNation(team)
   if (!nation) return { title: "National Team" }
-  const years = getTeamsByClub(team)
-    .map((item) => item.displaySeason)
-    .join(", ")
+  const nationTeams = getTeamsByClub(team)
+  const years = nationTeams.map((item) => item.displaySeason).join(", ")
   return pageMetadata({
-    title: `${nation.name} Historical Squads`,
-    description: `Explore legendary ${nation.name} World Cup squads${years ? ` (${years})` : ""}. Lineup, formation and ratings, then simulate them against football teams from any era.`,
+    title: `${nation.name} Squads — ${years}`,
+    description: `Explore ${nation.name} squads (${years}): World Cup sides and the current national team. Lineup, formation and ratings, then simulate them against football teams from any era.`,
     path: `/national-teams/${team}`,
-    keywords: [`${nation.name} world cup squad`, `${nation.name} historical team`, "football match simulator"],
+    keywords: clubHubKeywords(nation.name, team, nationTeams),
   })
 }
 
@@ -42,8 +41,8 @@ export default async function NationPage({ params }: PageProps<"/national-teams/
     <div className="grid gap-6">
       <PageHeader
         kicker="National squads"
-        title={`${nation.name} historical squads`}
-        lead={`Historical ${nation.name} sides in the simulator. Open a tournament year for the starting XI, formation, ratings and a one-click match.`}
+        title={`${nation.name} squads`}
+        lead={`${nation.name} sides in the simulator, newest first. Open a year for the starting XI, formation, ratings and a one-click football match.`}
         crumbs={[{ href: "/national-teams", label: "National teams" }]}
       >
         {prime ? (

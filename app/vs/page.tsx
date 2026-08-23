@@ -7,15 +7,17 @@ import { pageMetadata } from "@/lib/seo"
 import { absoluteUrl } from "@/lib/site"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Dream Matches",
+  title: "Dream Football Matches — Who Would Win?",
   description:
-    "Simulate legendary dream matches: Barcelona 2008/09 vs Real Madrid 2016/17, Brazil 2002 vs Argentina 2022, and more historical football matchups. Model probabilities, not archive scores.",
+    "Who would win: Barcelona 2009 vs Real Madrid 2017? Brazil 1970 vs Spain 2010? Current El Clásico? Simulate dream football matches. Model probabilities, not archive scores.",
   path: "/vs",
   keywords: [
-    "dream football matches",
-    "barcelona vs real madrid simulator",
-    "brazil vs argentina simulator",
-    "historical football matchup",
+    "who would win football",
+    "dream football match",
+    "barcelona vs real madrid",
+    "prime barcelona vs prime real madrid",
+    "brazil vs argentina",
+    "football match simulator",
   ],
 })
 
@@ -44,7 +46,7 @@ export default function VsIndexPage() {
       <PageHeader
         kicker="Matchups"
         title="Dream matches"
-        lead="Each page is a historical matchup you can simulate. Percentages come from many seeded runs — not a single score presented as fact."
+        lead="Who would win? Each page is a matchup you can simulate — legendary years and current squads. Percentages come from many seeded runs, not a single score presented as fact."
       />
       <div className="grid gap-2">
         {rows.map((row) =>

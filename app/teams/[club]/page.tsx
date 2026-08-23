@@ -6,7 +6,7 @@ import { PageHeader } from "@/components/ui/PageHeader"
 import { getClub } from "@/data/clubs"
 import { getPrimeEntity } from "@/data/prime"
 import { allClubIds, getTeamsByClub } from "@/data/teams"
-import { pageMetadata } from "@/lib/seo"
+import { clubHubKeywords, pageMetadata } from "@/lib/seo"
 
 export const dynamicParams = false
 
@@ -20,14 +20,13 @@ export async function generateMetadata({
   const { club } = await params
   const clubMeta = getClub(club)
   if (!clubMeta) return { title: "Club" }
-  const seasons = getTeamsByClub(club)
-    .map((team) => team.displaySeason)
-    .join(", ")
+  const clubTeams = getTeamsByClub(club)
+  const seasons = clubTeams.map((team) => team.displaySeason).join(", ")
   return pageMetadata({
-    title: `${clubMeta.name} Historical Squads`,
-    description: `Explore legendary ${clubMeta.name} squads${seasons ? ` (${seasons})` : ""}. Lineup, formation and ratings, then simulate them in a football match simulator.`,
+    title: `${clubMeta.name} Squads — ${seasons}`,
+    description: `Explore ${clubMeta.name} squads (${seasons}): lineup, formation and team ratings. Open a season — including the current squad — then simulate a football match.`,
     path: `/teams/${club}`,
-    keywords: [`${clubMeta.name} squad`, `${clubMeta.name} historical team`, "football match simulator"],
+    keywords: clubHubKeywords(clubMeta.name, club, clubTeams),
   })
 }
 
@@ -42,8 +41,8 @@ export default async function ClubPage({ params }: PageProps<"/teams/[club]">) {
     <div className="grid gap-6">
       <PageHeader
         kicker="Club squads"
-        title={`${clubMeta.name} historical squads`}
-        lead={`Historical ${clubMeta.name} teams in the simulator. Open a season for the starting XI, formation, ratings and a one-click match.`}
+        title={`${clubMeta.name} squads`}
+        lead={`${clubMeta.name} teams in the simulator, newest first. Open a season for the starting XI, formation, ratings and a one-click football match.`}
         crumbs={[{ href: "/teams", label: "Teams" }]}
       >
         {prime ? (

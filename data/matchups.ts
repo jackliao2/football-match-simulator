@@ -13,6 +13,15 @@ export const HOMEPAGE_TEAMS = [
   "tottenham-2016-17",
 ]
 
+export const HOMEPAGE_CURRENT_CLUBS = [
+  "barcelona-2025-26",
+  "real-madrid-2025-26",
+  "arsenal-2025-26",
+  "liverpool-2025-26",
+  "manchester-city-2025-26",
+  "paris-saint-germain-2025-26",
+]
+
 export const HOMEPAGE_NATIONS = [
   "brazil-1958",
   "brazil-1970",
@@ -24,8 +33,21 @@ export const HOMEPAGE_NATIONS = [
   "netherlands-1988",
 ]
 
+export const HOMEPAGE_CURRENT_NATIONS = [
+  "brazil-2026",
+  "argentina-2026",
+  "france-2026",
+  "spain-2026",
+  "england-2026",
+  "germany-2026",
+]
+
 export const FEATURED_MATCHUPS = [
   ["barcelona-2008-09", "real-madrid-2016-17"],
+  ["barcelona-2025-26", "real-madrid-2025-26"],
+  ["england-2026", "brazil-2026"],
+  ["argentina-2026", "france-2026"],
+  ["arsenal-2025-26", "manchester-city-2025-26"],
   ["manchester-united-2007-08", "barcelona-2010-11"],
   ["arsenal-2003-04", "manchester-city-2022-23"],
   ["manchester-united-1998-99", "arsenal-2003-04"],
@@ -149,6 +171,39 @@ export const DEFAULT_RIVALS: Record<string, string> = {
   "colombia-2014": "brazil-2002",
   "denmark-1992": "germany-1990",
   "denmark-1998": "france-1998",
+  "barcelona-2025-26": "real-madrid-2025-26",
+  "real-madrid-2025-26": "barcelona-2025-26",
+  "manchester-united-2025-26": "liverpool-2025-26",
+  "arsenal-2025-26": "manchester-city-2025-26",
+  "liverpool-2025-26": "manchester-city-2025-26",
+  "ac-milan-2025-26": "inter-milan-2025-26",
+  "inter-milan-2025-26": "ac-milan-2025-26",
+  "bayern-munich-2025-26": "borussia-dortmund-2025-26",
+  "manchester-city-2025-26": "arsenal-2025-26",
+  "chelsea-2025-26": "arsenal-2025-26",
+  "juventus-2025-26": "ac-milan-2025-26",
+  "ajax-2025-26": "ajax-1994-95",
+  "borussia-dortmund-2025-26": "bayern-munich-2025-26",
+  "porto-2025-26": "chelsea-2025-26",
+  "atletico-madrid-2025-26": "real-madrid-2025-26",
+  "tottenham-2025-26": "arsenal-2025-26",
+  "paris-saint-germain-2025-26": "barcelona-2025-26",
+  "napoli-2025-26": "inter-milan-2025-26",
+  "brazil-2026": "argentina-2026",
+  "argentina-2026": "france-2026",
+  "france-2026": "spain-2026",
+  "spain-2026": "england-2026",
+  "germany-2026": "france-2026",
+  "italy-2026": "france-2026",
+  "netherlands-2026": "england-2026",
+  "england-2026": "brazil-2026",
+  "portugal-2026": "france-2026",
+  "croatia-2026": "france-2026",
+  "uruguay-2026": "brazil-2026",
+  "belgium-2026": "france-2026",
+  "hungary-2026": "germany-2026",
+  "colombia-2026": "brazil-2026",
+  "denmark-2026": "england-2026",
 }
 
 export function defaultOpponent(teamId: string): string {

@@ -24,6 +24,11 @@ export const primeEntities: PrimeEntity[] = [
         teamId: "barcelona-2014-15",
         argument: "MSN. A second treble, built on the most lethal forward line of the decade.",
       },
+      {
+        teamId: "barcelona-2025-26",
+        argument:
+          "Not a claimed prime — the current squad. Yamal, Pedri and Flick, so you can put 2025/26 next to the treble years.",
+      },
     ],
   },
   {
@@ -45,6 +50,11 @@ export const primeEntities: PrimeEntity[] = [
         teamId: "real-madrid-2016-17",
         argument: "Zidane's complete side. League and Europe, Casemiro-Kroos-Modrić, Ronaldo still scoring.",
       },
+      {
+        teamId: "real-madrid-2025-26",
+        argument:
+          "The current squad. Mbappé, Vinícius and Bellingham — simulate them against La Décima and 2016/17.",
+      },
     ],
   },
   {
@@ -65,6 +75,10 @@ export const primeEntities: PrimeEntity[] = [
       {
         teamId: "manchester-united-2007-08",
         argument: "Peak Ronaldo, Rooney and Tevez, Vidić and Ferdinand, a European Cup in Moscow.",
+      },
+      {
+        teamId: "manchester-united-2025-26",
+        argument: "Amorim's current rebuild. Not a prime — the 2025/26 squad you can throw at 1999 and 2008.",
       },
     ],
   },
@@ -120,6 +134,10 @@ export const primeEntities: PrimeEntity[] = [
         teamId: "brazil-2002",
         argument: "The three R's. Ronaldo's redemption World Cup, and a fifth star on the shirt.",
       },
+      {
+        teamId: "brazil-2026",
+        argument: "Ancelotti's current side. Vinícius and Rodrygo against Pelé, Romário and the three R's.",
+      },
     ],
   },
   {
@@ -140,6 +158,10 @@ export const primeEntities: PrimeEntity[] = [
       {
         teamId: "argentina-2022",
         argument: "Messi's tournament. Lusail, penalties, and the ending the story needed.",
+      },
+      {
+        teamId: "argentina-2026",
+        argument: "Scaloni's current squad. Still Messi's idea — simulate 2026 against 1986 and Qatar.",
       },
     ],
   },
