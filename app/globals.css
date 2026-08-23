@@ -163,7 +163,7 @@ a.result-panel:hover {
 
 .faceoff-card {
   display: grid;
-  grid-template-rows: 4.7rem 2.35rem 2.5rem minmax(0, 1fr);
+  grid-template-rows: auto 2.35rem 2.5rem minmax(0, 1fr);
   min-width: 0;
   border: 2px solid #3a5230;
   background:
@@ -186,12 +186,82 @@ a.result-panel:hover {
     inset -5px 0 0 var(--color-danger);
 }
 
+.faceoff-identity-wrap {
+  display: grid;
+  gap: 0.4rem;
+  min-width: 0;
+  padding: 0.7rem 0.8rem 0.5rem;
+}
+
 .faceoff-identity {
   display: flex;
   align-items: center;
   gap: 0.7rem;
   min-width: 0;
-  padding: 0.7rem 0.8rem 0.45rem;
+  padding: 0;
+}
+
+.trophy-mark {
+  width: 7px;
+  height: 8px;
+  background: var(--color-gold);
+  clip-path: polygon(20% 0, 80% 0, 100% 28%, 68% 28%, 68% 62%, 88% 100%, 12% 100%, 32% 62%, 32% 28%, 0 28%);
+}
+
+.sim-play {
+  padding: 0.85rem 0.9rem 1rem;
+}
+
+.sim-clock {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 2.15rem;
+  font-weight: 600;
+  letter-spacing: -0.05em;
+  color: var(--color-gold);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.sim-meter {
+  height: 3px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sim-meter > span {
+  display: block;
+  height: 100%;
+  background: var(--color-gold);
+}
+
+.sim-score {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 1.65rem;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.mc-line {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.15rem 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+.mc-bar {
+  display: flex;
+  height: 3px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.mc-bar > i {
+  display: block;
+  height: 100%;
 }
 
 .faceoff-change {
@@ -426,8 +496,12 @@ a.result-panel:hover {
     grid-template-rows: auto auto auto auto;
   }
 
-  .faceoff-identity {
+  .faceoff-identity-wrap {
     padding: 0.55rem 0.55rem 0.4rem;
+  }
+
+  .faceoff-identity {
+    padding: 0;
     gap: 0.45rem;
   }
 

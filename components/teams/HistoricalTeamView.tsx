@@ -111,19 +111,6 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
 
       <section className="result-panel">
         <h2 className="border-b border-white/10 px-3 py-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
-          Honours by this season
-        </h2>
-        <div className="px-3 py-3">
-          {team.trophies.length > 0 ? (
-            <TrophyBadges trophies={team.trophies} />
-          ) : (
-            <p className="font-mono text-[12px] text-muted">No World Cup, Euros, Copa, UCL or league title yet.</p>
-          )}
-        </div>
-      </section>
-
-      <section className="result-panel">
-        <h2 className="border-b border-white/10 px-3 py-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
           Achievements
         </h2>
         <ul className="grid gap-1 px-3 py-2 font-mono text-[12px] leading-5">

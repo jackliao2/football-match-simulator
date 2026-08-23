@@ -6,6 +6,7 @@ import { MatchResult } from "@/components/simulator/MatchResult"
 import { MatchStats } from "@/components/simulator/MatchStats"
 import { MatchTimeline } from "@/components/simulator/MatchTimeline"
 import { MonteCarloResults } from "@/components/simulator/MonteCarloResults"
+import { SimulationPlay } from "@/components/simulator/SimulationPlay"
 import { FaceOffSquad } from "@/components/teams/SquadPanel"
 import { PixelCrest } from "@/components/teams/PixelCrest"
 import { TrophyBadges } from "@/components/teams/TrophyBadges"
@@ -62,6 +63,11 @@ export function MatchSetup({
   const [running, setRunning] = useState(false)
   const [match, setMatch] = useState<SimulatedMatch | null>(null)
   const [batch, setBatch] = useState<MonteCarloResult | null>(null)
+  const [play, setPlay] = useState<
+    | { kind: "match"; match: SimulatedMatch }
+    | { kind: "batch"; result: MonteCarloResult }
+    | null
+  >(null)
   const [analysis, setAnalysis] = useState<string | null>(null)
   const [analysisSource, setAnalysisSource] = useState<"ai" | "template" | null>(null)
   const [analysisLoading, setAnalysisLoading] = useState(false)
@@ -85,6 +91,7 @@ export function MatchSetup({
   function resetOutputs() {
     setMatch(null)
     setBatch(null)
+    setPlay(null)
     setAnalysis(null)
     setAnalysisError(null)
   }
@@ -132,20 +139,31 @@ export function MatchSetup({
   }
 
   function simulateOnce() {
-    if (sameTeam) return
+    if (sameTeam || play) return
     track("simulator_started", { home: home.id, away: away.id })
-    setMatch(simulateMatch(home.team, away.team, createSeed()))
+    const next = simulateMatch(home.team, away.team, createSeed())
+    setMatch(null)
+    setBatch(null)
+    setPlay({ kind: "match", match: next })
     showResults("match")
   }
 
   function simulateHundred() {
-    if (sameTeam) return
+    if (sameTeam || play) return
     setRunning(true)
     track("simulate_100", { home: home.id, away: away.id })
     const result = simulateMany(home.team, away.team, 100, createSeed())
-    setBatch(result)
+    setMatch(null)
+    setBatch(null)
+    setPlay({ kind: "batch", result })
     setRunning(false)
     showResults("batch")
+  }
+
+  function finishPlay() {
+    if (play?.kind === "match") setMatch(play.match)
+    if (play?.kind === "batch") setBatch(play.result)
+    setPlay(null)
   }
 
   function scrollToSetup() {
@@ -217,16 +235,21 @@ export function MatchSetup({
               {sameTeam ? (
                 <p className="text-center font-mono text-[11px] leading-4 text-danger">Pick two different teams.</p>
               ) : null}
-              <button type="button" disabled={sameTeam} className="rail-btn rail-btn-primary" onClick={simulateOnce}>
-                Simulate
+              <button
+                type="button"
+                disabled={sameTeam || Boolean(play)}
+                className="rail-btn rail-btn-primary"
+                onClick={simulateOnce}
+              >
+                {play?.kind === "match" ? "Playing…" : "Simulate"}
               </button>
               <button
                 type="button"
-                disabled={sameTeam || running}
+                disabled={sameTeam || running || Boolean(play)}
                 className="rail-btn"
                 onClick={simulateHundred}
               >
-                {running ? "Running…" : "100 Matches"}
+                {play?.kind === "batch" ? "Running…" : "100 Matches"}
               </button>
               <button
                 type="button"
@@ -256,9 +279,19 @@ export function MatchSetup({
         </div>
       </div>
 
-      {match || batch || analysis || analysisError ? (
+      {play || match || batch || analysis || analysisError ? (
       <div ref={resultRef} className="result-anchor mt-6 grid gap-4">
-        {match ? (
+        {play?.kind === "match" ? (
+          <div id="result-match">
+            <SimulationPlay
+              kind="match"
+              home={home.team}
+              away={away.team}
+              match={play.match}
+              onDone={finishPlay}
+            />
+          </div>
+        ) : match ? (
           <div id="result-match" className="grid gap-4">
             <MatchResult match={match} home={home.team} away={away.team} />
             <div className="flex flex-wrap gap-2">
@@ -287,7 +320,17 @@ export function MatchSetup({
           </div>
         ) : null}
 
-        {batch ? (
+        {play?.kind === "batch" ? (
+          <div id="result-batch">
+            <SimulationPlay
+              kind="batch"
+              home={home.team}
+              away={away.team}
+              batch={play.result}
+              onDone={finishPlay}
+            />
+          </div>
+        ) : batch ? (
           <div id="result-batch" className="grid gap-2">
             <MonteCarloResults result={batch} />
             <div className="flex flex-wrap gap-2">
@@ -366,32 +409,32 @@ function TeamColumn({
 
   return (
     <article className={`faceoff-card ${away ? "away faceoff-away" : "home faceoff-home"}`}>
-      <button
-        type="button"
-        onClick={onOpenPicker}
-        className={`faceoff-identity group w-full border-0 bg-transparent text-left outline-none hover:bg-white/5 ${
-          away ? "flex-row-reverse text-right" : ""
-        }`}
-      >
-        <PixelCrest clubId={team.clubId} size={48} />
-        <span className="min-w-0 flex-1">
-          <span className={`block font-display text-[8px] tracking-[0.2em] ${accent}`}>{label}</span>
-          <span className="mt-0.5 block truncate font-mono text-lg font-semibold leading-6 tracking-tight text-text sm:text-xl sm:leading-7">
-            {team.clubName}
-          </span>
-          <span className="mt-0.5 block truncate font-mono text-xs text-muted sm:text-sm">
-            {team.manager}
-            <span className="mx-1.5 text-line-hi">·</span>
-            {team.formation}
-          </span>
-          {team.team.trophies.length > 0 ? (
-            <span className="mt-1.5 block">
-              <TrophyBadges trophies={team.team.trophies} align={away ? "right" : "left"} />
+      <div className={`faceoff-identity-wrap ${away ? "text-right" : ""}`}>
+        <button
+          type="button"
+          onClick={onOpenPicker}
+          className={`faceoff-identity group w-full border-0 bg-transparent text-left outline-none hover:bg-white/5 ${
+            away ? "flex-row-reverse text-right" : ""
+          }`}
+        >
+          <PixelCrest clubId={team.clubId} size={48} />
+          <span className="min-w-0 flex-1">
+            <span className={`block font-display text-[8px] tracking-[0.2em] ${accent}`}>{label}</span>
+            <span className="mt-0.5 block truncate font-mono text-lg font-semibold leading-6 tracking-tight text-text sm:text-xl sm:leading-7">
+              {team.clubName}
             </span>
-          ) : null}
-        </span>
-        <OvrStamp value={team.overallRating} size="md" align={away ? "left" : "right"} />
-      </button>
+            <span className="mt-0.5 block truncate font-mono text-xs text-muted sm:text-sm">
+              {team.manager}
+              <span className="mx-1.5 text-line-hi">·</span>
+              {team.formation}
+            </span>
+          </span>
+          <OvrStamp value={team.overallRating} size="md" align={away ? "left" : "right"} />
+        </button>
+        {team.team.trophies.length > 0 ? (
+          <TrophyBadges trophies={team.team.trophies} align={away ? "right" : "left"} />
+        ) : null}
+      </div>
 
       <button type="button" onClick={onOpenPicker} className="faceoff-change">
         Change team ▾

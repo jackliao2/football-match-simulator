@@ -17,12 +17,11 @@ export interface Player {
 
 export type TeamKind = "club" | "nation"
 
-export type TrophyCode = "ucl" | "el" | "league" | "world-cup" | "euros" | "copa"
+export type TrophyCode = "ucl" | "el" | "league" | "cup" | "world-cup" | "euros" | "copa"
 
 export interface Trophy {
   code: TrophyCode
   label: string
-  count: number
 }
 
 export interface HistoricalTeam {
@@ -149,6 +148,13 @@ export interface MonteCarloResult {
   avgAwayGoals: number
   mostCommonScore: string
   scorelines: Array<{ score: string; count: number; pct: number }>
+  homeClub: string
+  awayClub: string
+  topScorers: {
+    home: Array<{ player: string; goals: number }>
+    away: Array<{ player: string; goals: number }>
+  }
+  samples: Array<{ home: number; away: number }>
 }
 
 export interface CommentaryPayload {

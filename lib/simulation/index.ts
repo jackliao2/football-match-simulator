@@ -132,6 +132,13 @@ export function simulateMatch(
   }
 }
 
+function topFromMap(map: Map<string, number>, limit: number) {
+  return [...map.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, limit)
+    .map(([player, goals]) => ({ player, goals }))
+}
+
 export function simulateMany(
   home: HistoricalTeam,
   away: HistoricalTeam,
@@ -144,6 +151,9 @@ export function simulateMany(
   let homeGoals = 0
   let awayGoals = 0
   const scoreCounts = new Map<string, number>()
+  const homeScorers = new Map<string, number>()
+  const awayScorers = new Map<string, number>()
+  const samples: Array<{ home: number; away: number }> = []
 
   for (let i = 0; i < runs; i++) {
     const match = simulateMatch(home, away, `${baseSeed}:${i}`)
@@ -154,11 +164,16 @@ export function simulateMany(
     else draws += 1
     const key = `${match.score.home}-${match.score.away}`
     scoreCounts.set(key, (scoreCounts.get(key) ?? 0) + 1)
+    if (samples.length < 24) samples.push({ home: match.score.home, away: match.score.away })
+    for (const scorer of match.scorers) {
+      const bucket = scorer.team === "home" ? homeScorers : awayScorers
+      bucket.set(scorer.player, (bucket.get(scorer.player) ?? 0) + 1)
+    }
   }
 
   const scorelines = [...scoreCounts.entries()]
     .sort((a, b) => b[1] - a[1])
-    .slice(0, 5)
+    .slice(0, 6)
     .map(([score, count]) => ({
       score,
       count,
@@ -169,6 +184,8 @@ export function simulateMany(
     runs,
     homeTeam: `${home.clubName} ${home.displaySeason}`,
     awayTeam: `${away.clubName} ${away.displaySeason}`,
+    homeClub: home.clubName,
+    awayClub: away.clubName,
     homeWins,
     draws,
     awayWins,
@@ -179,6 +196,11 @@ export function simulateMany(
     avgAwayGoals: round2(awayGoals / runs),
     mostCommonScore: scorelines[0]?.score ?? "0-0",
     scorelines,
+    topScorers: {
+      home: topFromMap(homeScorers, 5),
+      away: topFromMap(awayScorers, 5),
+    },
+    samples,
   }
 }
 
