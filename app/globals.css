@@ -199,60 +199,47 @@ a.result-panel:hover {
 
 @keyframes gold-sheen {
   0% {
-    background-position: 200% 0;
+    background-position: 160% 0;
   }
   100% {
-    background-position: -200% 0;
-  }
-}
-
-@keyframes gold-pulse {
-  0%,
-  100% {
-    box-shadow: 5px 5px 0 0 #000, 0 0 8px rgba(212, 180, 90, 0.16);
-  }
-  50% {
-    box-shadow: 5px 5px 0 0 #000, 0 0 18px rgba(240, 213, 122, 0.42);
+    background-position: -60% 0;
   }
 }
 
 .faceoff-card.era-shine {
-  border-color: #c9a227;
-  animation: gold-pulse 2.4s ease-in-out infinite;
+  border-color: #8a7438;
 }
 
 .faceoff-card.away.era-shine {
-  border-color: #d4b45a;
+  border-color: #8a7438;
 }
 
 .era-sheen {
   background-image: linear-gradient(
-    105deg,
-    transparent 36%,
-    rgba(240, 213, 122, 0.22) 50%,
-    transparent 64%
+    110deg,
+    transparent 42%,
+    rgba(240, 213, 122, 0.08) 50%,
+    transparent 58%
   );
-  background-size: 220% 100%;
-  animation: gold-sheen 2.6s linear infinite;
+  background-size: 280% 100%;
+  animation: gold-sheen 9s ease-in-out infinite;
 }
 
 .season-shine {
-  border-color: var(--color-gold) !important;
+  border-color: #9a8244 !important;
   color: var(--color-gold) !important;
-  box-shadow: 0 0 9px rgba(212, 180, 90, 0.4);
   background-image: linear-gradient(
-    105deg,
-    rgba(212, 180, 90, 0.1) 40%,
-    rgba(240, 213, 122, 0.38) 50%,
-    rgba(212, 180, 90, 0.1) 60%
+    110deg,
+    rgba(212, 180, 90, 0.06) 44%,
+    rgba(240, 213, 122, 0.16) 50%,
+    rgba(212, 180, 90, 0.06) 56%
   );
-  background-size: 220% 100%;
-  animation: gold-sheen 2.4s linear infinite;
+  background-size: 280% 100%;
+  animation: gold-sheen 10s ease-in-out infinite;
 }
 
 .team-card-shine {
-  border-color: #c9a227;
-  box-shadow: 3px 3px 0 0 #000, 0 0 14px rgba(212, 180, 90, 0.3);
+  border-color: #8a7438;
 }
 
 .faceoff-identity {
