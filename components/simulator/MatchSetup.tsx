@@ -1,17 +1,21 @@
 "use client"
 
-import { useMemo, useState } from "react"
-import { startMatch } from "@/app/actions"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { ClubPicker } from "@/components/simulator/ClubPicker"
+import { MatchResult } from "@/components/simulator/MatchResult"
+import { MatchStats } from "@/components/simulator/MatchStats"
+import { MatchTimeline } from "@/components/simulator/MatchTimeline"
 import { MonteCarloResults } from "@/components/simulator/MonteCarloResults"
 import { FaceOffSquad } from "@/components/teams/SquadPanel"
 import { PixelCrest } from "@/components/teams/PixelCrest"
+import { ResultPanel } from "@/components/ui/ResultPanel"
 import { OvrStamp } from "@/components/ui/OvrStamp"
 import { track } from "@/lib/analytics"
+import { absoluteUrl } from "@/lib/site"
 import { createSeed } from "@/lib/match-id"
-import { simulateMany } from "@/lib/simulation"
+import { simulateMany, simulateMatch } from "@/lib/simulation"
 import { teamSquad, type SquadMember, type StarPlayer } from "@/lib/stars"
-import type { HistoricalTeam, MonteCarloResult, TeamKind } from "@/types"
+import type { HistoricalTeam, MonteCarloResult, SimulatedMatch, TeamKind } from "@/types"
 
 export interface TeamOption {
   id: string
@@ -55,11 +59,34 @@ export function MatchSetup({
   const [awayId, setAwayId] = useState(awayDefault.id)
   const [picker, setPicker] = useState<"home" | "away" | null>(null)
   const [running, setRunning] = useState(false)
+  const [match, setMatch] = useState<SimulatedMatch | null>(null)
   const [batch, setBatch] = useState<MonteCarloResult | null>(null)
   const [analysis, setAnalysis] = useState<string | null>(null)
   const [analysisSource, setAnalysisSource] = useState<"ai" | "template" | null>(null)
   const [analysisLoading, setAnalysisLoading] = useState(false)
   const [analysisError, setAnalysisError] = useState<string | null>(null)
+  const [copied, setCopied] = useState(false)
+  const resultRef = useRef<HTMLDivElement>(null)
+  const scrollTarget = useRef<"match" | "batch" | "analysis">("match")
+  const [scrollKey, setScrollKey] = useState(0)
+
+  useEffect(() => {
+    if (scrollKey === 0) return
+    const node = document.getElementById(`result-${scrollTarget.current}`) ?? resultRef.current
+    node?.scrollIntoView({ behavior: "smooth", block: "start" })
+  }, [scrollKey])
+
+  function showResults(target: "match" | "batch" | "analysis") {
+    scrollTarget.current = target
+    setScrollKey((key) => key + 1)
+  }
+
+  function resetOutputs() {
+    setMatch(null)
+    setBatch(null)
+    setAnalysis(null)
+    setAnalysisError(null)
+  }
 
   const homeSeasons = teams.filter((team) => team.clubId === homeClub)
   const awaySeasons = teams.filter((team) => team.clubId === awayClub)
@@ -83,16 +110,14 @@ export function MatchSetup({
       setAwayId(preferred.id)
     }
     setPicker(null)
-    setBatch(null)
-    setAnalysis(null)
+    resetOutputs()
   }
 
   function changeSeason(side: "home" | "away", teamId: string) {
     track("season_selected", { teamId, side })
     if (side === "home") setHomeId(teamId)
     else setAwayId(teamId)
-    setBatch(null)
-    setAnalysis(null)
+    resetOutputs()
   }
 
   function swapSides() {
@@ -102,8 +127,14 @@ export function MatchSetup({
     setAwayId(homeId)
     setHomeClub(nextHomeClub)
     setHomeId(nextHomeId)
-    setBatch(null)
-    setAnalysis(null)
+    resetOutputs()
+  }
+
+  function simulateOnce() {
+    if (sameTeam) return
+    track("simulator_started", { home: home.id, away: away.id })
+    setMatch(simulateMatch(home.team, away.team, createSeed()))
+    showResults("match")
   }
 
   function simulateHundred() {
@@ -113,6 +144,19 @@ export function MatchSetup({
     const result = simulateMany(home.team, away.team, 100, createSeed())
     setBatch(result)
     setRunning(false)
+    showResults("batch")
+  }
+
+  async function shareMatch() {
+    if (!match) return
+    const url = absoluteUrl(`/match/${match.id}`)
+    try {
+      await navigator.clipboard.writeText(url)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1600)
+    } catch {
+      window.prompt("Copy this match URL", url)
+    }
   }
 
   async function runAnalysis() {
@@ -136,6 +180,7 @@ export function MatchSetup({
       }
       setAnalysis(data.report)
       setAnalysisSource(data.source ?? "template")
+      showResults("analysis")
     } catch (err) {
       setAnalysisError(err instanceof Error ? err.message : "Could not generate analysis")
     } finally {
@@ -145,11 +190,7 @@ export function MatchSetup({
 
   return (
     <div className="w-full">
-      <form
-        action={startMatch}
-        onSubmit={() => track("simulator_started", { home: home.id, away: away.id })}
-        className="grid gap-3"
-      >
+      <div className="grid gap-3">
         <div className="faceoff-board">
           <TeamColumn
             label="Home"
@@ -171,7 +212,7 @@ export function MatchSetup({
               {sameTeam ? (
                 <p className="text-center font-mono text-[11px] leading-4 text-danger">Pick two different teams.</p>
               ) : null}
-              <button type="submit" disabled={sameTeam} className="rail-btn rail-btn-primary">
+              <button type="button" disabled={sameTeam} className="rail-btn rail-btn-primary" onClick={simulateOnce}>
                 Simulate
               </button>
               <button
@@ -205,28 +246,44 @@ export function MatchSetup({
             name="away"
           />
         </div>
-      </form>
+      </div>
 
-      {analysisError ? <p className="mt-3 text-sm text-danger">{analysisError}</p> : null}
-
-      {analysis ? (
-        <section className="mt-3 border-2 border-line bg-panel px-4 py-4 sm:px-5">
-          <div className="mb-3 flex items-end justify-between gap-3">
-            <h2 className="font-display text-[10px] uppercase tracking-[0.16em] text-gold">
-              Pre-match analysis
-            </h2>
-            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted">
-              {analysisSource === "ai" ? "LLM brief" : "Local brief"}
-            </span>
+      {match || batch || analysis || analysisError ? (
+      <div ref={resultRef} className="result-anchor mt-6 grid gap-4">
+        {match ? (
+          <div id="result-match" className="grid gap-4">
+            <MatchResult match={match} home={home.team} away={away.team} />
+            <div className="grid gap-4 lg:grid-cols-2">
+              <MatchStats match={match} />
+              <MatchTimeline match={match} />
+            </div>
+            <button type="button" className="rail-btn w-full sm:w-auto" onClick={shareMatch}>
+              {copied ? "Copied" : "Copy match link"}
+            </button>
           </div>
-          <div className="whitespace-pre-wrap text-sm leading-7 text-text">{analysis}</div>
-        </section>
-      ) : null}
+        ) : null}
 
-      {batch ? (
-        <div className="mt-3">
-          <MonteCarloResults result={batch} />
-        </div>
+        {batch ? (
+          <div id="result-batch">
+            <MonteCarloResults result={batch} />
+          </div>
+        ) : null}
+
+        {analysisError ? <p className="font-mono text-sm text-danger">{analysisError}</p> : null}
+
+        {analysis ? (
+          <ResultPanel
+            id="result-analysis"
+            kicker="Pre-match"
+            title="Analysis"
+            aside={analysisSource === "ai" ? "LLM brief" : "Local brief"}
+          >
+            <div className="whitespace-pre-wrap px-4 py-4 font-mono text-sm leading-7 text-text sm:px-5">
+              {analysis}
+            </div>
+          </ResultPanel>
+        ) : null}
+      </div>
       ) : null}
 
       {picker ? (

@@ -1,4 +1,5 @@
 import { PixelCrest } from "@/components/teams/PixelCrest"
+import { ResultPanel } from "@/components/ui/ResultPanel"
 import { OvrStamp } from "@/components/ui/OvrStamp"
 import type { HistoricalTeam, SimulatedMatch } from "@/types"
 
@@ -21,27 +22,21 @@ export function MatchResult({
         : "Draw"
 
   return (
-    <section className="border-2 border-gold bg-panel pixel-border">
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b-2 border-line bg-panel-2 px-4 py-3">
-        <span className="font-display text-[10px] uppercase tracking-[0.18em] text-gold">
-          Simulated Result · Seed {match.seed}
-        </span>
-        <span className="font-mono text-xs uppercase tracking-wider text-muted">{resultLabel}</span>
-      </div>
-      <div className="grid gap-6 p-4 sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:p-5">
+    <ResultPanel kicker="Simulated result" aside={`Seed ${match.seed}`}>
+      <div className="grid gap-6 px-4 py-5 sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:px-5">
         <ResultTeam team={home} />
         <div className="text-center">
-          <div className="font-display text-3xl tracking-[0.2em] text-gold sm:text-4xl">
-            {match.score.home} – {match.score.away}
+          <div className="result-score text-4xl sm:text-5xl">
+            {match.score.home}–{match.score.away}
           </div>
-          <div className="mt-2 font-mono text-xs uppercase tracking-[0.16em] text-muted">Final</div>
+          <div className="mt-2 font-mono text-xs tracking-[0.16em] text-muted uppercase">{resultLabel}</div>
         </div>
         <div className="sm:justify-self-end">
-          <ResultTeam team={away} />
+          <ResultTeam team={away} align="right" />
         </div>
       </div>
       {match.scorers.length > 0 ? (
-        <div className="grid gap-4 border-t-2 border-line px-4 py-3 font-mono text-sm sm:grid-cols-2">
+        <div className="grid gap-4 border-t border-white/10 px-4 py-3 font-mono text-sm sm:grid-cols-2 sm:px-5">
           <ol>
             {homeGoals.length === 0 ? (
               <li className="text-muted">No goals</li>
@@ -68,24 +63,30 @@ export function MatchResult({
           </ol>
         </div>
       ) : (
-        <p className="border-t-2 border-line px-4 py-3 text-sm text-muted">No goals in this simulation.</p>
+        <p className="border-t border-white/10 px-4 py-3 font-mono text-sm text-muted sm:px-5">
+          No goals in this simulation.
+        </p>
       )}
-    </section>
+    </ResultPanel>
   )
 }
 
-function ResultTeam({ team }: { team: HistoricalTeam }) {
+function ResultTeam({
+  team,
+  align = "left",
+}: {
+  team: HistoricalTeam
+  align?: "left" | "right"
+}) {
   return (
-    <div className="flex items-center gap-3">
+    <div className={`flex items-center gap-3 ${align === "right" ? "flex-row-reverse text-right" : ""}`}>
       <PixelCrest clubId={team.clubId} size={44} />
       <div className="min-w-0">
-        <div className="font-display text-[10px] uppercase tracking-wide">{team.clubName}</div>
-        <div className="font-mono text-xs text-muted">{team.displaySeason}</div>
-        <div className="font-mono text-[11px] text-muted">
-          <span className="text-gold">Coach</span> {team.manager}
-        </div>
+        <div className="truncate font-mono text-base font-semibold tracking-tight sm:text-lg">{team.clubName}</div>
+        <div className="font-mono text-sm text-gold">{team.displaySeason}</div>
+        <div className="font-mono text-xs text-muted">{team.manager}</div>
       </div>
-      <OvrStamp value={team.overallRating} size="md" />
+      <OvrStamp value={team.overallRating} size="md" align={align === "right" ? "left" : "right"} />
     </div>
   )
 }

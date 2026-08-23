@@ -8,7 +8,6 @@ import { MatchResult } from "@/components/simulator/MatchResult"
 import { MatchStats } from "@/components/simulator/MatchStats"
 import { MatchTimeline } from "@/components/simulator/MatchTimeline"
 import { StarPlayers } from "@/components/teams/StarPlayers"
-import { PixelButton } from "@/components/ui/PixelButton"
 import { getTeam } from "@/data/teams"
 import { vsPath } from "@/data/matchups"
 import { parseMatchId } from "@/lib/match-id"
@@ -51,21 +50,25 @@ export default async function MatchPage({ params }: PageProps<"/match/[matchId]"
   const match = simulateMatch(home, away, parsed.seed)
 
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-5">
       <TrackOnMount
         event="match_simulated"
         payload={{ matchId, home: home.id, away: away.id, seed: parsed.seed }}
       />
-      <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted">
-        <Link href="/simulate" className="hover:text-gold">
-          Simulator
-        </Link>
-        <span className="px-2">/</span>
-        Simulated match
-      </p>
-      <h1 className="font-display text-[13px] uppercase leading-relaxed tracking-[0.08em] sm:text-xl">
-        {match.homeTeam} vs {match.awayTeam}
-      </h1>
+      <header className="grid gap-2 text-center sm:text-left">
+        <p className="font-display text-[9px] uppercase tracking-[0.28em] text-gold">
+          <Link href="/" className="hover:text-gold-2">
+            Simulator
+          </Link>
+          <span className="px-2 text-muted">/</span>
+          Simulated match
+        </p>
+        <h1 className="font-mono text-2xl font-semibold tracking-tight sm:text-3xl">
+          {home.clubName} {home.displaySeason}
+          <span className="mx-2 text-gold">vs</span>
+          {away.clubName} {away.displaySeason}
+        </h1>
+      </header>
       <MatchResult match={match} home={home} away={away} />
       <div className="grid gap-6 lg:grid-cols-2">
         <StarPlayers team={home} count={6} title={`${home.clubName} stars`} />
@@ -77,23 +80,23 @@ export default async function MatchPage({ params }: PageProps<"/match/[matchId]"
         <MatchStats match={match} />
       </div>
       {match.tacticalNotes.length > 0 ? (
-        <ul className="border-2 border-line bg-panel px-6 py-4 text-sm leading-7 text-muted">
+        <ul className="result-panel px-5 py-4 font-mono text-sm leading-7 text-muted">
           {match.tacticalNotes.map((note) => (
             <li key={note}>{note}</li>
           ))}
         </ul>
       ) : null}
       <CommentaryPanel matchId={match.id} />
-      <div className="flex flex-wrap gap-3">
-        <PixelButton href={teamPath(home)}>
+      <div className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-sm">
+        <Link href={teamPath(home)} className="text-gold hover:text-gold-2">
           {home.clubName} {home.displaySeason}
-        </PixelButton>
-        <PixelButton href={teamPath(away)}>
+        </Link>
+        <Link href={teamPath(away)} className="text-gold hover:text-gold-2">
           {away.clubName} {away.displaySeason}
-        </PixelButton>
-        <PixelButton href={vsPath(home.id, away.id)} variant="ghost">
-          Dream match page
-        </PixelButton>
+        </Link>
+        <Link href={vsPath(home.id, away.id)} className="text-muted hover:text-gold">
+          Dream match
+        </Link>
       </div>
     </div>
   )

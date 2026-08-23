@@ -1,8 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { PixelButton } from "@/components/ui/PixelButton"
 import { MonteCarloResults } from "@/components/simulator/MonteCarloResults"
 import { track } from "@/lib/analytics"
 import { buildMatchId, createSeed } from "@/lib/match-id"
@@ -34,6 +33,11 @@ export function MatchActions({
     setRunning(false)
   }
 
+  useEffect(() => {
+    if (!batch) return
+    document.getElementById("batch-result")?.scrollIntoView({ behavior: "smooth", block: "start" })
+  }, [batch])
+
   async function shareMatch() {
     track("match_shared", { home: home.id, away: away.id })
     const url = window.location.href
@@ -49,24 +53,28 @@ export function MatchActions({
   return (
     <div className="grid gap-4">
       <div className="grid gap-3 sm:grid-cols-3">
-        <PixelButton variant="primary" onClick={simulateAgain} className="w-full">
-          Simulate Again
-        </PixelButton>
-        <PixelButton onClick={simulateHundred} disabled={running} className="w-full">
-          {running ? "Running…" : "Simulate 100 Matches"}
-        </PixelButton>
-        <PixelButton variant="ghost" onClick={shareMatch} className="w-full">
-          {copied ? "Copied" : "Share Match"}
-        </PixelButton>
+        <button type="button" className="rail-btn rail-btn-primary" onClick={simulateAgain}>
+          Simulate again
+        </button>
+        <button type="button" className="rail-btn" onClick={simulateHundred} disabled={running}>
+          {running ? "Running…" : "100 Matches"}
+        </button>
+        <button type="button" className="rail-btn" onClick={shareMatch}>
+          {copied ? "Copied" : "Share match"}
+        </button>
       </div>
-      <PixelButton
-        variant="ghost"
-        className="w-full"
+      <button
+        type="button"
+        className="rail-swap"
         onClick={() => router.push(`/match/${buildMatchId(away.id, home.id, createSeed())}`)}
       >
         Reverse fixture
-      </PixelButton>
-      {batch ? <MonteCarloResults result={batch} /> : null}
+      </button>
+      {batch ? (
+        <div id="batch-result" className="result-anchor">
+          <MonteCarloResults result={batch} />
+        </div>
+      ) : null}
     </div>
   )
 }

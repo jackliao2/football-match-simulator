@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { PixelButton } from "@/components/ui/PixelButton"
-import { PixelCard, PixelCardHeader } from "@/components/ui/PixelCard"
+import { ResultPanel } from "@/components/ui/ResultPanel"
 import { track } from "@/lib/analytics"
 
 export function CommentaryPanel({ matchId }: { matchId: string }) {
@@ -39,28 +38,25 @@ export function CommentaryPanel({ matchId }: { matchId: string }) {
   }
 
   return (
-    <PixelCard>
-      <PixelCardHeader>AI Match Report</PixelCardHeader>
-      <div className="grid gap-4 p-4">
-        <p className="text-sm leading-6 text-muted">
-          Optional write-up of this simulated result. The engine already decided the score; this
-          only describes it. If no AI key is configured, a local template is used instead.
+    <ResultPanel
+      kicker="Report"
+      title="Match report"
+      aside={source === "ai" ? "LLM brief" : source === "template" ? "Local brief" : undefined}
+    >
+      <div className="grid gap-4 p-4 sm:p-5">
+        <p className="font-mono text-sm leading-6 text-muted">
+          Optional write-up of this simulated result. The engine already decided the score.
         </p>
         {!report ? (
-          <PixelButton onClick={generate} disabled={loading} className="w-full sm:w-auto">
-            {loading ? "Writing…" : "Generate Match Report"}
-          </PixelButton>
+          <button type="button" className="rail-btn rail-btn-primary w-full sm:w-auto" onClick={generate} disabled={loading}>
+            {loading ? "Writing…" : "Generate report"}
+          </button>
         ) : null}
-        {error ? <p className="text-sm text-danger">{error}</p> : null}
+        {error ? <p className="font-mono text-sm text-danger">{error}</p> : null}
         {report ? (
-          <div>
-            <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.16em] text-gold">
-              {source === "ai" ? "Generated from structured match JSON" : "Local template report"}
-            </p>
-            <div className="whitespace-pre-wrap text-sm leading-7 text-text">{report}</div>
-          </div>
+          <div className="whitespace-pre-wrap font-mono text-sm leading-7 text-text">{report}</div>
         ) : null}
       </div>
-    </PixelCard>
+    </ResultPanel>
   )
 }

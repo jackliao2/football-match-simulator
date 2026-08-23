@@ -19,16 +19,16 @@ function StatRow({
   const total = homeValue + awayValue
   const homePct = total === 0 ? 50 : (homeValue / total) * 100
   return (
-    <div className="border-b border-line px-4 py-3 last:border-b-0">
+    <div className="border-b border-white/10 px-4 py-3 last:border-b-0">
       <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3">
         <span className={`text-right font-mono ${emphasize ? "text-gold" : "text-text"}`}>{home}</span>
-        <span className="min-w-[7rem] text-center font-display text-[10px] uppercase tracking-[0.14em] text-muted">
+        <span className="min-w-[7rem] text-center font-display text-[8px] uppercase tracking-[0.16em] text-muted">
           {label}
         </span>
         <span className={`font-mono ${emphasize ? "text-gold" : "text-text"}`}>{away}</span>
       </div>
-      <div className="mt-2 flex h-1.5 overflow-hidden bg-line">
-        <span className="h-full bg-home" style={{ width: `${homePct}%` }} />
+      <div className="mt-2 flex h-[5px] overflow-hidden bg-white/10">
+        <span className="h-full bg-gold" style={{ width: `${homePct}%` }} />
         <span className="h-full bg-danger" style={{ width: `${100 - homePct}%` }} />
       </div>
     </div>
@@ -38,9 +38,10 @@ function StatRow({
 export function MatchStats({ match }: { match: SimulatedMatch }) {
   const s = match.stats
   return (
-    <section className="border-2 border-line bg-panel">
-      <h2 className="border-b-2 border-line bg-panel-2 px-4 py-3 font-display text-[10px] uppercase tracking-[0.16em] text-gold">
-        Match Statistics
+    <section className="result-panel">
+      <h2 className="border-b border-white/10 px-4 py-3 font-mono text-lg font-semibold tracking-tight">
+        <span className="mb-1 block font-display text-[8px] uppercase tracking-[0.22em] text-gold">Statistics</span>
+        Match stats
       </h2>
       <StatRow
         label="Possession"

@@ -77,6 +77,23 @@ optgroup {
     inset 0 0 0 1px rgba(240, 213, 122, 0.08);
 }
 
+.result-anchor,
+.result-panel {
+  scroll-margin-top: 5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 22%),
+    #0b100b;
+  box-shadow: 5px 5px 0 0 #000;
+}
+
+.result-score {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: var(--color-gold);
+}
+
 .faceoff-board {
   display: grid;
   gap: 0.7rem;

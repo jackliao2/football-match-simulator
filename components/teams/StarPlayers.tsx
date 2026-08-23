@@ -45,9 +45,9 @@ export function StarPlayers({
   }
 
   return (
-    <section className="border-2 border-line bg-panel pixel-border">
-      <div className="flex items-center justify-between border-b-2 border-line bg-panel-2 px-4 py-3">
-        <h2 className="font-display text-[10px] uppercase tracking-[0.16em] text-gold">{title}</h2>
+    <section className="result-panel">
+      <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
+        <h2 className="font-mono text-lg font-semibold tracking-tight">{title}</h2>
         <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted">
           OVR · hover stats
         </span>

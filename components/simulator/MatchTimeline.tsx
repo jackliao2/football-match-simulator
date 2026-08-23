@@ -24,11 +24,12 @@ function eventTone(type: MatchEvent["type"]): string {
 
 export function MatchTimeline({ match }: { match: SimulatedMatch }) {
   return (
-    <section className="border-2 border-line bg-panel">
-      <h2 className="border-b-2 border-line bg-panel-2 px-4 py-3 font-display text-[10px] uppercase tracking-[0.16em] text-gold">
-        Match Events
+    <section className="result-panel">
+      <h2 className="border-b border-white/10 px-4 py-3 font-mono text-lg font-semibold tracking-tight">
+        <span className="mb-1 block font-display text-[8px] uppercase tracking-[0.22em] text-gold">Events</span>
+        Match events
       </h2>
-      <ol className="divide-y divide-line">
+      <ol className="divide-y divide-white/10">
         {match.events.map((event, index) => (
           <li
             key={`${event.type}-${event.minute}-${event.player}-${index}`}
