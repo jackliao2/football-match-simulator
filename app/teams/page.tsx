@@ -10,7 +10,7 @@ import { absoluteUrl } from "@/lib/site"
 export const metadata: Metadata = pageMetadata({
   title: "Historical Football Teams",
   description:
-    "Browse legendary historical football squads by club and season — Barcelona, Real Madrid, Manchester United, Chelsea, Ajax, Juventus, Dortmund, Porto, Atlético and more. Open a squad, then simulate a match.",
+    "Browse historical football squads by club and season — Barcelona, Real Madrid, Chelsea, Ajax, Tottenham, PSG, Napoli, Juventus, Dortmund and more. Open a squad, then simulate a match.",
   path: "/teams",
   keywords: [
     "historical football teams",

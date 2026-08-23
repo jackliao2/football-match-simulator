@@ -40,6 +40,15 @@ export const clubs: Club[] = [
     city: "Madrid",
     country: "Spain",
   },
+  { id: "tottenham", name: "Tottenham", code: "TOT", city: "London", country: "England" },
+  {
+    id: "paris-saint-germain",
+    name: "Paris Saint-Germain",
+    code: "PSG",
+    city: "Paris",
+    country: "France",
+  },
+  { id: "napoli", name: "Napoli", code: "NAP", city: "Naples", country: "Italy" },
 ]
 
 export const nations: Club[] = [
@@ -56,6 +65,8 @@ export const nations: Club[] = [
   { id: "uruguay", name: "Uruguay", code: "URU", city: "Montevideo", country: "Uruguay", kind: "nation" },
   { id: "belgium", name: "Belgium", code: "BEL", city: "Brussels", country: "Belgium", kind: "nation" },
   { id: "hungary", name: "Hungary", code: "HUN", city: "Budapest", country: "Hungary", kind: "nation" },
+  { id: "colombia", name: "Colombia", code: "COL", city: "Bogotá", country: "Colombia", kind: "nation" },
+  { id: "denmark", name: "Denmark", code: "DEN", city: "Copenhagen", country: "Denmark", kind: "nation" },
 ]
 
 export const orgs: Club[] = [...clubs, ...nations]

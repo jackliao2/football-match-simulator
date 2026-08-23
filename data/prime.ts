@@ -198,6 +198,31 @@ export const primeEntities: PrimeEntity[] = [
       },
     ],
   },
+  {
+    slug: "england",
+    name: "England",
+    kind: "club",
+    title: "When Was England's Prime?",
+    description:
+      "1966 at Wembley, the golden generation of 2004, or Southgate's 2018 run. More than one England is playable — including sides that never lifted a trophy.",
+    seoTitle: "Prime England — When Was England's Prime?",
+    seoDescription:
+      "When was England's prime? Compare 1966, Italia 90, Euro 96, the 2004 golden generation, 2018 and 2021, then simulate each squad.",
+    candidates: [
+      {
+        teamId: "england-1966",
+        argument: "The only star. Banks, Moore, Charlton, Hurst — and a World Cup at Wembley.",
+      },
+      {
+        teamId: "england-2004",
+        argument: "Beckham, Gerrard, Lampard, Scholes, Rooney. The names still look like a final. The tournament did not.",
+      },
+      {
+        teamId: "england-2018",
+        argument: "Kane's Golden Boot, a semi-final, and the first time in a generation it felt close.",
+      },
+    ],
+  },
 ]
 
 export function getPrimeEntity(slug: string): PrimeEntity | undefined {

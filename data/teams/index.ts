@@ -1,40 +1,45 @@
 import { teamSquad, teamStars } from "@/lib/stars"
 import type { HistoricalTeam } from "@/types"
 import { acMilan198889, acMilan200607 } from "@/data/teams/ac-milan"
-import { ajax199495 } from "@/data/teams/ajax"
-import { arsenal200304 } from "@/data/teams/arsenal"
-import { atleticoMadrid201314 } from "@/data/teams/atletico-madrid"
+import { ajax199495, ajax201819 } from "@/data/teams/ajax"
+import { arsenal199798, arsenal200304 } from "@/data/teams/arsenal"
+import { atleticoMadrid201314, atleticoMadrid202021 } from "@/data/teams/atletico-madrid"
 import {
   barcelona200809,
   barcelona201011,
   barcelona201415,
 } from "@/data/teams/barcelona"
 import { bayernMunich201213, bayernMunich201920 } from "@/data/teams/bayern-munich"
-import { borussiaDortmund201213 } from "@/data/teams/borussia-dortmund"
+import { borussiaDortmund201011, borussiaDortmund201213 } from "@/data/teams/borussia-dortmund"
 import { chelsea200405, chelsea201112 } from "@/data/teams/chelsea"
-import { interMilan200910 } from "@/data/teams/inter-milan"
-import { juventus201617 } from "@/data/teams/juventus"
+import { interMilan198889, interMilan200910 } from "@/data/teams/inter-milan"
+import { juventus200203, juventus201617 } from "@/data/teams/juventus"
 import { liverpool200405, liverpool201819 } from "@/data/teams/liverpool"
-import { manchesterCity202223 } from "@/data/teams/manchester-city"
+import { manchesterCity201718, manchesterCity202223 } from "@/data/teams/manchester-city"
 import {
   manchesterUnited199899,
   manchesterUnited200708,
 } from "@/data/teams/manchester-united"
-import { porto200304 } from "@/data/teams/porto"
+import { napoli198687, napoli202223 } from "@/data/teams/napoli"
+import { parisSaintGermain201718, parisSaintGermain202223 } from "@/data/teams/paris-saint-germain"
+import { porto200304, porto201011 } from "@/data/teams/porto"
 import { realMadrid201314, realMadrid201617 } from "@/data/teams/real-madrid"
+import { tottenham201617, tottenham201819 } from "@/data/teams/tottenham"
 import { argentina1986, argentina2022 } from "@/data/teams/argentina"
-import { belgium2018 } from "@/data/teams/belgium"
-import { brazil1970, brazil2002 } from "@/data/teams/brazil"
-import { croatia2018 } from "@/data/teams/croatia"
-import { england1966 } from "@/data/teams/england"
-import { france1998, france2018 } from "@/data/teams/france"
-import { germany2014 } from "@/data/teams/germany"
-import { hungary1954 } from "@/data/teams/hungary"
-import { italy2006 } from "@/data/teams/italy"
-import { netherlands1974 } from "@/data/teams/netherlands"
-import { portugal2016 } from "@/data/teams/portugal"
+import { belgium1986, belgium2018 } from "@/data/teams/belgium"
+import { brazil1970, brazil1982, brazil2002 } from "@/data/teams/brazil"
+import { colombia1994, colombia2014 } from "@/data/teams/colombia"
+import { croatia1998, croatia2018 } from "@/data/teams/croatia"
+import { denmark1992, denmark1998 } from "@/data/teams/denmark"
+import { england1966, england1990, england1996, england2004, england2018, england2021 } from "@/data/teams/england"
+import { france1984, france1998, france2018 } from "@/data/teams/france"
+import { germany1990, germany2006, germany2014 } from "@/data/teams/germany"
+import { hungary1954, hungary1966 } from "@/data/teams/hungary"
+import { italy1994, italy2006, italy2021 } from "@/data/teams/italy"
+import { netherlands1974, netherlands1988, netherlands2010 } from "@/data/teams/netherlands"
+import { portugal2004, portugal2016 } from "@/data/teams/portugal"
 import { spain2010, spain2012 } from "@/data/teams/spain"
-import { uruguay2010 } from "@/data/teams/uruguay"
+import { uruguay1950, uruguay2010 } from "@/data/teams/uruguay"
 
 export const teams: HistoricalTeam[] = [
   barcelona200809,
@@ -44,39 +49,75 @@ export const teams: HistoricalTeam[] = [
   realMadrid201617,
   manchesterUnited199899,
   manchesterUnited200708,
+  arsenal199798,
   arsenal200304,
   liverpool200405,
   liverpool201819,
   acMilan198889,
   acMilan200607,
+  interMilan198889,
   interMilan200910,
   bayernMunich201213,
   bayernMunich201920,
+  manchesterCity201718,
   manchesterCity202223,
   chelsea200405,
   chelsea201112,
+  juventus200203,
   juventus201617,
   ajax199495,
+  ajax201819,
+  borussiaDortmund201011,
   borussiaDortmund201213,
   porto200304,
+  porto201011,
   atleticoMadrid201314,
+  atleticoMadrid202021,
+  tottenham201617,
+  tottenham201819,
+  parisSaintGermain201718,
+  parisSaintGermain202223,
+  napoli198687,
+  napoli202223,
   brazil1970,
+  brazil1982,
   brazil2002,
   argentina1986,
   argentina2022,
+  france1984,
   france1998,
   france2018,
   spain2010,
   spain2012,
+  germany1990,
+  germany2006,
   germany2014,
+  italy1994,
   italy2006,
+  italy2021,
   netherlands1974,
+  netherlands1988,
+  netherlands2010,
   england1966,
+  england1990,
+  england1996,
+  england2004,
+  england2018,
+  england2021,
+  portugal2004,
   portugal2016,
+  croatia1998,
   croatia2018,
+  uruguay1950,
   uruguay2010,
+  belgium1986,
   belgium2018,
   hungary1954,
+  hungary1966,
+  colombia1994,
+  colombia2014,
+  denmark1992,
+  denmark1998,
 ]
 
 function assertTeamData(catalog: HistoricalTeam[]) {

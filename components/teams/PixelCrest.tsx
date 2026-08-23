@@ -77,6 +77,15 @@ function fill(clubId: string, x: number, y: number): string {
       return "#003087"
     case "atletico-madrid":
       return x % 2 === 0 ? "#ce102d" : "#f4f4f4"
+    case "tottenham":
+      if (y <= 4 && Math.abs(x - 8) < 2) return "#132257"
+      return "#f4f4f4"
+    case "paris-saint-germain":
+      if (x >= 6 && x <= 9) return "#ce102d"
+      return "#002654"
+    case "napoli":
+      if ((x - 8) * (x - 8) + (y - 8) * (y - 8) <= 6) return "#f4f4f4"
+      return "#12a0c6"
     case "brazil":
       if ((x - 8) * (x - 8) + (y - 8) * (y - 8) <= 3) return "#002776"
       if (Math.abs(x - 8) + Math.abs(y - 8) <= 5) return "#ffdf00"
@@ -123,6 +132,13 @@ function fill(clubId: string, x: number, y: number): string {
       if (y <= 5) return "#c8102e"
       if (y <= 10) return "#f4f4f4"
       return "#00843d"
+    case "colombia":
+      if (y <= 6) return "#fcd116"
+      if (y <= 10) return "#003893"
+      return "#ce1126"
+    case "denmark":
+      if (x === 6 || x === 7 || y === 7 || y === 8) return "#f4f4f4"
+      return "#c60c30"
     default:
       return "#5c8a48"
   }
