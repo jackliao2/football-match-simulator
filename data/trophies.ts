@@ -52,9 +52,14 @@ export const TROPHIES: Record<string, Trophy[]> = {
   "napoli-1986-87": [league(), cup()],
   "napoli-2022-23": [league()],
 
+  "brazil-1958": [wc()],
+  "brazil-1962": [wc()],
   "brazil-1970": [wc()],
   "brazil-1982": [],
+  "brazil-1994": [wc()],
+  "brazil-1998": [],
   "brazil-2002": [wc()],
+  "brazil-2014": [],
   "argentina-1986": [wc()],
   "argentina-2022": [wc()],
   "france-1984": [euros()],
@@ -97,4 +102,8 @@ export function trophiesFor(teamId: string): Trophy[] {
   const found = TROPHIES[teamId]
   if (!found) throw new Error(`Missing trophy data for ${teamId}`)
   return found
+}
+
+export function eraGlow(trophies: Trophy[]): boolean {
+  return trophies.some((item) => item.code === "world-cup") || trophies.length >= 2
 }

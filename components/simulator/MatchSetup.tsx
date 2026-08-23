@@ -10,6 +10,7 @@ import { SimulationPlay } from "@/components/simulator/SimulationPlay"
 import { FaceOffSquad } from "@/components/teams/SquadPanel"
 import { PixelCrest } from "@/components/teams/PixelCrest"
 import { TrophyBadges } from "@/components/teams/TrophyBadges"
+import { eraGlow } from "@/data/trophies"
 import { ResultPanel } from "@/components/ui/ResultPanel"
 import { OvrStamp } from "@/components/ui/OvrStamp"
 import { track } from "@/lib/analytics"
@@ -406,10 +407,13 @@ function TeamColumn({
 }) {
   const away = side === "away"
   const accent = away ? "text-danger" : "text-gold"
+  const glow = eraGlow(team.team.trophies)
 
   return (
-    <article className={`faceoff-card ${away ? "away faceoff-away" : "home faceoff-home"}`}>
-      <div className={`faceoff-identity-wrap ${away ? "text-right" : ""}`}>
+    <article
+      className={`faceoff-card ${away ? "away faceoff-away" : "home faceoff-home"} ${glow ? "era-shine" : ""}`}
+    >
+      <div className={`faceoff-identity-wrap ${away ? "text-right" : ""} ${glow ? "era-sheen" : ""}`}>
         <button
           type="button"
           onClick={onOpenPicker}
@@ -431,9 +435,9 @@ function TeamColumn({
           </span>
           <OvrStamp value={team.overallRating} size="md" align={away ? "left" : "right"} />
         </button>
-        {team.team.trophies.length > 0 ? (
+        <div className="trophy-slot">
           <TrophyBadges trophies={team.team.trophies} align={away ? "right" : "left"} />
-        ) : null}
+        </div>
       </div>
 
       <button type="button" onClick={onOpenPicker} className="faceoff-change">
@@ -443,6 +447,7 @@ function TeamColumn({
       <div className={`faceoff-seasons ${away ? "justify-end" : ""}`}>
         {seasons.map((season) => {
           const active = season.id === team.id
+          const shine = eraGlow(season.team.trophies)
           return (
             <button
               key={season.id}
@@ -454,7 +459,7 @@ function TeamColumn({
                     ? "border-danger bg-danger/15 text-danger"
                     : "border-gold bg-gold/15 text-gold"
                   : "border-line text-muted hover:border-line-hi hover:text-text"
-              }`}
+              } ${shine ? "season-shine" : ""}`}
             >
               {season.displaySeason}
             </button>

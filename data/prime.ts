@@ -99,14 +99,22 @@ export const primeEntities: PrimeEntity[] = [
     kind: "club",
     title: "When Was Brazil's Prime?",
     description:
-      "1970 or 2002? Pelé's third World Cup, or Ronaldo, Rivaldo and Ronaldinho in Japan and Korea. Both sides are playable.",
+      "1958, 1970, 1994 or 2002? Pelé twice, Romário in the heat, or the three R's. All of them are playable.",
     seoTitle: "Prime Brazil — When Was Brazil's Prime?",
     seoDescription:
-      "When was Brazil's prime? Compare the 1970 World Cup winners and the 2002 Ronaldo side, then simulate each legendary squad.",
+      "When was Brazil's prime? Compare 1958, 1970, 1994 and 2002, then simulate each World Cup squad.",
     candidates: [
+      {
+        teamId: "brazil-1958",
+        argument: "The first star. Pelé at 17, Garrincha on the right, a World Cup in Sweden.",
+      },
       {
         teamId: "brazil-1970",
         argument: "The aesthetic peak. Pelé, Jairzinho, Tostão and a 4–1 final against Italy.",
+      },
+      {
+        teamId: "brazil-1994",
+        argument: "Romário as the blade. A fourth star won the ugly way in Pasadena.",
       },
       {
         teamId: "brazil-2002",

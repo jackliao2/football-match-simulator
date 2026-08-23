@@ -150,6 +150,16 @@ export function simulateMany(
   let awayWins = 0
   let homeGoals = 0
   let awayGoals = 0
+  let homeXg = 0
+  let awayXg = 0
+  let homeShots = 0
+  let awayShots = 0
+  let homePoss = 0
+  let awayPoss = 0
+  let btts = 0
+  let over25 = 0
+  let homeClean = 0
+  let awayClean = 0
   const scoreCounts = new Map<string, number>()
   const homeScorers = new Map<string, number>()
   const awayScorers = new Map<string, number>()
@@ -159,6 +169,16 @@ export function simulateMany(
     const match = simulateMatch(home, away, `${baseSeed}:${i}`)
     homeGoals += match.score.home
     awayGoals += match.score.away
+    homeXg += match.stats.xg[0]
+    awayXg += match.stats.xg[1]
+    homeShots += match.stats.shots[0]
+    awayShots += match.stats.shots[1]
+    homePoss += match.stats.possession[0]
+    awayPoss += match.stats.possession[1]
+    if (match.score.home > 0 && match.score.away > 0) btts += 1
+    if (match.score.home + match.score.away >= 3) over25 += 1
+    if (match.score.away === 0) homeClean += 1
+    if (match.score.home === 0) awayClean += 1
     if (match.score.home > match.score.away) homeWins += 1
     else if (match.score.home < match.score.away) awayWins += 1
     else draws += 1
@@ -197,10 +217,20 @@ export function simulateMany(
     mostCommonScore: scorelines[0]?.score ?? "0-0",
     scorelines,
     topScorers: {
-      home: topFromMap(homeScorers, 5),
-      away: topFromMap(awayScorers, 5),
+      home: topFromMap(homeScorers, 4),
+      away: topFromMap(awayScorers, 4),
     },
     samples,
+    avgHomeXg: round2(homeXg / runs),
+    avgAwayXg: round2(awayXg / runs),
+    avgHomeShots: round1(homeShots / runs),
+    avgAwayShots: round1(awayShots / runs),
+    avgHomePoss: Math.round(homePoss / runs),
+    avgAwayPoss: Math.round(awayPoss / runs),
+    bttsPct: round1((btts / runs) * 100),
+    over25Pct: round1((over25 / runs) * 100),
+    homeCleanPct: round1((homeClean / runs) * 100),
+    awayCleanPct: round1((awayClean / runs) * 100),
   }
 }
 

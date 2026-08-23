@@ -155,6 +155,16 @@ export interface MonteCarloResult {
     away: Array<{ player: string; goals: number }>
   }
   samples: Array<{ home: number; away: number }>
+  avgHomeXg: number
+  avgAwayXg: number
+  avgHomeShots: number
+  avgAwayShots: number
+  avgHomePoss: number
+  avgAwayPoss: number
+  bttsPct: number
+  over25Pct: number
+  homeCleanPct: number
+  awayCleanPct: number
 }
 
 export interface CommentaryPayload {

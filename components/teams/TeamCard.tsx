@@ -5,11 +5,16 @@ import { teamSquad } from "@/lib/stars"
 import { CompactSquad } from "@/components/teams/SquadPanel"
 import { PixelCrest } from "@/components/teams/PixelCrest"
 import { TrophyBadges } from "@/components/teams/TrophyBadges"
+import { eraGlow } from "@/data/trophies"
 import { OvrStamp } from "@/components/ui/OvrStamp"
 
 export function TeamCard({ team }: { team: HistoricalTeam }) {
+  const glow = eraGlow(team.trophies)
   return (
-    <Link href={teamPath(team)} className="result-panel block p-3 no-underline hover:border-gold">
+    <Link
+      href={teamPath(team)}
+      className={`result-panel block p-3 no-underline hover:border-gold ${glow ? "team-card-shine era-sheen" : ""}`}
+    >
       <div className="flex items-start gap-3">
         <PixelCrest clubId={team.clubId} size={48} />
         <div className="min-w-0 flex-1">

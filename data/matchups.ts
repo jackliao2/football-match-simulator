@@ -14,12 +14,12 @@ export const HOMEPAGE_TEAMS = [
 ]
 
 export const HOMEPAGE_NATIONS = [
+  "brazil-1958",
   "brazil-1970",
-  "brazil-1982",
+  "brazil-1994",
+  "brazil-2002",
   "argentina-1986",
   "england-1966",
-  "england-2004",
-  "england-2018",
   "france-1984",
   "netherlands-1988",
 ]
@@ -61,6 +61,10 @@ export const FEATURED_MATCHUPS = [
   ["paris-saint-germain-2022-23", "barcelona-2010-11"],
   ["colombia-2014", "brazil-2002"],
   ["denmark-1992", "germany-1990"],
+  ["brazil-1958", "england-1966"],
+  ["brazil-1994", "italy-1994"],
+  ["brazil-1998", "france-1998"],
+  ["brazil-2014", "germany-2014"],
 ] as const
 
 export const DEFAULT_RIVALS: Record<string, string> = {
@@ -87,8 +91,13 @@ export const DEFAULT_RIVALS: Record<string, string> = {
   "borussia-dortmund-2012-13": "bayern-munich-2012-13",
   "porto-2003-04": "chelsea-2004-05",
   "atletico-madrid-2013-14": "real-madrid-2013-14",
+  "brazil-1958": "england-1966",
+  "brazil-1962": "hungary-1954",
   "brazil-1970": "hungary-1954",
+  "brazil-1994": "italy-1994",
+  "brazil-1998": "france-1998",
   "brazil-2002": "argentina-2022",
+  "brazil-2014": "germany-2014",
   "argentina-1986": "france-1998",
   "argentina-2022": "brazil-2002",
   "france-1998": "brazil-2002",

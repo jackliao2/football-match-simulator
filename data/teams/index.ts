@@ -28,7 +28,16 @@ import { realMadrid201314, realMadrid201617 } from "@/data/teams/real-madrid"
 import { tottenham201617, tottenham201819 } from "@/data/teams/tottenham"
 import { argentina1986, argentina2022 } from "@/data/teams/argentina"
 import { belgium1986, belgium2018 } from "@/data/teams/belgium"
-import { brazil1970, brazil1982, brazil2002 } from "@/data/teams/brazil"
+import {
+  brazil1958,
+  brazil1962,
+  brazil1970,
+  brazil1982,
+  brazil1994,
+  brazil1998,
+  brazil2002,
+  brazil2014,
+} from "@/data/teams/brazil"
 import { colombia1994, colombia2014 } from "@/data/teams/colombia"
 import { croatia1998, croatia2018 } from "@/data/teams/croatia"
 import { denmark1992, denmark1998 } from "@/data/teams/denmark"
@@ -80,9 +89,14 @@ const RAW: HistoricalTeam[] = [
   parisSaintGermain202223,
   napoli198687,
   napoli202223,
+  brazil1958,
+  brazil1962,
   brazil1970,
   brazil1982,
+  brazil1994,
+  brazil1998,
   brazil2002,
+  brazil2014,
   argentina1986,
   argentina2022,
   france1984,

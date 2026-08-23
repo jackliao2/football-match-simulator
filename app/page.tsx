@@ -33,7 +33,7 @@ export default function HomePage() {
         <h1 className="font-mono text-xl font-semibold tracking-tight text-text sm:text-3xl">
           Football Match Simulator
         </h1>
-        <p className="mx-auto max-w-xl font-mono text-sm leading-6 text-muted">
+        <p className="mx-auto whitespace-nowrap font-mono text-[11px] tracking-tight text-muted sm:text-sm">
           Legendary clubs and World Cup squads. Pick a season. Simulate a match.
         </p>
       </section>

@@ -6,6 +6,7 @@ import { StarPlayers } from "@/components/teams/StarPlayers"
 import { TeamRatings } from "@/components/teams/TeamRatings"
 import { PixelCrest } from "@/components/teams/PixelCrest"
 import { TrophyBadges } from "@/components/teams/TrophyBadges"
+import { eraGlow } from "@/data/trophies"
 import { MatchupRow } from "@/components/ui/MatchupRow"
 import { OvrStamp } from "@/components/ui/OvrStamp"
 import { FEATURED_MATCHUPS, defaultOpponent, vsPath } from "@/data/matchups"
@@ -65,7 +66,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
         <p className="font-display text-[9px] uppercase tracking-[0.28em] text-gold">
           {team.kind === "nation" ? "World Cup squad" : "Historical squad"}
         </p>
-        <div className="flex items-start gap-4">
+        <div className={`flex items-start gap-4 ${eraGlow(team.trophies) ? "era-sheen" : ""}`}>
           <PixelCrest clubId={team.clubId} size={64} />
           <div className="min-w-0 flex-1">
             <h1 className="font-mono text-xl font-semibold leading-snug tracking-tight sm:text-3xl">
