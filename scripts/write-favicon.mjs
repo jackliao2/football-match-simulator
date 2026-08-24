@@ -100,8 +100,42 @@ function ico(images) {
   return Buffer.concat([header, ...entries, ...blobs])
 }
 
-const png16 = png(raster(1))
-const png32 = png(raster(2))
+function downsample(rgba, from, to) {
+  const out = Buffer.alloc(to * to * 4)
+  const f = from / to
+  for (let y = 0; y < to; y += 1) {
+    for (let x = 0; x < to; x += 1) {
+      let r = 0
+      let g = 0
+      let b = 0
+      let a = 0
+      let n = 0
+      const y0 = Math.floor(y * f)
+      const x0 = Math.floor(x * f)
+      const y1 = Math.max(y0 + 1, Math.floor((y + 1) * f))
+      const x1 = Math.max(x0 + 1, Math.floor((x + 1) * f))
+      for (let sy = y0; sy < y1; sy += 1) {
+        for (let sx = x0; sx < x1; sx += 1) {
+          const i = (sy * from + sx) * 4
+          r += rgba[i]
+          g += rgba[i + 1]
+          b += rgba[i + 2]
+          a += rgba[i + 3]
+          n += 1
+        }
+      }
+      const o = (y * to + x) * 4
+      out[o] = Math.round(r / n)
+      out[o + 1] = Math.round(g / n)
+      out[o + 2] = Math.round(b / n)
+      out[o + 3] = Math.round(a / n)
+    }
+  }
+  return out
+}
+
+const native = raster(1)
+const png32 = png(native)
+const png16 = png({ size: 16, rgba: downsample(native.rgba, native.size, 16) })
 writeFileSync(join(root, "app/favicon.ico"), ico([{ size: 16, buf: png16 }, { size: 32, buf: png32 }]))
-writeFileSync(join(root, "public/icon-32.png"), png32)
-console.log("wrote app/favicon.ico and public/icon-32.png")
+console.log("wrote app/favicon.ico")

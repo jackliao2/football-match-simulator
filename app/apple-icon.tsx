@@ -6,9 +6,8 @@ export const contentType = "image/png"
 
 export default function AppleIcon() {
   const rows = brandRows()
-  const pad = 18
-  const inner = size.width - pad * 2
-  const cell = inner / BRAND_MARK_SIZE
+  const cell = 5
+  const inner = BRAND_MARK_SIZE * cell
   return new ImageResponse(
     (
       <div
