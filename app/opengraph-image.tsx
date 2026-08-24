@@ -7,7 +7,7 @@ export const contentType = "image/png"
 
 export default function OpenGraphImage() {
   const rows = brandRows()
-  const cell = 5
+  const cell = 6
   return new ImageResponse(
     (
       <div
@@ -19,11 +19,16 @@ export default function OpenGraphImage() {
           justifyContent: "center",
           background: BRAND_INK,
           color: "#d7ead0",
-          padding: 72,
-          border: "18px solid #d4b45a",
+          padding: 80,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 32,
+          }}
+        >
           <div style={{ display: "flex", flexDirection: "column" }}>
             {rows.map((row, y) => (
               <div key={y} style={{ display: "flex", height: cell }}>
@@ -43,31 +48,50 @@ export default function OpenGraphImage() {
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div
               style={{
-                fontSize: 18,
-                letterSpacing: 6,
-                color: "#7e9876",
+                fontSize: 22,
+                letterSpacing: 10,
+                color: "#c5d0be",
                 textTransform: "uppercase",
+                fontFamily: "Georgia, 'Times New Roman', serif",
               }}
             >
               Legendary
             </div>
             <div
               style={{
+                width: 72,
+                height: 1,
+                backgroundColor: "#d4b45a",
+                marginTop: 12,
+                marginBottom: 12,
+              }}
+            />
+            <div
+              style={{
                 fontSize: 56,
-                letterSpacing: 4,
+                letterSpacing: 12,
                 color: "#d4b45a",
                 textTransform: "uppercase",
-                marginTop: 8,
+                fontFamily: "Georgia, 'Times New Roman', serif",
               }}
             >
               Match
             </div>
           </div>
         </div>
-        <div style={{ fontSize: 40, marginTop: 40, lineHeight: 1.2 }}>Pick a team. Pick an era.</div>
-        <div style={{ fontSize: 40, lineHeight: 1.2 }}>Settle the debate.</div>
-        <div style={{ marginTop: 28, fontSize: 20, color: "#7e9876" }}>
-          Football match simulator · Historical squads · No club crests
+        <div
+          style={{
+            fontSize: 32,
+            marginTop: 48,
+            lineHeight: 1.35,
+            color: "#d7ead0",
+            letterSpacing: 1,
+          }}
+        >
+          Pick a team. Pick an era. Settle the debate.
+        </div>
+        <div style={{ marginTop: 20, fontSize: 20, color: "#7e9876", letterSpacing: 2 }}>
+          Football match simulator · Historical squads
         </div>
       </div>
     ),

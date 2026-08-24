@@ -15,6 +15,7 @@
   --color-danger: #c45c4a;
   --color-home: #8fbf4a;
   --font-display: var(--font-display);
+  --font-brand: var(--font-brand);
   --font-mono: var(--font-mono);
 }
 
@@ -66,73 +67,82 @@ button {
   min-width: 0;
   flex-shrink: 0;
   text-decoration: none;
+  color: inherit;
 }
 
 .site-lockup {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-  border: 2px solid var(--color-gold);
-  background: #0b100b;
-  box-shadow:
-    3px 3px 0 #000,
-    inset 0 0 0 1px rgba(240, 213, 122, 0.14);
-  padding: 0.28rem 0.65rem 0.28rem 0.32rem;
-}
-
-.site-logo:hover .site-lockup {
-  border-color: var(--color-gold-2);
+  gap: 0.62rem;
 }
 
 .brand-mark {
   flex-shrink: 0;
+  filter: drop-shadow(0 0 10px rgba(212, 180, 90, 0.18));
 }
 
 .site-lockup-text {
   display: flex;
   min-width: 0;
   flex-direction: column;
-  gap: 4px;
+  align-items: flex-start;
   line-height: 1;
 }
 
 .site-lockup-kicker {
-  display: none;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 8px;
-  font-weight: 600;
-  letter-spacing: 0.34em;
+  font-family: var(--font-brand), "Cinzel", Palatino, "Times New Roman", serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
   text-indent: 0.08em;
   text-transform: uppercase;
-  color: #9aaa90;
+  color: #c5d0be;
+}
+
+.site-lockup-rule {
+  display: block;
+  width: 1.7rem;
+  height: 1px;
+  margin: 0.22rem 0 0.2rem;
+  background: linear-gradient(to right, var(--color-gold), transparent 92%);
 }
 
 .site-lockup-name {
-  font-family: var(--font-display), ui-monospace, monospace;
-  font-size: 8px;
-  line-height: 8px;
-  letter-spacing: 0.14em;
+  font-family: var(--font-brand), "Cinzel", Palatino, "Times New Roman", serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.34em;
+  text-indent: 0.04em;
   text-transform: uppercase;
   color: var(--color-gold);
-  text-shadow: 1px 1px 0 #000;
-  -webkit-font-smoothing: none;
+}
+
+.site-logo:hover .site-lockup-name {
+  color: var(--color-gold-2);
+}
+
+.site-logo:hover .brand-mark {
+  filter: drop-shadow(0 0 12px rgba(240, 213, 122, 0.32));
 }
 
 @media (min-width: 640px) {
   .site-lockup {
-    gap: 0.7rem;
-    padding: 0.4rem 0.8rem 0.4rem 0.4rem;
+    gap: 0.78rem;
   }
 
   .site-lockup-kicker {
-    display: block;
+    font-size: 10px;
+    letter-spacing: 0.46em;
+  }
+
+  .site-lockup-rule {
+    width: 2.15rem;
+    margin: 0.28rem 0 0.24rem;
   }
 
   .site-lockup-name {
-    font-size: 16px;
-    line-height: 16px;
-    letter-spacing: 0.16em;
-    text-shadow: 2px 2px 0 #000;
+    font-size: 17px;
+    letter-spacing: 0.4em;
   }
 }
 

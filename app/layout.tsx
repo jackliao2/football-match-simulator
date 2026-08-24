@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next"
-import { IBM_Plex_Mono, Press_Start_2P } from "next/font/google"
+import { Cinzel, IBM_Plex_Mono, Press_Start_2P } from "next/font/google"
 import { SiteFooter } from "@/components/ui/SiteFooter"
 import { SiteHeader } from "@/components/ui/SiteHeader"
 import { defaultMetadata } from "@/lib/seo"
@@ -9,6 +9,13 @@ const display = Press_Start_2P({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-display",
+  display: "swap",
+})
+
+const brand = Cinzel({
+  weight: ["500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-brand",
   display: "swap",
 })
 
@@ -29,7 +36,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${display.variable} ${mono.variable} h-full`}>
+    <html lang="en" className={`${display.variable} ${brand.variable} ${mono.variable} h-full`}>
       <body className="flex min-h-full flex-col font-mono antialiased">
         <SiteHeader />
         <div className="page-frame">
