@@ -5,10 +5,12 @@ import { SITE } from "@/lib/site"
 export function SiteLogo() {
   return (
     <Link href="/" className="site-logo" aria-label={SITE.name}>
-      <BrandMark size={32} />
-      <span className="site-wordmark">
-        <span className="site-word-kicker">Legendary</span>
-        <span className="site-word-name">Match</span>
+      <span className="site-lockup">
+        <BrandMark size={36} />
+        <span className="site-lockup-text">
+          <span className="site-lockup-kicker">Legendary</span>
+          <span className="site-lockup-name">Match</span>
+        </span>
       </span>
     </Link>
   )

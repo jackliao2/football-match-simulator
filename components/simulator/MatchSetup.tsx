@@ -10,7 +10,6 @@ import { MonteCarloResults } from "@/components/simulator/MonteCarloResults"
 import { SimulationPlay } from "@/components/simulator/SimulationPlay"
 import { FaceOffSquad } from "@/components/teams/SquadPanel"
 import { PixelCrest } from "@/components/teams/PixelCrest"
-import { TrophyBadges } from "@/components/teams/TrophyBadges"
 import { eraGlow } from "@/data/trophies"
 import { isCurrentSquad } from "@/lib/seo"
 import { ResultPanel } from "@/components/ui/ResultPanel"
@@ -162,8 +161,8 @@ export function MatchSetup({
     return preferredSeason(seasons, includeNow)?.id
   }
 
-  function toggleCurrentSquads() {
-    const next = !includeCurrent
+  function setCurrentSquads(next: boolean) {
+    if (next === includeCurrent) return
     setIncludeCurrent(next)
     try {
       window.localStorage.setItem("lm-current-squads", next ? "1" : "0")
@@ -302,17 +301,26 @@ export function MatchSetup({
           <div className="faceoff-rail">
             <div className="faceoff-rail-inner">
               <div className="faceoff-vs">VS</div>
-              <button
-                type="button"
-                className="era-mode"
-                role="switch"
-                aria-checked={includeCurrent}
-                onClick={toggleCurrentSquads}
-              >
-                <span className={!includeCurrent ? "is-on" : ""}>Legend</span>
-                <i className={includeCurrent ? "is-on" : ""} aria-hidden />
-                <span className={includeCurrent ? "is-on" : ""}>Now</span>
-              </button>
+              <div className="era-mode" role="radiogroup" aria-label="Squad era">
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={!includeCurrent}
+                  className={!includeCurrent ? "is-on" : ""}
+                  onClick={() => setCurrentSquads(false)}
+                >
+                  Legendary
+                </button>
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={includeCurrent}
+                  className={includeCurrent ? "is-on" : ""}
+                  onClick={() => setCurrentSquads(true)}
+                >
+                  Now
+                </button>
+              </div>
               <button type="button" onClick={swapSides} className="rail-swap">
                 Swap
               </button>
@@ -543,9 +551,6 @@ function TeamColumn({
           </span>
           <OvrStamp value={team.overallRating} size="md" align={away ? "left" : "right"} />
         </button>
-        <div className="trophy-slot">
-          <TrophyBadges trophies={team.team.trophies} align={away ? "right" : "left"} />
-        </div>
       </div>
 
       <button type="button" onClick={onOpenPicker} className="faceoff-change">
