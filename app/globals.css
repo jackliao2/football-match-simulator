@@ -423,12 +423,93 @@ a.result-panel:hover {
 
 .mc-bar {
   display: flex;
-  height: 3px;
+  height: 8px;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.08);
 }
 
 .mc-bar > i {
+  display: block;
+  height: 100%;
+}
+
+.mc-score {
+  display: grid;
+  grid-template-columns: 2.6rem 1fr 2.4rem;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.mc-score-bar {
+  display: block;
+  height: 6px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.mc-score-bar > i {
+  display: block;
+  height: 100%;
+  background: var(--color-gold);
+}
+
+.mc-split {
+  display: grid;
+  grid-template-columns: 2.6rem 2.8rem 1fr 2.8rem;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.22rem 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.mc-split-bar {
+  display: flex;
+  height: 6px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.mc-split-bar > i {
+  display: block;
+  height: 100%;
+}
+
+.mc-chip-bar {
+  display: block;
+  height: 4px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.mc-chip-bar > i {
+  display: block;
+  height: 100%;
+  background: var(--color-gold);
+}
+
+.mc-scorer {
+  display: grid;
+  grid-template-columns: 4.6rem 1fr 1.7rem 2rem;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.mc-scorer-bar {
+  display: block;
+  height: 6px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.mc-scorer-bar > i {
   display: block;
   height: 100%;
 }
