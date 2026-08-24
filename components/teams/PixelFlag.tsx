@@ -261,6 +261,10 @@ const PAINT: Record<string, Paint> = {
     if (x === 6 && y === 3) return C.green
     return C.gold
   },
+  BF: (x, y) => {
+    if (x === 6 && y >= 3 && y <= 4) return C.gold
+    return y < 4 ? C.red : C.green
+  },
   ML: vBands([C.green, C.gold, C.red]),
   GN: vBands([C.red, C.gold, C.green]),
   GA: hBands([C.green, C.gold, "#00209f"]),

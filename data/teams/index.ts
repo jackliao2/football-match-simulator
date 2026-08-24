@@ -87,6 +87,56 @@ import { netherlands1974, netherlands1988, netherlands2010 } from "@/data/teams/
 import { portugal2004, portugal2016 } from "@/data/teams/portugal"
 import { spain2010, spain2012 } from "@/data/teams/spain"
 import { uruguay1950, uruguay2010 } from "@/data/teams/uruguay"
+import {
+  athleticBilbao198384,
+  astonVilla198182,
+  everton198485,
+  leedsUnited197374,
+  newcastle199596,
+  nottinghamForest197980,
+  sevilla200506,
+  valencia200304,
+} from "@/data/teams/expanded-clubs"
+import {
+  asRoma200001,
+  bayerLeverkusen202324,
+  borussiaMonchengladbach197475,
+  lazio199900,
+} from "@/data/teams/expanded-europe"
+import {
+  benfica196162,
+  bocaJuniors2000,
+  celtic196667,
+  feyenoord196970,
+  flamengo1981,
+  galatasaray199900,
+  lyon200506,
+  marseille199293,
+  monaco201617,
+  psv198788,
+  rangers199293,
+  redStar199091,
+  riverPlate2018,
+  santos1962,
+  sporting200203,
+  steaua198586,
+} from "@/data/teams/expanded-rest"
+import {
+  cameroon1990,
+  chile2015,
+  czechia1996,
+  greece2004,
+  japan2002,
+  mexico1986,
+  morocco2022,
+  nigeria1994,
+  senegal2002,
+  southKorea2002,
+  sweden1994,
+  turkey2002,
+  usa2002,
+  wales2016,
+} from "@/data/teams/expanded-nations"
 
 const RAW: HistoricalTeam[] = [
   barcelona200809,
@@ -188,6 +238,48 @@ const RAW: HistoricalTeam[] = [
   colombia2014,
   denmark1992,
   denmark1998,
+  everton198485,
+  leedsUnited197374,
+  nottinghamForest197980,
+  newcastle199596,
+  astonVilla198182,
+  sevilla200506,
+  valencia200304,
+  athleticBilbao198384,
+  asRoma200001,
+  lazio199900,
+  bayerLeverkusen202324,
+  borussiaMonchengladbach197475,
+  marseille199293,
+  lyon200506,
+  monaco201617,
+  benfica196162,
+  sporting200203,
+  psv198788,
+  feyenoord196970,
+  celtic196667,
+  rangers199293,
+  redStar199091,
+  steaua198586,
+  galatasaray199900,
+  santos1962,
+  flamengo1981,
+  bocaJuniors2000,
+  riverPlate2018,
+  mexico1986,
+  sweden1994,
+  greece2004,
+  turkey2002,
+  chile2015,
+  wales2016,
+  morocco2022,
+  senegal2002,
+  nigeria1994,
+  cameroon1990,
+  japan2002,
+  southKorea2002,
+  usa2002,
+  czechia1996,
   brazil2026,
   argentina2026,
   france2026,
@@ -212,21 +304,22 @@ export const teams: HistoricalTeam[] = RAW.map((team) => ({
 
 function assertTeamData(catalog: HistoricalTeam[]) {
   const seen = new Set<string>()
+  const errors: string[] = []
   const missingNations: string[] = []
   for (const team of catalog) {
-    if (seen.has(team.id)) throw new Error(`Duplicate team id: ${team.id}`)
+    if (seen.has(team.id)) errors.push(`Duplicate team id: ${team.id}`)
     seen.add(team.id)
     const ids = team.players.map((player) => player.id)
     if (new Set(ids).size !== ids.length) {
-      throw new Error(`Duplicate player id in ${team.id}`)
+      errors.push(`Duplicate player id in ${team.id}`)
     }
     if (team.startingXI.length !== 11) {
-      throw new Error(`${team.id} starting XI must have 11 players`)
+      errors.push(`${team.id} starting XI has ${team.startingXI.length} players`)
     }
     const roster = new Set(ids)
     for (const id of team.startingXI) {
       if (!roster.has(id)) {
-        throw new Error(`${team.id} starting XI missing player ${id} (roster: ${ids.join(", ")})`)
+        errors.push(`${team.id} starting XI missing player ${id}`)
       }
     }
     if (team.kind !== "nation") {
@@ -236,7 +329,10 @@ function assertTeamData(catalog: HistoricalTeam[]) {
     }
   }
   if (missingNations.length > 0) {
-    throw new Error(`Missing nation flags:\n${missingNations.join("\n")}`)
+    errors.push(`Missing nation flags:\n${missingNations.join("\n")}`)
+  }
+  if (errors.length > 0) {
+    throw new Error(errors.join("\n"))
   }
 }
 

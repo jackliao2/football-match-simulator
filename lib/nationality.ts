@@ -1,4 +1,5 @@
 import type { HistoricalTeam } from "@/types"
+import { EXPANDED_PLAYER_NATIONS } from "@/data/player-nations-expanded"
 
 const TEAM_FLAG: Record<string, string> = {
   brazil: "BR",
@@ -16,6 +17,20 @@ const TEAM_FLAG: Record<string, string> = {
   hungary: "HU",
   colombia: "CO",
   denmark: "DK",
+  mexico: "MX",
+  usa: "US",
+  japan: "JP",
+  "south-korea": "KR",
+  morocco: "MA",
+  senegal: "SN",
+  sweden: "SE",
+  greece: "GR",
+  turkey: "TR",
+  chile: "CL",
+  wales: "WA",
+  nigeria: "NG",
+  cameroon: "CM",
+  czechia: "CZ",
 }
 
 const BY_NATION: Record<string, string[]> = {
@@ -1667,7 +1682,7 @@ const EXTRA_NATIONS: Record<string, string> = {
   "Timo Werner": "DE",
 }
 
-for (const [name, code] of Object.entries(EXTRA_NATIONS)) {
+for (const [name, code] of Object.entries({ ...EXTRA_NATIONS, ...EXPANDED_PLAYER_NATIONS })) {
   if (!PLAYER_NATION[name]) PLAYER_NATION[name] = code
 }
 

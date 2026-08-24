@@ -57,6 +57,20 @@ export interface HistoricalTeam {
   seoDescription: string
 }
 
+export type ClubLeague =
+  | "premier-league"
+  | "la-liga"
+  | "serie-a"
+  | "bundesliga"
+  | "ligue-1"
+  | "liga-portugal"
+  | "eredivisie"
+  | "scottish"
+  | "other-europe"
+  | "south-america"
+
+export type NationRegion = "europe" | "south-america" | "africa" | "concacaf" | "asia"
+
 export interface Club {
   id: string
   name: string
@@ -64,6 +78,8 @@ export interface Club {
   city: string
   country: string
   kind?: TeamKind
+  league?: ClubLeague
+  region?: NationRegion
 }
 
 export interface PrimeCandidate {

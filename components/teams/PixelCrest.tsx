@@ -139,6 +139,120 @@ function fill(clubId: string, x: number, y: number): string {
     case "denmark":
       if (x === 6 || x === 7 || y === 7 || y === 8) return "#f4f4f4"
       return "#c60c30"
+    case "everton":
+      return "#003399"
+    case "leeds-united":
+      if (y === 7 || y === 8) return "#1d1d1d"
+      return "#f4f4f4"
+    case "nottingham-forest":
+      return "#dd0000"
+    case "newcastle":
+      return x % 2 === 0 ? "#111111" : "#f4f4f4"
+    case "aston-villa":
+      return x < 8 ? "#670e36" : "#95bfe5"
+    case "sevilla":
+      if (y <= 5) return "#f4f4f4"
+      return "#d21034"
+    case "valencia":
+      if (x < 8) return "#ee3524"
+      return "#000000"
+    case "athletic-bilbao":
+      return x % 2 === 0 ? "#ee2524" : "#f4f4f4"
+    case "as-roma":
+      if (y <= 4) return "#f0c14b"
+      return y % 2 === 0 ? "#8e1f2f" : "#f4b441"
+    case "lazio":
+      return "#87d8f7"
+    case "bayer-leverkusen":
+      if (x < 8) return "#e32219"
+      return "#111111"
+    case "borussia-monchengladbach":
+      if (y >= 6 && y <= 9) return "#111111"
+      return "#00a651"
+    case "marseille":
+      if (y <= 4) return "#2faeea"
+      return "#f4f4f4"
+    case "lyon":
+      if (x < 6) return "#003da5"
+      if (x >= 10) return "#c8102e"
+      return "#f4f4f4"
+    case "monaco":
+      if (y < x - 2) return "#c8102e"
+      return "#f4f4f4"
+    case "benfica":
+      return "#e03c31"
+    case "sporting":
+      if (x < 8) return "#008656"
+      return "#f4f4f4"
+    case "psv":
+      return x % 2 === 0 ? "#e03c31" : "#f4f4f4"
+    case "feyenoord":
+      if (y <= 5) return "#e03c31"
+      if (y <= 10) return "#f4f4f4"
+      return "#111111"
+    case "celtic":
+      if ((x + y) % 2 === 0) return "#018749"
+      return "#f4f4f4"
+    case "rangers":
+      return "#1b4596"
+    case "red-star":
+      return x % 2 === 0 ? "#d50032" : "#f4f4f4"
+    case "steaua":
+      return "#0033a0"
+    case "galatasaray":
+      return x < 8 ? "#f6b40e" : "#d50032"
+    case "flamengo":
+      return y % 2 === 0 ? "#c8102e" : "#111111"
+    case "santos":
+      if (y <= 5) return "#f4f4f4"
+      return "#111111"
+    case "boca-juniors":
+      if (y >= 6 && y <= 9) return "#f0c14b"
+      return "#003da5"
+    case "river-plate":
+      if (Math.abs((x - 8) - (8 - y)) <= 1) return "#e03c31"
+      return "#f4f4f4"
+    case "sweden":
+      if (x === 6 || x === 7 || y === 7 || y === 8) return "#fecc00"
+      return "#006aa7"
+    case "greece":
+      return y % 2 === 0 ? "#0d5eaf" : "#f4f4f4"
+    case "turkey":
+      return "#e30a17"
+    case "czechia":
+      if (x + y < 10 && x < 7) return "#11457e"
+      return y < 8 ? "#f4f4f4" : "#d7141a"
+    case "wales":
+      return y < 8 ? "#c8102e" : "#00ab39"
+    case "chile":
+      if (y < 8) return x <= 6 ? "#0039a6" : "#f4f4f4"
+      return "#d52b1e"
+    case "mexico":
+      if (x <= 5) return "#006847"
+      if (x >= 10) return "#ce1126"
+      return "#f4f4f4"
+    case "usa":
+      if (x <= 6 && y <= 6) return "#002868"
+      return y % 2 === 0 ? "#bf0a30" : "#f4f4f4"
+    case "morocco":
+      return "#c1272d"
+    case "senegal":
+      if (x <= 5) return "#00853f"
+      if (x >= 10) return "#e31b23"
+      return "#fdef42"
+    case "nigeria":
+      if (x <= 5 || x >= 10) return "#008751"
+      return "#f4f4f4"
+    case "cameroon":
+      if (x <= 5) return "#007a5e"
+      if (x >= 10) return "#ce1126"
+      return "#fcd116"
+    case "japan":
+      if ((x - 8) * (x - 8) + (y - 8) * (y - 8) <= 10) return "#bc002d"
+      return "#f4f4f4"
+    case "south-korea":
+      if ((x - 8) * (x - 8) + (y - 8) * (y - 8) <= 10) return y < 8 ? "#cd2e3a" : "#0047a0"
+      return "#f4f4f4"
     default:
       return "#5c8a48"
   }

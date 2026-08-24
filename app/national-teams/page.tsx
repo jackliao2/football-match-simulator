@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { TeamCard } from "@/components/teams/TeamCard"
 import { PageHeader } from "@/components/ui/PageHeader"
-import { nations } from "@/data/clubs"
+import { NATION_REGIONS, nations } from "@/data/clubs"
 import { getTeamsByClub } from "@/data/teams"
 import { pageMetadata } from "@/lib/seo"
 import { absoluteUrl } from "@/lib/site"
@@ -30,9 +30,13 @@ export const metadata: Metadata = pageMetadata({
 })
 
 export default function NationalTeamsPage() {
-  const sections = nations
-    .map((nation) => ({ nation, teams: getTeamsByClub(nation.id) }))
-    .filter((section) => section.teams.length > 0)
+  const sections = NATION_REGIONS.map((region) => ({
+    region,
+    nations: nations
+      .filter((nation) => nation.region === region.id)
+      .map((nation) => ({ nation, teams: getTeamsByClub(nation.id) }))
+      .filter((section) => section.teams.length > 0),
+  })).filter((section) => section.nations.length > 0)
 
   return (
     <div className="grid gap-8">
@@ -44,35 +48,42 @@ export default function NationalTeamsPage() {
             "@type": "CollectionPage",
             name: "Historical National Teams",
             url: absoluteUrl("/national-teams"),
-            hasPart: sections.map((section) => ({
-              "@type": "SportsTeam",
-              name: section.nation.name,
-              url: absoluteUrl(`/national-teams/${section.nation.id}`),
-            })),
+            hasPart: sections.flatMap((section) =>
+              section.nations.map((item) => ({
+                "@type": "SportsTeam",
+                name: item.nation.name,
+                url: absoluteUrl(`/national-teams/${item.nation.id}`),
+              })),
+            ),
           }),
         }}
       />
       <PageHeader
         kicker="World Cup sides"
         title="Historical national teams"
-        lead="World Cup and Euros squads plus 2026 current sides. Same engine as the clubs — pick a year, then simulate them against any era."
+        lead="World Cup and Euros squads grouped by region, plus 2026 current sides. Same engine as the clubs — pick a year, then simulate them against any era."
       >
         <Link href="/teams" className="font-mono text-sm text-gold hover:text-gold-2">
           Club teams →
         </Link>
       </PageHeader>
-      {sections.map(({ nation, teams }) => (
-        <section key={nation.id} className="grid gap-3">
-          <h2 className="font-mono text-lg font-semibold tracking-tight">
-            <Link href={`/national-teams/${nation.id}`} className="hover:text-gold">
-              {nation.name}
-            </Link>
-          </h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {teams.map((team) => (
-              <TeamCard key={team.id} team={team} />
-            ))}
-          </div>
+      {sections.map(({ region, nations: regionNations }) => (
+        <section key={region.id} className="grid gap-4">
+          <h2 className="font-display text-xs tracking-[0.18em] text-gold uppercase">{region.label}</h2>
+          {regionNations.map(({ nation, teams }) => (
+            <div key={nation.id} className="grid gap-3">
+              <h3 className="font-mono text-lg font-semibold tracking-tight">
+                <Link href={`/national-teams/${nation.id}`} className="hover:text-gold">
+                  {nation.name}
+                </Link>
+              </h3>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {teams.map((team) => (
+                  <TeamCard key={team.id} team={team} />
+                ))}
+              </div>
+            </div>
+          ))}
         </section>
       ))}
     </div>

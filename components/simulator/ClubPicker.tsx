@@ -1,12 +1,20 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { PixelCrest } from "@/components/teams/PixelCrest"
+import { LEAGUES, NATION_REGIONS, clubs as clubCatalog, nations as nationCatalog, getClub } from "@/data/clubs"
 
 export interface ClubPick {
   clubId: string
   clubName: string
   overallRating: number
+}
+
+function matchesQuery(item: ClubPick, query: string) {
+  if (!query) return true
+  const meta = getClub(item.clubId)
+  const hay = `${item.clubName} ${meta?.code ?? ""} ${meta?.city ?? ""}`.toLowerCase()
+  return hay.includes(query)
 }
 
 export function ClubPicker({
@@ -22,6 +30,12 @@ export function ClubPicker({
   onSelect: (clubId: string) => void
   onClose: () => void
 }) {
+  const [tab, setTab] = useState<"clubs" | "nations">(
+    nations.some((item) => item.clubId === currentId) ? "nations" : "clubs",
+  )
+  const [query, setQuery] = useState("")
+  const q = query.trim().toLowerCase()
+
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
       if (event.key === "Escape") onClose()
@@ -30,75 +44,112 @@ export function ClubPicker({
     return () => window.removeEventListener("keydown", onKey)
   }, [onClose])
 
+  const byId = useMemo(() => {
+    const map = new Map<string, ClubPick>()
+    for (const item of [...clubs, ...nations]) map.set(item.clubId, item)
+    return map
+  }, [clubs, nations])
+
+  const clubGroups = useMemo(() => {
+    const used = new Set<string>()
+    const groups: { id: string; label: string; items: ClubPick[] }[] = LEAGUES.map((league) => {
+      const items = clubCatalog
+        .filter((club) => club.league === league.id)
+        .map((club) => byId.get(club.id))
+        .filter((item): item is ClubPick => Boolean(item && matchesQuery(item, q)))
+      for (const item of items) used.add(item.clubId)
+      return { id: league.id, label: league.label, items }
+    }).filter((group) => group.items.length > 0)
+
+    const rest = clubs.filter((item) => !used.has(item.clubId) && matchesQuery(item, q))
+    if (rest.length > 0) groups.push({ id: "other", label: "Other", items: rest })
+    return groups
+  }, [byId, clubs, q])
+
+  const nationGroups = useMemo(() => {
+    const used = new Set<string>()
+    const groups: { id: string; label: string; items: ClubPick[] }[] = NATION_REGIONS.map((region) => {
+      const items = nationCatalog
+        .filter((nation) => nation.region === region.id)
+        .map((nation) => byId.get(nation.id))
+        .filter((item): item is ClubPick => Boolean(item && matchesQuery(item, q)))
+      for (const item of items) used.add(item.clubId)
+      return { id: region.id, label: region.label, items }
+    }).filter((group) => group.items.length > 0)
+
+    const rest = nations.filter((item) => !used.has(item.clubId) && matchesQuery(item, q))
+    if (rest.length > 0) groups.push({ id: "other", label: "Other", items: rest })
+    return groups
+  }, [byId, nations, q])
+
+  const groups = tab === "clubs" ? clubGroups : nationGroups
+  const empty = groups.length === 0
+
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 p-3 sm:items-center"
+      className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 p-2 sm:items-center sm:p-3"
       onClick={onClose}
     >
-      <div
-        className="max-h-[88dvh] w-full max-w-3xl overflow-y-auto border-2 border-gold bg-panel pixel-border"
-        onClick={(event) => event.stopPropagation()}
-      >
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b-2 border-line bg-panel-2 px-4 py-3">
-          <span className="font-display text-[10px] uppercase tracking-[0.18em] text-gold">
-            Select team
-          </span>
-          <button
-            type="button"
-            onClick={onClose}
-            className="font-display text-[10px] uppercase tracking-widest text-muted hover:text-gold"
-          >
+      <div className="picker-shell" onClick={(event) => event.stopPropagation()}>
+        <div className="picker-head">
+          <div className="picker-tabs" role="tablist">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={tab === "clubs"}
+              className={tab === "clubs" ? "is-on" : ""}
+              onClick={() => setTab("clubs")}
+            >
+              Clubs
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={tab === "nations"}
+              className={tab === "nations" ? "is-on" : ""}
+              onClick={() => setTab("nations")}
+            >
+              Nations
+            </button>
+          </div>
+          <input
+            className="picker-search"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Find…"
+            aria-label="Filter teams"
+          />
+          <button type="button" className="picker-close" onClick={onClose}>
             Close
           </button>
         </div>
-        <Group title="Clubs" items={clubs} currentId={currentId} onSelect={onSelect} />
-        {nations.length > 0 ? (
-          <Group title="National teams" items={nations} currentId={currentId} onSelect={onSelect} />
-        ) : null}
+        <div className="picker-body">
+          {empty ? <p className="picker-empty">No match.</p> : null}
+          {groups.map((group) => (
+            <section key={group.id} className="picker-league">
+              <h3>{group.label}</h3>
+              <div className="picker-row">
+                {group.items.map((item) => {
+                  const meta = getClub(item.clubId)
+                  const active = item.clubId === currentId
+                  return (
+                    <button
+                      key={item.clubId}
+                      type="button"
+                      title={`${item.clubName} · ${item.overallRating}`}
+                      className={`picker-cell${active ? " is-on" : ""}`}
+                      onClick={() => onSelect(item.clubId)}
+                    >
+                      <PixelCrest clubId={item.clubId} size={22} />
+                      <span className="picker-code">{meta?.code ?? item.clubName.slice(0, 3).toUpperCase()}</span>
+                    </button>
+                  )
+                })}
+              </div>
+            </section>
+          ))}
+        </div>
       </div>
     </div>
-  )
-}
-
-function Group({
-  title,
-  items,
-  currentId,
-  onSelect,
-}: {
-  title: string
-  items: ClubPick[]
-  currentId: string
-  onSelect: (clubId: string) => void
-}) {
-  return (
-    <section className="p-4">
-      <h3 className="mb-3 font-display text-[9px] uppercase tracking-[0.18em] text-muted">{title}</h3>
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-        {items.map((item) => {
-          const active = item.clubId === currentId
-          return (
-            <button
-              key={item.clubId}
-              type="button"
-              onClick={() => onSelect(item.clubId)}
-              className={`flex items-center gap-3 border-2 px-3 py-3 text-left transition-colors ${
-                active
-                  ? "border-gold bg-panel-2"
-                  : "border-line bg-ink/40 hover:border-line-hi"
-              }`}
-            >
-              <PixelCrest clubId={item.clubId} size={40} />
-              <span className="min-w-0">
-                <span className="block truncate font-display text-[9px] uppercase tracking-wide text-text">
-                  {item.clubName}
-                </span>
-                <span className="font-display text-lg text-gold">{item.overallRating}</span>
-              </span>
-            </button>
-          )
-        })}
-      </div>
-    </section>
   )
 }
