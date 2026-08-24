@@ -23,7 +23,7 @@ export function SiteHeader() {
           </span>
           <span className="hidden min-w-0 flex-col sm:flex">
             <span className="font-display text-[10px] uppercase tracking-[0.18em] text-text sm:text-[11px]">
-              Football Match Simulator
+              {SITE.name}
             </span>
             <span className="hidden text-[11px] text-muted lg:block">{SITE.tagline}</span>
           </span>

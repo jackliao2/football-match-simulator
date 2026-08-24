@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og"
 
-export const alt = "Football Match Simulator — Legendary teams from any era"
+export const alt = "LegendaryMatch — Football match simulator"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
@@ -28,7 +28,7 @@ export default function OpenGraphImage() {
             textTransform: "uppercase",
           }}
         >
-          Football Match Simulator
+          LegendaryMatch
         </div>
         <div style={{ fontSize: 54, marginTop: 28, lineHeight: 1.2 }}>Pick a team. Pick an era.</div>
         <div style={{ fontSize: 54, lineHeight: 1.2 }}>Settle the debate.</div>

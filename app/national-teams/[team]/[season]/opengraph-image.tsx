@@ -15,7 +15,7 @@ export default async function NationOpenGraphImage({
   const title = team ? `${team.clubName} ${team.displaySeason}` : "National Team"
   const subtitle = team
     ? "Squad, lineup, formation and ratings"
-    : "Football Match Simulator"
+    : "LegendaryMatch"
 
   return new ImageResponse(
     (
@@ -33,7 +33,7 @@ export default async function NationOpenGraphImage({
         }}
       >
         <div style={{ fontSize: 20, letterSpacing: 6, color: "#d4b45a" }}>
-          {team ? `[ ${team.clubCode} ]` : "FMS"}
+          {team ? `[ ${team.clubCode} ]` : "LM"}
         </div>
         <div style={{ fontSize: 52, marginTop: 24, lineHeight: 1.15 }}>{title}</div>
         <div style={{ fontSize: 24, marginTop: 16, color: "#7e9876" }}>{subtitle}</div>

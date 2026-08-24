@@ -53,11 +53,13 @@ export const PLANNER_KEYWORDS = [
   "barcelona vs real madrid",
 ]
 
+const HOME_TITLE = `${SITE.name} — Football Match Simulator`
+
 export const defaultMetadata: Metadata = {
   metadataBase: new URL(absoluteUrl("/")),
   title: {
-    default: "Football Match Simulator — Legendary Teams From Any Era",
-    template: "%s | Football Match Simulator",
+    default: HOME_TITLE,
+    template: `%s | ${SITE.name}`,
   },
   description: SITE.description,
   applicationName: SITE.name,
@@ -65,13 +67,13 @@ export const defaultMetadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: SITE.name,
-    title: "Football Match Simulator — Legendary Teams From Any Era",
+    title: HOME_TITLE,
     description: SITE.description,
     url: absoluteUrl("/"),
   },
   twitter: {
     card: "summary_large_image",
-    title: "Football Match Simulator — Legendary Teams From Any Era",
+    title: HOME_TITLE,
     description: SITE.description,
   },
   alternates: { canonical: "/" },
@@ -170,7 +172,7 @@ export function teamMetadata(team: HistoricalTeam): Metadata {
   const latestYear = years[years.length - 1] ?? team.displaySeason
   const description = `${team.seoDescription} ${latestYear} ${team.clubName} squad, lineup and formation — playable in the football match simulator.`
   return {
-    title: { absolute: `${team.seoTitle} | Football Match Simulator` },
+    title: { absolute: `${team.seoTitle} | ${SITE.name}` },
     description,
     keywords: [
       ...squadKeywords(team),

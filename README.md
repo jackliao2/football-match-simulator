@@ -1,6 +1,8 @@
-# Football Match Simulator
+# LegendaryMatch
 
-Historical football database + match simulator. Pick a legendary team, pick a season, and settle the debate.
+Football match simulator. Brand: **LegendaryMatch**. Pick a legendary team, pick a season, and settle the debate.
+
+Live while the custom domain is pending: https://football-match-simulator-phi.vercel.app — set `NEXT_PUBLIC_SITE_URL=https://legendarymatch.com` after DNS is pointed.
 
 This is **not** a management game, card game, or generic football chatbot. Historical teams are reusable entities with squad pages that also rank for club + year + squad searches.
 

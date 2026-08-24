@@ -12,7 +12,7 @@ import {
 import { primeEntities } from "@/data/prime"
 import { getTeam, teams, toTeamOption } from "@/data/teams"
 import { MatchupRow } from "@/components/ui/MatchupRow"
-import { absoluteUrl } from "@/lib/site"
+import { SITE, absoluteUrl } from "@/lib/site"
 
 const FAQ = [
   [
@@ -57,7 +57,7 @@ export default function HomePage() {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebApplication",
-              name: "Football Match Simulator",
+              name: SITE.name,
               applicationCategory: "GameApplication",
               operatingSystem: "Web",
               url: absoluteUrl("/"),
@@ -70,7 +70,7 @@ export default function HomePage() {
           Football match simulator
         </p>
         <h1 className="font-mono text-xl font-semibold tracking-tight text-text sm:text-3xl">
-          Football Match Simulator
+          {SITE.name}
         </h1>
         <p className="mx-auto whitespace-nowrap font-mono text-[11px] tracking-tight text-muted sm:text-sm">
           Pick a team. Pick an era. Settle the debate.

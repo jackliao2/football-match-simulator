@@ -2,7 +2,7 @@
   "name": "football-match-simulator",
   "version": "0.1.0",
   "private": true,
-  "description": "Historical football match simulator — pick a team, pick an era, settle the debate.",
+  "description": "LegendaryMatch — football match simulator. Pick a team, pick an era, settle the debate.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

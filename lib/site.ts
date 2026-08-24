@@ -12,11 +12,12 @@ export function getSiteUrl(): string {
 }
 
 export const SITE = {
-  name: "Football Match Simulator",
-  shortName: "FMS",
+  name: "LegendaryMatch",
+  shortName: "LM",
+  domain: "legendarymatch.com",
   tagline: "Pick a team. Pick an era. Settle the debate.",
   description:
-    "Football match simulator online: pick a historical team or a current squad and simulate a custom football match. Barcelona 2009 squad vs Real Madrid 2017, Brazil 1970, Arsenal 2004, 2026 national sides — score, scorers, xG and who-would-win probabilities, not a chatbot guess.",
+    "LegendaryMatch is a football match simulator online: pick a historical team or a current squad and simulate a custom football match. Barcelona 2009 squad vs Real Madrid 2017, Brazil 1970, Arsenal 2004, 2026 national sides — score, scorers, xG and who-would-win probabilities, not a chatbot guess.",
   disclaimer:
     "Independent football simulation project. Not affiliated with or endorsed by any club, league, federation or player.",
 }

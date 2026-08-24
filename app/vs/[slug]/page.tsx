@@ -11,7 +11,7 @@ import { allVsPairs } from "@/data/matchups"
 import { getTeam, teams, toTeamOption } from "@/data/teams"
 import { parseVsSlug } from "@/lib/match-id"
 import { teamPath } from "@/lib/paths"
-import { absoluteUrl } from "@/lib/site"
+import { SITE, absoluteUrl } from "@/lib/site"
 import { simulateMany } from "@/lib/simulation"
 
 const VS_RUNS = 400
@@ -35,7 +35,7 @@ export async function generateMetadata({
   const title = `Who Would Win: ${matchup}?`
   const description = `Who would win ${matchup}? Simulate this dream football match. Model probabilities from ${VS_RUNS} runs in a football match simulator — not a recorded historical result.`
   return {
-    title: { absolute: `${title} | Football Match Simulator` },
+    title: { absolute: `${title} | ${SITE.name}` },
     description,
     keywords: [
       `who would win ${home.clubName} vs ${away.clubName}`,

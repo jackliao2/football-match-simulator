@@ -47,7 +47,7 @@ export default async function MatchOpenGraphImage({
             </div>
           </div>
         ) : (
-          <div style={{ fontSize: 48, marginTop: 24 }}>Football Match Simulator</div>
+          <div style={{ fontSize: 48, marginTop: 24 }}>LegendaryMatch</div>
         )}
       </div>
     ),

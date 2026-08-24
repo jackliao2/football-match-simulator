@@ -7,7 +7,7 @@ import { getPrimeEntity, primeEntities } from "@/data/prime"
 import { getTeam } from "@/data/teams"
 import { vsPath } from "@/data/matchups"
 import { teamPath } from "@/lib/paths"
-import { absoluteUrl } from "@/lib/site"
+import { SITE, absoluteUrl } from "@/lib/site"
 
 export const dynamicParams = false
 
@@ -22,7 +22,7 @@ export async function generateMetadata({
   const page = getPrimeEntity(entity)
   if (!page) return { title: "Prime" }
   return {
-    title: { absolute: `${page.seoTitle} | Football Match Simulator` },
+    title: { absolute: `${page.seoTitle} | ${SITE.name}` },
     description: page.seoDescription,
     keywords: [
       page.title.toLowerCase(),

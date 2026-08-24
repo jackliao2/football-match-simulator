@@ -494,11 +494,13 @@ export function PixelFlag({
     <span
       title={label}
       aria-label={label}
-      className={`inline-grid shrink-0 ${className}`}
+      className={`inline-grid shrink-0 overflow-hidden ${className}`}
       style={{
         width: size,
         height,
+        aspectRatio: `${W} / ${H}`,
         gridTemplateColumns: `repeat(${W}, 1fr)`,
+        gridTemplateRows: `repeat(${H}, 1fr)`,
         imageRendering: "pixelated",
         boxShadow: "1px 1px 0 #000",
       }}

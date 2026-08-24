@@ -20,7 +20,7 @@ export default function Icon() {
           border: "2px solid #d4b45a",
         }}
       >
-        F
+        L
       </div>
     ),
     { ...size },

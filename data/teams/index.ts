@@ -212,6 +212,7 @@ export const teams: HistoricalTeam[] = RAW.map((team) => ({
 
 function assertTeamData(catalog: HistoricalTeam[]) {
   const seen = new Set<string>()
+  const missingNations: string[] = []
   for (const team of catalog) {
     if (seen.has(team.id)) throw new Error(`Duplicate team id: ${team.id}`)
     seen.add(team.id)
@@ -228,6 +229,14 @@ function assertTeamData(catalog: HistoricalTeam[]) {
         throw new Error(`${team.id} starting XI missing player ${id} (roster: ${ids.join(", ")})`)
       }
     }
+    if (team.kind !== "nation") {
+      for (const player of team.players) {
+        if (player.nation === "XX") missingNations.push(`${team.id}: ${player.name}`)
+      }
+    }
+  }
+  if (missingNations.length > 0) {
+    throw new Error(`Missing nation flags:\n${missingNations.join("\n")}`)
   }
 }
 

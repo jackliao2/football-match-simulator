@@ -458,19 +458,14 @@ function TeamColumn({
       <div className={`faceoff-seasons ${away ? "justify-end" : ""}`}>
         {seasons.map((season) => {
           const active = season.id === team.id
-          const shine = eraGlow(season.team.trophies)
+          const champion = eraGlow(season.team.trophies)
           return (
             <button
               key={season.id}
               type="button"
+              aria-pressed={active}
               onClick={() => onSeason(season.id)}
-              className={`border font-mono ${
-                active
-                  ? away
-                    ? "border-danger bg-danger/15 text-danger"
-                    : "border-gold bg-gold/15 text-gold"
-                  : "border-line text-muted hover:border-line-hi hover:text-text"
-              } ${shine ? "season-shine" : ""}`}
+              className={`season-chip${active ? " is-on" : ""}${champion ? " is-cup" : ""}`}
             >
               {season.displaySeason}
             </button>
