@@ -79,14 +79,23 @@ export function MatchSetup({
   const [copied, setCopied] = useState(false)
   const resultRef = useRef<HTMLDivElement>(null)
   const scrollTarget = useRef<"match" | "batch" | "analysis">("match")
+  const legendHomeId = useRef(homeDefault.id)
+  const legendAwayId = useRef(awayDefault.id)
   const [scrollKey, setScrollKey] = useState(0)
 
   useEffect(() => {
     try {
-      if (window.localStorage.getItem("lm-current-squads") === "1") setIncludeCurrent(true)
+      if (window.localStorage.getItem("lm-current-squads") !== "1") return
+      setIncludeCurrent(true)
+      const nextHome = preferredSeason(seasonsForClub(teams, homeClub, true), true)
+      const nextAway = preferredSeason(seasonsForClub(teams, awayClub, true), true)
+      if (nextHome) setHomeId(nextHome.id)
+      if (nextAway) setAwayId(nextAway.id)
     } catch {
       /* ignore */
     }
+    // Hydrate once from the saved Now/Legend switch.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -134,12 +143,23 @@ export function MatchSetup({
     if (side === "home") {
       setHomeClub(clubId)
       setHomeId(preferred.id)
+      if (!includeCurrent) legendHomeId.current = preferred.id
     } else {
       setAwayClub(clubId)
       setAwayId(preferred.id)
+      if (!includeCurrent) legendAwayId.current = preferred.id
     }
     setPicker(null)
     resetOutputs()
+  }
+
+  function applyEra(clubId: string, includeNow: boolean, rememberedId?: string) {
+    const seasons = seasonsForClub(teams, clubId, includeNow)
+    if (rememberedId) {
+      const remembered = seasons.find((season) => season.id === rememberedId)
+      if (remembered) return remembered.id
+    }
+    return preferredSeason(seasons, includeNow)?.id
   }
 
   function toggleCurrentSquads() {
@@ -150,25 +170,40 @@ export function MatchSetup({
     } catch {
       /* ignore */
     }
-    if (!next) {
-      const nextHome = preferredSeason(seasonsForClub(teams, homeClub, false), false)
-      const nextAway = preferredSeason(seasonsForClub(teams, awayClub, false), false)
-      if (nextHome) setHomeId(nextHome.id)
-      if (nextAway) setAwayId(nextAway.id)
+    if (next) {
+      legendHomeId.current = homeId
+      legendAwayId.current = awayId
+      const nextHome = applyEra(homeClub, true)
+      const nextAway = applyEra(awayClub, true)
+      if (nextHome) setHomeId(nextHome)
+      if (nextAway) setAwayId(nextAway)
+    } else {
+      const nextHome = applyEra(homeClub, false, legendHomeId.current)
+      const nextAway = applyEra(awayClub, false, legendAwayId.current)
+      if (nextHome) setHomeId(nextHome)
+      if (nextAway) setAwayId(nextAway)
     }
     resetOutputs()
   }
 
   function changeSeason(side: "home" | "away", teamId: string) {
     track("season_selected", { teamId, side })
-    if (side === "home") setHomeId(teamId)
-    else setAwayId(teamId)
+    if (side === "home") {
+      setHomeId(teamId)
+      if (!includeCurrent) legendHomeId.current = teamId
+    } else {
+      setAwayId(teamId)
+      if (!includeCurrent) legendAwayId.current = teamId
+    }
     resetOutputs()
   }
 
   function swapSides() {
     const nextHomeClub = awayClub
     const nextHomeId = awayId
+    const nextLegendHome = legendAwayId.current
+    legendAwayId.current = legendHomeId.current
+    legendHomeId.current = nextLegendHome
     setAwayClub(homeClub)
     setAwayId(homeId)
     setHomeClub(nextHomeClub)
