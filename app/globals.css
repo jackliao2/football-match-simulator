@@ -242,7 +242,7 @@ a.result-panel:hover {
 
 .faceoff-card {
   display: grid;
-  grid-template-rows: 6rem 2.35rem 3.85rem minmax(0, 1fr);
+  grid-template-rows: 6rem 2.35rem 2.7rem minmax(0, 1fr);
   min-width: 0;
   border: 2px solid #3a5230;
   background:
@@ -547,20 +547,157 @@ a.result-panel:hover {
 
 .faceoff-seasons {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  align-content: flex-start;
-  gap: 0.3rem;
   min-width: 0;
-  overflow: hidden;
+  overflow: visible;
+  position: relative;
+  z-index: 5;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 0.32rem 0.7rem;
+  padding: 0.28rem 0.7rem;
 }
 
-.faceoff-seasons button {
-  padding: 0.18rem 0.42rem;
+.era-select {
+  position: relative;
+  width: 100%;
+}
+
+.era-select-btn {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: #080c08;
+  padding: 0.32rem 0.55rem;
+  color: var(--color-text);
+}
+
+.era-select-btn.is-cup {
+  border-color: rgba(212, 180, 90, 0.5);
+}
+
+.era-select-btn.is-open,
+.era-select-btn:hover {
+  border-color: var(--color-gold);
+}
+
+.era-select-kicker {
+  font-family: var(--font-display), ui-monospace, monospace;
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.era-select-year {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.era-select-caret {
+  color: var(--color-muted);
   font-size: 11px;
-  line-height: 1.2;
+}
+
+.era-select.is-right .era-select-btn {
+  flex-direction: row-reverse;
+}
+
+.era-select-menu {
+  position: absolute;
+  top: calc(100% + 3px);
+  right: 0;
+  left: 0;
+  z-index: 40;
+  max-height: 15rem;
+  overflow-y: auto;
+  border: 1px solid var(--color-gold);
+  background: #0b100b;
+  box-shadow: 4px 4px 0 #000;
+}
+
+.era-select-item {
+  display: grid;
+  grid-template-columns: 4.4rem minmax(0, 1fr) auto;
+  width: 100%;
+  align-items: center;
+  gap: 0.4rem;
+  border: 0;
+  background: transparent;
+  padding: 0.42rem 0.55rem;
+  text-align: left;
+  color: var(--color-text);
+}
+
+.era-select-item:hover,
+.era-select-item.is-on {
+  background: rgba(212, 180, 90, 0.12);
+}
+
+.era-select-item-year {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.era-select-item-meta {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--color-muted);
+}
+
+.era-mode {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border: 0;
+  background: transparent;
+  padding: 0.15rem 0;
+  font-family: var(--font-display), ui-monospace, monospace;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.era-mode span.is-on {
+  color: var(--color-gold);
+}
+
+.era-mode i {
+  position: relative;
+  display: block;
+  width: 22px;
+  height: 12px;
+  border: 1px solid #5c8a48;
+  background: #080c08;
+}
+
+.era-mode i::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 8px;
+  height: 8px;
+  background: #7e9876;
+}
+
+.era-mode i.is-on {
+  border-color: var(--color-gold);
+}
+
+.era-mode i.is-on::after {
+  left: 11px;
+  background: var(--color-gold);
 }
 
 .faceoff-squad {
@@ -750,7 +887,7 @@ a.result-panel:hover {
   }
 
   .faceoff-card {
-    grid-template-rows: 5.6rem auto 3.6rem minmax(0, 1fr);
+    grid-template-rows: 5.6rem auto 2.6rem minmax(0, 1fr);
   }
 
   .faceoff-identity-wrap {

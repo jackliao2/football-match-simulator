@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react"
 import { ClubPicker } from "@/components/simulator/ClubPicker"
+import { EraSelect } from "@/components/simulator/EraSelect"
 import { MatchResult } from "@/components/simulator/MatchResult"
 import { MatchStats } from "@/components/simulator/MatchStats"
 import { MatchTimeline } from "@/components/simulator/MatchTimeline"
@@ -11,6 +12,7 @@ import { FaceOffSquad } from "@/components/teams/SquadPanel"
 import { PixelCrest } from "@/components/teams/PixelCrest"
 import { TrophyBadges } from "@/components/teams/TrophyBadges"
 import { eraGlow } from "@/data/trophies"
+import { isCurrentSquad } from "@/lib/seo"
 import { ResultPanel } from "@/components/ui/ResultPanel"
 import { OvrStamp } from "@/components/ui/OvrStamp"
 import { track } from "@/lib/analytics"
@@ -46,8 +48,9 @@ export function MatchSetup({
   defaultHome?: string
   defaultAway?: string
 }) {
-  const clubs = useMemo(() => uniqueOrgs(teams, "club"), [teams])
-  const nations = useMemo(() => uniqueOrgs(teams, "nation"), [teams])
+  const [includeCurrent, setIncludeCurrent] = useState(false)
+  const clubs = useMemo(() => uniqueOrgs(teams, "club", includeCurrent), [teams, includeCurrent])
+  const nations = useMemo(() => uniqueOrgs(teams, "nation", includeCurrent), [teams, includeCurrent])
 
   const homeDefault = teams.find((team) => team.id === defaultHome) ?? teams[0]!
   const awayDefault =
@@ -79,6 +82,14 @@ export function MatchSetup({
   const [scrollKey, setScrollKey] = useState(0)
 
   useEffect(() => {
+    try {
+      if (window.localStorage.getItem("lm-current-squads") === "1") setIncludeCurrent(true)
+    } catch {
+      /* ignore */
+    }
+  }, [])
+
+  useEffect(() => {
     if (scrollKey === 0) return
     const node = document.getElementById(`result-${scrollTarget.current}`) ?? resultRef.current
     node?.scrollIntoView({ behavior: "smooth", block: "start" })
@@ -97,10 +108,16 @@ export function MatchSetup({
     setAnalysisError(null)
   }
 
-  const homeSeasons = seasonsForClub(teams, homeClub)
-  const awaySeasons = seasonsForClub(teams, awayClub)
-  const home = teams.find((team) => team.id === homeId) ?? homeSeasons[0]!
-  const away = teams.find((team) => team.id === awayId) ?? awaySeasons[0]!
+  const homeSeasons = seasonsForClub(teams, homeClub, includeCurrent)
+  const awaySeasons = seasonsForClub(teams, awayClub, includeCurrent)
+  const home =
+    homeSeasons.find((team) => team.id === homeId) ??
+    preferredSeason(homeSeasons, includeCurrent) ??
+    homeSeasons[0]!
+  const away =
+    awaySeasons.find((team) => team.id === awayId) ??
+    preferredSeason(awaySeasons, includeCurrent) ??
+    awaySeasons[0]!
   const sameTeam = home.id === away.id
   const homeSquad = home.squad.length > 0 ? home.squad : teamSquad(home.team)
   const awaySquad = away.squad.length > 0 ? away.squad : teamSquad(away.team)
@@ -110,8 +127,8 @@ export function MatchSetup({
       setPicker(null)
       return
     }
-    const seasons = seasonsForClub(teams, clubId)
-    const preferred = seasons[0]
+    const seasons = seasonsForClub(teams, clubId, includeCurrent)
+    const preferred = preferredSeason(seasons, includeCurrent)
     if (!preferred) return
     track("team_selected", { clubId, side })
     if (side === "home") {
@@ -122,6 +139,23 @@ export function MatchSetup({
       setAwayId(preferred.id)
     }
     setPicker(null)
+    resetOutputs()
+  }
+
+  function toggleCurrentSquads() {
+    const next = !includeCurrent
+    setIncludeCurrent(next)
+    try {
+      window.localStorage.setItem("lm-current-squads", next ? "1" : "0")
+    } catch {
+      /* ignore */
+    }
+    if (!next) {
+      const nextHome = preferredSeason(seasonsForClub(teams, homeClub, false), false)
+      const nextAway = preferredSeason(seasonsForClub(teams, awayClub, false), false)
+      if (nextHome) setHomeId(nextHome.id)
+      if (nextAway) setAwayId(nextAway.id)
+    }
     resetOutputs()
   }
 
@@ -233,6 +267,17 @@ export function MatchSetup({
           <div className="faceoff-rail">
             <div className="faceoff-rail-inner">
               <div className="faceoff-vs">VS</div>
+              <button
+                type="button"
+                className="era-mode"
+                role="switch"
+                aria-checked={includeCurrent}
+                onClick={toggleCurrentSquads}
+              >
+                <span className={!includeCurrent ? "is-on" : ""}>Legend</span>
+                <i className={includeCurrent ? "is-on" : ""} aria-hidden />
+                <span className={includeCurrent ? "is-on" : ""}>Now</span>
+              </button>
               <button type="button" onClick={swapSides} className="rail-swap">
                 Swap
               </button>
@@ -381,18 +426,35 @@ export function MatchSetup({
   )
 }
 
-function seasonsForClub(teams: TeamOption[], clubId: string) {
+function seasonsForClub(teams: TeamOption[], clubId: string, includeCurrent: boolean) {
   return teams
-    .filter((team) => team.clubId === clubId)
+    .filter((team) => team.clubId === clubId && (includeCurrent || !isCurrentSquad(team.team)))
     .sort((a, b) => b.team.eraYear - a.team.eraYear)
 }
 
-function uniqueOrgs(teams: TeamOption[], kind: TeamKind): TeamOption[] {
+function preferredSeason(seasons: TeamOption[], includeCurrent: boolean) {
+  if (seasons.length === 0) return undefined
+  if (includeCurrent) return seasons[0]
+  return [...seasons].sort(
+    (a, b) => b.overallRating - a.overallRating || b.team.eraYear - a.team.eraYear,
+  )[0]
+}
+
+function uniqueOrgs(teams: TeamOption[], kind: TeamKind, includeCurrent: boolean) {
   const map = new Map<string, TeamOption>()
   for (const team of teams) {
     if (team.kind !== kind) continue
+    if (!includeCurrent && isCurrentSquad(team.team)) continue
     const prev = map.get(team.clubId)
-    if (!prev || team.team.eraYear > prev.team.eraYear) map.set(team.clubId, team)
+    if (!prev) {
+      map.set(team.clubId, team)
+      continue
+    }
+    const better = includeCurrent
+      ? team.team.eraYear > prev.team.eraYear
+      : team.overallRating > prev.overallRating ||
+        (team.overallRating === prev.overallRating && team.team.eraYear > prev.team.eraYear)
+    if (better) map.set(team.clubId, team)
   }
   return [...map.values()]
 }
@@ -455,22 +517,13 @@ function TeamColumn({
         Change team ▾
       </button>
 
-      <div className={`faceoff-seasons ${away ? "justify-end" : ""}`}>
-        {seasons.map((season) => {
-          const active = season.id === team.id
-          const champion = eraGlow(season.team.trophies)
-          return (
-            <button
-              key={season.id}
-              type="button"
-              aria-pressed={active}
-              onClick={() => onSeason(season.id)}
-              className={`season-chip${active ? " is-on" : ""}${champion ? " is-cup" : ""}`}
-            >
-              {season.displaySeason}
-            </button>
-          )
-        })}
+      <div className="faceoff-seasons">
+        <EraSelect
+          seasons={seasons}
+          value={team}
+          align={away ? "right" : "left"}
+          onChange={onSeason}
+        />
       </div>
 
       <div className="faceoff-squad">

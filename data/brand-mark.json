@@ -3,25 +3,24 @@
   "palette": {
     "g": "#d4b45a",
     "G": "#f3dc8a",
-    "p": "#102410",
-    "P": "#183418"
+    "w": "#fff3c4"
   },
   "rows": [
-    ".....GPPPPG.....",
-    "....GPPPPPPG....",
-    "...GPPPPPPPPG...",
-    "..GPPPPPGPPPPG..",
-    ".gPPPPPGGGPPPPg.",
-    ".gppGGGGGGGGppg.",
-    ".gpppggggggpppg.",
-    ".gpppggppggpppg.",
-    ".gppggppppggppg.",
-    ".gppgppppppgppg.",
-    "..gppppppppppg..",
-    "...gppppppppg...",
-    "....gppppppg....",
-    ".....gppppg.....",
-    "......gppg......",
-    ".......gg......."
+    "................",
+    "...g........g...",
+    "..g.gggggggg.g..",
+    "..g.gGGGGGGg.g..",
+    "..g.gGwwwwGg.g..",
+    "..g.gGGGGGGg.g..",
+    "...g.gggggg.g...",
+    "....gggggggg....",
+    "......gGGg......",
+    "......gggg......",
+    "......gggg......",
+    ".....gggggg.....",
+    "....gGGGGGGg....",
+    "...gggggggggg...",
+    "................",
+    "................"
   ]
 }
