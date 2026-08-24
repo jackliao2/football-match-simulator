@@ -134,8 +134,8 @@ function downsample(rgba, from, to) {
   return out
 }
 
-const native = raster(1)
-const png32 = png(native)
-const png16 = png({ size: 16, rgba: downsample(native.rgba, native.size, 16) })
+const png16 = png(mark.size === 16 ? raster(1) : { size: 16, rgba: downsample(raster(1).rgba, mark.size, 16) })
+const png32 = png(mark.size === 16 ? raster(2) : raster(1))
 writeFileSync(join(root, "app/favicon.ico"), ico([{ size: 16, buf: png16 }, { size: 32, buf: png32 }]))
-console.log("wrote app/favicon.ico")
+writeFileSync(join(root, "public/icon-preview.png"), png(raster(mark.size === 16 ? 8 : 4)))
+console.log("wrote app/favicon.ico and public/icon-preview.png")

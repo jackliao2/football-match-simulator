@@ -7,7 +7,7 @@ export const contentType = "image/png"
 
 export default function OpenGraphImage() {
   const rows = brandRows()
-  const cell = 3
+  const cell = 5
   return new ImageResponse(
     (
       <div
