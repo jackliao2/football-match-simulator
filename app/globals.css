@@ -62,6 +62,85 @@ button {
   touch-action: manipulation;
 }
 
+.site-logo {
+  display: flex;
+  min-width: 0;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.7rem;
+  text-decoration: none;
+}
+
+.site-logo:hover .site-word-name {
+  color: var(--color-gold-2);
+}
+
+.brand-mark {
+  box-shadow: 2px 2px 0 #000;
+}
+
+.site-wordmark {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+  line-height: 1;
+  -webkit-font-smoothing: none;
+}
+
+.site-word-kicker,
+.site-word-name {
+  font-family: var(--font-display), ui-monospace, monospace;
+  text-transform: uppercase;
+}
+
+.site-word-kicker {
+  display: none;
+  font-size: 8px;
+  line-height: 8px;
+  letter-spacing: 1px;
+  color: var(--color-muted);
+}
+
+.site-word-name {
+  position: relative;
+  font-size: 8px;
+  line-height: 8px;
+  letter-spacing: 1px;
+  color: var(--color-gold);
+  text-shadow: 1px 1px 0 #000;
+}
+
+.site-word-name::after {
+  content: "";
+  display: none;
+  width: 100%;
+  height: 2px;
+  margin-top: 3px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--color-gold) 0 6px,
+    transparent 6px 8px
+  );
+}
+
+@media (min-width: 640px) {
+  .site-word-kicker {
+    display: block;
+  }
+
+  .site-word-name {
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 0 #000;
+  }
+
+  .site-word-name::after {
+    display: block;
+  }
+}
+
 select {
   background-color: var(--color-panel);
   color: var(--color-text);

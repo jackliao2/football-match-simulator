@@ -1,9 +1,12 @@
 import { ImageResponse } from "next/og"
+import { BRAND_INK, BRAND_MARK_SIZE, brandColor, brandRows } from "@/lib/brand-mark"
 
 export const size = { width: 32, height: 32 }
 export const contentType = "image/png"
 
 export default function Icon() {
+  const rows = brandRows()
+  const cell = size.width / BRAND_MARK_SIZE
   return new ImageResponse(
     (
       <div
@@ -11,16 +14,24 @@ export default function Icon() {
           width: "100%",
           height: "100%",
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "#070907",
-          color: "#d4b45a",
-          fontSize: 16,
-          fontWeight: 700,
-          border: "2px solid #d4b45a",
+          flexDirection: "column",
+          background: BRAND_INK,
         }}
       >
-        L
+        {rows.map((row, y) => (
+          <div key={y} style={{ display: "flex", height: cell }}>
+            {[...row].map((token, x) => (
+              <div
+                key={x}
+                style={{
+                  width: cell,
+                  height: cell,
+                  backgroundColor: brandColor(token) ?? BRAND_INK,
+                }}
+              />
+            ))}
+          </div>
+        ))}
       </div>
     ),
     { ...size },
