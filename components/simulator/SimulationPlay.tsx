@@ -45,7 +45,10 @@ function MatchPlay({
   const [line, setLine] = useState("Kick-off")
 
   const done = useRef(onDone)
-  done.current = onDone
+
+  useEffect(() => {
+    done.current = onDone
+  }, [onDone])
 
   useEffect(() => {
     const goals = match.events
@@ -107,7 +110,10 @@ function BatchPlay({
   const [line, setLine] = useState("0–0")
 
   const finish = useRef(onDone)
-  finish.current = onDone
+
+  useEffect(() => {
+    finish.current = onDone
+  }, [onDone])
 
   useEffect(() => {
     const samples = batch.samples.length > 0 ? batch.samples : [{ home: 1, away: 1 }]

@@ -83,11 +83,17 @@ Set any OpenAI-compatible endpoint:
 
 ```env
 AI_API_KEY=
-AI_BASE_URL=https://api.x.ai/v1
-AI_MODEL=grok-4.6
+AI_BASE_URL=https://ark.cn-beijing.volces.com/api/v3
+AI_MODEL=ep-your-endpoint-id
+AI_DISABLE_THINKING=true
 ```
 
-`XAI_API_KEY` is accepted as a fallback. Commentary is generated only after the user asks for a report (`POST /api/commentary`). Historical pages never call AI.
+The production configuration targets Volcano Ark and Seed 2.0 Mini. Keep thinking disabled for this deterministic, latency-sensitive use case. `XAI_API_KEY` remains accepted as a legacy fallback. Commentary is generated only after the user asks for a report (`POST /api/commentary`). Historical pages never call AI.
+
+Before adding a production key, keep the timeout, per-instance rate limit and cache settings from
+`.env.example`. Repeated requests for the same deterministic matchup share a pending request and reuse
+the cached response. The built-in limiter protects a warm server instance; move the limiter and cache to
+a durable shared store before high-volume or licensed API traffic.
 
 ## SEO rules
 
@@ -103,7 +109,13 @@ npm run dev
 npm run build
 npm start
 npm run lint
+npm run typecheck
+npm test
+npm run launch:check
 ```
+
+`npm run launch:check` intentionally fails until the custom production domain, working contact inbox and
+current club-season catalogue are ready. It is a pre-launch gate, not part of ordinary local checks.
 
 ## Disclaimer
 

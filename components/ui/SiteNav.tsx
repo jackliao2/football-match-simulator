@@ -14,7 +14,10 @@ const links = [
 export function SiteNav() {
   const pathname = usePathname()
   return (
-    <nav className="flex shrink-0 gap-0.5 overflow-x-auto sm:gap-2">
+    <nav
+      aria-label="Primary navigation"
+      className="ml-auto flex min-w-0 flex-1 justify-start gap-0.5 overflow-x-auto overscroll-x-contain sm:justify-end sm:gap-2"
+    >
       {links.map((link) => {
         const active = pathname === link.href || pathname.startsWith(`${link.href}/`)
         return (

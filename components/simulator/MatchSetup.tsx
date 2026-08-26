@@ -83,16 +83,19 @@ export function MatchSetup({
   const [scrollKey, setScrollKey] = useState(0)
 
   useEffect(() => {
-    try {
-      if (window.localStorage.getItem("lm-current-squads") !== "1") return
-      setIncludeCurrent(true)
-      const nextHome = preferredSeason(seasonsForClub(teams, homeClub, true), true)
-      const nextAway = preferredSeason(seasonsForClub(teams, awayClub, true), true)
-      if (nextHome) setHomeId(nextHome.id)
-      if (nextAway) setAwayId(nextAway.id)
-    } catch {
-      /* ignore */
-    }
+    const hydration = window.setTimeout(() => {
+      try {
+        if (window.localStorage.getItem("lm-current-squads") !== "1") return
+        setIncludeCurrent(true)
+        const nextHome = preferredSeason(seasonsForClub(teams, homeClub, true), true)
+        const nextAway = preferredSeason(seasonsForClub(teams, awayClub, true), true)
+        if (nextHome) setHomeId(nextHome.id)
+        if (nextAway) setAwayId(nextAway.id)
+      } catch {
+        /* ignore */
+      }
+    }, 0)
+    return () => window.clearTimeout(hydration)
     // Hydrate once from the saved Now/Legend switch.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

@@ -33,7 +33,14 @@ export async function generateMatchReport(
   try {
     const report = await provider.generateMatchReport(COMMENTARY_SYSTEM_PROMPT, payload)
     return { report, source: "ai" }
-  } catch {
+  } catch (error) {
+    console.error(
+      "[ai-provider]",
+      JSON.stringify({
+        error: error instanceof Error ? error.message : "Unknown provider error",
+        feature: "commentary",
+      }),
+    )
     return { report: templateMatchReport(match), source: "template" }
   }
 }

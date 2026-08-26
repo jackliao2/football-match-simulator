@@ -295,7 +295,7 @@ const PAINT: Record<string, Paint> = {
     return C.white
   },
   LB: hBands([C.red, C.white, C.red]),
-  QA: (x, y) => (x <= 3 ? C.white : "#8a1538"),
+  QA: (x) => (x <= 3 ? C.white : "#8a1538"),
   AE: (x, y) => {
     if (x <= 3) return C.red
     if (y <= 2) return C.green
@@ -332,7 +332,7 @@ const PAINT: Record<string, Paint> = {
     return y < 4 ? "#0038a8" : C.red
   },
   SG: (x, y) => (y < 4 ? C.red : C.white),
-  HK: (_x, _y) => C.red,
+  HK: () => C.red,
   TW: (x, y) => {
     if (x <= 5 && y <= 3) return "#000095"
     return C.red
@@ -349,7 +349,7 @@ const PAINT: Record<string, Paint> = {
   MT: vBands([C.white, C.red]),
   CY: (_x, y) => (y === 6 ? C.green : C.white),
   MD: vBands(["#003da5", C.gold, C.red]),
-  ME: (_x, _y) => C.red,
+  ME: () => C.red,
   XK: (_x, y) => (y >= 5 ? C.gold : "#244aa5"),
   MC: hBands([C.red, C.white]),
   AD: vBands(["#0018a8", C.gold, C.red]),

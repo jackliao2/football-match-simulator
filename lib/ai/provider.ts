@@ -18,16 +18,29 @@ function env(name: string): string | undefined {
   return value && value.trim().length > 0 ? value.trim() : undefined
 }
 
+function envInt(name: string, fallback: number, min: number, max: number): number {
+  const parsed = Number.parseInt(process.env[name] ?? "", 10)
+  if (!Number.isFinite(parsed)) return fallback
+  return Math.max(min, Math.min(max, parsed))
+}
+
 export function getAiConfig(): { apiKey: string; baseUrl: string; model: string } | null {
   const apiKey = env("AI_API_KEY") ?? env("XAI_API_KEY")
   if (!apiKey) return null
-  const baseUrl = (env("AI_BASE_URL") ?? "https://api.x.ai/v1").replace(/\/$/, "")
-  const model = env("AI_MODEL") ?? "grok-4.6"
+  const baseUrl = (env("AI_BASE_URL") ?? "https://ark.cn-beijing.volces.com/api/v3").replace(/\/$/, "")
+  const model = env("AI_MODEL")
+  if (!model) return null
   return { apiKey, baseUrl, model }
 }
 
 export function isAiConfigured(): boolean {
   return getAiConfig() !== null
+}
+
+export function getAiCacheNamespace(): string {
+  const config = getAiConfig()
+  if (!config) return "template"
+  return `${config.baseUrl}:${config.model}`
 }
 
 export class OpenAICompatibleProvider implements CommentaryProvider {
@@ -38,22 +51,40 @@ export class OpenAICompatibleProvider implements CommentaryProvider {
     payload: unknown,
     options?: { maxTokens?: number; temperature?: number },
   ): Promise<string> {
-    const response = await fetch(`${this.config.baseUrl}/chat/completions`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${this.config.apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: this.config.model,
-        temperature: options?.temperature ?? 0.7,
-        max_tokens: options?.maxTokens ?? 900,
-        messages: [
-          { role: "system", content: prompt },
-          { role: "user", content: JSON.stringify(payload) },
-        ],
-      }),
-    })
+    const timeoutMs = envInt("AI_TIMEOUT_MS", 20_000, 3_000, 25_000)
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), timeoutMs)
+    let response: Response
+    try {
+      response = await fetch(`${this.config.baseUrl}/chat/completions`, {
+        method: "POST",
+        cache: "no-store",
+        signal: controller.signal,
+        headers: {
+          Authorization: `Bearer ${this.config.apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: this.config.model,
+          temperature: options?.temperature ?? 0.7,
+          max_tokens: options?.maxTokens ?? 900,
+          ...(process.env.AI_DISABLE_THINKING !== "false"
+            ? { thinking: { type: "disabled" } }
+            : {}),
+          messages: [
+            { role: "system", content: prompt },
+            { role: "user", content: JSON.stringify(payload) },
+          ],
+        }),
+      })
+    } catch (error) {
+      if (controller.signal.aborted) {
+        throw new Error(`AI provider timed out after ${timeoutMs}ms`)
+      }
+      throw error
+    } finally {
+      clearTimeout(timeout)
+    }
 
     if (!response.ok) {
       const body = await response.text()

@@ -230,7 +230,14 @@ export async function generatePreMatchAnalysis(
       maxTokens: 1600,
     })
     return { report, source: "ai" }
-  } catch {
+  } catch (error) {
+    console.error(
+      "[ai-provider]",
+      JSON.stringify({
+        error: error instanceof Error ? error.message : "Unknown provider error",
+        feature: "analysis",
+      }),
+    )
     return { report: fallback, source: "template" }
   }
 }

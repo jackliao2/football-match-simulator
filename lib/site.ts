@@ -14,8 +14,8 @@ export function getSiteUrl(): string {
 export const SITE = {
   name: "LegendaryMatch",
   shortName: "LM",
-  domain: "legendarymatch.com",
-  email: "info@legendarymatch.com",
+  domain: process.env.NEXT_PUBLIC_SITE_DOMAIN?.trim() || "legendarymatch.com",
+  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "info@legendarymatch.com",
   legalUpdated: "26 August 2026",
   tagline: "Pick a team. Pick an era. Settle the debate.",
   description:
