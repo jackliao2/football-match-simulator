@@ -9,7 +9,7 @@ import {
 } from "@/data/matchups"
 import { primeEntities } from "@/data/prime"
 import { getTeam, teams, toTeamOption } from "@/data/teams"
-import { MatchupRow } from "@/components/ui/MatchupRow"
+import { DreamMatchCarousel } from "@/components/ui/DreamMatchCarousel"
 import { SITE, absoluteUrl } from "@/lib/site"
 
 const FAQ = [
@@ -43,6 +43,12 @@ export default function HomePage() {
   const options = teams.map(toTeamOption)
   const legendary = HOMEPAGE_TEAMS.map((id) => getTeam(id)).filter(Boolean)
   const nations = HOMEPAGE_NATIONS.map((id) => getTeam(id)).filter(Boolean)
+  const dreamMatches = HOMEPAGE_MATCHUPS.flatMap(([homeId, awayId]) => {
+    const home = getTeam(homeId)
+    const away = getTeam(awayId)
+    if (!home || !away) return []
+    return [{ href: vsPath(homeId, awayId), home, away }]
+  })
 
   return (
     <div className="grid gap-3">
@@ -97,21 +103,7 @@ export default function HomePage() {
             All matchups →
           </Link>
         </div>
-        <div className="grid gap-2">
-          {HOMEPAGE_MATCHUPS.map(([homeId, awayId]) => {
-            const home = getTeam(homeId)
-            const away = getTeam(awayId)
-            if (!home || !away) return null
-            return (
-              <MatchupRow
-                key={`${homeId}-${awayId}`}
-                href={vsPath(homeId, awayId)}
-                home={home}
-                away={away}
-              />
-            )
-          })}
-        </div>
+        <DreamMatchCarousel items={dreamMatches} />
       </section>
 
       <section className="home-section">

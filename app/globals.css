@@ -314,6 +314,58 @@ button {
   color: var(--color-gold-2);
 }
 
+.dream-reel {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.dream-reel-stage {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.dream-reel-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+}
+
+.dream-reel-arrow {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid rgba(212, 180, 90, 0.45);
+  background: #0a0e0a;
+  color: var(--color-gold);
+  font-family: var(--font-brand), "Cinzel", Palatino, "Times New Roman", serif;
+  font-size: 1.35rem;
+  line-height: 1;
+  box-shadow: 2px 2px 0 #000;
+}
+
+.dream-reel-arrow:hover {
+  border-color: var(--color-gold);
+  background: rgba(212, 180, 90, 0.14);
+}
+
+.dream-reel-dots {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.dream-reel-dots button {
+  width: 0.55rem;
+  height: 0.55rem;
+  border: 1px solid var(--color-gold);
+  background: transparent;
+  padding: 0;
+}
+
+.dream-reel-dots button.is-on {
+  background: var(--color-gold);
+}
+
 select {
   background-color: var(--color-panel);
   color: var(--color-text);
