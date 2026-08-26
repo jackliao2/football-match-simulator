@@ -366,6 +366,115 @@ button {
   background: var(--color-gold);
 }
 
+.team-reel-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .team-reel-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.legal-doc {
+  display: grid;
+  gap: 1.1rem;
+  max-width: 44rem;
+}
+
+.legal-updated {
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--color-muted);
+}
+
+.legal-body {
+  display: grid;
+  gap: 1.45rem;
+}
+
+.legal-body h2 {
+  margin-bottom: 0.45rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+.legal-body p,
+.legal-body li {
+  font-size: 0.875rem;
+  line-height: 1.75;
+  color: var(--color-muted);
+}
+
+.legal-body p + p {
+  margin-top: 0.7rem;
+}
+
+.legal-body ul {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 0.55rem;
+  padding-left: 1.15rem;
+}
+
+.legal-body li strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.legal-body a {
+  color: var(--color-gold);
+}
+
+.legal-body a:hover {
+  color: var(--color-gold-2);
+}
+
+.legal-body code {
+  font-size: 0.8em;
+  color: var(--color-text);
+}
+
+.legal-mail {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.legal-mail a {
+  color: var(--color-gold);
+  text-decoration: none;
+}
+
+.legal-mail a:hover {
+  color: var(--color-gold-2);
+  text-decoration: underline;
+}
+
+.legal-siblings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--color-line);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.legal-siblings a {
+  color: var(--color-muted);
+}
+
+.legal-siblings a:hover {
+  color: var(--color-gold);
+}
+
 select {
   background-color: var(--color-panel);
   color: var(--color-text);

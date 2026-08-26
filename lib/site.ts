@@ -15,6 +15,8 @@ export const SITE = {
   name: "LegendaryMatch",
   shortName: "LM",
   domain: "legendarymatch.com",
+  email: "info@legendarymatch.com",
+  legalUpdated: "26 August 2026",
   tagline: "Pick a team. Pick an era. Settle the debate.",
   description:
     "LegendaryMatch is a football match simulator online: pick a historical team or a current squad and simulate a custom football match. Barcelona 2009 squad vs Real Madrid 2017, Brazil 1970, Arsenal 2004, 2026 national sides — score, scorers, xG and who-would-win probabilities, not a chatbot guess.",

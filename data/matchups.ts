@@ -35,14 +35,15 @@ export const HOMEPAGE_CURRENT_CLUBS = [
 ]
 
 export const HOMEPAGE_NATIONS = [
-  "brazil-1958",
   "brazil-1970",
-  "brazil-1994",
-  "brazil-2002",
   "argentina-1986",
+  "spain-2010",
+  "france-1998",
+  "italy-2006",
+  "germany-2014",
   "england-1966",
-  "france-1984",
-  "netherlands-1988",
+  "netherlands-1974",
+  "brazil-2002",
 ]
 
 export const HOMEPAGE_CURRENT_NATIONS = [

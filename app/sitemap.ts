@@ -14,6 +14,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: absoluteUrl("/national-teams"), changeFrequency: "weekly", priority: 0.8 },
     { url: absoluteUrl("/prime"), changeFrequency: "monthly", priority: 0.6 },
     { url: absoluteUrl("/vs"), changeFrequency: "weekly", priority: 0.7 },
+    { url: absoluteUrl("/terms"), changeFrequency: "yearly", priority: 0.3 },
+    { url: absoluteUrl("/privacy"), changeFrequency: "yearly", priority: 0.3 },
+    { url: absoluteUrl("/contact"), changeFrequency: "yearly", priority: 0.3 },
   ]
 
   const clubRoutes = clubs.map((club) => ({

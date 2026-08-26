@@ -1,6 +1,5 @@
 import Link from "next/link"
 import { MatchSetup } from "@/components/simulator/MatchSetup"
-import { TeamCard } from "@/components/teams/TeamCard"
 import {
   HOMEPAGE_MATCHUPS,
   HOMEPAGE_NATIONS,
@@ -10,7 +9,9 @@ import {
 import { primeEntities } from "@/data/prime"
 import { getTeam, teams, toTeamOption } from "@/data/teams"
 import { DreamMatchCarousel } from "@/components/ui/DreamMatchCarousel"
+import { TeamCardCarousel } from "@/components/ui/TeamCardCarousel"
 import { SITE, absoluteUrl } from "@/lib/site"
+import type { HistoricalTeam } from "@/types"
 
 const FAQ = [
   [
@@ -41,8 +42,12 @@ const FAQ = [
 
 export default function HomePage() {
   const options = teams.map(toTeamOption)
-  const legendary = HOMEPAGE_TEAMS.map((id) => getTeam(id)).filter(Boolean)
-  const nations = HOMEPAGE_NATIONS.map((id) => getTeam(id)).filter(Boolean)
+  const legendary = HOMEPAGE_TEAMS.map((id) => getTeam(id)).filter(
+    (team): team is HistoricalTeam => Boolean(team),
+  )
+  const nations = HOMEPAGE_NATIONS.map((id) => getTeam(id)).filter(
+    (team): team is HistoricalTeam => Boolean(team),
+  )
   const dreamMatches = HOMEPAGE_MATCHUPS.flatMap(([homeId, awayId]) => {
     const home = getTeam(homeId)
     const away = getTeam(awayId)
@@ -114,18 +119,12 @@ export default function HomePage() {
           </div>
         </div>
         <h3 className="home-section-sub">Clubs</h3>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {legendary.map((team) =>
-            team ? <TeamCard key={team.id} team={team} /> : null,
-          )}
-        </div>
+        <TeamCardCarousel teams={legendary} kind="club" />
         <Link href="/teams" className="home-section-link">
           All club teams →
         </Link>
         <h3 className="home-section-sub">Nations</h3>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {nations.map((team) => (team ? <TeamCard key={team.id} team={team} /> : null))}
-        </div>
+        <TeamCardCarousel teams={nations} kind="nation" />
         <Link href="/national-teams" className="home-section-link">
           All national teams →
         </Link>
