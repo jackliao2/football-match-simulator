@@ -73,12 +73,12 @@ button {
 .site-lockup {
   display: flex;
   align-items: center;
-  gap: 0.62rem;
+  gap: 0.75rem;
 }
 
 .brand-mark {
   flex-shrink: 0;
-  filter: drop-shadow(0 0 10px rgba(212, 180, 90, 0.18));
+  filter: drop-shadow(0 0 12px rgba(212, 180, 90, 0.25));
 }
 
 .site-lockup-text {
@@ -86,63 +86,71 @@ button {
   min-width: 0;
   flex-direction: column;
   align-items: flex-start;
-  line-height: 1;
+  line-height: 1.1;
 }
 
 .site-lockup-kicker {
-  font-family: var(--font-brand), "Cinzel", Palatino, "Times New Roman", serif;
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.32em;
-  text-indent: 0.08em;
+  font-family: var(--font-display), ui-monospace, "Cascadia Code", monospace;
+  font-size: 7px;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-indent: 0.14em;
   text-transform: uppercase;
-  color: #c5d0be;
+  color: var(--color-muted);
 }
 
 .site-lockup-rule {
   display: block;
-  width: 1.7rem;
+  width: 1.5rem;
   height: 1px;
-  margin: 0.22rem 0 0.2rem;
-  background: linear-gradient(to right, var(--color-gold), transparent 92%);
+  margin: 0.15rem 0 0.15rem;
+  background: linear-gradient(to right, var(--color-gold), transparent 85%);
+  opacity: 0.6;
 }
 
 .site-lockup-name {
   font-family: var(--font-brand), "Cinzel", Palatino, "Times New Roman", serif;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.34em;
-  text-indent: 0.04em;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-indent: 0.09em;
   text-transform: uppercase;
-  color: var(--color-gold);
+  color: var(--color-text);
+  line-height: 1;
 }
 
 .site-logo:hover .site-lockup-name {
+  color: var(--color-gold);
+}
+
+.site-logo:hover .site-lockup-kicker {
   color: var(--color-gold-2);
 }
 
 .site-logo:hover .brand-mark {
-  filter: drop-shadow(0 0 12px rgba(240, 213, 122, 0.32));
+  filter: drop-shadow(0 0 16px rgba(240, 213, 122, 0.4));
+  transform: scale(1.02);
+  transition: filter 0.2s ease, transform 0.2s ease;
 }
 
 @media (min-width: 640px) {
   .site-lockup {
-    gap: 0.78rem;
+    gap: 1rem;
   }
 
   .site-lockup-kicker {
-    font-size: 10px;
-    letter-spacing: 0.46em;
+    font-size: 8px;
+    letter-spacing: 0.36em;
   }
 
   .site-lockup-rule {
-    width: 2.15rem;
-    margin: 0.28rem 0 0.24rem;
+    width: 2rem;
+    margin: 0.2rem 0 0.2rem;
   }
 
   .site-lockup-name {
-    font-size: 17px;
-    letter-spacing: 0.4em;
+    font-size: 19px;
+    letter-spacing: 0.22em;
   }
 }
 
