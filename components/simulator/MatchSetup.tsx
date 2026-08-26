@@ -537,19 +537,19 @@ function TeamColumn({
             away ? "flex-row-reverse text-right" : ""
           }`}
         >
-          <PixelCrest clubId={team.clubId} size={48} />
+          <PixelCrest clubId={team.clubId} size={40} />
           <span className="min-w-0 flex-1">
             <span className={`block font-display text-[8px] tracking-[0.2em] ${accent}`}>{label}</span>
-            <span className="mt-0.5 block truncate font-mono text-lg font-semibold leading-6 tracking-tight text-text sm:text-xl sm:leading-7">
+            <span className="mt-0.5 block truncate font-mono text-[15px] font-semibold leading-5 tracking-tight text-text sm:text-lg sm:leading-6">
               {team.clubName}
             </span>
-            <span className="mt-0.5 block truncate font-mono text-xs text-muted sm:text-sm">
+            <span className="mt-0.5 block truncate font-mono text-[11px] text-muted sm:text-xs">
               {team.manager}
               <span className="mx-1.5 text-line-hi">·</span>
               {team.formation}
             </span>
           </span>
-          <OvrStamp value={team.overallRating} size="md" align={away ? "left" : "right"} />
+          <OvrStamp value={team.overallRating} size="sm" align={away ? "left" : "right"} />
         </button>
       </div>
 

@@ -81,21 +81,21 @@ export function FaceOffSquad({ squad }: { squad: SquadMember[] }) {
   const bench = squad.filter((player) => !player.starter)
 
   return (
-    <div className="grid gap-1">
-      <p className="px-1 font-display text-[8px] uppercase tracking-[0.16em] text-gold">XI</p>
+    <div className="grid gap-0.5">
+      <p className="px-1 font-display text-[7px] uppercase tracking-[0.16em] text-gold">XI</p>
       <ul className="grid gap-px">
         {xi.map((player) => (
-          <FaceRow key={player.id} player={player} />
+          <FaceRow key={player.id} player={player} compact />
         ))}
       </ul>
       {bench.length > 0 ? (
-        <details className="mt-1.5">
-          <summary className="cursor-pointer list-none px-1 font-display text-[8px] uppercase tracking-[0.16em] text-muted hover:text-gold">
+        <details className="mt-1">
+          <summary className="cursor-pointer list-none px-1 font-display text-[7px] uppercase tracking-[0.16em] text-muted hover:text-gold">
             Bench · {bench.length} ▾
           </summary>
-          <ul className="mt-1 grid gap-px">
+          <ul className="mt-0.5 grid gap-px">
             {bench.map((player) => (
-              <FaceRow key={player.id} player={player} dim />
+              <FaceRow key={player.id} player={player} dim compact />
             ))}
           </ul>
         </details>
@@ -119,17 +119,17 @@ function FaceRow({
       className="group relative z-0 cursor-help outline-none hover:z-30 focus-within:z-30"
     >
       <div className="faceoff-player">
-        <span className="font-mono text-[10px] font-medium tracking-wider text-gold">{player.position}</span>
-        <span className={`flex min-w-0 items-center gap-1.5 ${dim ? "text-muted" : "text-text"}`}>
+        <span className="font-mono text-[9px] font-medium tracking-wider text-gold">{player.position}</span>
+        <span className={`flex min-w-0 items-center gap-1 ${dim ? "text-muted" : "text-text"}`}>
           <span
-            className={`min-w-0 truncate font-mono leading-none ${compact ? "text-xs" : "text-[13px] font-medium"}`}
+            className={`min-w-0 truncate font-mono leading-none ${compact ? "text-[12px]" : "text-[13px] font-medium"}`}
           >
             {player.name}
           </span>
-          <PixelFlag code={player.nation} size={compact ? 12 : 14} />
+          <PixelFlag code={player.nation} size={compact ? 11 : 14} />
         </span>
         <span
-          className={`justify-self-end font-mono text-[13px] font-medium tabular-nums leading-none ${ovrTone(player.overall)}`}
+          className={`justify-self-end font-mono text-[12px] font-medium tabular-nums leading-none ${ovrTone(player.overall)}`}
         >
           {player.overall}
         </span>

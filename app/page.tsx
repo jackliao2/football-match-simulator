@@ -45,7 +45,7 @@ export default function HomePage() {
   const nations = HOMEPAGE_NATIONS.map((id) => getTeam(id)).filter(Boolean)
 
   return (
-    <div className="grid gap-5">
+    <div className="grid gap-3">
       <section className="home-hero">
         <script
           type="application/ld+json"

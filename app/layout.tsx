@@ -41,7 +41,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SiteHeader />
         <div className="page-frame">
           <aside className="page-rail" aria-hidden="true" />
-          <main className="min-w-0 flex-1 px-3 py-3 sm:px-4 sm:py-4">{children}</main>
+          <main className="min-w-0 flex-1 px-3 py-2 sm:px-4 sm:py-2.5">{children}</main>
           <aside className="page-rail" aria-hidden="true" />
         </div>
         <SiteFooter />

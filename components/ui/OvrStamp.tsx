@@ -4,7 +4,7 @@ export function OvrStamp({
   align = "right",
 }: {
   value: number
-  size?: "md" | "lg" | "xl"
+  size?: "sm" | "md" | "lg" | "xl"
   align?: "left" | "right"
 }) {
   const number =
@@ -12,11 +12,13 @@ export function OvrStamp({
       ? "text-4xl sm:text-6xl"
       : size === "lg"
         ? "text-3xl sm:text-5xl"
-        : "text-2xl sm:text-3xl"
+        : size === "md"
+          ? "text-2xl sm:text-3xl"
+          : "text-xl sm:text-2xl"
   return (
     <div className={`flex flex-col leading-none ${align === "left" ? "items-start" : "items-end"}`}>
       <span className={`font-display tracking-tight text-gold ${number}`}>{value}</span>
-      <span className="mt-1 font-display text-[8px] tracking-[0.28em] text-muted">OVR</span>
+      <span className="mt-0.5 font-display text-[7px] tracking-[0.28em] text-muted sm:text-[8px]">OVR</span>
     </div>
   )
 }
