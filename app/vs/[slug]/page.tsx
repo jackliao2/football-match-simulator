@@ -108,7 +108,19 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
         <TeamRatings team={away} />
       </div>
 
-      <MatchSetup teams={options} defaultHome={home.id} defaultAway={away.id} />
+      <section className="grid gap-3" aria-labelledby="replay-this-matchup">
+        <div>
+          <p className="font-mono text-xs uppercase tracking-[0.22em] text-gold">Your turn</p>
+          <h2 id="replay-this-matchup" className="mt-1 text-2xl font-semibold tracking-tight text-ink">
+            Simulate this matchup
+          </h2>
+          <p className="mt-1 max-w-2xl text-sm leading-6 text-muted">
+            The teams are already selected. Run the match yourself for a fresh seeded result, or test
+            the matchup 100 times.
+          </p>
+        </div>
+        <MatchSetup teams={options} defaultHome={home.id} defaultAway={away.id} />
+      </section>
 
       <Link href="/simulate" className="font-mono text-sm text-gold hover:text-gold-2">
         Choose different teams →
