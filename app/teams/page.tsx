@@ -4,26 +4,16 @@ import { TeamCard } from "@/components/teams/TeamCard"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { LEAGUES, clubs } from "@/data/clubs"
 import { getTeamsByClub } from "@/data/teams"
+import { LEAGUE_NOTES, catalogCounts } from "@/lib/page-copy"
 import { pageMetadata } from "@/lib/seo"
 import { absoluteUrl } from "@/lib/site"
 
+const counts = catalogCounts()
+
 export const metadata: Metadata = pageMetadata({
-  title: "Historical Football Teams",
-  description:
-    "Browse football squads by club and season — Barcelona 2009 squad, Real Madrid 2017 squad, Arsenal 2004 squad, Manchester United 2008 squad, plus every club's 2025/26 current squad. Open a lineup, then simulate a football match.",
+  title: "Club squads by season",
+  description: `${counts.clubSides} playable club sides across ${counts.clubs} clubs — Guardiola’s Barça, Istanbul, the Invincibles, plus 2025/26 squads. Not a shirt shop. Open a year and run the match.`,
   path: "/teams",
-  keywords: [
-    "historical football teams",
-    "legendary football squads",
-    "barcelona 2009 squad",
-    "real madrid 2017 squad",
-    "arsenal 2004 squad",
-    "manchester united 2008 squad",
-    "liverpool 2005 squad",
-    "ac milan 2007 squad",
-    "barcelona 2025 squad",
-    "football match simulator teams",
-  ],
 })
 
 export default function TeamsPage() {
@@ -43,9 +33,8 @@ export default function TeamsPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "CollectionPage",
-            name: "Historical Football Teams",
-            description:
-              "Legendary club squads by season for the football match simulator.",
+            name: "Club squads by season",
+            description: `${counts.clubSides} historical and current club squads for the football match simulator.`,
             url: absoluteUrl("/teams"),
             hasPart: sections.flatMap((section) =>
               section.clubs.map((item) => ({
@@ -59,22 +48,26 @@ export default function TeamsPage() {
       />
       <PageHeader
         kicker="Club database"
-        title="Historical football teams"
-        lead="Legendary club squads grouped by league, plus current 2025/26 lineups where we have them. Open a team for the starting XI, formation and ratings, then simulate a football match against any era."
+        title="Club squads, by the year that mattered"
+        lead={`${counts.clubSides} sides, ${counts.clubs} clubs. Grouped by country so you can find Forest next to United, Athletic next to Madrid. Current 2025/26 XIs are in here too — they sit next to the vintage pages, not in a separate toy league.`}
       >
         <Link href="/national-teams" className="font-mono text-sm text-gold hover:text-gold-2">
-          World Cup national teams →
+          National teams instead →
         </Link>
       </PageHeader>
       {sections.map(({ league, clubs: leagueClubs }) => (
         <section key={league.id} className="grid gap-4">
           <h2 className="font-display text-xs tracking-[0.18em] text-gold uppercase">{league.label}</h2>
+          <p className="catalog-note">{LEAGUE_NOTES[league.id]}</p>
           {leagueClubs.map(({ club, teams }) => (
             <div key={club.id} className="grid gap-3">
               <h3 className="font-mono text-lg font-semibold tracking-tight">
                 <Link href={`/teams/${club.id}`} className="hover:text-gold">
                   {club.name}
                 </Link>
+                <span className="ml-2 font-mono text-xs font-normal text-muted">
+                  {club.city} · {teams.map((team) => team.displaySeason).join(" / ")}
+                </span>
               </h3>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {teams.map((team) => (

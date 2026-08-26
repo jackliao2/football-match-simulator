@@ -1,0 +1,580 @@
+import { FEATURED_MATCHUPS, defaultOpponent } from "@/data/matchups"
+import { getTeam, teams } from "@/data/teams"
+import { teamStars } from "@/lib/stars"
+import type { Club, ClubLeague, HistoricalTeam, NationRegion } from "@/types"
+
+export function copySlot(id: string, modulo: number): number {
+  let hash = 2166136261
+  for (let i = 0; i < id.length; i += 1) {
+    hash ^= id.charCodeAt(i)
+    hash = Math.imul(hash, 16777619)
+  }
+  return Math.abs(hash) % modulo
+}
+
+export function isCurrentSquad(team: HistoricalTeam): boolean {
+  return team.kind === "nation" ? team.eraYear >= 2026 : team.eraYear >= 2025
+}
+
+export function firstSentence(text: string): string {
+  const trimmed = text.trim()
+  const match = trimmed.match(/^[^.!?]+[.!?]/)
+  return (match ? match[0] : trimmed).trim()
+}
+
+function clip(text: string, max = 158): string {
+  const clean = text.replace(/\s+/g, " ").trim()
+  if (clean.length <= max) return clean
+  const cut = clean.slice(0, max - 1)
+  const space = cut.lastIndexOf(" ")
+  return `${cut.slice(0, space > 80 ? space : max - 1)}…`
+}
+
+function stars(team: HistoricalTeam, count = 3) {
+  return teamStars(team, count)
+}
+
+function trophyBits(team: HistoricalTeam): string {
+  if (team.trophies.length === 0) return ""
+  return team.trophies.map((trophy) => trophy.label).join(", ")
+}
+
+function axis(team: HistoricalTeam): "attack" | "mid" | "defence" | "keeper" {
+  const scores: Array<["attack" | "mid" | "defence" | "keeper", number]> = [
+    ["attack", team.attackRating],
+    ["mid", team.midfieldRating],
+    ["defence", team.defenseRating],
+    ["keeper", team.goalkeeperRating],
+  ]
+  scores.sort((a, b) => b[1] - a[1])
+  return scores[0]![0]
+}
+
+export type TeamPageCopy = {
+  title: string
+  description: string
+  kicker: string
+  deck: string
+  paragraphs: string[]
+  playHeading: string
+  playNotes: string
+  matchupHeading: string
+}
+
+export function teamPageCopy(team: HistoricalTeam, opponentArg?: HistoricalTeam): TeamPageCopy {
+  const opponent = opponentArg ?? getTeam(defaultOpponent(team.id))
+  const slot = copySlot(team.id, 9)
+  const names = stars(team, 3)
+  const top = names[0]
+  const second = names[1]
+  const third = names[2]
+  const current = isCurrentSquad(team)
+  const silver = trophyBits(team)
+  const wonWorldCup = team.trophies.some((trophy) => trophy.code === "world-cup")
+  const wonUcl = team.trophies.some((trophy) => trophy.code === "ucl")
+  const wonEuros = team.trophies.some((trophy) => trophy.code === "euros")
+  const tag = team.styleTags[0]
+  const feat = team.achievements[0]
+
+  const title = buildTitle(team, {
+    slot,
+    current,
+    wonWorldCup,
+    wonUcl,
+    wonEuros,
+    top: top?.name,
+    tag,
+    feat,
+    silver,
+  })
+
+  const closers = [
+    firstSentence(team.summary),
+    opponent
+      ? `${firstSentence(team.summary)} The argument on this page is usually ${opponent.clubName} ${opponent.displaySeason}.`
+      : firstSentence(team.summary),
+    `${firstSentence(team.summary)} ${team.formation}, ${team.manager} on the bench.`,
+    top
+      ? `${firstSentence(team.summary)} ${top.name} is the highest-rated name in the XI.`
+      : team.summary,
+    silver
+      ? `${firstSentence(team.summary)} Silverware that season: ${silver}.`
+      : firstSentence(team.summary),
+    `${team.clubName} ${team.displaySeason} as we rate it — ATK ${team.attackRating}, MID ${team.midfieldRating}, DEF ${team.defenseRating}.`,
+    feat ? `${feat}. ${firstSentence(team.summary)}` : team.summary,
+    current
+      ? `${firstSentence(team.summary)} This is the current squad, not a vintage XI.`
+      : `${firstSentence(team.summary)} Era-relative ratings: a number from ${team.eraYear}, not a time machine.`,
+    tag
+      ? `${firstSentence(team.summary)} The label we stuck on them is ${tag.toLowerCase()}.`
+      : team.summary,
+  ]
+  const description = clip(closers[slot] ?? team.summary)
+
+  const kickers = current
+    ? team.kind === "nation"
+      ? ["2026 cycle", "Current national side", "Now", "World Cup year"]
+      : ["Current squad", "This season", "Now", "2025/26"]
+    : wonWorldCup
+      ? ["World Cup winners", "World Cup squad", "Champions", team.kind === "nation" ? "National side" : "Club side"]
+      : wonEuros
+        ? ["Euros winners", "European champions", "Tournament side", "National side"]
+        : wonUcl
+          ? ["European Cup", "UCL winners", "Club side", "That night"]
+          : team.kind === "nation"
+            ? ["National side", "Tournament squad", "International XI", "World Cup squad"]
+            : ["Club side", "League season", "Historical squad", "That year"]
+  const kicker = kickers[copySlot(`${team.id}-k`, kickers.length)]!
+
+  const decks = [
+    `${team.manager} · ${team.formation}`,
+    feat ?? `${team.manager} · ${team.formation}`,
+    top && second && third ? `${top.name}, ${second.name}, ${third.name}` : `${team.manager} · ${team.formation}`,
+    silver ? silver : `${team.formation}, overall ${team.overallRating}`,
+    tag ? `${tag} · OVR ${team.overallRating}` : `OVR ${team.overallRating}`,
+    current
+      ? `The ${team.displaySeason} squad, as we have it`
+      : `${team.eraYear} as a ${team.formation}`,
+    top ? `${top.name} at ${top.overall}` : team.formation,
+    team.kind === "nation"
+      ? `${team.clubName} at ${team.displaySeason}`
+      : `${team.clubName} in ${team.displaySeason}`,
+    `${team.attackRating} attack · ${team.defenseRating} defence`,
+  ]
+  const deck = decks[slot]!
+
+  const paragraphs = extraParagraphs(team, opponent, slot, names)
+
+  const playHeadings = [
+    "How they play",
+    "What the numbers say",
+    "Shape",
+    "On the pitch",
+    "The idea",
+    "Where it hurts",
+    "Style in the engine",
+    "How this XI is built",
+    "Not a vibe — ratings",
+  ]
+
+  const matchupHeadings = [
+    "Who they get thrown at",
+    "Dream matches from here",
+    "If not this XI, then who?",
+    "Sides people run them against",
+    "The usual arguments",
+    "Simulate them against",
+    "Other pages from this debate",
+    "Matchups",
+    "Pick a fight",
+  ]
+
+  return {
+    title,
+    description,
+    kicker,
+    deck,
+    paragraphs,
+    playHeading: playHeadings[slot]!,
+    playNotes: playParagraph(team, slot),
+    matchupHeading: matchupHeadings[copySlot(`${team.id}-m`, matchupHeadings.length)]!,
+  }
+}
+
+function buildTitle(
+  team: HistoricalTeam,
+  bits: {
+    slot: number
+    current: boolean
+    wonWorldCup: boolean
+    wonUcl: boolean
+    wonEuros: boolean
+    top?: string
+    tag?: string
+    feat?: string
+    silver: string
+  },
+): string {
+  const name = team.clubName
+  const year = team.displaySeason
+  if (bits.current && team.kind === "nation") {
+    const options = [
+      `${name} ${year} national team`,
+      `${team.manager}'s ${name} ${year}`,
+      `${name} at the ${year} World Cup`,
+      `${year} ${name} squad`,
+    ]
+    return options[bits.slot % options.length]!
+  }
+  if (bits.current) {
+    const options = [
+      `${name} ${year} squad`,
+      `${name} this season (${year})`,
+      `${team.manager}'s ${name} ${year}`,
+      `${name} ${year} — current XI`,
+    ]
+    return options[bits.slot % options.length]!
+  }
+  if (bits.wonWorldCup) {
+    const options = [
+      `${name} ${year} World Cup squad`,
+      `${year} ${name}, World Cup winners`,
+      `${team.manager}'s ${name} ${year}`,
+      `${name} ${year} — the World Cup side`,
+    ]
+    return options[bits.slot % options.length]!
+  }
+  if (bits.wonEuros) {
+    return bits.slot % 2 === 0 ? `${name} ${year} Euros squad` : `${team.manager}'s ${name} ${year}`
+  }
+  if (bits.wonUcl) {
+    const options = [
+      `${name} ${year} Champions League squad`,
+      `${team.manager}'s ${name} ${year}`,
+      `${name} ${year} — European Cup`,
+      `${name} ${year} squad`,
+    ]
+    return options[bits.slot % options.length]!
+  }
+  const rest = [
+    `${name} ${year}`,
+    `${name} ${year} squad`,
+    `${team.manager}'s ${name} ${year}`,
+    `${name} ${year} in a ${team.formation}`,
+    bits.top ? `${bits.top} and ${name} ${year}` : `${name} ${year}`,
+    bits.tag ? `${name} ${year} — ${bits.tag}` : `${name} ${year}`,
+    bits.silver ? `${name} ${year} (${bits.silver})` : `${year} ${name}`,
+    `How ${name} ${year} is rated`,
+    `${name} ${year} XI`,
+  ]
+  return rest[bits.slot]!
+}
+
+function extraParagraphs(
+  team: HistoricalTeam,
+  opponent: HistoricalTeam | undefined,
+  slot: number,
+  names: ReturnType<typeof stars>,
+): string[] {
+  const extra = 1 + (slot % 3)
+  const pool: string[] = []
+  const top = names[0]
+  const second = names[1]
+  const siblingsNote = siblingNote(team)
+  const feat = team.achievements.filter((item) => item.length > 8)
+
+  if (top && second) {
+    pool.push(
+      [
+        `${top.name} (${top.overall}) is the headline. ${second.name} sits behind that in the ratings, which is not the same as who actually ran the dressing room.`,
+        `If you only remember one name from this ${team.displaySeason} side it is probably ${top.name}. The engine also has to live with ${second.name} every week.`,
+        `Highest rated: ${top.name}. Not a slight on ${second.name} — the scale is era-relative and a bit argumentative on purpose.`,
+      ][copySlot(`${team.id}-s`, 3)]!,
+    )
+  }
+
+  if (feat[0]) {
+    pool.push(
+      feat.length > 1
+        ? `What they actually did that year: ${feat[0].replace(/\.$/, "")}. Also on the list: ${feat[1]}.`
+        : `The honour this page is built around: ${feat[0].replace(/\.$/, "")}.`,
+    )
+  }
+
+  if (opponent) {
+    pool.push(
+      [
+        `People open this squad and immediately queue ${opponent.clubName} ${opponent.displaySeason}. That pairing is a rivalry in the catalogue, not a historical fixture unless the years actually met.`,
+        `If you came to beat a particular ghost, ${opponent.clubName} ${opponent.displaySeason} is the default other shirt.`,
+        `The simulate button on this page points at ${opponent.clubName} ${opponent.displaySeason} first. Change it. The engine does not mind.`,
+      ][copySlot(`${team.id}-o`, 3)]!,
+    )
+  }
+
+  if (siblingsNote) pool.push(siblingsNote)
+
+  if (team.styleTags.length >= 2) {
+    pool.push(
+      `Tags on the page — ${team.styleTags.slice(0, 3).join(", ").toLowerCase()} — are shorthand for how the model leans, not a documentary.`,
+    )
+  }
+
+  pool.push(chemistryLine(team, slot))
+
+  const out: string[] = []
+  const start = copySlot(`${team.id}-p`, pool.length)
+  for (let i = 0; i < extra && i < pool.length; i += 1) {
+    const next = pool[(start + i) % pool.length]
+    if (next && !out.includes(next)) out.push(next)
+  }
+  return out
+}
+
+function siblingNote(team: HistoricalTeam): string | undefined {
+  const others = teams
+    .filter((item) => item.clubId === team.clubId && item.id !== team.id)
+    .sort((a, b) => b.eraYear - a.eraYear)
+  if (others.length === 0) return undefined
+  const years = others.map((item) => item.displaySeason)
+  if (years.length === 1) {
+    return `The other ${team.clubName} page here is ${years[0]}. Different year, different ratings, same shirt.`
+  }
+  if (isCurrentSquad(team)) {
+    return `Older ${team.clubName} sides on the site: ${years.join(", ")}. Use those if the argument is about a peak, not this cycle.`
+  }
+  return `Same club, other years in the database: ${years.join(", ")}.`
+}
+
+function chemistryLine(team: HistoricalTeam, slot: number): string {
+  const chem = team.chemistryRating
+  if (chem >= 94) {
+    return [
+      `Chemistry is ${chem}. The model treats this as a side that has played together, not eleven strangers in a photoshoot.`,
+      `Cohesion sits at ${chem} — high on purpose. Famous XIs usually get that bump.`,
+    ][slot % 2]!
+  }
+  if (chem <= 82) {
+    return `Chemistry is only ${chem}. Talent on the page, less of a locked dressing room than the holy sides.`
+  }
+  return `Chemistry ${chem}, overall ${team.overallRating}. Neither number is a FIFA card from a shop.`
+}
+
+function playParagraph(team: HistoricalTeam, slot: number): string {
+  const strong = axis(team)
+  const possess = team.possession
+  const press = team.pressing
+  const counter = team.counterAttack
+  const tempo = team.tempo
+  const bits: string[] = []
+
+  if (possess >= 68) {
+    bits.push(
+      `Possession is rated ${possess} — they want the ball, or at least the model thinks they did.`,
+    )
+  } else if (possess <= 48) {
+    bits.push(`Possession ${possess}. This is not a keep-ball souvenir.`)
+  } else {
+    bits.push(`Possession sits at ${possess}, not a religion.`)
+  }
+
+  if (press >= 80) {
+    bits.push(`Pressing ${press}, so turnovers are supposed to happen high up.`)
+  } else if (press <= 58) {
+    bits.push(`They do not hunt in packs (${press} press). The work is further back.`)
+  }
+
+  if (counter >= 80 && possess < 62) {
+    bits.push(`Counter-attack ${counter}: the point is the break, not the concert.`)
+  }
+
+  if (tempo >= 80) {
+    bits.push(`Tempo ${tempo} — the engine will try to rush the game.`)
+  } else if (tempo <= 58) {
+    bits.push(`Tempo ${tempo}. Patience, or at least the impression of it.`)
+  }
+
+  const axisLine = {
+    attack: `Attack ${team.attackRating} is the loud number.`,
+    mid: `Midfield ${team.midfieldRating} is where this side actually lives.`,
+    defence: `Defence ${team.defenseRating} is the thing the model respects most.`,
+    keeper: `The goalkeeper rating (${team.goalkeeperRating}) is doing more work than the outfield glamour.`,
+  }[strong]
+
+  const width =
+    team.width >= 82
+      ? `Width ${team.width}: both touchlines in play.`
+      : team.width <= 60
+        ? `Narrow-ish (width ${team.width}).`
+        : undefined
+
+  const aerial =
+    team.aerialThreat >= 78
+      ? `They will ask a question at set pieces (aerial ${team.aerialThreat}).`
+      : team.aerialThreat <= 52
+        ? `Aerial threat ${team.aerialThreat} — do not expect a barrage of flicks.`
+        : undefined
+
+  const ordered = [axisLine, ...bits, width, aerial].filter((item): item is string => Boolean(item))
+  const start = slot % ordered.length
+  const rotated = [...ordered.slice(start), ...ordered.slice(0, start)]
+  const take = 3 + (slot % 2)
+  return rotated.slice(0, take).join(" ")
+}
+
+export function relatedMatchups(team: HistoricalTeam, limit = 4): HistoricalTeam[] {
+  const seen = new Set<string>([team.id])
+  const out: HistoricalTeam[] = []
+
+  const add = (id: string | undefined) => {
+    if (!id || seen.has(id)) return
+    const found = getTeam(id)
+    if (!found) return
+    seen.add(id)
+    out.push(found)
+  }
+
+  add(defaultOpponent(team.id))
+  for (const [home, away] of FEATURED_MATCHUPS) {
+    if (home === team.id) add(away)
+    if (away === team.id) add(home)
+    if (out.length >= limit) return out.slice(0, limit)
+  }
+
+  const pool = teams.filter((item) => item.clubId !== team.clubId)
+  if (pool.length === 0) return out.slice(0, limit)
+  const start = copySlot(team.id, pool.length)
+  const step = 17
+  for (let i = 0; i < pool.length && out.length < limit; i += 1) {
+    add(pool[(start + i * step) % pool.length]!.id)
+  }
+  return out.slice(0, limit)
+}
+
+export type OrgHubCopy = {
+  kicker: string
+  title: string
+  lead: string
+  description: string
+}
+
+export function orgHubCopy(org: Club, sides: HistoricalTeam[]): OrgHubCopy {
+  const current = sides.find((side) => isCurrentSquad(side))
+  const historic = sides.filter((side) => !isCurrentSquad(side))
+  const years = sides.map((side) => side.displaySeason)
+  const managers = [...new Set(sides.map((side) => side.manager))]
+  const slot = copySlot(org.id, 6)
+  const nation = org.kind === "nation" || sides[0]?.kind === "nation"
+
+  const kicker = nation
+    ? current
+      ? "National sides"
+      : "Tournament sides"
+    : current
+      ? "Club seasons"
+      : "Club history"
+
+  const titleOptions = nation
+    ? [
+        `${org.name} national teams`,
+        `${org.name} squads`,
+        `${org.name} at the World Cup`,
+        `${org.name}: the years we built`,
+      ]
+    : [
+        `${org.name} squads`,
+        `${org.name} seasons`,
+        `${org.name} in the simulator`,
+        `${org.name}: playable years`,
+      ]
+  const title = titleOptions[slot % titleOptions.length]!
+
+  const sketches = sides.map((side) => `${side.displaySeason} — ${firstSentence(side.summary)}`)
+  const sketchLead = sketches[0]
+  const moreYears = years.length > 1 ? `Also here: ${years.slice(1).join(", ")}.` : ""
+
+  const leads = [
+    sketchLead
+      ? `${sketchLead} ${moreYears}`.trim()
+      : `${org.name} has ${sides.length} playable side${sides.length === 1 ? "" : "s"} in the catalogue.`,
+    historic.length > 0 && current
+      ? `${org.name} has a current squad (${current.displaySeason}) and ${historic.length} older XI${historic.length === 1 ? "" : "s"}: ${historic.map((side) => side.displaySeason).join(", ")}. They are not the same team with a new kit.`
+      : `${org.name}: ${years.join(", ")}.`,
+    managers.length <= 3
+      ? `${org.name} pages run through ${managers.join("; ")}. Years: ${years.join(", ")}.`
+      : `${org.name} across ${years.join(", ")}.`,
+    `${org.name} (${org.city}). ${sides.length} squad${sides.length === 1 ? "" : "s"} you can actually play, not a wiki infobox.`,
+    firstSentence(sides[0]?.summary ?? `${org.name} in the simulator.`),
+    nation
+      ? `${org.name} as national sides, ${years.join(" / ")}. Ratings stay in their year.`
+      : `${org.name} of ${org.country}. Playable seasons: ${years.join(", ")}.`,
+  ]
+
+  const lead = leads[slot]!
+  const description = clip(
+    `${lead} ${
+      nation
+        ? "Open a year for the XI and the ratings, then run them against a club or another country."
+        : "Open a season for the XI and the ratings."
+    }`,
+  )
+
+  return { kicker, title, lead, description }
+}
+
+export const LEAGUE_NOTES: Record<ClubLeague, string> = {
+  "premier-league":
+    "English pages mix the arguments everyone has (United 99, the Invincibles, Istanbul, Mourinho’s first Chelsea) with the ones people forget they want: Revie’s Leeds, Clough’s Forest, Keegan’s Newcastle. Current 2025/26 squads sit in the same list so you can throw this season at a treble side without a separate site.",
+  "la-liga":
+    "Spain here is mostly the clásico years people pause YouTube for — Guardiola’s Barça, Madrid’s European Cup sides, Simeone’s Atlético — plus Athletic, Sevilla and Valencia so it is not only two clubs shouting.",
+  "serie-a":
+    "Italy is the Milan derby in several decades, Juve when they actually had a European night, Napoli with Maradona and with the 2023 title. Calcio as a mood, not a FIFA league select screen.",
+  bundesliga:
+    "Bayern’s treble years, Klopp’s Dortmund, Gladbach when they were the thing, Leverkusen going unbeaten. German football in the catalogue is more than one red shirt.",
+  "ligue-1":
+    "PSG’s expensive decades, Marseille ’93, Lyon when they could not stop winning the league, Jardim’s Monaco with a teenager called Mbappé. France as clubs, not only the national team pages.",
+  "liga-portugal":
+    "Porto under Mourinho, Benfica with Eusébio, Sporting with a skinny winger who left for Manchester. Portuguese sides that changed European ties, not a complete Primeira Liga dump.",
+  eredivisie:
+    "Ajax 95 is the one everyone books. Van Gaal’s children, plus PSV’s European Cup and Feyenoord’s earlier one, because Dutch football did not start and end in Amsterdam.",
+  scottish:
+    "Lisbon Lions. Nine-in-a-row Rangers. Two Glasgow clubs, two very different European stories, no filler from the rest of the SPFL.",
+  "other-europe":
+    "The nights that still get put on grainy tape: Red Star in Bari, Steaua in Seville, Galatasaray in Copenhagen. Not a ‘rest of world’ junk drawer — three specific miracles.",
+  "south-america":
+    "Santos with Pelé, Flamengo with Zico, Boca and River as club sides rather than just Argentina shirts. Libertadores memory, playable.",
+}
+
+export const REGION_NOTES: Record<NationRegion, string> = {
+  europe:
+    "Euros winners, World Cup winners, and the nearly sides that still get shouted about — Cruyff’s Netherlands, Croatia in 2018, Greece in 2004. 2026 squads are in the same list as 1966.",
+  "south-america":
+    "Brazil in several peaks (and 2014), Argentina with Maradona and with Messi, Uruguay as the original nuisance, Colombia when Valderrama or James ran the midfield.",
+  africa:
+    "Not a complete CAF archive. Cameroon 90, Nigeria 94, Senegal knocking out France, Morocco to a World Cup semi. The nights that changed who Europe thought could win.",
+  concacaf:
+    "Mexico at a home World Cup, the US in 2002. Thin on purpose — we built the arguments people actually type, not every Gold Cup squad.",
+  asia:
+    "Japan and South Korea, 2002, co-hosts who stopped being a footnote. If you want a 2026 Asian XI, it is not on this page yet.",
+}
+
+export function catalogCounts(): { clubs: number; nations: number; clubSides: number; nationSides: number } {
+  const clubSides = teams.filter((team) => team.kind !== "nation")
+  const nationSides = teams.filter((team) => team.kind === "nation")
+  return {
+    clubs: new Set(clubSides.map((team) => team.clubId)).size,
+    nations: new Set(nationSides.map((team) => team.clubId)).size,
+    clubSides: clubSides.length,
+    nationSides: nationSides.length,
+  }
+}
+
+export function vsPageCopy(home: HistoricalTeam, away: HistoricalTeam, runs: number) {
+  const slot = copySlot(`${home.id}|${away.id}`, 7)
+  const matchup = `${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}`
+  const titles = [
+    `Who would win: ${matchup}?`,
+    `${home.clubName} ${home.displaySeason} against ${away.clubName} ${away.displaySeason}`,
+    `The ${home.clubName} / ${away.clubName} argument (${home.displaySeason} vs ${away.displaySeason})`,
+    `${matchup} — model, not memory`,
+    `${home.displaySeason} ${home.clubName} vs ${away.displaySeason} ${away.clubName}`,
+    `Can ${home.clubName} ${home.displaySeason} live with ${away.clubName} ${away.displaySeason}?`,
+    `${matchup}`,
+  ]
+  const leads = [
+    `${firstSentence(home.summary)} ${firstSentence(away.summary)} The percentages below are ${runs.toLocaleString()} seeds, not a result that already happened.`,
+    `Two XIs that did not share a pitch. ${home.manager}'s ${home.clubName} against ${away.manager}'s ${away.clubName}. Run it if you want a score; this page will not pick one for you.`,
+    `${home.clubName} ${home.displaySeason} (OVR ${home.overallRating}) and ${away.clubName} ${away.displaySeason} (OVR ${away.overallRating}). Ratings stay in their year — that is the whole joke of the site.`,
+    `If they had met: ${home.formation} versus ${away.formation}. ${runs.toLocaleString()} simulated matches sit under that sentence so one weird 4–0 does not become folklore.`,
+    `${firstSentence(home.summary)} Lined up against ${away.clubName} ${away.displaySeason}. Change the sides if this is not the fight you wanted.`,
+    `Not a recap of a real fixture. ${home.clubName} in ${home.displaySeason}, ${away.clubName} in ${away.displaySeason}, same engine as the rest of the site.`,
+    `${home.styleTags[0] ?? home.formation} against ${away.styleTags[0] ?? away.formation}. The bar chart is a model. The simulate button is the actual match.`,
+  ]
+  return {
+    title: titles[slot]!,
+    description: clip(
+      `${firstSentence(home.summary)} ${firstSentence(away.summary)} ${runs} simulated matches, not a historical scoreline.`,
+    ),
+    lead: leads[slot]!,
+    kicker: ["Dream match", "Who would win", "Hypothetical", "Model matchup", "Catalogue fight"][slot % 5]!,
+  }
+}

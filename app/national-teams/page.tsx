@@ -4,29 +4,16 @@ import { TeamCard } from "@/components/teams/TeamCard"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { NATION_REGIONS, nations } from "@/data/clubs"
 import { getTeamsByClub } from "@/data/teams"
+import { REGION_NOTES, catalogCounts } from "@/lib/page-copy"
 import { pageMetadata } from "@/lib/seo"
 import { absoluteUrl } from "@/lib/site"
 
+const counts = catalogCounts()
+
 export const metadata: Metadata = pageMetadata({
-  title: "Historical National Teams",
-  description:
-    "Simulate national teams from any era: Brazil 1970, Argentina 1986, England 1966, Spain 2010, plus 2026 current squads. World Cup and Euros sides as historical teams you can play.",
+  title: "National teams by tournament year",
+  description: `${counts.nationSides} national sides — Brazil 1970, Argentina 1986, Spain 2010, France 2026 — World Cup and Euros XIs you can play against club sides from any era.`,
   path: "/national-teams",
-  keywords: [
-    "world cup squads",
-    "world cup simulator",
-    "brazil 1970",
-    "argentina 1986",
-    "england 1966",
-    "spain 2010",
-    "france 1998",
-    "hungary 1954",
-    "portugal 2016",
-    "croatia 2018",
-    "brazil 2026 squad",
-    "historical national teams",
-    "football match simulator",
-  ],
 })
 
 export default function NationalTeamsPage() {
@@ -46,8 +33,9 @@ export default function NationalTeamsPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "CollectionPage",
-            name: "Historical National Teams",
+            name: "National teams by tournament year",
             url: absoluteUrl("/national-teams"),
+            description: `${counts.nationSides} World Cup and Euros squads, plus 2026 national sides.`,
             hasPart: sections.flatMap((section) =>
               section.nations.map((item) => ({
                 "@type": "SportsTeam",
@@ -60,22 +48,26 @@ export default function NationalTeamsPage() {
       />
       <PageHeader
         kicker="World Cup sides"
-        title="Historical national teams"
-        lead="World Cup and Euros squads grouped by region, plus 2026 current sides. Same engine as the clubs — pick a year, then simulate them against any era."
+        title="National teams, the years that stuck"
+        lead={`${counts.nationSides} XIs from ${counts.nations} countries. Tournament years, not a roster of every friendly. A 2026 side can play 1970 Brazil; that is the point. Club pages live next door.`}
       >
         <Link href="/teams" className="font-mono text-sm text-gold hover:text-gold-2">
-          Club teams →
+          Club teams instead →
         </Link>
       </PageHeader>
       {sections.map(({ region, nations: regionNations }) => (
         <section key={region.id} className="grid gap-4">
           <h2 className="font-display text-xs tracking-[0.18em] text-gold uppercase">{region.label}</h2>
+          <p className="catalog-note">{REGION_NOTES[region.id]}</p>
           {regionNations.map(({ nation, teams }) => (
             <div key={nation.id} className="grid gap-3">
               <h3 className="font-mono text-lg font-semibold tracking-tight">
                 <Link href={`/national-teams/${nation.id}`} className="hover:text-gold">
                   {nation.name}
                 </Link>
+                <span className="ml-2 font-mono text-xs font-normal text-muted">
+                  {teams.map((team) => team.displaySeason).join(" / ")}
+                </span>
               </h3>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {teams.map((team) => (

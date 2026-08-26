@@ -12,6 +12,26 @@ import { DreamMatchCarousel } from "@/components/ui/DreamMatchCarousel"
 import { TeamCardCarousel } from "@/components/ui/TeamCardCarousel"
 import { SITE, absoluteUrl } from "@/lib/site"
 import type { HistoricalTeam } from "@/types"
+import type { Metadata } from "next"
+
+const HOME_DESCRIPTION =
+  "Pick two squads — Brazil 1970, Barcelona 2008/09, France 2026, whoever we have — and a seeded engine plays the match. Score, scorers, xG. The model decides; a chatbot does not."
+
+export const metadata: Metadata = {
+  title: { absolute: `${SITE.name} — Football Match Simulator` },
+  description: HOME_DESCRIPTION,
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: `${SITE.name} — Football Match Simulator`,
+    description: HOME_DESCRIPTION,
+    url: absoluteUrl("/"),
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE.name} — Football Match Simulator`,
+    description: HOME_DESCRIPTION,
+  },
+}
 
 const FAQ = [
   [
@@ -68,8 +88,7 @@ export default function HomePage() {
               applicationCategory: "GameApplication",
               operatingSystem: "Web",
               url: absoluteUrl("/"),
-              description:
-                "Football match simulator online. Pick a historical team or a current squad and simulate a custom football match. The engine produces score, scorers, xG and events.",
+              description: HOME_DESCRIPTION,
             }),
           }}
         />
@@ -108,35 +127,53 @@ export default function HomePage() {
             All matchups →
           </Link>
         </div>
+        <p className="home-section-lead">
+          The fights people type into a search bar. Three at a time; the rest live on the matchups page.
+        </p>
         <DreamMatchCarousel items={dreamMatches} />
       </section>
 
       <section className="home-section">
         <div className="home-section-head">
           <div>
-            <p className="home-section-kicker">Catalog</p>
-            <h2 className="home-section-title">Legendary teams</h2>
+            <p className="home-section-kicker">Clubs</p>
+            <h2 className="home-section-title">Legendary clubs</h2>
           </div>
+          <Link href="/teams" className="home-section-link">
+            All club teams →
+          </Link>
         </div>
-        <h3 className="home-section-sub">Clubs</h3>
+        <p className="home-section-lead">
+          Club sides people actually argue about — Guardiola’s first Barça, Madrid 2016/17, United’s treble —
+          plus the rest of the catalogue behind the link.
+        </p>
         <TeamCardCarousel teams={legendary} kind="club" />
-        <Link href="/teams" className="home-section-link">
-          All club teams →
-        </Link>
-        <h3 className="home-section-sub">Nations</h3>
+      </section>
+
+      <section className="home-section">
+        <div className="home-section-head">
+          <div>
+            <p className="home-section-kicker">Nations</p>
+            <h2 className="home-section-title">Legendary nations</h2>
+          </div>
+          <Link href="/national-teams" className="home-section-link">
+            All national teams →
+          </Link>
+        </div>
+        <p className="home-section-lead">
+          World Cup and Euros sides, not a dump of every qualifier. Brazil 1970, Maradona’s 86, Spain’s tiki-taka
+          years — then every other national XI we have.
+        </p>
         <TeamCardCarousel teams={nations} kind="nation" />
-        <Link href="/national-teams" className="home-section-link">
-          All national teams →
-        </Link>
       </section>
 
       <section className="grid gap-4">
         <h2 className="font-mono text-lg font-semibold tracking-tight">How the football simulator works</h2>
         <div className="grid gap-3 sm:grid-cols-3">
           {[
-            ["01", "Pick two teams", "Choose a legendary club, a World Cup side or a current 2025/26 squad — Barcelona 2008/09, Brazil 1970, Real Madrid 2025/26 and more."],
-            ["02", "The engine plays the match", "Ratings, style and a random seed produce a score, xG, scorers and events. The model decides. AI never picks the winner."],
-            ["03", "Replay or run 100 matches", "Simulate again, run a hundred seeds for who-would-win probabilities, or share the match link."],
+            ["01", "Pick two shirts", "A club peak, a World Cup side, or this season — Barcelona 2008/09, Brazil 1970, Madrid 2025/26, whatever the argument is."],
+            ["02", "The engine plays it", "Ratings, style and a seed. Score, xG, scorers, events. Optional prose comes after. It does not choose the winner."],
+            ["03", "Again, or a hundred times", "Same seed is the same match. A new seed is another night. A hundred runs is the spread, not a trophy."],
           ].map(([step, title, copy]) => (
             <div key={step} className="result-panel p-4">
               <div className="font-display text-[10px] text-gold">{step}</div>

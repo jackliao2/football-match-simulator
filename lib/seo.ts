@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { teamPageCopy } from "@/lib/page-copy"
 import { teamPath } from "@/lib/paths"
 import { SITE, absoluteUrl } from "@/lib/site"
 import type { HistoricalTeam } from "@/types"
@@ -168,29 +169,26 @@ export function isCurrentSquad(team: HistoricalTeam): boolean {
 
 export function teamMetadata(team: HistoricalTeam): Metadata {
   const path = teamPath(team)
-  const years = seasonYears(team)
-  const latestYear = years[years.length - 1] ?? team.displaySeason
-  const description = `${team.seoDescription} ${latestYear} ${team.clubName} squad, lineup and formation — playable in the football match simulator.`
+  const copy = teamPageCopy(team)
   return {
-    title: { absolute: `${team.seoTitle} | ${SITE.name}` },
-    description,
+    title: { absolute: `${copy.title} | ${SITE.name}` },
+    description: copy.description,
     keywords: [
-      ...squadKeywords(team),
-      "football match simulator",
-      "simulate football match",
-      "who would win football",
+      `${team.clubName} ${team.displaySeason}`,
+      `${team.clubName} ${team.displaySeason} squad`,
+      team.kind === "nation" ? `${team.clubName} ${team.displaySeason} national team` : `${team.clubName} ${team.displaySeason} lineup`,
     ],
     alternates: { canonical: path },
     openGraph: {
-      title: team.seoTitle,
-      description,
+      title: copy.title,
+      description: copy.description,
       url: absoluteUrl(path),
       type: "article",
     },
     twitter: {
       card: "summary_large_image",
-      title: team.seoTitle,
-      description,
+      title: copy.title,
+      description: copy.description,
     },
   }
 }

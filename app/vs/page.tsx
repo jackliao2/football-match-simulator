@@ -7,18 +7,10 @@ import { pageMetadata } from "@/lib/seo"
 import { absoluteUrl } from "@/lib/site"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Dream Football Matches — Who Would Win?",
+  title: "Dream matches you can actually play",
   description:
-    "Who would win: Barcelona 2009 vs Real Madrid 2017? Brazil 1970 vs Spain 2010? Current El Clásico? Simulate dream football matches. Model probabilities, not archive scores.",
+    "Barcelona 2008/09 vs Madrid 2016/17, Brazil 1970 vs Spain 2010, and the rest of the arguments. Each page runs hundreds of seeds. No archive score pretending to be a result.",
   path: "/vs",
-  keywords: [
-    "who would win football",
-    "dream football match",
-    "barcelona vs real madrid",
-    "prime barcelona vs prime real madrid",
-    "brazil vs argentina",
-    "football match simulator",
-  ],
 })
 
 export default function VsIndexPage() {
@@ -39,14 +31,14 @@ export default function VsIndexPage() {
             "@type": "CollectionPage",
             name: "Dream Matches",
             url: absoluteUrl("/vs"),
-            description: "Indexable historical football matchups for the match simulator.",
+            description: "Hypothetical football matchups. Percentages from many seeded runs, not archive scores.",
           }),
         }}
       />
       <PageHeader
         kicker="Matchups"
         title="Dream matches"
-        lead="Who would win? Each page is a matchup you can simulate — legendary years and current squads. Percentages come from many seeded runs, not a single score presented as fact."
+        lead="These are fights that never happened, or happened in a different year. Open a row, look at the 400-run table, then play a single match if you want a night’s scoreline."
       />
       <div className="grid gap-2">
         {rows.map((row) =>

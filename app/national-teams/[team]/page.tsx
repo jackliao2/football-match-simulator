@@ -6,7 +6,10 @@ import { PageHeader } from "@/components/ui/PageHeader"
 import { getNation } from "@/data/clubs"
 import { getPrimeEntity } from "@/data/prime"
 import { allNationIds, getTeamsByClub } from "@/data/teams"
-import { clubHubKeywords, pageMetadata } from "@/lib/seo"
+import { firstSentence, orgHubCopy } from "@/lib/page-copy"
+import { teamPath } from "@/lib/paths"
+import { pageMetadata } from "@/lib/seo"
+import { absoluteUrl } from "@/lib/site"
 
 export const dynamicParams = false
 
@@ -21,12 +24,11 @@ export async function generateMetadata({
   const nation = getNation(team)
   if (!nation) return { title: "National Team" }
   const nationTeams = getTeamsByClub(team)
-  const years = nationTeams.map((item) => item.displaySeason).join(", ")
+  const copy = orgHubCopy(nation, nationTeams)
   return pageMetadata({
-    title: `${nation.name} Squads — ${years}`,
-    description: `Explore ${nation.name} squads (${years}): World Cup sides and the current national team. Lineup, formation and ratings, then simulate them against football teams from any era.`,
+    title: copy.title,
+    description: copy.description,
     path: `/national-teams/${team}`,
-    keywords: clubHubKeywords(nation.name, team, nationTeams),
   })
 }
 
@@ -36,13 +38,31 @@ export default async function NationPage({ params }: PageProps<"/national-teams/
   const nationTeams = getTeamsByClub(team)
   if (!nation || nationTeams.length === 0) notFound()
   const prime = getPrimeEntity(team)
+  const copy = orgHubCopy(nation, nationTeams)
 
   return (
     <div className="grid gap-6">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: copy.title,
+            description: copy.description,
+            url: absoluteUrl(`/national-teams/${team}`),
+            hasPart: nationTeams.map((item) => ({
+              "@type": "SportsTeam",
+              name: `${item.clubName} ${item.displaySeason}`,
+              url: absoluteUrl(teamPath(item)),
+            })),
+          }),
+        }}
+      />
       <PageHeader
-        kicker="National squads"
-        title={`${nation.name} squads`}
-        lead={`${nation.name} sides in the simulator, newest first. Open a year for the starting XI, formation, ratings and a one-click football match.`}
+        kicker={copy.kicker}
+        title={copy.title}
+        lead={copy.lead}
         crumbs={[{ href: "/national-teams", label: "National teams" }]}
       >
         {prime ? (
@@ -51,6 +71,15 @@ export default async function NationPage({ params }: PageProps<"/national-teams/
           </Link>
         ) : null}
       </PageHeader>
+      <div className="season-sketches">
+        {nationTeams.map((item) => (
+          <p key={item.id}>
+            <Link href={teamPath(item)}>{item.displaySeason}</Link>
+            {" — "}
+            {firstSentence(item.summary)} {item.manager}, {item.formation}, OVR {item.overallRating}.
+          </p>
+        ))}
+      </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {nationTeams.map((item) => (
           <TeamCard key={item.id} team={item} />

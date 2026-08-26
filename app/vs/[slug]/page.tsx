@@ -10,6 +10,7 @@ import { PageHeader } from "@/components/ui/PageHeader"
 import { allVsPairs } from "@/data/matchups"
 import { getTeam, teams, toTeamOption } from "@/data/teams"
 import { parseVsSlug } from "@/lib/match-id"
+import { vsPageCopy } from "@/lib/page-copy"
 import { teamPath } from "@/lib/paths"
 import { SITE, absoluteUrl } from "@/lib/site"
 import { simulateMany } from "@/lib/simulation"
@@ -31,23 +32,14 @@ export async function generateMetadata({
   const home = getTeam(parsed.homeId)
   const away = getTeam(parsed.awayId)
   if (!home || !away) return { title: "Dream Match" }
-  const matchup = `${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}`
-  const title = `Who Would Win: ${matchup}?`
-  const description = `Who would win ${matchup}? Simulate this dream football match. Model probabilities from ${VS_RUNS} runs in a football match simulator — not a recorded historical result.`
+  const copy = vsPageCopy(home, away, VS_RUNS)
   return {
-    title: { absolute: `${title} | ${SITE.name}` },
-    description,
-    keywords: [
-      `who would win ${home.clubName} vs ${away.clubName}`,
-      `${home.clubName} vs ${away.clubName}`,
-      matchup,
-      "dream football match",
-      "football match simulator",
-    ],
+    title: { absolute: `${copy.title} | ${SITE.name}` },
+    description: copy.description,
     alternates: { canonical: `/vs/${slug}` },
     openGraph: {
-      title,
-      description,
+      title: copy.title,
+      description: copy.description,
       url: absoluteUrl(`/vs/${slug}`),
     },
   }
@@ -64,6 +56,8 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
   const model = simulateMany(home, away, VS_RUNS, `vs:${slug}`)
   const options = teams.map(toTeamOption)
 
+  const copy = vsPageCopy(home, away, VS_RUNS)
+
   return (
     <div className="grid gap-6">
       <script
@@ -72,16 +66,16 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebPage",
-            name: `${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}`,
+            name: copy.title,
             url: absoluteUrl(`/vs/${slug}`),
-            description: `Football match simulator matchup. Model output from ${VS_RUNS} seeded runs.`,
+            description: copy.description,
           }),
         }}
       />
       <PageHeader
-        kicker="Dream match simulator"
+        kicker={copy.kicker}
         title={`${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}`}
-        lead={`This page does not pick a winner. Simulate it yourself. The percentages are model output from ${VS_RUNS.toLocaleString()} seeded runs, not a historical result.`}
+        lead={copy.lead}
         crumbs={[{ href: "/vs", label: "Dream matches" }]}
       />
 

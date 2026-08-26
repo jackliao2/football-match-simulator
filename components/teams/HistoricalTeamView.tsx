@@ -9,11 +9,11 @@ import { TrophyBadges } from "@/components/teams/TrophyBadges"
 import { eraGlow } from "@/data/trophies"
 import { MatchupRow } from "@/components/ui/MatchupRow"
 import { OvrStamp } from "@/components/ui/OvrStamp"
-import { FEATURED_MATCHUPS, defaultOpponent, vsPath } from "@/data/matchups"
+import { defaultOpponent, vsPath } from "@/data/matchups"
 import { getPrimeEntity } from "@/data/prime"
-import { getTeam, getTeamsByClub, teams } from "@/data/teams"
+import { getTeam, getTeamsByClub } from "@/data/teams"
 import { orgIndexPath, orgPath, teamPath } from "@/lib/paths"
-import { isCurrentSquad } from "@/lib/seo"
+import { relatedMatchups, teamPageCopy } from "@/lib/page-copy"
 import { absoluteUrl } from "@/lib/site"
 import type { HistoricalTeam } from "@/types"
 
@@ -22,25 +22,9 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
   const prime = getPrimeEntity(team.clubId)
   const opponentId = defaultOpponent(team.id)
   const opponent = getTeam(opponentId)
-  const battles = FEATURED_MATCHUPS.map(([a, b]) => {
-    if (a === team.id) return getTeam(b)
-    if (b === team.id) return getTeam(a)
-    return undefined
-  }).filter((item): item is NonNullable<typeof item> => Boolean(item))
-
-  const extraOpponents = teams
-    .filter((item) => item.id !== team.id && !battles.some((battle) => battle.id === item.id))
-    .slice(0, 2)
-  const popular = [...battles, ...extraOpponents].slice(0, 4)
+  const popular = relatedMatchups(team, 4)
+  const copy = teamPageCopy(team, opponent)
   const indexLabel = team.kind === "nation" ? "National teams" : "Teams"
-  const current = isCurrentSquad(team)
-  const kicker = current
-    ? team.kind === "nation"
-      ? "Current national squad"
-      : "Current squad"
-    : team.kind === "nation"
-      ? "World Cup squad"
-      : "Historical squad"
   const orgHref = orgPath(team.kind, team.clubId)
   const orgIndexHref = orgIndexPath(team.kind)
 
@@ -56,6 +40,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
             name: `${team.clubName} ${team.displaySeason}`,
             sport: "Soccer",
             url: absoluteUrl(teamPath(team)),
+            description: team.summary,
             athlete: team.players.map((player) => ({
               "@type": "Person",
               name: player.name,
@@ -94,7 +79,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
           </Link>
         </p>
         <p className="font-display text-[9px] uppercase tracking-[0.28em] text-gold">
-          {kicker}
+          {copy.kicker}
         </p>
         <div className={`flex items-start gap-4 ${eraGlow(team.trophies) ? "era-sheen" : ""}`}>
           <PixelCrest clubId={team.clubId} size={64} />
@@ -102,9 +87,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
             <h1 className="font-mono text-xl font-semibold leading-snug tracking-tight sm:text-3xl">
               {team.clubName} {team.displaySeason}
             </h1>
-            <p className="mt-1 font-mono text-sm text-muted">
-              Squad, starting XI, formation & team ratings
-            </p>
+            <p className="mt-1 font-mono text-sm text-muted">{copy.deck}</p>
             <p className="mt-0.5 font-mono text-xs text-muted">
               {team.manager}
               <span className="mx-2 text-line-hi">·</span>
@@ -116,7 +99,12 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
           </div>
           <OvrStamp value={team.overallRating} size="xl" />
         </div>
-        <p className="max-w-3xl font-mono text-sm leading-6 text-muted">{team.summary}</p>
+        <div className="team-essay">
+          <p>{team.summary}</p>
+          {copy.paragraphs.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+        </div>
         <Link
           href={`/simulate?home=${team.id}&away=${opponentId}`}
           className="rail-btn rail-btn-primary rail-btn-inline"
@@ -129,6 +117,13 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
       <Formation team={team} />
       <SquadList team={team} />
       <TeamRatings team={team} />
+
+      <section className="result-panel">
+        <h2 className="border-b border-white/10 px-3 py-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
+          {copy.playHeading}
+        </h2>
+        <p className="px-3 py-3 font-mono text-[12px] leading-6 text-muted">{copy.playNotes}</p>
+      </section>
 
       <section className="result-panel">
         <h2 className="border-b border-white/10 px-3 py-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
@@ -158,7 +153,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
 
       {popular.length > 0 ? (
         <section className="grid gap-2">
-          <h2 className="font-mono text-lg font-semibold tracking-tight">Popular matchups</h2>
+          <h2 className="font-mono text-lg font-semibold tracking-tight">{copy.matchupHeading}</h2>
           {popular.map((other) => (
             <MatchupRow key={other.id} href={vsPath(team.id, other.id)} home={team} away={other} />
           ))}

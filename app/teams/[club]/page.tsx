@@ -6,7 +6,10 @@ import { PageHeader } from "@/components/ui/PageHeader"
 import { getClub } from "@/data/clubs"
 import { getPrimeEntity } from "@/data/prime"
 import { allClubIds, getTeamsByClub } from "@/data/teams"
-import { clubHubKeywords, pageMetadata } from "@/lib/seo"
+import { firstSentence, orgHubCopy } from "@/lib/page-copy"
+import { teamPath } from "@/lib/paths"
+import { pageMetadata } from "@/lib/seo"
+import { absoluteUrl } from "@/lib/site"
 
 export const dynamicParams = false
 
@@ -21,12 +24,11 @@ export async function generateMetadata({
   const clubMeta = getClub(club)
   if (!clubMeta) return { title: "Club" }
   const clubTeams = getTeamsByClub(club)
-  const seasons = clubTeams.map((team) => team.displaySeason).join(", ")
+  const copy = orgHubCopy(clubMeta, clubTeams)
   return pageMetadata({
-    title: `${clubMeta.name} Squads — ${seasons}`,
-    description: `Explore ${clubMeta.name} squads (${seasons}): lineup, formation and team ratings. Open a season — including the current squad — then simulate a football match.`,
+    title: copy.title,
+    description: copy.description,
     path: `/teams/${club}`,
-    keywords: clubHubKeywords(clubMeta.name, club, clubTeams),
   })
 }
 
@@ -36,13 +38,31 @@ export default async function ClubPage({ params }: PageProps<"/teams/[club]">) {
   const clubTeams = getTeamsByClub(club)
   if (!clubMeta || clubTeams.length === 0) notFound()
   const prime = getPrimeEntity(club)
+  const copy = orgHubCopy(clubMeta, clubTeams)
 
   return (
     <div className="grid gap-6">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: copy.title,
+            description: copy.description,
+            url: absoluteUrl(`/teams/${club}`),
+            hasPart: clubTeams.map((team) => ({
+              "@type": "SportsTeam",
+              name: `${team.clubName} ${team.displaySeason}`,
+              url: absoluteUrl(teamPath(team)),
+            })),
+          }),
+        }}
+      />
       <PageHeader
-        kicker="Club squads"
-        title={`${clubMeta.name} squads`}
-        lead={`${clubMeta.name} teams in the simulator, newest first. Open a season for the starting XI, formation, ratings and a one-click football match.`}
+        kicker={copy.kicker}
+        title={copy.title}
+        lead={copy.lead}
         crumbs={[{ href: "/teams", label: "Teams" }]}
       >
         {prime ? (
@@ -51,6 +71,15 @@ export default async function ClubPage({ params }: PageProps<"/teams/[club]">) {
           </Link>
         ) : null}
       </PageHeader>
+      <div className="season-sketches">
+        {clubTeams.map((team) => (
+          <p key={team.id}>
+            <Link href={teamPath(team)}>{team.displaySeason}</Link>
+            {" — "}
+            {firstSentence(team.summary)} {team.manager}, {team.formation}, OVR {team.overallRating}.
+          </p>
+        ))}
+      </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {clubTeams.map((team) => (
           <TeamCard key={team.id} team={team} />
