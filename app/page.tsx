@@ -2,9 +2,7 @@ import Link from "next/link"
 import { MatchSetup } from "@/components/simulator/MatchSetup"
 import { TeamCard } from "@/components/teams/TeamCard"
 import {
-  FEATURED_MATCHUPS,
-  HOMEPAGE_CURRENT_CLUBS,
-  HOMEPAGE_CURRENT_NATIONS,
+  HOMEPAGE_MATCHUPS,
   HOMEPAGE_NATIONS,
   HOMEPAGE_TEAMS,
   vsPath,
@@ -29,7 +27,7 @@ const FAQ = [
   ],
   [
     "Do you include current squads?",
-    "Yes. Every club has a 2025/26 squad and every national side has a 2026 squad, alongside the legendary years. Pick the current season in the picker, or open the squad page, then simulate it against any era.",
+    "Yes. Every club has a 2025/26 squad and every national side has a 2026 squad, alongside the legendary years. Turn on Now in the picker, or open the squad page, then simulate it against any era.",
   ],
   [
     "How do you rate players?",
@@ -45,12 +43,10 @@ export default function HomePage() {
   const options = teams.map(toTeamOption)
   const legendary = HOMEPAGE_TEAMS.map((id) => getTeam(id)).filter(Boolean)
   const nations = HOMEPAGE_NATIONS.map((id) => getTeam(id)).filter(Boolean)
-  const currentClubs = HOMEPAGE_CURRENT_CLUBS.map((id) => getTeam(id)).filter(Boolean)
-  const currentNations = HOMEPAGE_CURRENT_NATIONS.map((id) => getTeam(id)).filter(Boolean)
 
   return (
     <div className="grid gap-5">
-      <section className="grid gap-2 text-center">
+      <section className="home-hero">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -66,14 +62,22 @@ export default function HomePage() {
             }),
           }}
         />
-        <p className="font-display text-[9px] uppercase tracking-[0.28em] text-gold">
-          Football match simulator
-        </p>
-        <h1 className="font-mono text-xl font-semibold tracking-tight text-text sm:text-3xl">
-          {SITE.name}
+        <p className="home-hero-kicker">Football match simulator</p>
+        <h1 className="home-hero-title">
+          <span className="home-hero-legendary">Legendary</span>
+          <span className="home-hero-rule" aria-hidden="true" />
+          <span className="home-hero-match">Match</span>
         </h1>
-        <p className="mx-auto whitespace-nowrap font-mono text-[11px] tracking-tight text-muted sm:text-sm">
-          Pick a team. Pick an era. Settle the debate.
+        <p className="home-hero-tagline">
+          <span>Pick a team</span>
+          <span className="home-hero-dot" aria-hidden="true">
+            ·
+          </span>
+          <span>Pick an era</span>
+          <span className="home-hero-dot" aria-hidden="true">
+            ·
+          </span>
+          <span>Settle the debate</span>
         </p>
       </section>
 
@@ -83,63 +87,18 @@ export default function HomePage() {
         defaultAway="real-madrid-2016-17"
       />
 
-      <section className="grid gap-4">
-        <h2 className="font-mono text-lg font-semibold tracking-tight">Current club squads</h2>
-        <p className="font-mono text-sm leading-6 text-muted">
-          2025/26 lineups for Barcelona, Real Madrid, Arsenal, Liverpool and more — same engine as the legendary years.
-        </p>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {currentClubs.map((team) => (team ? <TeamCard key={team.id} team={team} /> : null))}
-        </div>
-        <Link href="/teams" className="font-mono text-sm text-gold hover:text-gold-2">
-          All club teams →
-        </Link>
-      </section>
-
-      <section className="grid gap-4">
-        <h2 className="font-mono text-lg font-semibold tracking-tight">2026 national squads</h2>
-        <p className="font-mono text-sm leading-6 text-muted">
-          Current Brazil, Argentina, France, Spain, England and Germany sides. Simulate them against 1970, 1986 or 2010.
-        </p>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {currentNations.map((team) => (team ? <TeamCard key={team.id} team={team} /> : null))}
-        </div>
-        <Link href="/national-teams" className="font-mono text-sm text-gold hover:text-gold-2">
-          All national teams →
-        </Link>
-      </section>
-
-      <section className="grid gap-4">
-        <h2 className="font-mono text-lg font-semibold tracking-tight">Legendary club teams</h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {legendary.map((team) =>
-            team ? <TeamCard key={team.id} team={team} /> : null,
-          )}
-        </div>
-        <Link href="/teams" className="font-mono text-sm text-gold hover:text-gold-2">
-          All club teams →
-        </Link>
-      </section>
-
-      <section className="grid gap-4">
-        <h2 className="font-mono text-lg font-semibold tracking-tight">Legendary national teams</h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {nations.map((team) => (team ? <TeamCard key={team.id} team={team} /> : null))}
-        </div>
-        <Link href="/national-teams" className="font-mono text-sm text-gold hover:text-gold-2">
-          All national teams →
-        </Link>
-      </section>
-
-      <section className="grid gap-4">
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <h2 className="font-mono text-lg font-semibold tracking-tight">Popular dream matches</h2>
-          <Link href="/vs" className="font-mono text-sm text-gold hover:text-gold-2">
+      <section className="home-section">
+        <div className="home-section-head">
+          <div>
+            <p className="home-section-kicker">Dream matches</p>
+            <h2 className="home-section-title">Popular dream matches</h2>
+          </div>
+          <Link href="/vs" className="home-section-link">
             All matchups →
           </Link>
         </div>
         <div className="grid gap-2">
-          {FEATURED_MATCHUPS.slice(0, 8).map(([homeId, awayId]) => {
+          {HOMEPAGE_MATCHUPS.map(([homeId, awayId]) => {
             const home = getTeam(homeId)
             const away = getTeam(awayId)
             if (!home || !away) return null
@@ -153,6 +112,31 @@ export default function HomePage() {
             )
           })}
         </div>
+      </section>
+
+      <section className="home-section">
+        <div className="home-section-head">
+          <div>
+            <p className="home-section-kicker">Catalog</p>
+            <h2 className="home-section-title">Legendary teams</h2>
+          </div>
+        </div>
+        <h3 className="home-section-sub">Clubs</h3>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {legendary.map((team) =>
+            team ? <TeamCard key={team.id} team={team} /> : null,
+          )}
+        </div>
+        <Link href="/teams" className="home-section-link">
+          All club teams →
+        </Link>
+        <h3 className="home-section-sub">Nations</h3>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {nations.map((team) => (team ? <TeamCard key={team.id} team={team} /> : null))}
+        </div>
+        <Link href="/national-teams" className="home-section-link">
+          All national teams →
+        </Link>
       </section>
 
       <section className="grid gap-4">
