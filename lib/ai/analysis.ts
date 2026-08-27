@@ -11,10 +11,9 @@ const DEF_POS = new Set(["CB", "LB", "RB", "LCB", "RCB", "LWB", "RWB"])
 export const ANALYSIS_SYSTEM_PROMPT = `You write premium, fan-first matchup copy for a historical football team simulator.
 
 Hard rules:
-- Return valid JSON only, with exactly these string fields: headline, matchupStory, modelReason, decidingSequence, pressurePoint.
+- Return valid JSON only, with exactly these string fields: headline, matchupStory, decidingSequence, pressurePoint.
 - headline: 6-14 words. Celebrate the collision of eras; no winner and no markdown.
 - matchupStory: maximum 42 words. Mention both full team seasons, both managers, and what makes their football identities collide.
-- modelReason: maximum 36 words. Explain the supplied 100-run engine verdict for this specific matchup. Take a position; do not give each side equal generic praise.
 - decidingSequence: maximum 38 words. Describe one vivid, concrete sequence likely to decide the game, naming players from both supplied squads.
 - pressurePoint: maximum 28 words. Identify one specific zone or unit where the matchup advantage is most likely to appear. Write a statement, not a question.
 - This is NOT a match report. Do not invent scorers, cards, events or statistics.
@@ -30,7 +29,6 @@ The JSON is the source of truth.`
 export interface AnalysisCopy {
   headline: string
   matchupStory: string
-  modelReason: string
   decidingSequence: string
   pressurePoint: string
 }
@@ -249,22 +247,15 @@ export function templatePreMatchAnalysis(home: HistoricalTeam, away: HistoricalT
   ].join("\n\n")
 }
 
-function shortFallback(home: HistoricalTeam, away: HistoricalTeam, simulation: MonteCarloResult): AnalysisCopy {
+function shortFallback(home: HistoricalTeam, away: HistoricalTeam): AnalysisCopy {
   const homeCore = starters(home).sort(byOverall).slice(0, 3)
   const awayCore = starters(away).sort(byOverall).slice(0, 3)
   const homeNames = homeCore.map((player) => player.name)
   const awayNames = awayCore.map((player) => player.name)
-  const gap = Math.abs(simulation.homeWins - simulation.awayWins)
-  const leader = simulation.homeWins >= simulation.awayWins ? home : away
-  const modelReason =
-    gap <= 5
-      ? `Only ${gap} win${gap === 1 ? "" : "s"} separate the sides: ${home.clubName}'s midfield control is almost exactly cancelled out by ${away.clubName}'s attacking threat.`
-      : `${leader.clubName} take the model edge because their strongest unit attacks the space the opposing shape is least comfortable defending.`
 
   return {
     headline: "Two great eras, one match they never got to play",
     matchupStory: `${home.manager}'s ${home.clubName} ${home.displaySeason} bring ${home.styleTags[0] ?? "their defining style"}; ${away.manager}'s ${away.clubName} ${away.displaySeason} answer with ${away.styleTags[0] ?? "a different rhythm"}.`,
-    modelReason,
     decidingSequence: `${homeNames[1] ?? homeNames[0]} looks for ${homeNames[0]}, while ${awayNames[1] ?? awayNames[0]}'s first forward pass releases ${awayNames[0]} into the space left behind.`,
     pressurePoint: `The space around the two midfields is where ${home.formation} and ${away.formation} stop being shapes and become a direct duel.`,
   }
@@ -297,12 +288,11 @@ function parseAnalysisCopy(raw: string): AnalysisCopy | null {
   try {
     const cleaned = raw.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "")
     const value = JSON.parse(cleaned) as Partial<AnalysisCopy>
-    const fields: Array<keyof AnalysisCopy> = ["headline", "matchupStory", "modelReason", "decidingSequence", "pressurePoint"]
+    const fields: Array<keyof AnalysisCopy> = ["headline", "matchupStory", "decidingSequence", "pressurePoint"]
     if (!fields.every((field) => typeof value[field] === "string" && value[field]!.trim())) return null
     const copy = {
       headline: cleanCopy(value.headline!, 120),
       matchupStory: cleanCopy(value.matchupStory!, 360),
-      modelReason: cleanCopy(value.modelReason!, 300),
       decidingSequence: cleanCopy(value.decidingSequence!, 320),
       pressurePoint: cleanCopy(value.pressurePoint!, 240),
     }
@@ -319,7 +309,7 @@ export async function generatePreMatchAnalysis(
   away: HistoricalTeam,
 ): Promise<{ analysis: PreMatchAnalysis; source: "ai" | "template" }> {
   const simulation = simulateMany(home, away, 100, `ai-analysis:${home.id}:${away.id}`)
-  const fallback = shortFallback(home, away, simulation)
+  const fallback = shortFallback(home, away)
   const provider = createCommentaryProvider()
   if (!provider) return { analysis: { copy: fallback, simulation }, source: "template" }
 

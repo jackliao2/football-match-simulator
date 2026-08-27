@@ -59,7 +59,7 @@ export function AiAnalysisResult({ analysis, home, away }: { analysis: PreMatchA
           <div className="absolute inset-y-0 left-0 w-0.5 bg-gold" />
           <p className="font-display text-[8px] uppercase tracking-[0.24em] text-gold">The call</p>
           <h3 className="mt-1 font-brand text-xl font-semibold tracking-wide text-text sm:text-2xl">{balance}</h3>
-          <p className="mt-3 max-w-4xl text-sm leading-6 text-text sm:text-base">{copy.modelReason}</p>
+          <p className="mt-3 max-w-4xl text-sm leading-6 text-text sm:text-base">{modelReason(home, away, sim)}</p>
         </div>
         <div className="grid border-t border-white/10 md:grid-cols-[1.25fr_0.75fr]">
           <AnalysisBeat label="The deciding sequence" text={copy.decidingSequence} />
@@ -165,4 +165,28 @@ function universeLabel(homePct: number, awayPct: number) {
   if (gap <= 5) return "Too close to call"
   if (gap <= 12) return "A narrow model edge — never out of reach"
   return "A clear model lean, with an upset path still open"
+}
+
+function modelReason(home: HistoricalTeam, away: HistoricalTeam, sim: PreMatchAnalysis["simulation"]) {
+  const units = [
+    { label: "attack", home: home.attackRating, away: away.attackRating },
+    { label: "midfield", home: home.midfieldRating, away: away.midfieldRating },
+    { label: "defence", home: home.defenseRating, away: away.defenseRating },
+    { label: "goalkeeping", home: home.goalkeeperRating, away: away.goalkeeperRating },
+    { label: "chemistry", home: home.chemistryRating, away: away.chemistryRating },
+  ]
+  const homeEdge = [...units].sort((a, b) => (b.home - b.away) - (a.home - a.away))[0]!
+  const awayEdge = [...units].sort((a, b) => (b.away - b.home) - (a.away - a.home))[0]!
+  const gap = Math.abs(sim.homeWins - sim.awayWins)
+
+  if (gap <= 5) {
+    return `Only ${gap} win${gap === 1 ? "" : "s"} separate them. ${home.clubName}'s best answer is ${homeEdge.label} (${homeEdge.home}–${homeEdge.away}); ${away.clubName}'s is ${awayEdge.label} (${awayEdge.away}–${awayEdge.home}). The engine does not justify a clear favourite.`
+  }
+
+  const homeLeads = sim.homeWins > sim.awayWins
+  const leader = homeLeads ? home : away
+  const edge = homeLeads ? homeEdge : awayEdge
+  const leaderValue = homeLeads ? edge.home : edge.away
+  const otherValue = homeLeads ? edge.away : edge.home
+  return `${leader.clubName}'s clearest advantage is ${edge.label} (${leaderValue}–${otherValue}). Across 100 nights that becomes ${Math.max(sim.homeWins, sim.awayWins)} wins to ${Math.min(sim.homeWins, sim.awayWins)}, enough to make the call.`
 }
