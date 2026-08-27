@@ -35,7 +35,7 @@ export function AiAnalysisResult({ analysis, home, away }: { analysis: PreMatchA
     <section id="result-analysis" className="result-panel isolate overflow-hidden border-2 border-gold/50 shadow-[8px_8px_0_#000,0_0_0_1px_rgba(212,180,90,0.18)]">
       <header className="relative overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_50%_0%,rgba(212,180,90,0.15),transparent_50%)] px-4 py-4 sm:px-6">
         <div className="flex items-center justify-between gap-3">
-          <p className="font-display text-[8px] uppercase tracking-[0.28em] text-gold">AI match lab</p>
+          <p className="font-display text-[8px] uppercase tracking-[0.28em] text-gold">Expert AI Analysis</p>
           <p className="font-display text-[8px] uppercase tracking-[0.2em] text-muted">Era collision</p>
         </div>
         <h2 className="mx-auto mt-2 max-w-3xl text-center font-brand text-lg leading-snug font-semibold tracking-wide text-text sm:text-2xl">{copy.headline}</h2>

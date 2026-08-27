@@ -395,12 +395,12 @@ export function MatchSetup({
               </button>
               <button
                 type="button"
-                disabled={sameTeam || analysisLoading || aiRemaining <= 0}
+                disabled={sameTeam || analysisLoading}
                 className="rail-btn"
                 onClick={runAnalysis}
               >
                 <span className="flex flex-col items-center gap-0.5">
-                  <span>{analysisLoading ? "Analysing…" : "AI Analysis"}</span>
+                  <span>{analysisLoading ? "Analysing…" : "Expert AI Analysis"}</span>
                   <span className="font-mono text-[8px] normal-case tracking-normal opacity-70">Daily {aiRemaining}/5</span>
                 </span>
               </button>
@@ -492,12 +492,31 @@ export function MatchSetup({
           </div>
         ) : null}
 
-        {analysisError ? <p className="font-mono text-sm text-danger">{analysisError}</p> : null}
+        {analysisError ? (
+          <section id="result-analysis" className="result-panel border-2 border-gold/40 px-5 py-6 shadow-[8px_8px_0_#000]">
+            <p className="font-display text-[8px] uppercase tracking-[0.24em] text-gold">Expert AI Analysis</p>
+            <h2 className="mt-2 font-brand text-xl font-semibold text-text">{aiRemaining <= 0 ? "Daily free quota used" : "Analysis unavailable"}</h2>
+            <p className="mt-2 font-mono text-sm leading-6 text-text/80">{analysisError}</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={simulateOnce}>Simulate match</button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={simulateHundred}>100 Matches</button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>Back to teams</button>
+            </div>
+          </section>
+        ) : null}
 
         {analysisLoading ? (
           <AiAnalysisLoading home={home.team} away={away.team} />
         ) : analysis ? (
-          <AiAnalysisResult analysis={analysis} home={home.team} away={away.team} />
+          <div className="grid gap-3">
+            <AiAnalysisResult analysis={analysis} home={home.team} away={away.team} />
+            <div className="flex flex-wrap gap-2">
+              <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={simulateOnce}>Simulate match</button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={simulateHundred}>100 Matches</button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={runAnalysis}>Expert AI again · {aiRemaining}/5</button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>Back to teams</button>
+            </div>
+          </div>
         ) : null}
       </div>
       ) : null}
