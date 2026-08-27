@@ -21,13 +21,17 @@ describe("AI route handlers", () => {
         homeId: "barcelona-2008-09",
       }),
     )
-    const body = (await response.json()) as { report?: string; source?: string }
+    const body = (await response.json()) as {
+      analysis?: { copy?: { hook?: string }; simulation?: { runs?: number } }
+      source?: string
+    }
 
     expect(response.status).toBe(200)
     expect(Number(response.headers.get("X-RateLimit-Limit"))).toBeGreaterThan(0)
     expect(response.headers.get("X-AI-Cache")).toBe("miss")
     expect(body.source).toBe("template")
-    expect(body.report).toContain("ENGINE READ")
+    expect(body.analysis?.copy?.hook?.length).toBeGreaterThan(20)
+    expect(body.analysis?.simulation?.runs).toBe(100)
   })
 
   it("reuses a deterministic match report", async () => {

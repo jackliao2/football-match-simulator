@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react"
 import { ClubPicker } from "@/components/simulator/ClubPicker"
+import { AiAnalysisLoading, AiAnalysisResult } from "@/components/simulator/AiAnalysisResult"
 import { EraSelect } from "@/components/simulator/EraSelect"
 import { MatchResult } from "@/components/simulator/MatchResult"
 import { MatchStats } from "@/components/simulator/MatchStats"
@@ -12,12 +13,12 @@ import { FaceOffSquad } from "@/components/teams/SquadPanel"
 import { PixelCrest } from "@/components/teams/PixelCrest"
 import { eraGlow } from "@/data/trophies"
 import { isCurrentSquad } from "@/lib/seo"
-import { ResultPanel } from "@/components/ui/ResultPanel"
 import { OvrStamp } from "@/components/ui/OvrStamp"
 import { track } from "@/lib/analytics"
 import { absoluteUrl } from "@/lib/site"
 import { createSeed } from "@/lib/match-id"
 import { simulateMany, simulateMatch } from "@/lib/simulation"
+import type { PreMatchAnalysis } from "@/lib/ai/analysis"
 import { teamSquad, type SquadMember, type StarPlayer } from "@/lib/stars"
 import type { HistoricalTeam, MonteCarloResult, SimulatedMatch, TeamKind } from "@/types"
 
@@ -71,7 +72,7 @@ export function MatchSetup({
     | { kind: "batch"; result: MonteCarloResult }
     | null
   >(null)
-  const [analysis, setAnalysis] = useState<string | null>(null)
+  const [analysis, setAnalysis] = useState<PreMatchAnalysis | null>(null)
   const [analysisSource, setAnalysisSource] = useState<"ai" | "template" | null>(null)
   const [analysisLoading, setAnalysisLoading] = useState(false)
   const [analysisError, setAnalysisError] = useState<string | null>(null)
@@ -260,7 +261,9 @@ export function MatchSetup({
   async function runAnalysis() {
     if (sameTeam) return
     setAnalysisLoading(true)
+    setAnalysis(null)
     setAnalysisError(null)
+    showResults("analysis")
     track("ai_analysis", { home: home.id, away: away.id })
     try {
       const response = await fetch("/api/analysis", {
@@ -269,16 +272,15 @@ export function MatchSetup({
         body: JSON.stringify({ homeId: home.id, awayId: away.id }),
       })
       const data = (await response.json()) as {
-        report?: string
+        analysis?: PreMatchAnalysis
         source?: "ai" | "template"
         error?: string
       }
-      if (!response.ok || !data.report) {
+      if (!response.ok || !data.analysis) {
         throw new Error(data.error ?? "Could not generate analysis")
       }
-      setAnalysis(data.report)
+      setAnalysis(data.analysis)
       setAnalysisSource(data.source ?? "template")
-      showResults("analysis")
     } catch (err) {
       setAnalysisError(err instanceof Error ? err.message : "Could not generate analysis")
     } finally {
@@ -352,7 +354,7 @@ export function MatchSetup({
                 className="rail-btn"
                 onClick={runAnalysis}
               >
-                {analysisLoading ? "Writing…" : "AI Analysis"}
+                {analysisLoading ? "Analysing…" : "AI Analysis"}
               </button>
               <p className="rail-hint">
                 <span className="md:hidden">Tap a player for PAC SHO PAS DRI DEF PHY</span>
@@ -374,7 +376,7 @@ export function MatchSetup({
         </div>
       </div>
 
-      {play || match || batch || analysis || analysisError ? (
+      {play || match || batch || analysis || analysisLoading || analysisError ? (
       <div ref={resultRef} className="result-anchor mt-6 grid gap-4">
         {play?.kind === "match" ? (
           <div id="result-match">
@@ -444,17 +446,10 @@ export function MatchSetup({
 
         {analysisError ? <p className="font-mono text-sm text-danger">{analysisError}</p> : null}
 
-        {analysis ? (
-          <ResultPanel
-            id="result-analysis"
-            kicker="Pre-match"
-            title="Analysis"
-            aside={analysisSource === "ai" ? "LLM brief" : "Local brief"}
-          >
-            <div className="whitespace-pre-wrap px-4 py-4 font-mono text-sm leading-7 text-text sm:px-5">
-              {analysis}
-            </div>
-          </ResultPanel>
+        {analysisLoading ? (
+          <AiAnalysisLoading home={home.clubName} away={away.clubName} />
+        ) : analysis ? (
+          <AiAnalysisResult analysis={analysis} source={analysisSource} />
         ) : null}
       </div>
       ) : null}

@@ -1,32 +1,40 @@
 import type { HistoricalTeam, Player } from "@/types"
 import { createCommentaryProvider } from "@/lib/ai/provider"
+import { simulateMany } from "@/lib/simulation"
 import { starters } from "@/lib/simulation/ratings"
+import type { MonteCarloResult } from "@/types"
 
 const ATTACK_POS = new Set(["ST", "CF", "LW", "RW", "SS", "CAM"])
 const MID_POS = new Set(["CM", "CDM", "CAM", "LCM", "RCM", "LDM", "RDM", "LM", "RM"])
 const DEF_POS = new Set(["CB", "LB", "RB", "LCB", "RCB", "LWB", "RWB"])
 
-export const ANALYSIS_SYSTEM_PROMPT = `You write pre-match tactical analysis for a historical football team simulator.
+export const ANALYSIS_SYSTEM_PROMPT = `You write ultra-short, entertaining verdicts for a historical football team simulator.
 
 Hard rules:
-- This is NOT a match report. Do not invent a score, scorers, cards or a winner.
+- Return valid JSON only, with exactly these string fields: hook, keyBattle, dangerMan, verdict.
+- hook: one punchy sentence, maximum 22 words. Make it memorable, like "Nobody here can live with Ronaldo in open grass."
+- keyBattle: maximum 24 words, naming the most important tactical duel.
+- dangerMan: maximum 20 words, naming one supplied player and why he matters.
+- verdict: maximum 28 words explaining which side has the edge and why.
+- This is NOT a match report. Do not invent scorers, cards, events or statistics.
 - Never invent players who are not in the supplied squads.
 - Never claim this was a real historical fixture. These sides may be from different eras.
 - Ratings are era-relative: a 95 in 1970 is greatness in 1970, not a claim about modern athleticism.
-- Write 450-800 words in English.
-- Use these section headings in this order, in capitals:
-  OPENING
-  STYLE CLASH
-  FORWARD DUEL
-  MIDFIELD CONTROL
-  DEFENCE AND KEEPERS
-  COACHING
-  ENGINE READ
-- Be specific: name forwards, creators, destroyers and keepers from the JSON.
-- Compare styles (possession, press, counter, width, tempo) using the supplied numbers.
-- The ENGINE READ section may say which side the model rates stronger and why, but must stress that a single simulated seed can still swing.
+- Be decisive and fun, not academic. No markdown and no headings.
 
 The JSON is the source of truth.`
+
+export interface AnalysisCopy {
+  hook: string
+  keyBattle: string
+  dangerMan: string
+  verdict: string
+}
+
+export interface PreMatchAnalysis {
+  copy: AnalysisCopy
+  simulation: MonteCarloResult
+}
 
 function byOverall(a: Player, b: Player) {
   return b.overall - a.overall
@@ -217,19 +225,54 @@ export function templatePreMatchAnalysis(home: HistoricalTeam, away: HistoricalT
   ].join("\n\n")
 }
 
+function shortFallback(home: HistoricalTeam, away: HistoricalTeam): AnalysisCopy {
+  const homeStar = pick(home, ATTACK_POS, 1)[0] ?? starters(home).sort(byOverall)[0]
+  const awayStar = pick(away, ATTACK_POS, 1)[0] ?? starters(away).sort(byOverall)[0]
+  const stronger = home.overallRating >= away.overallRating ? home : away
+  const other = stronger.id === home.id ? away : home
+
+  return {
+    hook: `${homeStar?.name ?? home.clubName} against ${awayStar?.name ?? away.clubName} is the duel this matchup was built for.`,
+    keyBattle: `${home.clubName}'s ${home.formation} meets ${away.clubName}'s ${away.formation}; control of midfield decides who gets to play forward.`,
+    dangerMan: `${homeStar?.name ?? home.clubName} carries the clearest route to changing this game in one action.`,
+    verdict: `${stronger.clubName} hold the rating edge, but ${other.clubName} have enough quality to punish one bad phase.`,
+  }
+}
+
+function parseAnalysisCopy(raw: string): AnalysisCopy | null {
+  try {
+    const cleaned = raw.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "")
+    const value = JSON.parse(cleaned) as Partial<AnalysisCopy>
+    const fields: Array<keyof AnalysisCopy> = ["hook", "keyBattle", "dangerMan", "verdict"]
+    if (!fields.every((field) => typeof value[field] === "string" && value[field]!.trim())) return null
+    return {
+      hook: value.hook!.trim().slice(0, 180),
+      keyBattle: value.keyBattle!.trim().slice(0, 220),
+      dangerMan: value.dangerMan!.trim().slice(0, 180),
+      verdict: value.verdict!.trim().slice(0, 240),
+    }
+  } catch {
+    return null
+  }
+}
+
 export async function generatePreMatchAnalysis(
   home: HistoricalTeam,
   away: HistoricalTeam,
-): Promise<{ report: string; source: "ai" | "template" }> {
-  const fallback = templatePreMatchAnalysis(home, away)
+): Promise<{ analysis: PreMatchAnalysis; source: "ai" | "template" }> {
+  const fallback = shortFallback(home, away)
+  const simulation = simulateMany(home, away, 100, `ai-analysis:${home.id}:${away.id}`)
   const provider = createCommentaryProvider()
-  if (!provider) return { report: fallback, source: "template" }
+  if (!provider) return { analysis: { copy: fallback, simulation }, source: "template" }
 
   try {
-    const report = await provider.generate(ANALYSIS_SYSTEM_PROMPT, analysisPayload(home, away), {
-      maxTokens: 1600,
+    const raw = await provider.generate(ANALYSIS_SYSTEM_PROMPT, analysisPayload(home, away), {
+      maxTokens: 260,
+      temperature: 0.55,
     })
-    return { report, source: "ai" }
+    const copy = parseAnalysisCopy(raw)
+    if (!copy) throw new Error("AI provider returned invalid analysis JSON")
+    return { analysis: { copy, simulation }, source: "ai" }
   } catch (error) {
     console.error(
       "[ai-provider]",
@@ -238,6 +281,6 @@ export async function generatePreMatchAnalysis(
         feature: "analysis",
       }),
     )
-    return { report: fallback, source: "template" }
+    return { analysis: { copy: fallback, simulation }, source: "template" }
   }
 }
