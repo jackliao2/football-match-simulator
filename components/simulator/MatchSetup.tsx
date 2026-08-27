@@ -22,6 +22,13 @@ import type { PreMatchAnalysis } from "@/lib/ai/analysis"
 import { teamSquad, type SquadMember, type StarPlayer } from "@/lib/stars"
 import type { HistoricalTeam, MonteCarloResult, SimulatedMatch, TeamKind } from "@/types"
 
+const AI_DAILY_LIMIT = 5
+const AI_USAGE_KEY = "lm-ai-daily-usage"
+
+function localDayKey(date = new Date()) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`
+}
+
 export interface TeamOption {
   id: string
   clubId: string
@@ -75,6 +82,7 @@ export function MatchSetup({
   const [analysis, setAnalysis] = useState<PreMatchAnalysis | null>(null)
   const [analysisLoading, setAnalysisLoading] = useState(false)
   const [analysisError, setAnalysisError] = useState<string | null>(null)
+  const [aiUsesToday, setAiUsesToday] = useState(0)
   const [copied, setCopied] = useState(false)
   const resultRef = useRef<HTMLDivElement>(null)
   const scrollTarget = useRef<"match" | "batch" | "analysis">("match")
@@ -98,6 +106,22 @@ export function MatchSetup({
     return () => window.clearTimeout(hydration)
     // Hydrate once from the saved Now/Legend switch.
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    const hydration = window.setTimeout(() => {
+      try {
+        const saved = JSON.parse(window.localStorage.getItem(AI_USAGE_KEY) ?? "null") as { date?: string; count?: number } | null
+        if (saved?.date === localDayKey() && Number.isFinite(saved.count)) {
+          setAiUsesToday(Math.min(AI_DAILY_LIMIT, Math.max(0, saved.count ?? 0)))
+        } else {
+          window.localStorage.setItem(AI_USAGE_KEY, JSON.stringify({ date: localDayKey(), count: 0 }))
+        }
+      } catch {
+        /* ignore */
+      }
+    }, 0)
+    return () => window.clearTimeout(hydration)
   }, [])
 
   useEffect(() => {
@@ -130,6 +154,7 @@ export function MatchSetup({
     preferredSeason(awaySeasons, includeCurrent) ??
     awaySeasons[0]!
   const sameTeam = home.id === away.id
+  const aiRemaining = Math.max(0, AI_DAILY_LIMIT - aiUsesToday)
   const homeSquad = home.squad.length > 0 ? home.squad : teamSquad(home.team)
   const awaySquad = away.squad.length > 0 ? away.squad : teamSquad(away.team)
 
@@ -219,6 +244,9 @@ export function MatchSetup({
     const next = simulateMatch(home.team, away.team, createSeed())
     setMatch(null)
     setBatch(null)
+    setAnalysis(null)
+    setAnalysisError(null)
+    setAnalysisLoading(false)
     setPlay({ kind: "match", match: next })
     showResults("match")
   }
@@ -230,6 +258,9 @@ export function MatchSetup({
     const result = simulateMany(home.team, away.team, 100, createSeed())
     setMatch(null)
     setBatch(null)
+    setAnalysis(null)
+    setAnalysisError(null)
+    setAnalysisLoading(false)
     setPlay({ kind: "batch", result })
     setRunning(false)
     showResults("batch")
@@ -259,6 +290,15 @@ export function MatchSetup({
 
   async function runAnalysis() {
     if (sameTeam) return
+    setMatch(null)
+    setBatch(null)
+    setPlay(null)
+    if (aiRemaining <= 0) {
+      setAnalysis(null)
+      setAnalysisError("You have used today’s 5 free AI analyses. Come back tomorrow.")
+      showResults("analysis")
+      return
+    }
     setAnalysisLoading(true)
     setAnalysis(null)
     setAnalysisError(null)
@@ -279,6 +319,13 @@ export function MatchSetup({
         throw new Error(data.error ?? "Could not generate analysis")
       }
       setAnalysis(data.analysis)
+      const nextCount = Math.min(AI_DAILY_LIMIT, aiUsesToday + 1)
+      setAiUsesToday(nextCount)
+      try {
+        window.localStorage.setItem(AI_USAGE_KEY, JSON.stringify({ date: localDayKey(), count: nextCount }))
+      } catch {
+        /* ignore */
+      }
     } catch (err) {
       setAnalysisError(err instanceof Error ? err.message : "Could not generate analysis")
     } finally {
@@ -348,11 +395,14 @@ export function MatchSetup({
               </button>
               <button
                 type="button"
-                disabled={sameTeam || analysisLoading}
+                disabled={sameTeam || analysisLoading || aiRemaining <= 0}
                 className="rail-btn"
                 onClick={runAnalysis}
               >
-                {analysisLoading ? "Analysing…" : "AI Analysis"}
+                <span className="flex flex-col items-center gap-0.5">
+                  <span>{analysisLoading ? "Analysing…" : "AI Analysis"}</span>
+                  <span className="font-mono text-[8px] normal-case tracking-normal opacity-70">Daily {aiRemaining}/5</span>
+                </span>
               </button>
               <p className="rail-hint">
                 <span className="md:hidden">Tap a player for PAC SHO PAS DRI DEF PHY</span>
@@ -375,7 +425,7 @@ export function MatchSetup({
       </div>
 
       {play || match || batch || analysis || analysisLoading || analysisError ? (
-      <div ref={resultRef} className={`mt-6 grid scroll-mt-20 gap-4 ${analysis || analysisLoading ? "" : "result-anchor"}`}>
+      <div ref={resultRef} className="mt-6 mb-10 grid scroll-mt-20 gap-4">
         {play?.kind === "match" ? (
           <div id="result-match">
             <SimulationPlay

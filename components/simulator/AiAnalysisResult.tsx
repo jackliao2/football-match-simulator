@@ -5,8 +5,8 @@ import type { HistoricalTeam } from "@/types"
 
 export function AiAnalysisLoading({ home, away }: { home: HistoricalTeam; away: HistoricalTeam }) {
   return (
-    <section id="result-analysis" className="result-panel overflow-hidden" aria-live="polite">
-      <div className="grid min-h-80 place-items-center bg-[radial-gradient(circle_at_50%_42%,rgba(212,180,90,0.12),transparent_40%)] px-5 py-12 text-center">
+    <section id="result-analysis" className="result-panel isolate overflow-hidden border-2 border-gold/50 shadow-[8px_8px_0_#000]" aria-live="polite">
+      <div className="grid min-h-64 place-items-center bg-[radial-gradient(circle_at_50%_42%,rgba(212,180,90,0.12),transparent_40%)] px-5 py-8 text-center">
         <div>
           <div className="mx-auto flex items-center justify-center gap-5" aria-hidden="true">
             <PixelCrest clubId={home.clubId} size={52} className="animate-pulse" />
@@ -18,7 +18,7 @@ export function AiAnalysisLoading({ home, away }: { home: HistoricalTeam; away: 
           </div>
           <p className="mt-6 font-display text-[9px] uppercase tracking-[0.28em] text-gold">Building the matchup</p>
           <h2 className="mt-2 font-brand text-xl font-semibold tracking-wide text-text">Two eras enter the match lab</h2>
-          <p className="mx-auto mt-2 max-w-md font-mono text-xs leading-5 text-muted">{home.clubName} {home.displaySeason} vs {away.clubName} {away.displaySeason}. Mapping each era&apos;s identity, routes to victory and 100 alternate nights.</p>
+          <p className="mx-auto mt-2 max-w-md font-mono text-xs leading-5 text-muted">{home.clubName} {home.displaySeason} vs {away.clubName} {away.displaySeason}. Building the match call, decisive sequence and 100 alternate nights.</p>
           <div className="mx-auto mt-6 h-px w-56 overflow-hidden bg-white/10"><span className="block h-full w-1/2 animate-pulse bg-gold" /></div>
           <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-muted">Usually 5–15 seconds</p>
         </div>
@@ -30,36 +30,35 @@ export function AiAnalysisLoading({ home, away }: { home: HistoricalTeam; away: 
 export function AiAnalysisResult({ analysis, home, away }: { analysis: PreMatchAnalysis; home: HistoricalTeam; away: HistoricalTeam }) {
   const { copy, simulation: sim } = analysis
   const score = sim.mostCommonScore.replace("-", "–")
-  const balance = universeLabel(sim.homeWinPct, sim.awayWinPct)
 
   return (
-    <section id="result-analysis" className="result-panel overflow-hidden border-gold/30">
-      <header className="relative overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_50%_0%,rgba(212,180,90,0.15),transparent_50%)] px-4 pt-5 pb-6 sm:px-7 sm:pt-7">
+    <section id="result-analysis" className="result-panel isolate overflow-hidden border-2 border-gold/50 shadow-[8px_8px_0_#000,0_0_0_1px_rgba(212,180,90,0.18)]">
+      <header className="relative overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_50%_0%,rgba(212,180,90,0.15),transparent_50%)] px-4 py-4 sm:px-6">
         <div className="flex items-center justify-between gap-3">
           <p className="font-display text-[8px] uppercase tracking-[0.28em] text-gold">AI match lab</p>
           <p className="font-display text-[8px] uppercase tracking-[0.2em] text-muted">Era collision</p>
         </div>
-        <h2 className="mx-auto mt-4 max-w-3xl text-center font-brand text-xl leading-snug font-semibold tracking-wide text-text sm:text-3xl">{copy.headline}</h2>
+        <h2 className="mx-auto mt-2 max-w-3xl text-center font-brand text-lg leading-snug font-semibold tracking-wide text-text sm:text-2xl">{copy.headline}</h2>
 
-        <div className="mx-auto mt-6 grid max-w-3xl grid-cols-[minmax(0,1fr)_5rem_minmax(0,1fr)] items-center gap-2 sm:grid-cols-[minmax(0,1fr)_8rem_minmax(0,1fr)] sm:gap-5">
+        <div className="mx-auto mt-3 grid max-w-3xl grid-cols-[minmax(0,1fr)_5rem_minmax(0,1fr)] items-center gap-2 sm:grid-cols-[minmax(0,1fr)_7rem_minmax(0,1fr)] sm:gap-4">
           <TeamMark team={home} />
           <div className="text-center">
             <p className="font-display text-[7px] uppercase tracking-[0.18em] text-muted">Most seen</p>
-            <p className="result-score mt-1 text-4xl leading-none sm:text-6xl">{score}</p>
+            <p className="result-score mt-1 text-4xl leading-none sm:text-5xl">{score}</p>
             <p className="mt-1 font-mono text-[9px] text-muted">in 100 runs</p>
           </div>
           <TeamMark team={away} away />
         </div>
 
-        <p className="mx-auto mt-6 max-w-3xl border-t border-white/10 pt-5 text-center text-sm leading-6 text-text sm:text-base">{copy.matchupStory}</p>
+        <p className="mx-auto mt-3 max-w-3xl border-t border-white/10 pt-3 text-center text-sm leading-5 text-text">{copy.matchupStory}</p>
       </header>
 
       <section className="border-b border-white/10">
-        <div className="relative bg-gold/[0.045] px-4 py-5 sm:px-7 sm:py-6">
+        <div className="relative bg-gold/[0.045] px-4 py-3 sm:px-6 sm:py-4">
           <div className="absolute inset-y-0 left-0 w-0.5 bg-gold" />
           <p className="font-display text-[8px] uppercase tracking-[0.24em] text-gold">The call</p>
-          <h3 className="mt-1 font-brand text-xl font-semibold tracking-wide text-text sm:text-2xl">{balance}</h3>
-          <p className="mt-3 max-w-4xl text-sm leading-6 text-text sm:text-base">{modelReason(home, away, sim)}</p>
+          <h3 className="mt-1 font-brand text-lg font-semibold tracking-wide text-text sm:text-xl">{copy.callTitle}</h3>
+          <p className="mt-2 max-w-4xl text-sm leading-5 text-text">{copy.callBody}</p>
         </div>
         <div className="grid border-t border-white/10 md:grid-cols-[1.25fr_0.75fr]">
           <AnalysisBeat label="The deciding sequence" text={copy.decidingSequence} />
@@ -67,7 +66,7 @@ export function AiAnalysisResult({ analysis, home, away }: { analysis: PreMatchA
         </div>
       </section>
 
-      <section className="px-4 py-5 sm:px-7 sm:py-6">
+      <section className="px-4 py-4 sm:px-6">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <p className="font-display text-[8px] uppercase tracking-[0.24em] text-gold">100 alternate nights</p>
@@ -76,7 +75,7 @@ export function AiAnalysisResult({ analysis, home, away }: { analysis: PreMatchA
           <p className="font-mono text-[10px] text-text/70">Same squads. A different bounce of the ball.</p>
         </div>
 
-        <div className="mt-5 grid items-center gap-5 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-7">
+        <div className="mt-3 grid items-center gap-4 sm:grid-cols-[7rem_minmax(0,1fr)]">
           <UniverseGrid homeWins={sim.homeWins} draws={sim.draws} awayWins={sim.awayWins} />
           <div className="grid grid-cols-3 gap-2">
             <Outcome label={`${home.clubName} wins`} value={sim.homeWins} tone="gold" />
@@ -85,7 +84,7 @@ export function AiAnalysisResult({ analysis, home, away }: { analysis: PreMatchA
           </div>
         </div>
 
-        <div className="mt-5 grid gap-5 lg:grid-cols-[1fr_1.4fr]">
+        <div className="mt-3 grid gap-3 lg:grid-cols-[1fr_1.4fr]">
           <div>
             <p className="font-display text-[8px] uppercase tracking-[0.18em] text-muted">Recurring scorelines</p>
             <div className="mt-2 flex flex-wrap gap-2">
@@ -131,7 +130,7 @@ function TeamMark({ team, away = false }: { team: HistoricalTeam; away?: boolean
 
 function AnalysisBeat({ label, text, border = false }: { label: string; text: string; border?: boolean }) {
   return (
-    <article className={`px-4 py-5 sm:px-7 sm:py-6 ${border ? "border-t border-white/10 md:border-t-0 md:border-l" : ""}`}>
+    <article className={`px-4 py-3 sm:px-6 sm:py-4 ${border ? "border-t border-white/10 md:border-t-0 md:border-l" : ""}`}>
       <p className="font-display text-[8px] uppercase tracking-[0.22em] text-gold">{label}</p>
       <p className="mt-2 text-sm leading-6 text-text sm:text-[15px]">{text}</p>
     </article>
@@ -150,7 +149,7 @@ function UniverseGrid({ homeWins, draws, awayWins }: { homeWins: number; draws: 
     ...Array.from({ length: awayWins }, () => "bg-danger"),
   ]
   return (
-    <div className="mx-auto grid w-full max-w-[8.5rem] grid-cols-10 gap-[3px]" role="img" aria-label={`${homeWins} home wins, ${draws} draws and ${awayWins} away wins`}>
+    <div className="mx-auto grid w-full max-w-[7rem] grid-cols-10 gap-[2px]" role="img" aria-label={`${homeWins} home wins, ${draws} draws and ${awayWins} away wins`}>
       {cells.map((tone, index) => <span key={index} className={`aspect-square ${tone}`} />)}
     </div>
   )
@@ -158,35 +157,4 @@ function UniverseGrid({ homeWins, draws, awayWins }: { homeWins: number; draws: 
 
 function Metric({ label, value }: { label: string; value: string }) {
   return <div className="bg-[#0b100b] p-3"><p className="font-display text-[7px] uppercase tracking-[0.14em] text-muted">{label}</p><p className="mt-1.5 font-mono text-base font-semibold tabular-nums text-text">{value}</p></div>
-}
-
-function universeLabel(homePct: number, awayPct: number) {
-  const gap = Math.abs(homePct - awayPct)
-  if (gap <= 5) return "Too close to call"
-  if (gap <= 12) return "A narrow model edge — never out of reach"
-  return "A clear model lean, with an upset path still open"
-}
-
-function modelReason(home: HistoricalTeam, away: HistoricalTeam, sim: PreMatchAnalysis["simulation"]) {
-  const units = [
-    { label: "attack", home: home.attackRating, away: away.attackRating },
-    { label: "midfield", home: home.midfieldRating, away: away.midfieldRating },
-    { label: "defence", home: home.defenseRating, away: away.defenseRating },
-    { label: "goalkeeping", home: home.goalkeeperRating, away: away.goalkeeperRating },
-    { label: "chemistry", home: home.chemistryRating, away: away.chemistryRating },
-  ]
-  const homeEdge = [...units].sort((a, b) => (b.home - b.away) - (a.home - a.away))[0]!
-  const awayEdge = [...units].sort((a, b) => (b.away - b.home) - (a.away - a.home))[0]!
-  const gap = Math.abs(sim.homeWins - sim.awayWins)
-
-  if (gap <= 5) {
-    return `Only ${gap} win${gap === 1 ? "" : "s"} separate them. ${home.clubName}'s best answer is ${homeEdge.label} (${homeEdge.home}–${homeEdge.away}); ${away.clubName}'s is ${awayEdge.label} (${awayEdge.away}–${awayEdge.home}). The engine does not justify a clear favourite.`
-  }
-
-  const homeLeads = sim.homeWins > sim.awayWins
-  const leader = homeLeads ? home : away
-  const edge = homeLeads ? homeEdge : awayEdge
-  const leaderValue = homeLeads ? edge.home : edge.away
-  const otherValue = homeLeads ? edge.away : edge.home
-  return `${leader.clubName}'s clearest advantage is ${edge.label} (${leaderValue}–${otherValue}). Across 100 nights that becomes ${Math.max(sim.homeWins, sim.awayWins)} wins to ${Math.min(sim.homeWins, sim.awayWins)}, enough to make the call.`
 }

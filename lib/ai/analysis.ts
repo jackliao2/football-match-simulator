@@ -11,9 +11,11 @@ const DEF_POS = new Set(["CB", "LB", "RB", "LCB", "RCB", "LWB", "RWB"])
 export const ANALYSIS_SYSTEM_PROMPT = `You write premium, fan-first matchup copy for a historical football team simulator.
 
 Hard rules:
-- Return valid JSON only, with exactly these string fields: headline, matchupStory, decidingSequence, pressurePoint.
+- Return valid JSON only, with exactly these string fields: headline, matchupStory, callTitle, callBody, decidingSequence, pressurePoint.
 - headline: 6-14 words. Celebrate the collision of eras; no winner and no markdown.
 - matchupStory: maximum 42 words. Mention both full team seasons, both managers, and what makes their football identities collide.
+- callTitle: 4-9 words. Make one match-specific football assertion. Never write "Too close to call", generic probability language, ratings, numbers or markdown.
+- callBody: maximum 38 words. Use engineRead to make the call, but translate it into football. Name supplied players and identify the single tactical pattern most likely to tilt the game. If the win split is close, explain the decisive pattern instead of hedging. Do not repeat win totals, percentages or ratings.
 - decidingSequence: maximum 38 words. Describe one vivid, concrete sequence likely to decide the game, naming players from both supplied squads.
 - pressurePoint: maximum 28 words. Identify one specific zone or unit where the matchup advantage is most likely to appear. Write a statement, not a question.
 - This is NOT a match report. Do not invent scorers, cards, events or statistics.
@@ -29,6 +31,8 @@ The JSON is the source of truth.`
 export interface AnalysisCopy {
   headline: string
   matchupStory: string
+  callTitle: string
+  callBody: string
   decidingSequence: string
   pressurePoint: string
 }
@@ -247,15 +251,22 @@ export function templatePreMatchAnalysis(home: HistoricalTeam, away: HistoricalT
   ].join("\n\n")
 }
 
-function shortFallback(home: HistoricalTeam, away: HistoricalTeam): AnalysisCopy {
+function shortFallback(home: HistoricalTeam, away: HistoricalTeam, simulation: MonteCarloResult): AnalysisCopy {
   const homeCore = starters(home).sort(byOverall).slice(0, 3)
   const awayCore = starters(away).sort(byOverall).slice(0, 3)
   const homeNames = homeCore.map((player) => player.name)
   const awayNames = awayCore.map((player) => player.name)
+  const close = Math.abs(simulation.homeWins - simulation.awayWins) <= 5
+  const leader = simulation.homeWins >= simulation.awayWins ? home : away
+  const leaderNames = simulation.homeWins >= simulation.awayWins ? homeNames : awayNames
 
   return {
     headline: "Two great eras, one match they never got to play",
     matchupStory: `${home.manager}'s ${home.clubName} ${home.displaySeason} bring ${home.styleTags[0] ?? "their defining style"}; ${away.manager}'s ${away.clubName} ${away.displaySeason} answer with ${away.styleTags[0] ?? "a different rhythm"}.`,
+    callTitle: close ? "The first broken line decides it" : `${leader.clubName}'s transition tilts the night`,
+    callBody: close
+      ? `${homeNames[0]} and ${awayNames[0]} headline it, but the decisive detail is which midfield plays through the first press and releases its front line facing goal.`
+      : `${leaderNames[1] ?? leaderNames[0]} finding ${leaderNames[0]} before the opposing block resets is the repeatable pattern that gives ${leader.clubName} the sharper route to goal.`,
     decidingSequence: `${homeNames[1] ?? homeNames[0]} looks for ${homeNames[0]}, while ${awayNames[1] ?? awayNames[0]}'s first forward pass releases ${awayNames[0]} into the space left behind.`,
     pressurePoint: `The space around the two midfields is where ${home.formation} and ${away.formation} stop being shapes and become a direct duel.`,
   }
@@ -288,11 +299,13 @@ function parseAnalysisCopy(raw: string): AnalysisCopy | null {
   try {
     const cleaned = raw.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "")
     const value = JSON.parse(cleaned) as Partial<AnalysisCopy>
-    const fields: Array<keyof AnalysisCopy> = ["headline", "matchupStory", "decidingSequence", "pressurePoint"]
+    const fields: Array<keyof AnalysisCopy> = ["headline", "matchupStory", "callTitle", "callBody", "decidingSequence", "pressurePoint"]
     if (!fields.every((field) => typeof value[field] === "string" && value[field]!.trim())) return null
     const copy = {
       headline: cleanCopy(value.headline!, 120),
       matchupStory: cleanCopy(value.matchupStory!, 360),
+      callTitle: cleanCopy(value.callTitle!, 100),
+      callBody: cleanCopy(value.callBody!, 300),
       decidingSequence: cleanCopy(value.decidingSequence!, 320),
       pressurePoint: cleanCopy(value.pressurePoint!, 240),
     }
@@ -309,7 +322,7 @@ export async function generatePreMatchAnalysis(
   away: HistoricalTeam,
 ): Promise<{ analysis: PreMatchAnalysis; source: "ai" | "template" }> {
   const simulation = simulateMany(home, away, 100, `ai-analysis:${home.id}:${away.id}`)
-  const fallback = shortFallback(home, away)
+  const fallback = shortFallback(home, away, simulation)
   const provider = createCommentaryProvider()
   if (!provider) return { analysis: { copy: fallback, simulation }, source: "template" }
 
