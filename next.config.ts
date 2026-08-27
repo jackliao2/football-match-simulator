@@ -34,7 +34,14 @@ const nextConfig: NextConfig = {
     ]
   },
   async redirects() {
-    return NATION_IDS.flatMap((id) => [
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.legendarymatch.com" }],
+        destination: "https://legendarymatch.com/:path*",
+        permanent: true,
+      },
+      ...NATION_IDS.flatMap((id) => [
       {
         source: `/teams/${id}`,
         destination: `/national-teams/${id}`,
@@ -45,7 +52,8 @@ const nextConfig: NextConfig = {
         destination: `/national-teams/${id}/:season`,
         permanent: true,
       },
-    ])
+      ]),
+    ]
   },
 }
 

@@ -6,6 +6,7 @@ const { loadEnvConfig } = nextEnv
 loadEnvConfig(process.cwd())
 
 const problems = []
+const expectedHostname = "legendarymatch.com"
 
 function problem(message) {
   problems.push(message)
@@ -29,6 +30,8 @@ if (!siteUrl) {
       parsed.hostname.endsWith(".vercel.app")
     ) {
       problem("NEXT_PUBLIC_SITE_URL must be the owned production domain")
+    } else if (parsed.hostname !== expectedHostname) {
+      problem(`NEXT_PUBLIC_SITE_URL must use the canonical host ${expectedHostname}`)
     } else {
       ok(`Production URL: ${parsed.origin}`)
     }
@@ -40,6 +43,8 @@ if (!siteUrl) {
 const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim()
 if (!contactEmail || !contactEmail.includes("@") || contactEmail.endsWith("@example.com")) {
   problem("NEXT_PUBLIC_CONTACT_EMAIL must be a working production inbox")
+} else if (!contactEmail.toLowerCase().endsWith(`@${expectedHostname}`)) {
+  problem(`NEXT_PUBLIC_CONTACT_EMAIL must use @${expectedHostname}`)
 } else {
   ok(`Contact inbox: ${contactEmail}`)
 }
