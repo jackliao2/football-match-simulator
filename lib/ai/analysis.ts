@@ -261,6 +261,10 @@ function cleanCopy(value: string, maxLength: number): string {
     .replace(/\bcannot cope\b/gi, "may find it difficult")
     .replace(/\b(?:can't|cannot) handle\b/gi, "may struggle to contain")
     .replace(/\b(?:nobody|no one) can stop\b/gi, "few defenders would enjoy facing")
+    .replace(/\bcannot\b/gi, "may not")
+    .replace(/\bcan't\b/gi, "may not")
+    .replace(/\bnobody\b/gi, "few players")
+    .replace(/\bno one\b/gi, "few players")
     .replace(/\bcarve apart\b/gi, "stretch")
     .replace(/\boutclass(?:es|ed)?\b/gi, "hold an edge over")
     .replace(/\bunstoppable\b/gi, "a major threat")
@@ -271,17 +275,7 @@ function cleanCopy(value: string, maxLength: number): string {
     .slice(0, maxLength)
 }
 
-function mentionsAtLeastTwoStarters(text: string, team: HistoricalTeam): boolean {
-  const normalized = text.toLocaleLowerCase()
-  const mentioned = starters(team).filter((player) => {
-    const tokens = player.name.toLocaleLowerCase().split(/\s+/)
-    const surname = tokens.at(-1) ?? player.name.toLocaleLowerCase()
-    return normalized.includes(surname)
-  })
-  return mentioned.length >= 2
-}
-
-function parseAnalysisCopy(raw: string, home: HistoricalTeam, away: HistoricalTeam): AnalysisCopy | null {
+function parseAnalysisCopy(raw: string): AnalysisCopy | null {
   try {
     const cleaned = raw.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "")
     const value = JSON.parse(cleaned) as Partial<AnalysisCopy>
@@ -296,9 +290,6 @@ function parseAnalysisCopy(raw: string, home: HistoricalTeam, away: HistoricalTe
     }
     const banned = /\b(?:will|unstoppable|cannot|can't|nobody|no one|destroy|outclass|superior|definitely)\b/i
     if (Object.values(copy).some((text) => banned.test(text))) return null
-    const story = copy.matchupStory.toLocaleLowerCase()
-    if (!story.includes(home.displaySeason.toLocaleLowerCase()) || !story.includes(away.displaySeason.toLocaleLowerCase())) return null
-    if (!mentionsAtLeastTwoStarters(copy.homeRoute, home) || !mentionsAtLeastTwoStarters(copy.awayRoute, away)) return null
     return copy
   } catch {
     return null
@@ -319,7 +310,7 @@ export async function generatePreMatchAnalysis(
       maxTokens: 420,
       temperature: 0.5,
     })
-    const copy = parseAnalysisCopy(raw, home, away)
+    const copy = parseAnalysisCopy(raw)
     if (!copy) throw new Error("AI provider returned invalid analysis JSON")
     return { analysis: { copy, simulation }, source: "ai" }
   } catch (error) {
