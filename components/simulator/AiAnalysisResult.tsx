@@ -51,7 +51,7 @@ export function AiAnalysisResult({ analysis, home, away }: { analysis: PreMatchA
           <TeamMark team={away} away />
         </div>
 
-        <p className="mx-auto mt-6 max-w-3xl border-t border-white/10 pt-5 text-center text-sm leading-6 text-text/90 sm:text-base">{copy.matchupStory}</p>
+        <p className="mx-auto mt-6 max-w-3xl border-t border-white/10 pt-5 text-center text-sm leading-6 text-text sm:text-base">{copy.matchupStory}</p>
       </header>
 
       <section className="border-b border-white/10">
