@@ -36,6 +36,11 @@ export const PLANNER_KEYWORDS = [
   "simulate football match",
   "football simulator",
   "soccer match simulator",
+  "soccer simulator online",
+  "custom soccer match simulator",
+  "simulate soccer match",
+  "historical soccer teams",
+  "dream soccer match",
   "who would win football",
   "dream football match",
   "world cup simulator",
@@ -134,6 +139,7 @@ export function squadKeywords(team: HistoricalTeam): string[] {
     `${team.clubName} ${team.displaySeason} lineup`,
     `${team.clubName} ${team.displaySeason} formation`,
     `simulate ${team.clubName} ${team.displaySeason}`,
+    `${team.clubName} ${team.displaySeason} soccer team`,
   ]
   for (const name of names) {
     for (const year of years) {
@@ -159,7 +165,7 @@ export function clubHubKeywords(name: string, clubId: string, teams: HistoricalT
       }
     }
   }
-  phrases.push("football match simulator", "simulate football match")
+  phrases.push("football match simulator", "simulate football match", "soccer match simulator", "simulate soccer match")
   return [...new Set(phrases)]
 }
 
@@ -176,6 +182,7 @@ export function teamMetadata(team: HistoricalTeam): Metadata {
     keywords: [
       `${team.clubName} ${team.displaySeason}`,
       `${team.clubName} ${team.displaySeason} squad`,
+      `${team.clubName} ${team.displaySeason} soccer team`,
       team.kind === "nation" ? `${team.clubName} ${team.displaySeason} national team` : `${team.clubName} ${team.displaySeason} lineup`,
     ],
     alternates: { canonical: path },

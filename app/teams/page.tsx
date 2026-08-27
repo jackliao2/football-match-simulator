@@ -14,6 +14,7 @@ export const metadata: Metadata = pageMetadata({
   title: "Club squads by season",
   description: `${counts.clubSides} playable club sides across ${counts.clubs} clubs — Guardiola’s Barça, Istanbul, the Invincibles, plus 2025/26 squads. Not a shirt shop. Open a year and run the match.`,
   path: "/teams",
+  keywords: ["historical soccer teams", "legendary football squads", "soccer teams by season", "football match simulator"],
 })
 
 export default function TeamsPage() {
@@ -34,7 +35,7 @@ export default function TeamsPage() {
             "@context": "https://schema.org",
             "@type": "CollectionPage",
             name: "Club squads by season",
-            description: `${counts.clubSides} historical and current club squads for the football match simulator.`,
+            description: `${counts.clubSides} historical and current club squads for the football and soccer match simulator.`,
             url: absoluteUrl("/teams"),
             hasPart: sections.flatMap((section) =>
               section.clubs.map((item) => ({

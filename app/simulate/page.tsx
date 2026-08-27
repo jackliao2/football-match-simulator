@@ -6,10 +6,11 @@ import { getTeam, teams, toTeamOption } from "@/data/teams"
 import { pageMetadata } from "@/lib/seo"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Simulate a match",
+  title: "Soccer Match Simulator — Simulate Any Two Teams",
   description:
-    "Two squads, one seed. Score, scorers, xG. Run it a hundred times if you want a spread rather than a single 3–1 you will quote all week.",
+    "Simulate a custom soccer or football match online. Pick any two historical or current squads for a score, scorers, xG, match events and 100-match win probabilities.",
   path: "/simulate",
+  keywords: ["soccer match simulator", "football match simulator", "simulate soccer match", "custom soccer simulator"],
 })
 
 export default async function SimulatePage({
@@ -30,8 +31,8 @@ export default async function SimulatePage({
     <div className="grid gap-5">
       <PageHeader
         kicker="Match engine"
-        title="Simulate a football match"
-        lead="Two historical or current squads. The engine writes the score. Commentary is optional and never gets a vote."
+        title="Simulate a football or soccer match"
+        lead="Pick two historical or current squads. The match engine writes the score; Expert AI Analysis explains the matchup but never gets a vote."
       />
       <MatchSetup teams={options} defaultHome={home} defaultAway={away} />
     </div>

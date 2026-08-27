@@ -9,8 +9,9 @@ import { absoluteUrl } from "@/lib/site"
 export const metadata: Metadata = pageMetadata({
   title: "Dream matches you can actually play",
   description:
-    "Barcelona 2008/09 vs Madrid 2016/17, Brazil 1970 vs Spain 2010, and the rest of the arguments. Each page runs hundreds of seeds. No archive score pretending to be a result.",
+    "Dream football and soccer matchups: Barcelona 2008/09 vs Madrid 2016/17, Brazil 1970 vs Spain 2010 and more. Explore simulated scores and who-would-win probabilities.",
   path: "/vs",
+  keywords: ["dream soccer matches", "who would win soccer", "historical football matchups", "soccer match simulator"],
 })
 
 export default function VsIndexPage() {
@@ -31,7 +32,7 @@ export default function VsIndexPage() {
             "@type": "CollectionPage",
             name: "Dream Matches",
             url: absoluteUrl("/vs"),
-            description: "Hypothetical football matchups. Percentages from many seeded runs, not archive scores.",
+            description: "Hypothetical football and soccer matchups. Percentages from many seeded runs, not archive scores.",
           }),
         }}
       />

@@ -14,6 +14,7 @@ export const metadata: Metadata = pageMetadata({
   title: "National teams by tournament year",
   description: `${counts.nationSides} national sides — Brazil 1970, Argentina 1986, Spain 2010, France 2026 — World Cup and Euros XIs you can play against club sides from any era.`,
   path: "/national-teams",
+  keywords: ["historical soccer national teams", "World Cup teams simulator", "international football simulator", "soccer match simulator"],
 })
 
 export default function NationalTeamsPage() {

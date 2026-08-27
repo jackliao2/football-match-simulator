@@ -15,25 +15,29 @@ import type { HistoricalTeam } from "@/types"
 import type { Metadata } from "next"
 
 const HOME_DESCRIPTION =
-  "Pick two squads — Brazil 1970, Barcelona 2008/09, France 2026, whoever we have — and a seeded engine plays the match. Score, scorers, xG. The model decides; a chatbot does not."
+  "Online football and soccer match simulator. Pick legendary or current squads — Brazil 1970, Barcelona 2008/09, France 2026 — then simulate the score, scorers, xG and 100-match win probabilities."
 
 export const metadata: Metadata = {
-  title: { absolute: `${SITE.name} — Football Match Simulator` },
+  title: { absolute: `${SITE.name} — Football & Soccer Match Simulator` },
   description: HOME_DESCRIPTION,
   alternates: { canonical: "/" },
   openGraph: {
-    title: `${SITE.name} — Football Match Simulator`,
+    title: `${SITE.name} — Football & Soccer Match Simulator`,
     description: HOME_DESCRIPTION,
     url: absoluteUrl("/"),
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE.name} — Football Match Simulator`,
+    title: `${SITE.name} — Football & Soccer Match Simulator`,
     description: HOME_DESCRIPTION,
   },
 }
 
 const FAQ = [
+  [
+    "Is this also a soccer match simulator?",
+    "Yes. Football and soccer describe the same sport here. US fans can use this soccer match simulator to match historical or current teams, play one game, or run 100 simulations for win probabilities.",
+  ],
   [
     "What is a football match simulator?",
     "This football match simulator lets you pick two squads — historical or current — and play a seeded match. Ratings, style and chance produce a score, scorers, xG and events. AI never picks the winner.",

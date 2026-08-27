@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og"
 import { BRAND_INK, brandColor, brandRows } from "@/lib/brand-mark"
 
-export const alt = "LegendaryMatch — Football match simulator"
+export const alt = "LegendaryMatch — Football and soccer match simulator"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
