@@ -8,27 +8,31 @@ const ATTACK_POS = new Set(["ST", "CF", "LW", "RW", "SS", "CAM"])
 const MID_POS = new Set(["CM", "CDM", "CAM", "LCM", "RCM", "LDM", "RDM", "LM", "RM"])
 const DEF_POS = new Set(["CB", "LB", "RB", "LCB", "RCB", "LWB", "RWB"])
 
-export const ANALYSIS_SYSTEM_PROMPT = `You write ultra-short, entertaining verdicts for a historical football team simulator.
+export const ANALYSIS_SYSTEM_PROMPT = `You write premium, fan-first matchup copy for a historical football team simulator.
 
 Hard rules:
-- Return valid JSON only, with exactly these string fields: hook, keyBattle, dangerMan, verdict.
-- hook: one punchy sentence, maximum 22 words. Make it memorable, like "Nobody here can live with Ronaldo in open grass."
-- keyBattle: maximum 24 words, naming the most important tactical duel.
-- dangerMan: maximum 20 words, naming one supplied player and why he matters.
-- verdict: maximum 28 words explaining which side has the edge and why.
+- Return valid JSON only, with exactly these string fields: headline, matchupStory, hinge, homeRoute, awayRoute.
+- headline: 6-14 words. Celebrate the collision of eras; no winner and no markdown.
+- matchupStory: maximum 42 words. Mention both full team seasons, both managers, and what makes their football identities collide.
+- hinge: maximum 28 words. Describe the tactical question that could swing the matchup.
+- homeRoute: maximum 32 words. Describe how the home side could win, naming at least two supplied home players.
+- awayRoute: maximum 32 words. Describe how the away side could win, naming at least two supplied away players.
 - This is NOT a match report. Do not invent scorers, cards, events or statistics.
 - Never invent players who are not in the supplied squads.
 - Never claim this was a real historical fixture. These sides may be from different eras.
 - Ratings are era-relative: a 95 in 1970 is greatness in 1970, not a claim about modern athleticism.
-- Be decisive and fun, not academic. No markdown and no headings.
+- Give both fanbases a credible route to victory. Do not rank players' careers or settle GOAT debates.
+- Avoid absolutes and insults. Never use: unstoppable, cannot cope, no answer, destroy, carve apart, outclass, superior, easy win, definitely, will punish.
+- Sound like the opening of a great Champions League broadcast: vivid, specific and respectful. No markdown and no headings.
 
 The JSON is the source of truth.`
 
 export interface AnalysisCopy {
-  hook: string
-  keyBattle: string
-  dangerMan: string
-  verdict: string
+  headline: string
+  matchupStory: string
+  hinge: string
+  homeRoute: string
+  awayRoute: string
 }
 
 export interface PreMatchAnalysis {
@@ -63,9 +67,13 @@ export function analysisPayload(home: HistoricalTeam, away: HistoricalTeam) {
     home: {
       id: home.id,
       name: home.clubName,
+      fullName: `${home.clubName} ${home.displaySeason}`,
       season: home.displaySeason,
       manager: home.manager,
       formation: home.formation,
+      summary: home.summary,
+      achievements: home.achievements,
+      trophies: home.trophies.map((trophy) => trophy.label),
       overall: home.overallRating,
       styleTags: home.styleTags,
       ratings: {
@@ -110,9 +118,13 @@ export function analysisPayload(home: HistoricalTeam, away: HistoricalTeam) {
     away: {
       id: away.id,
       name: away.clubName,
+      fullName: `${away.clubName} ${away.displaySeason}`,
       season: away.displaySeason,
       manager: away.manager,
       formation: away.formation,
+      summary: away.summary,
+      achievements: away.achievements,
+      trophies: away.trophies.map((trophy) => trophy.label),
       overall: away.overallRating,
       styleTags: away.styleTags,
       ratings: {
@@ -226,31 +238,67 @@ export function templatePreMatchAnalysis(home: HistoricalTeam, away: HistoricalT
 }
 
 function shortFallback(home: HistoricalTeam, away: HistoricalTeam): AnalysisCopy {
-  const homeStar = pick(home, ATTACK_POS, 1)[0] ?? starters(home).sort(byOverall)[0]
-  const awayStar = pick(away, ATTACK_POS, 1)[0] ?? starters(away).sort(byOverall)[0]
-  const stronger = home.overallRating >= away.overallRating ? home : away
-  const other = stronger.id === home.id ? away : home
+  const homeCore = starters(home).sort(byOverall).slice(0, 3)
+  const awayCore = starters(away).sort(byOverall).slice(0, 3)
+  const homeNames = homeCore.map((player) => player.name)
+  const awayNames = awayCore.map((player) => player.name)
 
   return {
-    hook: `${homeStar?.name ?? home.clubName} against ${awayStar?.name ?? away.clubName} is the duel this matchup was built for.`,
-    keyBattle: `${home.clubName}'s ${home.formation} meets ${away.clubName}'s ${away.formation}; control of midfield decides who gets to play forward.`,
-    dangerMan: `${homeStar?.name ?? home.clubName} carries the clearest route to changing this game in one action.`,
-    verdict: `${stronger.clubName} hold the rating edge, but ${other.clubName} have enough quality to punish one bad phase.`,
+    headline: "Two great eras, one match they never got to play",
+    matchupStory: `${home.manager}'s ${home.clubName} ${home.displaySeason} bring ${home.styleTags[0] ?? "their defining style"}; ${away.manager}'s ${away.clubName} ${away.displaySeason} answer with ${away.styleTags[0] ?? "a different rhythm"}.`,
+    hinge: `${home.clubName}'s ${home.formation} against ${away.clubName}'s ${away.formation}: whichever midfield escapes pressure first can shape the night.`,
+    homeRoute: `${homeNames.slice(0, 2).join(" and ")} give ${home.clubName} a route through control, timing and the final pass.`,
+    awayRoute: `${awayNames.slice(0, 2).join(" and ")} give ${away.clubName} a route through movement, transition and decisive moments.`,
   }
 }
 
-function parseAnalysisCopy(raw: string): AnalysisCopy | null {
+function cleanCopy(value: string, maxLength: number): string {
+  return value
+    .replace(/^[\s#>*_`-]+/, "")
+    .replace(/[*_`#]/g, "")
+    .replace(/\bwill punish\b/gi, "could test")
+    .replace(/\bcannot cope\b/gi, "may find it difficult")
+    .replace(/\b(?:can't|cannot) handle\b/gi, "may struggle to contain")
+    .replace(/\bcarve apart\b/gi, "stretch")
+    .replace(/\boutclass(?:es|ed)?\b/gi, "hold an edge over")
+    .replace(/\bunstoppable\b/gi, "a major threat")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, maxLength)
+}
+
+function mentionsAtLeastTwoStarters(text: string, team: HistoricalTeam): boolean {
+  const normalized = text.toLocaleLowerCase()
+  const mentioned = starters(team).filter((player) => {
+    const tokens = player.name.toLocaleLowerCase().split(/\s+/)
+    const surname = tokens.at(-1) ?? player.name.toLocaleLowerCase()
+    return normalized.includes(surname)
+  })
+  return mentioned.length >= 2
+}
+
+function parseAnalysisCopy(raw: string, home: HistoricalTeam, away: HistoricalTeam): AnalysisCopy | null {
   try {
     const cleaned = raw.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "")
     const value = JSON.parse(cleaned) as Partial<AnalysisCopy>
-    const fields: Array<keyof AnalysisCopy> = ["hook", "keyBattle", "dangerMan", "verdict"]
+    const fields: Array<keyof AnalysisCopy> = ["headline", "matchupStory", "hinge", "homeRoute", "awayRoute"]
     if (!fields.every((field) => typeof value[field] === "string" && value[field]!.trim())) return null
-    return {
-      hook: value.hook!.trim().slice(0, 180),
-      keyBattle: value.keyBattle!.trim().slice(0, 220),
-      dangerMan: value.dangerMan!.trim().slice(0, 180),
-      verdict: value.verdict!.trim().slice(0, 240),
+    const copy = {
+      headline: cleanCopy(value.headline!, 120),
+      matchupStory: cleanCopy(value.matchupStory!, 360),
+      hinge: cleanCopy(value.hinge!, 240),
+      homeRoute: cleanCopy(value.homeRoute!, 280),
+      awayRoute: cleanCopy(value.awayRoute!, 280),
     }
+    const banned = /\b(?:will|unstoppable|cannot|can't|nobody|no one|destroy|outclass|superior|definitely)\b/i
+    if (Object.values(copy).some((text) => banned.test(text))) return null
+    const story = copy.matchupStory.toLocaleLowerCase()
+    const homeManager = home.manager.toLocaleLowerCase().split(/\s+/).at(-1) ?? home.manager.toLocaleLowerCase()
+    const awayManager = away.manager.toLocaleLowerCase().split(/\s+/).at(-1) ?? away.manager.toLocaleLowerCase()
+    if (!story.includes(home.displaySeason.toLocaleLowerCase()) || !story.includes(away.displaySeason.toLocaleLowerCase())) return null
+    if (!story.includes(homeManager) || !story.includes(awayManager)) return null
+    if (!mentionsAtLeastTwoStarters(copy.homeRoute, home) || !mentionsAtLeastTwoStarters(copy.awayRoute, away)) return null
+    return copy
   } catch {
     return null
   }
@@ -267,10 +315,10 @@ export async function generatePreMatchAnalysis(
 
   try {
     const raw = await provider.generate(ANALYSIS_SYSTEM_PROMPT, analysisPayload(home, away), {
-      maxTokens: 260,
-      temperature: 0.55,
+      maxTokens: 420,
+      temperature: 0.5,
     })
-    const copy = parseAnalysisCopy(raw)
+    const copy = parseAnalysisCopy(raw, home, away)
     if (!copy) throw new Error("AI provider returned invalid analysis JSON")
     return { analysis: { copy, simulation }, source: "ai" }
   } catch (error) {

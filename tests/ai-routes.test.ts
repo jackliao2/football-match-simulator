@@ -22,7 +22,7 @@ describe("AI route handlers", () => {
       }),
     )
     const body = (await response.json()) as {
-      analysis?: { copy?: { hook?: string }; simulation?: { runs?: number } }
+      analysis?: { copy?: { headline?: string; homeRoute?: string; awayRoute?: string }; simulation?: { runs?: number } }
       source?: string
     }
 
@@ -30,7 +30,9 @@ describe("AI route handlers", () => {
     expect(Number(response.headers.get("X-RateLimit-Limit"))).toBeGreaterThan(0)
     expect(response.headers.get("X-AI-Cache")).toBe("miss")
     expect(body.source).toBe("template")
-    expect(body.analysis?.copy?.hook?.length).toBeGreaterThan(20)
+    expect(body.analysis?.copy?.headline?.length).toBeGreaterThan(20)
+    expect(body.analysis?.copy?.homeRoute).toContain("Barcelona")
+    expect(body.analysis?.copy?.awayRoute).toContain("Real Madrid")
     expect(body.analysis?.simulation?.runs).toBe(100)
   })
 

@@ -73,7 +73,6 @@ export function MatchSetup({
     | null
   >(null)
   const [analysis, setAnalysis] = useState<PreMatchAnalysis | null>(null)
-  const [analysisSource, setAnalysisSource] = useState<"ai" | "template" | null>(null)
   const [analysisLoading, setAnalysisLoading] = useState(false)
   const [analysisError, setAnalysisError] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
@@ -280,7 +279,6 @@ export function MatchSetup({
         throw new Error(data.error ?? "Could not generate analysis")
       }
       setAnalysis(data.analysis)
-      setAnalysisSource(data.source ?? "template")
     } catch (err) {
       setAnalysisError(err instanceof Error ? err.message : "Could not generate analysis")
     } finally {
@@ -377,7 +375,7 @@ export function MatchSetup({
       </div>
 
       {play || match || batch || analysis || analysisLoading || analysisError ? (
-      <div ref={resultRef} className="result-anchor mt-6 grid gap-4">
+      <div ref={resultRef} className={`mt-6 grid scroll-mt-20 gap-4 ${analysis || analysisLoading ? "" : "result-anchor"}`}>
         {play?.kind === "match" ? (
           <div id="result-match">
             <SimulationPlay
@@ -447,9 +445,9 @@ export function MatchSetup({
         {analysisError ? <p className="font-mono text-sm text-danger">{analysisError}</p> : null}
 
         {analysisLoading ? (
-          <AiAnalysisLoading home={home.clubName} away={away.clubName} />
+          <AiAnalysisLoading home={home.team} away={away.team} />
         ) : analysis ? (
-          <AiAnalysisResult analysis={analysis} source={analysisSource} />
+          <AiAnalysisResult analysis={analysis} home={home.team} away={away.team} />
         ) : null}
       </div>
       ) : null}

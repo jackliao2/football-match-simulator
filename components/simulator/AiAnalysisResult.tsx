@@ -1,110 +1,168 @@
+import { PixelCrest } from "@/components/teams/PixelCrest"
 import { formatXg } from "@/lib/format"
 import type { PreMatchAnalysis } from "@/lib/ai/analysis"
+import type { HistoricalTeam } from "@/types"
 
-export function AiAnalysisLoading({ home, away }: { home: string; away: string }) {
+export function AiAnalysisLoading({ home, away }: { home: HistoricalTeam; away: HistoricalTeam }) {
   return (
     <section id="result-analysis" className="result-panel overflow-hidden" aria-live="polite">
-      <div className="grid min-h-72 place-items-center px-5 py-10 text-center">
+      <div className="grid min-h-80 place-items-center bg-[radial-gradient(circle_at_50%_42%,rgba(212,180,90,0.12),transparent_40%)] px-5 py-12 text-center">
         <div>
-          <div className="relative mx-auto h-20 w-20" aria-hidden="true">
-            <div className="absolute inset-0 animate-spin rounded-full border border-dashed border-gold/60" />
-            <div className="absolute inset-3 grid place-items-center rounded-full border border-white/10 bg-black/30 text-3xl shadow-[0_0_30px_rgba(212,175,55,0.16)]">
-              ⚽
+          <div className="mx-auto flex items-center justify-center gap-5" aria-hidden="true">
+            <PixelCrest clubId={home.clubId} size={52} className="animate-pulse" />
+            <div className="relative grid h-14 w-14 place-items-center">
+              <div className="absolute inset-0 animate-spin rounded-full border border-dashed border-gold/70" />
+              <span className="font-display text-[9px] tracking-[0.18em] text-gold">VS</span>
             </div>
-            <span className="absolute -right-1 top-1/2 h-2 w-2 rounded-full bg-gold shadow-[0_0_10px_rgba(212,175,55,0.9)]" />
+            <PixelCrest clubId={away.clubId} size={52} className="animate-pulse" />
           </div>
-          <p className="mt-5 font-display text-[9px] uppercase tracking-[0.24em] text-gold">AI match lab</p>
-          <h2 className="mt-2 font-mono text-lg font-semibold text-text">Running 100 simulations</h2>
-          <p className="mx-auto mt-2 max-w-md font-mono text-xs leading-5 text-muted">
-            {home} vs {away}. Comparing styles, danger men and the most likely score.
-          </p>
-          <div className="mx-auto mt-5 h-1.5 w-52 overflow-hidden rounded-full bg-white/10">
-            <span className="block h-full w-1/2 animate-pulse rounded-full bg-gold" />
-          </div>
-          <p className="mt-3 font-mono text-[11px] text-muted">Usually ready in 5–15 seconds</p>
+          <p className="mt-6 font-display text-[9px] uppercase tracking-[0.28em] text-gold">Building the matchup</p>
+          <h2 className="mt-2 font-brand text-xl font-semibold tracking-wide text-text">Two eras enter the match lab</h2>
+          <p className="mx-auto mt-2 max-w-md font-mono text-xs leading-5 text-muted">{home.clubName} {home.displaySeason} vs {away.clubName} {away.displaySeason}. Mapping each era&apos;s identity, routes to victory and 100 alternate nights.</p>
+          <div className="mx-auto mt-6 h-px w-56 overflow-hidden bg-white/10"><span className="block h-full w-1/2 animate-pulse bg-gold" /></div>
+          <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-muted">Usually 5–15 seconds</p>
         </div>
       </div>
     </section>
   )
 }
 
-export function AiAnalysisResult({
-  analysis,
-  source,
-}: {
-  analysis: PreMatchAnalysis
-  source: "ai" | "template" | null
-}) {
+export function AiAnalysisResult({ analysis, home, away }: { analysis: PreMatchAnalysis; home: HistoricalTeam; away: HistoricalTeam }) {
   const { copy, simulation: sim } = analysis
-  const prediction = sim.mostCommonScore.replace("-", "–")
+  const score = sim.mostCommonScore.replace("-", "–")
+  const balance = universeLabel(sim.homeWinPct, sim.awayWinPct)
 
   return (
-    <section id="result-analysis" className="result-panel overflow-hidden">
-      <header className="border-b border-white/10 px-4 py-4 sm:px-5">
+    <section id="result-analysis" className="result-panel overflow-hidden border-gold/30">
+      <header className="relative overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_50%_0%,rgba(212,180,90,0.15),transparent_50%)] px-4 pt-5 pb-6 sm:px-7 sm:pt-7">
         <div className="flex items-center justify-between gap-3">
-          <p className="font-display text-[8px] uppercase tracking-[0.22em] text-gold">AI verdict</p>
-          <p className="font-mono text-[10px] text-muted">{source === "ai" ? "Seed 2.0 Mini" : "Local fallback"}</p>
+          <p className="font-display text-[8px] uppercase tracking-[0.28em] text-gold">AI match lab</p>
+          <p className="font-display text-[8px] uppercase tracking-[0.2em] text-muted">Era collision</p>
         </div>
-        <h2 className="mt-2 max-w-3xl font-mono text-xl font-semibold leading-snug text-text sm:text-2xl">
-          {copy.hook}
-        </h2>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-muted">{copy.verdict}</p>
+        <h2 className="mx-auto mt-4 max-w-3xl text-center font-brand text-xl leading-snug font-semibold tracking-wide text-text sm:text-3xl">{copy.headline}</h2>
+
+        <div className="mx-auto mt-6 grid max-w-3xl grid-cols-[minmax(0,1fr)_5rem_minmax(0,1fr)] items-center gap-2 sm:grid-cols-[minmax(0,1fr)_8rem_minmax(0,1fr)] sm:gap-5">
+          <TeamMark team={home} />
+          <div className="text-center">
+            <p className="font-display text-[7px] uppercase tracking-[0.18em] text-muted">Most seen</p>
+            <p className="result-score mt-1 text-4xl leading-none sm:text-6xl">{score}</p>
+            <p className="mt-1 font-mono text-[9px] text-muted">in 100 runs</p>
+          </div>
+          <TeamMark team={away} away />
+        </div>
+
+        <p className="mx-auto mt-6 max-w-3xl border-t border-white/10 pt-5 text-center text-sm leading-6 text-muted sm:text-base">{copy.matchupStory}</p>
       </header>
 
-      <div className="grid lg:grid-cols-[0.8fr_1.2fr]">
-        <section className="border-b border-white/10 p-4 lg:border-r lg:border-b-0 sm:p-5">
-          <p className="font-display text-[8px] uppercase tracking-[0.2em] text-muted">Predicted score</p>
-          <p className="result-score mt-2 text-6xl leading-none text-text">{prediction}</p>
-          <p className="mt-2 font-mono text-xs text-muted">
-            Average goals {formatXg(sim.avgHomeGoals)}–{formatXg(sim.avgAwayGoals)}
-          </p>
-          <div className="mt-5 grid gap-3 border-t border-white/10 pt-4">
-            <Brief label="Key battle" text={copy.keyBattle} />
-            <Brief label="Danger man" text={copy.dangerMan} />
-          </div>
-        </section>
+      <section className="grid border-b border-white/10 md:grid-cols-2">
+        <RouteToVictory team={home} text={copy.homeRoute} />
+        <RouteToVictory team={away} text={copy.awayRoute} away />
+      </section>
 
-        <section className="p-4 sm:p-5">
-          <div className="flex items-end justify-between gap-3">
-            <div>
-              <p className="font-display text-[8px] uppercase tracking-[0.2em] text-gold">100 simulations</p>
-              <p className="mt-1 font-mono text-xs text-muted">How often each outcome appeared</p>
+      <section className="border-b border-white/10 bg-gold/[0.035] px-4 py-4 text-center sm:px-7">
+        <p className="font-display text-[8px] uppercase tracking-[0.22em] text-gold">The hinge</p>
+        <p className="mx-auto mt-2 max-w-3xl font-mono text-sm leading-6 text-text">{copy.hinge}</p>
+      </section>
+
+      <section className="px-4 py-5 sm:px-7 sm:py-6">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p className="font-display text-[8px] uppercase tracking-[0.24em] text-gold">100 alternate nights</p>
+            <h3 className="mt-1 font-brand text-lg font-semibold tracking-wide text-text">{balance}</h3>
+          </div>
+          <p className="font-mono text-[10px] text-muted">Same squads. A different bounce of the ball.</p>
+        </div>
+
+        <div className="mt-5 grid items-center gap-5 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-7">
+          <UniverseGrid homeWins={sim.homeWins} draws={sim.draws} awayWins={sim.awayWins} />
+          <div className="grid grid-cols-3 gap-2">
+            <Outcome label={`${home.clubName} wins`} value={sim.homeWins} tone="gold" />
+            <Outcome label="Level" value={sim.draws} />
+            <Outcome label={`${away.clubName} wins`} value={sim.awayWins} tone="danger" />
+          </div>
+        </div>
+
+        <div className="mt-5 grid gap-5 lg:grid-cols-[1fr_1.4fr]">
+          <div>
+            <p className="font-display text-[8px] uppercase tracking-[0.18em] text-muted">Recurring scorelines</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {sim.scorelines.slice(0, 4).map((line) => (
+                <div key={line.score} className="border border-white/10 bg-black/20 px-3 py-2 font-mono">
+                  <span className="text-sm font-semibold text-text">{line.score.replace("-", "–")}</span>
+                  <span className="ml-2 text-[10px] text-muted">{line.count} worlds</span>
+                </div>
+              ))}
             </div>
-            <span className="font-mono text-[10px] text-muted">Engine model</span>
-          </div>
-          <div className="mt-4 grid grid-cols-3 gap-2">
-            <Outcome label={sim.homeClub ?? sim.homeTeam} value={sim.homeWinPct} tone="gold" />
-            <Outcome label="Draw" value={sim.drawPct} />
-            <Outcome label={sim.awayClub ?? sim.awayTeam} value={sim.awayWinPct} tone="danger" />
-          </div>
-          <div className="mc-bar mt-3 h-2" aria-label="Win probability split">
-            <i className="bg-gold" style={{ width: `${sim.homeWinPct}%` }} />
-            <i className="bg-white/30" style={{ width: `${sim.drawPct}%` }} />
-            <i className="bg-danger" style={{ width: `${sim.awayWinPct}%` }} />
           </div>
 
-          <p className="mt-6 font-display text-[8px] uppercase tracking-[0.2em] text-muted">Match numbers</p>
-          <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-4">
-            <Metric label="Avg xG" value={`${formatXg(sim.avgHomeXg ?? 0)}–${formatXg(sim.avgAwayXg ?? 0)}`} />
-            <Metric label="Shots" value={`${sim.avgHomeShots ?? 0}–${sim.avgAwayShots ?? 0}`} />
-            <Metric label="Possession" value={`${sim.avgHomePoss ?? 0}–${sim.avgAwayPoss ?? 0}`} suffix="%" />
-            <Metric label="Both score" value={`${sim.bttsPct ?? 0}`} suffix="%" />
+          <div>
+            <p className="font-display text-[8px] uppercase tracking-[0.18em] text-muted">Match fingerprint</p>
+            <div className="mt-2 grid grid-cols-3 gap-px overflow-hidden border border-white/10 bg-white/10">
+              <Metric label="Avg goals" value={`${formatXg(sim.avgHomeGoals)}–${formatXg(sim.avgAwayGoals)}`} />
+              <Metric label="Avg xG" value={`${formatXg(sim.avgHomeXg ?? 0)}–${formatXg(sim.avgAwayXg ?? 0)}`} />
+              <Metric label="Possession" value={`${sim.avgHomePoss ?? 0}–${sim.avgAwayPoss ?? 0}%`} />
+            </div>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
     </section>
   )
 }
 
-function Brief({ label, text }: { label: string; text: string }) {
-  return <div><p className="font-display text-[8px] uppercase tracking-[0.16em] text-gold">{label}</p><p className="mt-1 text-sm leading-5 text-text">{text}</p></div>
+function TeamMark({ team, away = false }: { team: HistoricalTeam; away?: boolean }) {
+  const core = [...team.players].filter((player) => team.startingXI.includes(player.id)).sort((a, b) => b.overall - a.overall).slice(0, 3).map((player) => player.shortName || player.name)
+  return (
+    <div className={`min-w-0 ${away ? "text-right" : "text-left"}`}>
+      <div className={`flex items-center gap-2.5 sm:gap-4 ${away ? "flex-row-reverse" : ""}`}>
+        <PixelCrest clubId={team.clubId} size={48} className="hidden sm:grid" />
+        <div className="min-w-0">
+          <p className="truncate font-brand text-sm font-semibold tracking-wide text-text sm:text-xl">{team.clubName}</p>
+          <p className="mt-0.5 font-mono text-[10px] text-gold sm:text-xs">{team.displaySeason}</p>
+        </div>
+      </div>
+      <p className="mt-3 truncate font-mono text-[9px] text-muted sm:text-[11px]">{team.manager} · {team.formation}</p>
+      <p className="mt-1 truncate font-mono text-[9px] text-text/75 sm:text-[10px]" title={core.join(" · ")}>{core.join(" · ")}</p>
+    </div>
+  )
+}
+
+function RouteToVictory({ team, text, away = false }: { team: HistoricalTeam; text: string; away?: boolean }) {
+  return (
+    <article className={`relative px-4 py-5 sm:px-7 sm:py-6 ${away ? "border-t border-white/10 md:border-t-0 md:border-l" : ""}`}>
+      <div className={`absolute inset-y-0 w-0.5 ${away ? "right-0 bg-danger/70" : "left-0 bg-gold/70"}`} />
+      <p className={`font-display text-[8px] uppercase tracking-[0.2em] ${away ? "text-danger" : "text-gold"}`}>{team.clubName}&apos;s route</p>
+      <h3 className="mt-1 font-brand text-lg font-semibold tracking-wide text-text">How this era wins</h3>
+      <p className="mt-2 text-sm leading-6 text-muted">{text}</p>
+      <p className="mt-3 font-mono text-[9px] uppercase tracking-[0.1em] text-text/60">{team.styleTags.slice(0, 3).join(" · ")}</p>
+    </article>
+  )
 }
 
 function Outcome({ label, value, tone }: { label: string; value: number; tone?: "gold" | "danger" }) {
   const color = tone === "gold" ? "text-gold" : tone === "danger" ? "text-danger" : "text-text"
-  return <div className="min-w-0 text-center"><p className={`font-mono text-2xl font-semibold tabular-nums ${color}`}>{value}%</p><p className="mt-1 truncate font-mono text-[10px] text-muted" title={label}>{label}</p></div>
+  return <div className="min-w-0 text-center"><p className={`font-mono text-3xl font-semibold tabular-nums sm:text-4xl ${color}`}>{value}</p><p className="mt-1 truncate font-mono text-[9px] text-muted sm:text-[10px]" title={label}>{label}</p></div>
 }
 
-function Metric({ label, value, suffix = "" }: { label: string; value: string; suffix?: string }) {
-  return <div className="border border-white/10 bg-black/20 p-2.5"><p className="font-display text-[7px] uppercase tracking-[0.14em] text-muted">{label}</p><p className="mt-1 font-mono text-base font-semibold tabular-nums text-text">{value}{suffix}</p></div>
+function UniverseGrid({ homeWins, draws, awayWins }: { homeWins: number; draws: number; awayWins: number }) {
+  const cells = [
+    ...Array.from({ length: homeWins }, () => "bg-gold"),
+    ...Array.from({ length: draws }, () => "bg-white/30"),
+    ...Array.from({ length: awayWins }, () => "bg-danger"),
+  ]
+  return (
+    <div className="mx-auto grid w-full max-w-[8.5rem] grid-cols-10 gap-[3px]" role="img" aria-label={`${homeWins} home wins, ${draws} draws and ${awayWins} away wins`}>
+      {cells.map((tone, index) => <span key={index} className={`aspect-square ${tone}`} />)}
+    </div>
+  )
+}
+
+function Metric({ label, value }: { label: string; value: string }) {
+  return <div className="bg-[#0b100b] p-3"><p className="font-display text-[7px] uppercase tracking-[0.14em] text-muted">{label}</p><p className="mt-1.5 font-mono text-base font-semibold tabular-nums text-text">{value}</p></div>
+}
+
+function universeLabel(homePct: number, awayPct: number) {
+  const gap = Math.abs(homePct - awayPct)
+  if (gap <= 5) return "Too close to call"
+  if (gap <= 12) return "A narrow model edge — never out of reach"
+  return "A clear model lean, with an upset path still open"
 }
