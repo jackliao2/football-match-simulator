@@ -5,6 +5,7 @@ import { clubs, nations } from "@/data/clubs"
 import { teams } from "@/data/teams"
 import { teamPath } from "@/lib/paths"
 import { absoluteUrl } from "@/lib/site"
+import { LOCALES, localizedPath } from "@/lib/i18n"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -18,6 +19,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: absoluteUrl("/privacy"), changeFrequency: "yearly", priority: 0.3 },
     { url: absoluteUrl("/contact"), changeFrequency: "yearly", priority: 0.3 },
   ]
+
+  const localizedRoutes: MetadataRoute.Sitemap = LOCALES.flatMap((locale) =>
+    ["/", "/simulate", "/teams", "/national-teams", "/vs"].map((path) => ({
+      url: absoluteUrl(localizedPath(locale, path)),
+      changeFrequency: "weekly" as const,
+      priority: path === "/" ? 0.85 : 0.7,
+    })),
+  )
 
   const clubRoutes = clubs.map((club) => ({
     url: absoluteUrl(`/teams/${club.id}`),
@@ -54,6 +63,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     ...staticRoutes,
+    ...localizedRoutes,
     ...clubRoutes,
     ...nationRoutes,
     ...teamRoutes,

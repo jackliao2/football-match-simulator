@@ -21,6 +21,7 @@ import { simulateMany, simulateMatch } from "@/lib/simulation"
 import type { PreMatchAnalysis } from "@/lib/ai/analysis"
 import { teamSquad, type SquadMember, type StarPlayer } from "@/lib/stars"
 import type { HistoricalTeam, MonteCarloResult, SimulatedMatch, TeamKind } from "@/types"
+import type { Locale } from "@/lib/i18n"
 
 const AI_DAILY_LIMIT = 5
 const AI_USAGE_KEY = "lm-ai-daily-usage"
@@ -50,11 +51,20 @@ export function MatchSetup({
   teams,
   defaultHome,
   defaultAway,
+  locale,
 }: {
   teams: TeamOption[]
   defaultHome?: string
   defaultAway?: string
+  locale?: Locale
 }) {
+  const ui = locale === "es" ? {
+    home: "Local", away: "Visitante", legendary: "Leyendas", now: "Actual", swap: "Cambiar", different: "Elige dos equipos distintos.", simulate: "Simular", playing: "Jugando…", hundred: "100 partidos", running: "Calculando…", expert: "Análisis experto IA", analysing: "Analizando…", daily: "Hoy", change: "Cambiar equipo ▾", simulateAgain: "Simular de nuevo", back: "Volver a equipos", copy: "Copiar enlace", copied: "Copiado", runAgain: "Repetir 100", expertAgain: "Repetir análisis IA",
+  } : locale === "pt-br" ? {
+    home: "Casa", away: "Visitante", legendary: "Lendas", now: "Atual", swap: "Trocar", different: "Escolha dois times diferentes.", simulate: "Simular", playing: "Jogando…", hundred: "100 partidas", running: "Calculando…", expert: "Análise especializada IA", analysing: "Analisando…", daily: "Hoje", change: "Trocar time ▾", simulateAgain: "Simular novamente", back: "Voltar aos times", copy: "Copiar link", copied: "Copiado", runAgain: "Repetir 100", expertAgain: "Repetir análise IA",
+  } : {
+    home: "Home", away: "Away", legendary: "Legendary", now: "Now", swap: "Swap", different: "Pick two different teams.", simulate: "Simulate", playing: "Playing…", hundred: "100 Matches", running: "Running…", expert: "Expert AI Analysis", analysing: "Analysing…", daily: "Daily", change: "Change team ▾", simulateAgain: "Simulate again", back: "Back to teams", copy: "Copy link", copied: "Copied", runAgain: "Run 100 again", expertAgain: "Expert AI again",
+  }
   const [includeCurrent, setIncludeCurrent] = useState(false)
   const clubs = useMemo(() => uniqueOrgs(teams, "club", includeCurrent), [teams, includeCurrent])
   const nations = useMemo(() => uniqueOrgs(teams, "nation", includeCurrent), [teams, includeCurrent])
@@ -338,7 +348,7 @@ export function MatchSetup({
       <div className="grid gap-3">
         <div id="setup" className="faceoff-board result-anchor">
           <TeamColumn
-            label="Home"
+            label={ui.home}
             side="home"
             seasons={homeSeasons}
             team={home}
@@ -346,6 +356,7 @@ export function MatchSetup({
             onOpenPicker={() => setPicker("home")}
             onSeason={(value) => changeSeason("home", value)}
             name="home"
+            changeLabel={ui.change}
           />
 
           <div className="faceoff-rail">
@@ -359,7 +370,7 @@ export function MatchSetup({
                   className={!includeCurrent ? "is-on" : ""}
                   onClick={() => setCurrentSquads(false)}
                 >
-                  Legendary
+                  {ui.legendary}
                 </button>
                 <button
                   type="button"
@@ -368,14 +379,14 @@ export function MatchSetup({
                   className={includeCurrent ? "is-on" : ""}
                   onClick={() => setCurrentSquads(true)}
                 >
-                  Now
+                  {ui.now}
                 </button>
               </div>
               <button type="button" onClick={swapSides} className="rail-swap">
-                Swap
+                {ui.swap}
               </button>
               {sameTeam ? (
-                <p className="text-center font-mono text-[11px] leading-4 text-danger">Pick two different teams.</p>
+                <p className="text-center font-mono text-[11px] leading-4 text-danger">{ui.different}</p>
               ) : null}
               <button
                 type="button"
@@ -383,7 +394,7 @@ export function MatchSetup({
                 className="rail-btn rail-btn-primary"
                 onClick={simulateOnce}
               >
-                {play?.kind === "match" ? "Playing…" : "Simulate"}
+                {play?.kind === "match" ? ui.playing : ui.simulate}
               </button>
               <button
                 type="button"
@@ -391,7 +402,7 @@ export function MatchSetup({
                 className="rail-btn"
                 onClick={simulateHundred}
               >
-                {play?.kind === "batch" ? "Running…" : "100 Matches"}
+                {play?.kind === "batch" ? ui.running : ui.hundred}
               </button>
               <button
                 type="button"
@@ -400,8 +411,8 @@ export function MatchSetup({
                 onClick={runAnalysis}
               >
                 <span className="flex flex-col items-center gap-0.5">
-                  <span>{analysisLoading ? "Analysing…" : "Expert AI Analysis"}</span>
-                  <span className="font-mono text-[8px] normal-case tracking-normal opacity-70">Daily {aiRemaining}/5</span>
+                  <span>{analysisLoading ? ui.analysing : ui.expert}</span>
+                  <span className="font-mono text-[8px] normal-case tracking-normal opacity-70">{ui.daily} {aiRemaining}/5</span>
                 </span>
               </button>
               <p className="rail-hint">
@@ -412,7 +423,7 @@ export function MatchSetup({
           </div>
 
           <TeamColumn
-            label="Away"
+            label={ui.away}
             side="away"
             seasons={awaySeasons}
             team={away}
@@ -420,6 +431,7 @@ export function MatchSetup({
             onOpenPicker={() => setPicker("away")}
             onSeason={(value) => changeSeason("away", value)}
             name="away"
+            changeLabel={ui.change}
           />
         </div>
       </div>
@@ -441,7 +453,7 @@ export function MatchSetup({
             <MatchResult match={match} home={home.team} away={away.team} />
             <div className="flex flex-wrap gap-2">
               <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={simulateOnce}>
-                Simulate again
+                {ui.simulateAgain}
               </button>
               <button
                 type="button"
@@ -449,13 +461,13 @@ export function MatchSetup({
                 disabled={running}
                 onClick={simulateHundred}
               >
-                {running ? "Running…" : "100 Matches"}
+                {running ? ui.running : ui.hundred}
               </button>
               <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>
-                Back to teams
+                {ui.back}
               </button>
               <button type="button" className="rail-btn rail-btn-inline" onClick={shareMatch}>
-                {copied ? "Copied" : "Copy link"}
+                {copied ? ui.copied : ui.copy}
               </button>
             </div>
             <div className="grid gap-4 lg:grid-cols-2">
@@ -480,13 +492,13 @@ export function MatchSetup({
             <MonteCarloResults result={batch} />
             <div className="flex flex-wrap gap-2">
               <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={simulateOnce}>
-                Simulate match
+                {ui.simulate}
               </button>
               <button type="button" className="rail-btn rail-btn-inline" onClick={simulateHundred}>
-                Run 100 again
+                {ui.runAgain}
               </button>
               <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>
-                Back to teams
+                {ui.back}
               </button>
             </div>
           </div>
@@ -498,9 +510,9 @@ export function MatchSetup({
             <h2 className="mt-2 font-brand text-xl font-semibold text-text">{aiRemaining <= 0 ? "Daily free quota used" : "Analysis unavailable"}</h2>
             <p className="mt-2 font-mono text-sm leading-6 text-text/80">{analysisError}</p>
             <div className="mt-4 flex flex-wrap gap-2">
-              <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={simulateOnce}>Simulate match</button>
-              <button type="button" className="rail-btn rail-btn-inline" onClick={simulateHundred}>100 Matches</button>
-              <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>Back to teams</button>
+              <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={simulateOnce}>{ui.simulate}</button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={simulateHundred}>{ui.hundred}</button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>{ui.back}</button>
             </div>
           </section>
         ) : null}
@@ -511,10 +523,10 @@ export function MatchSetup({
           <div className="grid gap-3">
             <AiAnalysisResult analysis={analysis} home={home.team} away={away.team} />
             <div className="flex flex-wrap gap-2">
-              <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={simulateOnce}>Simulate match</button>
-              <button type="button" className="rail-btn rail-btn-inline" onClick={simulateHundred}>100 Matches</button>
-              <button type="button" className="rail-btn rail-btn-inline" onClick={runAnalysis}>Expert AI again · {aiRemaining}/5</button>
-              <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>Back to teams</button>
+              <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={simulateOnce}>{ui.simulate}</button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={simulateHundred}>{ui.hundred}</button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={runAnalysis}>{ui.expertAgain} · {aiRemaining}/5</button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>{ui.back}</button>
             </div>
           </div>
         ) : null}
@@ -576,6 +588,7 @@ function TeamColumn({
   onOpenPicker,
   onSeason,
   name,
+  changeLabel,
 }: {
   label: string
   side: "home" | "away"
@@ -585,6 +598,7 @@ function TeamColumn({
   onOpenPicker: () => void
   onSeason: (teamId: string) => void
   name: "home" | "away"
+  changeLabel: string
 }) {
   const away = side === "away"
   const accent = away ? "text-danger" : "text-gold"
@@ -619,7 +633,7 @@ function TeamColumn({
       </div>
 
       <button type="button" onClick={onOpenPicker} className="faceoff-change">
-        Change team ▾
+        {changeLabel}
       </button>
 
       <div className="faceoff-seasons">

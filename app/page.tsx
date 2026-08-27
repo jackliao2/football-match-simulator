@@ -13,6 +13,7 @@ import { TeamCardCarousel } from "@/components/ui/TeamCardCarousel"
 import { SITE, absoluteUrl } from "@/lib/site"
 import type { HistoricalTeam } from "@/types"
 import type { Metadata } from "next"
+import { languageAlternates } from "@/lib/i18n"
 
 const HOME_DESCRIPTION =
   "Online football and soccer match simulator. Pick legendary or current squads — Brazil 1970, Barcelona 2008/09, France 2026 — then simulate the score, scorers, xG and 100-match win probabilities."
@@ -20,7 +21,7 @@ const HOME_DESCRIPTION =
 export const metadata: Metadata = {
   title: { absolute: `${SITE.name} — Football & Soccer Match Simulator` },
   description: HOME_DESCRIPTION,
-  alternates: { canonical: "/" },
+  alternates: { canonical: "/", languages: languageAlternates("/") },
   openGraph: {
     title: `${SITE.name} — Football & Soccer Match Simulator`,
     description: HOME_DESCRIPTION,

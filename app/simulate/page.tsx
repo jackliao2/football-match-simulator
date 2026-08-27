@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/ui/PageHeader"
 import { defaultOpponent } from "@/data/matchups"
 import { getTeam, teams, toTeamOption } from "@/data/teams"
 import { pageMetadata } from "@/lib/seo"
+import { languageAlternates } from "@/lib/i18n"
 
 export const metadata: Metadata = pageMetadata({
   title: "Soccer Match Simulator — Simulate Any Two Teams",
@@ -12,6 +13,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/simulate",
   keywords: ["soccer match simulator", "football match simulator", "simulate soccer match", "custom soccer simulator"],
 })
+metadata.alternates = { canonical: "/simulate", languages: languageAlternates("/simulate") }
 
 export default async function SimulatePage({
   searchParams,

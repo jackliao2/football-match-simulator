@@ -7,6 +7,7 @@ import { getTeamsByClub } from "@/data/teams"
 import { REGION_NOTES, catalogCounts } from "@/lib/page-copy"
 import { pageMetadata } from "@/lib/seo"
 import { absoluteUrl } from "@/lib/site"
+import { languageAlternates } from "@/lib/i18n"
 
 const counts = catalogCounts()
 
@@ -16,6 +17,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/national-teams",
   keywords: ["historical soccer national teams", "World Cup teams simulator", "international football simulator", "soccer match simulator"],
 })
+metadata.alternates = { canonical: "/national-teams", languages: languageAlternates("/national-teams") }
 
 export default function NationalTeamsPage() {
   const sections = NATION_REGIONS.map((region) => ({
