@@ -25,6 +25,21 @@ describe("AI rate limiting", () => {
 })
 
 describe("AI response caching", () => {
+  it("bypasses storage and request deduplication when disabled", async () => {
+    let calls = 0
+    const create = async () => {
+      calls += 1
+      return `report-${calls}`
+    }
+
+    const first = await withAiCache("disabled", 0, create)
+    const second = await withAiCache("disabled", 0, create)
+
+    expect(calls).toBe(2)
+    expect(first).toEqual({ status: "miss", value: "report-1" })
+    expect(second).toEqual({ status: "miss", value: "report-2" })
+  })
+
   it("expires values after their TTL", () => {
     const cache = new TtlCache<string>()
     cache.set("report", "cached", 500, 1_000)

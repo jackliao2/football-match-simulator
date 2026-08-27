@@ -95,6 +95,9 @@ Before adding a production key, keep the timeout, per-instance rate limit and ca
 the cached response. The built-in limiter protects a warm server instance; move the limiter and cache to
 a durable shared store before high-volume or licensed API traffic.
 
+For deliberate production testing only, set `AI_RATE_LIMIT_ENABLED=false` and `AI_CACHE_ENABLED=false`.
+Restore both to `true` before public launch.
+
 ## SEO rules
 
 - One strong page per club-season: `/teams/{club}/{season}`

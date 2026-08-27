@@ -159,6 +159,14 @@ export function guardAiRequest(request: Request, endpoint: AiEndpoint): AiReques
     return { allowed: false, error: "Request body is too large", headers: {}, status: 413 }
   }
 
+  if (process.env.AI_RATE_LIMIT_ENABLED === "false") {
+    return {
+      allowed: true,
+      headers: { "X-RateLimit-Limit": "unlimited", "X-RateLimit-Remaining": "unlimited" },
+      status: 200,
+    }
+  }
+
   const result = runtimeState().limiter.consume(`${endpoint}:${clientKey(request)}`)
   const resetSeconds = Math.max(1, Math.ceil((result.resetAt - Date.now()) / 1_000))
   const headers: Record<string, string> = {
@@ -206,6 +214,7 @@ export async function withAiCache<T>(
   create: () => Promise<T>,
   shouldCache: (value: T) => boolean = () => true,
 ): Promise<{ status: AiCacheStatus; value: T }> {
+  if (ttlMs <= 0) return { status: "miss", value: await create() }
   const state = runtimeState()
   const cached = state.cache.get(key) as T | undefined
   if (cached !== undefined) return { status: "hit", value: cached }
@@ -226,6 +235,7 @@ export async function withAiCache<T>(
 }
 
 export function aiCacheTtlMs(endpoint: AiEndpoint): number {
+  if (process.env.AI_CACHE_ENABLED === "false") return 0
   const fallback = endpoint === "commentary" ? 604_800 : 86_400
   const seconds = envInt(
     endpoint === "commentary"
