@@ -51,26 +51,29 @@ export function AiAnalysisResult({ analysis, home, away }: { analysis: PreMatchA
           <TeamMark team={away} away />
         </div>
 
-        <p className="mx-auto mt-6 max-w-3xl border-t border-white/10 pt-5 text-center text-sm leading-6 text-muted sm:text-base">{copy.matchupStory}</p>
+        <p className="mx-auto mt-6 max-w-3xl border-t border-white/10 pt-5 text-center text-sm leading-6 text-text/90 sm:text-base">{copy.matchupStory}</p>
       </header>
 
-      <section className="grid border-b border-white/10 md:grid-cols-2">
-        <RouteToVictory team={home} text={copy.homeRoute} />
-        <RouteToVictory team={away} text={copy.awayRoute} away />
-      </section>
-
-      <section className="border-b border-white/10 bg-gold/[0.035] px-4 py-4 text-center sm:px-7">
-        <p className="font-display text-[8px] uppercase tracking-[0.22em] text-gold">The hinge</p>
-        <p className="mx-auto mt-2 max-w-3xl font-mono text-sm leading-6 text-text">{copy.hinge}</p>
+      <section className="border-b border-white/10">
+        <div className="relative bg-gold/[0.045] px-4 py-5 sm:px-7 sm:py-6">
+          <div className="absolute inset-y-0 left-0 w-0.5 bg-gold" />
+          <p className="font-display text-[8px] uppercase tracking-[0.24em] text-gold">The call</p>
+          <h3 className="mt-1 font-brand text-xl font-semibold tracking-wide text-text sm:text-2xl">{balance}</h3>
+          <p className="mt-3 max-w-4xl text-sm leading-6 text-text sm:text-base">{copy.modelReason}</p>
+        </div>
+        <div className="grid border-t border-white/10 md:grid-cols-[1.25fr_0.75fr]">
+          <AnalysisBeat label="The deciding sequence" text={copy.decidingSequence} />
+          <AnalysisBeat label="Pressure point" text={copy.pressurePoint} border />
+        </div>
       </section>
 
       <section className="px-4 py-5 sm:px-7 sm:py-6">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <p className="font-display text-[8px] uppercase tracking-[0.24em] text-gold">100 alternate nights</p>
-            <h3 className="mt-1 font-brand text-lg font-semibold tracking-wide text-text">{balance}</h3>
+            <h3 className="mt-1 font-brand text-lg font-semibold tracking-wide text-text">The evidence behind the call</h3>
           </div>
-          <p className="font-mono text-[10px] text-muted">Same squads. A different bounce of the ball.</p>
+          <p className="font-mono text-[10px] text-text/70">Same squads. A different bounce of the ball.</p>
         </div>
 
         <div className="mt-5 grid items-center gap-5 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-7">
@@ -120,20 +123,17 @@ function TeamMark({ team, away = false }: { team: HistoricalTeam; away?: boolean
           <p className="mt-0.5 font-mono text-[10px] text-gold sm:text-xs">{team.displaySeason}</p>
         </div>
       </div>
-      <p className="mt-3 truncate font-mono text-[9px] text-muted sm:text-[11px]">{team.manager} · {team.formation}</p>
-      <p className="mt-1 truncate font-mono text-[9px] text-text/75 sm:text-[10px]" title={core.join(" · ")}>{core.join(" · ")}</p>
+      <p className="mt-3 truncate font-mono text-[9px] text-text/70 sm:text-[11px]">{team.manager} · {team.formation}</p>
+      <p className="mt-1 truncate font-mono text-[9px] text-text sm:text-[10px]" title={core.join(" · ")}>{core.join(" · ")}</p>
     </div>
   )
 }
 
-function RouteToVictory({ team, text, away = false }: { team: HistoricalTeam; text: string; away?: boolean }) {
+function AnalysisBeat({ label, text, border = false }: { label: string; text: string; border?: boolean }) {
   return (
-    <article className={`relative px-4 py-5 sm:px-7 sm:py-6 ${away ? "border-t border-white/10 md:border-t-0 md:border-l" : ""}`}>
-      <div className={`absolute inset-y-0 w-0.5 ${away ? "right-0 bg-danger/70" : "left-0 bg-gold/70"}`} />
-      <p className={`font-display text-[8px] uppercase tracking-[0.2em] ${away ? "text-danger" : "text-gold"}`}>{team.clubName}&apos;s route</p>
-      <h3 className="mt-1 font-brand text-lg font-semibold tracking-wide text-text">How this era wins</h3>
-      <p className="mt-2 text-sm leading-6 text-muted">{text}</p>
-      <p className="mt-3 font-mono text-[9px] uppercase tracking-[0.1em] text-text/60">{team.styleTags.slice(0, 3).join(" · ")}</p>
+    <article className={`px-4 py-5 sm:px-7 sm:py-6 ${border ? "border-t border-white/10 md:border-t-0 md:border-l" : ""}`}>
+      <p className="font-display text-[8px] uppercase tracking-[0.22em] text-gold">{label}</p>
+      <p className="mt-2 text-sm leading-6 text-text sm:text-[15px]">{text}</p>
     </article>
   )
 }
