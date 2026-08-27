@@ -257,11 +257,15 @@ function cleanCopy(value: string, maxLength: number): string {
     .replace(/^[\s#>*_`-]+/, "")
     .replace(/[*_`#]/g, "")
     .replace(/\bwill punish\b/gi, "could test")
+    .replace(/\bwill\b/gi, "could")
     .replace(/\bcannot cope\b/gi, "may find it difficult")
     .replace(/\b(?:can't|cannot) handle\b/gi, "may struggle to contain")
+    .replace(/\b(?:nobody|no one) can stop\b/gi, "few defenders would enjoy facing")
     .replace(/\bcarve apart\b/gi, "stretch")
     .replace(/\boutclass(?:es|ed)?\b/gi, "hold an edge over")
     .replace(/\bunstoppable\b/gi, "a major threat")
+    .replace(/\bsuperior\b/gi, "stronger in this matchup")
+    .replace(/\bdefinitely\b/gi, "")
     .replace(/\s+/g, " ")
     .trim()
     .slice(0, maxLength)
@@ -293,10 +297,7 @@ function parseAnalysisCopy(raw: string, home: HistoricalTeam, away: HistoricalTe
     const banned = /\b(?:will|unstoppable|cannot|can't|nobody|no one|destroy|outclass|superior|definitely)\b/i
     if (Object.values(copy).some((text) => banned.test(text))) return null
     const story = copy.matchupStory.toLocaleLowerCase()
-    const homeManager = home.manager.toLocaleLowerCase().split(/\s+/).at(-1) ?? home.manager.toLocaleLowerCase()
-    const awayManager = away.manager.toLocaleLowerCase().split(/\s+/).at(-1) ?? away.manager.toLocaleLowerCase()
     if (!story.includes(home.displaySeason.toLocaleLowerCase()) || !story.includes(away.displaySeason.toLocaleLowerCase())) return null
-    if (!story.includes(homeManager) || !story.includes(awayManager)) return null
     if (!mentionsAtLeastTwoStarters(copy.homeRoute, home) || !mentionsAtLeastTwoStarters(copy.awayRoute, away)) return null
     return copy
   } catch {
