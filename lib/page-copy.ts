@@ -103,7 +103,7 @@ export function teamPageCopy(team: HistoricalTeam, opponentArg?: HistoricalTeam)
     `${team.clubName} ${team.displaySeason} as we rate it — ATK ${team.attackRating}, MID ${team.midfieldRating}, DEF ${team.defenseRating}.`,
     feat ? `${feat}. ${firstSentence(team.summary)}` : team.summary,
     current
-      ? `${firstSentence(team.summary)} This is the current squad, not a vintage XI.`
+      ? `${firstSentence(team.summary)} This is the newest season in this database, not a live roster.`
       : `${firstSentence(team.summary)} Era-relative ratings: a number from ${team.eraYear}, not a time machine.`,
     tag
       ? `${firstSentence(team.summary)} The label we stuck on them is ${tag.toLowerCase()}.`
@@ -113,8 +113,8 @@ export function teamPageCopy(team: HistoricalTeam, opponentArg?: HistoricalTeam)
 
   const kickers = current
     ? team.kind === "nation"
-      ? ["2026 cycle", "Current national side", "Now", "World Cup year"]
-      : ["Current squad", "This season", "Now", "2025/26"]
+      ? ["2026 cycle", "Recent national side", "Latest dataset", "World Cup year"]
+      : ["Recent squad", "Latest dataset", "2025/26", "Season snapshot"]
     : wonWorldCup
       ? ["World Cup winners", "World Cup squad", "Champions", team.kind === "nation" ? "National side" : "Club side"]
       : wonEuros
@@ -477,7 +477,7 @@ export function orgHubCopy(org: Club, sides: HistoricalTeam[]): OrgHubCopy {
       ? `${sketchLead} ${moreYears}`.trim()
       : `${org.name} has ${sides.length} playable side${sides.length === 1 ? "" : "s"} in the catalogue.`,
     historic.length > 0 && current
-      ? `${org.name} has a current squad (${current.displaySeason}) and ${historic.length} older XI${historic.length === 1 ? "" : "s"}: ${historic.map((side) => side.displaySeason).join(", ")}. They are not the same team with a new kit.`
+      ? `${org.name} has a recent-season dataset (${current.displaySeason}) and ${historic.length} older XI${historic.length === 1 ? "" : "s"}: ${historic.map((side) => side.displaySeason).join(", ")}. They are not the same team with a new kit.`
       : `${org.name}: ${years.join(", ")}.`,
     managers.length <= 3
       ? `${org.name} pages run through ${managers.join("; ")}. Years: ${years.join(", ")}.`
@@ -503,7 +503,7 @@ export function orgHubCopy(org: Club, sides: HistoricalTeam[]): OrgHubCopy {
 
 export const LEAGUE_NOTES: Record<ClubLeague, string> = {
   "premier-league":
-    "English pages mix the arguments everyone has (United 99, the Invincibles, Istanbul, Mourinho’s first Chelsea) with the ones people forget they want: Revie’s Leeds, Clough’s Forest, Keegan’s Newcastle. Current 2025/26 squads sit in the same list so you can throw this season at a treble side without a separate site.",
+    "English pages mix the arguments everyone has (United 99, the Invincibles, Istanbul, Mourinho’s first Chelsea) with the ones people forget they want: Revie’s Leeds, Clough’s Forest, Keegan’s Newcastle. The 2025/26 season sits in the same historical list without pretending to be a live roster.",
   "la-liga":
     "Spain here is mostly the clásico years people pause YouTube for — Guardiola’s Barça, Madrid’s European Cup sides, Simeone’s Atlético — plus Athletic, Sevilla and Valencia so it is not only two clubs shouting.",
   "serie-a":

@@ -13,7 +13,7 @@ const counts = catalogCounts()
 
 export const metadata: Metadata = pageMetadata({
   title: "Club squads by season",
-  description: `${counts.clubSides} playable club sides across ${counts.clubs} clubs — Guardiola’s Barça, Istanbul, the Invincibles, plus 2025/26 squads. Not a shirt shop. Open a year and run the match.`,
+  description: `${counts.clubSides} playable club sides across ${counts.clubs} clubs — Guardiola’s Barça, Istanbul, the Invincibles and the 2025/26 season. Open a year and run the match.`,
   path: "/teams",
   keywords: ["historical soccer teams", "legendary football squads", "soccer teams by season", "football match simulator"],
 })
@@ -52,7 +52,7 @@ export default function TeamsPage() {
       <PageHeader
         kicker="Club database"
         title="Club squads, by the year that mattered"
-        lead={`${counts.clubSides} sides, ${counts.clubs} clubs. Grouped by country so you can find Forest next to United, Athletic next to Madrid. Current 2025/26 XIs are in here too — they sit next to the vintage pages, not in a separate toy league.`}
+        lead={`${counts.clubSides} sides, ${counts.clubs} clubs. Grouped by country so you can find Forest next to United, Athletic next to Madrid. The 2025/26 dataset sits next to the vintage pages as a named season, not a claim that it is live.`}
       >
         <Link href="/national-teams" className="font-mono text-sm text-gold hover:text-gold-2">
           National teams instead →
@@ -74,7 +74,7 @@ export default function TeamsPage() {
               </h3>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {teams.map((team) => (
-                  <TeamCard key={team.id} team={team} />
+                  <TeamCard key={team.id} team={team} showSquad={false} />
                 ))}
               </div>
             </div>

@@ -50,7 +50,7 @@ export function EraSelect({
         aria-expanded={open}
         onClick={() => setOpen((open) => !open)}
       >
-        <span className="era-select-kicker">{current ? "Now" : "Era"}</span>
+        <span className="era-select-kicker">{current ? "Recent" : "Era"}</span>
         <span className="era-select-year">{value.displaySeason}</span>
         <Cups trophies={cups} />
         <span className="era-select-caret" aria-hidden>
@@ -76,7 +76,7 @@ export function EraSelect({
                 >
                   <span className="era-select-item-year">{season.displaySeason}</span>
                   <span className="era-select-item-meta">
-                    {now ? "Now" : season.team.manager}
+                    {now ? "Recent" : season.team.manager}
                   </span>
                   <Cups trophies={season.team.trophies} />
                 </button>

@@ -74,7 +74,7 @@ export default function NationalTeamsPage() {
               </h3>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {teams.map((team) => (
-                  <TeamCard key={team.id} team={team} />
+                  <TeamCard key={team.id} team={team} showSquad={false} />
                 ))}
               </div>
             </div>

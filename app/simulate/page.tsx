@@ -9,7 +9,7 @@ import { languageAlternates } from "@/lib/i18n"
 export const metadata: Metadata = pageMetadata({
   title: "Soccer Match Simulator — Simulate Any Two Teams",
   description:
-    "Simulate a custom soccer or football match online. Pick any two historical or current squads for a score, scorers, xG, match events and 100-match win probabilities.",
+    "Simulate a custom soccer or football match online. Pick any two squads from different seasons for a score, scorers, xG, match events and 100-match win probabilities.",
   path: "/simulate",
   keywords: ["soccer match simulator", "football match simulator", "simulate soccer match", "custom soccer simulator"],
 })
@@ -34,7 +34,7 @@ export default async function SimulatePage({
       <PageHeader
         kicker="Match engine"
         title="Simulate a football or soccer match"
-        lead="Pick two historical or current squads. The match engine writes the score; Expert AI Analysis explains the matchup but never gets a vote."
+        lead="Pick two squads from any available season. The match engine writes the score; Expert AI Analysis explains the matchup but never gets a vote."
       />
       <MatchSetup teams={options} defaultHome={home} defaultAway={away} />
     </div>

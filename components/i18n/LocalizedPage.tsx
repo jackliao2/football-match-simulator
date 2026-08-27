@@ -30,7 +30,7 @@ export function LocalizedPage({ locale, section }: { locale: Locale; section?: L
     const isNations = section === "national-teams"
     const items = isNations ? nations : clubs
     const pageCopy = isNations ? copy.nations : copy.teams
-    return <div lang={locale === "pt-br" ? "pt-BR" : "es"} className="grid gap-6"><PageHeader kicker={isNations ? copy.nav.nations : copy.nav.teams} title={pageCopy.title} lead={pageCopy.lead} /><div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">{items.map((team) => <TeamCard key={team.id} team={team} />)}</div><Link href={localizedPath(locale, "/simulate")} className="rail-btn rail-btn-primary rail-btn-inline justify-self-start">{copy.links.simulate}</Link></div>
+    return <div lang={locale === "pt-br" ? "pt-BR" : "es"} className="grid gap-6"><PageHeader kicker={isNations ? copy.nav.nations : copy.nav.teams} title={pageCopy.title} lead={pageCopy.lead} /><div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">{items.map((team) => <TeamCard key={team.id} team={team} showSquad={false} />)}</div><Link href={localizedPath(locale, "/simulate")} className="rail-btn rail-btn-primary rail-btn-inline justify-self-start">{copy.links.simulate}</Link></div>
   }
   if (section === "vs") {
     return <div lang={locale === "pt-br" ? "pt-BR" : "es"} className="grid gap-6"><PageHeader kicker={copy.nav.dreams} title={copy.dreams.title} lead={copy.dreams.lead} /><div className="grid gap-2">{matches.map((match) => <MatchupRow key={match.href} {...match} />)}</div></div>
@@ -45,8 +45,8 @@ export function LocalizedPage({ locale, section }: { locale: Locale; section?: L
       </section>
       <MatchSetup teams={options} defaultHome="barcelona-2008-09" defaultAway="real-madrid-2016-17" locale={locale} />
       <LocalizedSection title={copy.sections.dream} href={localizedPath(locale, "/vs")} link={copy.links.all}><div className="grid gap-2">{matches.slice(0, 3).map((match) => <MatchupRow key={match.href} {...match} />)}</div></LocalizedSection>
-      <LocalizedSection title={copy.sections.clubs} href={localizedPath(locale, "/teams")} link={copy.links.all}><div className="grid gap-3 md:grid-cols-3">{clubs.slice(0, 3).map((team) => <TeamCard key={team.id} team={team} />)}</div></LocalizedSection>
-      <LocalizedSection title={copy.sections.nations} href={localizedPath(locale, "/national-teams")} link={copy.links.all}><div className="grid gap-3 md:grid-cols-3">{nations.slice(0, 3).map((team) => <TeamCard key={team.id} team={team} />)}</div></LocalizedSection>
+      <LocalizedSection title={copy.sections.clubs} href={localizedPath(locale, "/teams")} link={copy.links.all}><div className="grid gap-3 md:grid-cols-3">{clubs.slice(0, 3).map((team) => <TeamCard key={team.id} team={team} showSquad={false} />)}</div></LocalizedSection>
+      <LocalizedSection title={copy.sections.nations} href={localizedPath(locale, "/national-teams")} link={copy.links.all}><div className="grid gap-3 md:grid-cols-3">{nations.slice(0, 3).map((team) => <TeamCard key={team.id} team={team} showSquad={false} />)}</div></LocalizedSection>
       <section className="grid gap-3"><h2 className="font-mono text-lg font-semibold text-text">{copy.faqTitle}</h2>{copy.faq.map(([question, answer]) => <article key={question} className="result-panel px-4 py-3"><h3 className="font-mono text-sm font-semibold text-text">{question}</h3><p className="mt-2 text-sm leading-6 text-muted">{answer}</p></article>)}</section>
     </div>
   )

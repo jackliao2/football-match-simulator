@@ -59,11 +59,11 @@ export function MatchSetup({
   locale?: Locale
 }) {
   const ui = locale === "es" ? {
-    home: "Local", away: "Visitante", legendary: "Leyendas", now: "Actual", swap: "Cambiar", different: "Elige dos equipos distintos.", simulate: "Simular", playing: "Jugando…", hundred: "100 partidos", running: "Calculando…", expert: "Análisis experto IA", analysing: "Analizando…", daily: "Hoy", change: "Cambiar equipo ▾", simulateAgain: "Simular de nuevo", back: "Volver a equipos", copy: "Copiar enlace", copied: "Copiado", runAgain: "Repetir 100", expertAgain: "Repetir análisis IA",
+    home: "Local", away: "Visitante", legendary: "Leyendas", now: "Recientes", swap: "Cambiar", different: "Elige dos equipos distintos.", simulate: "Simular", playing: "Jugando…", hundred: "100 partidos", running: "Calculando…", expert: "Análisis experto IA", analysing: "Analizando…", daily: "Hoy", change: "Cambiar equipo ▾", simulateAgain: "Simular de nuevo", back: "Volver a equipos", copy: "Copiar enlace", copied: "Copiado", runAgain: "Repetir 100", expertAgain: "Repetir análisis IA",
   } : locale === "pt-br" ? {
-    home: "Casa", away: "Visitante", legendary: "Lendas", now: "Atual", swap: "Trocar", different: "Escolha dois times diferentes.", simulate: "Simular", playing: "Jogando…", hundred: "100 partidas", running: "Calculando…", expert: "Análise especializada IA", analysing: "Analisando…", daily: "Hoje", change: "Trocar time ▾", simulateAgain: "Simular novamente", back: "Voltar aos times", copy: "Copiar link", copied: "Copiado", runAgain: "Repetir 100", expertAgain: "Repetir análise IA",
+    home: "Casa", away: "Visitante", legendary: "Lendas", now: "Recentes", swap: "Trocar", different: "Escolha dois times diferentes.", simulate: "Simular", playing: "Jogando…", hundred: "100 partidas", running: "Calculando…", expert: "Análise especializada IA", analysing: "Analisando…", daily: "Hoje", change: "Trocar time ▾", simulateAgain: "Simular novamente", back: "Voltar aos times", copy: "Copiar link", copied: "Copiado", runAgain: "Repetir 100", expertAgain: "Repetir análise IA",
   } : {
-    home: "Home", away: "Away", legendary: "Legendary", now: "Now", swap: "Swap", different: "Pick two different teams.", simulate: "Simulate", playing: "Playing…", hundred: "100 Matches", running: "Running…", expert: "Expert AI Analysis", analysing: "Analysing…", daily: "Daily", change: "Change team ▾", simulateAgain: "Simulate again", back: "Back to teams", copy: "Copy link", copied: "Copied", runAgain: "Run 100 again", expertAgain: "Expert AI again",
+    home: "Home", away: "Away", legendary: "Legendary", now: "Recent", swap: "Swap", different: "Pick two different teams.", simulate: "Simulate", playing: "Playing…", hundred: "100 Matches", running: "Running…", expert: "Expert AI Analysis", analysing: "Analysing…", daily: "Daily", change: "Change team ▾", simulateAgain: "Simulate again", back: "Back to teams", copy: "Copy link", copied: "Copied", runAgain: "Run 100 again", expertAgain: "Expert AI again",
   }
   const [includeCurrent, setIncludeCurrent] = useState(false)
   const clubs = useMemo(() => uniqueOrgs(teams, "club", includeCurrent), [teams, includeCurrent])
@@ -114,7 +114,7 @@ export function MatchSetup({
       }
     }, 0)
     return () => window.clearTimeout(hydration)
-    // Hydrate once from the saved Now/Legend switch.
+    // Hydrate once from the saved Recent/Legend switch.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

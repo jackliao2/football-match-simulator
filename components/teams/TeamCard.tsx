@@ -8,7 +8,7 @@ import { TrophyBadges } from "@/components/teams/TrophyBadges"
 import { eraGlow } from "@/data/trophies"
 import { OvrStamp } from "@/components/ui/OvrStamp"
 
-export function TeamCard({ team }: { team: HistoricalTeam }) {
+export function TeamCard({ team, showSquad = true }: { team: HistoricalTeam; showSquad?: boolean }) {
   const glow = eraGlow(team.trophies)
   return (
     <Link
@@ -31,9 +31,11 @@ export function TeamCard({ team }: { team: HistoricalTeam }) {
         </div>
         <OvrStamp value={team.overallRating} size="md" />
       </div>
-      <div className="mt-3">
-        <CompactSquad squad={teamSquad(team)} showBench={false} />
-      </div>
+      {showSquad ? <div className="mt-3"><CompactSquad squad={teamSquad(team)} showBench={false} /></div> : (
+        <div className="mt-3 flex flex-wrap gap-1.5 font-mono text-[9px] uppercase tracking-wide text-muted">
+          {team.styleTags.slice(0, 3).map((tag) => <span key={tag} className="border border-line px-1.5 py-1">{tag}</span>)}
+        </div>
+      )}
     </Link>
   )
 }

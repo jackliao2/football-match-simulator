@@ -157,7 +157,7 @@ export function squadKeywords(team: HistoricalTeam): string[] {
 
 export function clubHubKeywords(name: string, clubId: string, teams: HistoricalTeam[]): string[] {
   const aliases = CLUB_ALIASES[clubId] ?? [name.toLowerCase()]
-  const phrases = [`${name} squad`, `${name} historical team`, `${name} current squad`]
+  const phrases = [`${name} squad`, `${name} historical team`, `${name} recent squad`]
   for (const team of teams) {
     for (const year of seasonYears(team)) {
       for (const alias of aliases) {

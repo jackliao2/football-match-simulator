@@ -16,7 +16,7 @@ import type { Metadata } from "next"
 import { languageAlternates } from "@/lib/i18n"
 
 const HOME_DESCRIPTION =
-  "Online football and soccer match simulator. Pick legendary or current squads — Brazil 1970, Barcelona 2008/09, France 2026 — then simulate the score, scorers, xG and 100-match win probabilities."
+  "Online football and soccer match simulator. Pick squads from different eras — Brazil 1970, Barcelona 2008/09, France 2026 — then simulate the score, scorers, xG and 100-match win probabilities."
 
 export const metadata: Metadata = {
   title: { absolute: `${SITE.name} — Football & Soccer Match Simulator` },
@@ -37,11 +37,11 @@ export const metadata: Metadata = {
 const FAQ = [
   [
     "Is this also a soccer match simulator?",
-    "Yes. Football and soccer describe the same sport here. US fans can use this soccer match simulator to match historical or current teams, play one game, or run 100 simulations for win probabilities.",
+    "Yes. Football and soccer describe the same sport here. US fans can use this soccer match simulator to match squads from different seasons, play one game, or run 100 simulations for win probabilities.",
   ],
   [
     "What is a football match simulator?",
-    "This football match simulator lets you pick two squads — historical or current — and play a seeded match. Ratings, style and chance produce a score, scorers, xG and events. AI never picks the winner.",
+    "This football match simulator lets you pick two squads from different seasons and play a seeded match. Ratings, style and chance produce a score, scorers, xG and events. AI never picks the winner.",
   ],
   [
     "Can I simulate a custom football match online?",
@@ -52,8 +52,8 @@ const FAQ = [
     "That is the point of the site. Barcelona 2008/09 and Real Madrid 2016/17 are both playable, with squad pages for the 2009 Barcelona squad and the 2017 Real Madrid squad. Simulate the dream match instead of arguing.",
   ],
   [
-    "Do you include current squads?",
-    "Yes. Every club has a 2025/26 squad and every national side has a 2026 squad, alongside the legendary years. Turn on Now in the picker, or open the squad page, then simulate it against any era.",
+    "Do you include recent squads?",
+    "Yes. The latest club dataset is 2025/26 and the latest national-team set is 2026, alongside the legendary years. Turn on Recent in the picker, then simulate that season against any era.",
   ],
   [
     "How do you rate players?",
@@ -61,7 +61,7 @@ const FAQ = [
   ],
   [
     "When was Barcelona's prime?",
-    "Prime pages compare candidate seasons — Barcelona 2008/09, 2010/11 and 2014/15, plus the current squad — then send you into the simulator. Same idea for Real Madrid, Manchester United, Messi, Brazil and Argentina.",
+    "Prime pages compare candidate seasons — Barcelona 2008/09, 2010/11 and 2014/15, plus the latest dataset — then send you into the simulator. Same idea for Real Madrid, Manchester United, Messi, Brazil and Argentina.",
   ],
 ] as const
 
@@ -176,7 +176,7 @@ export default function HomePage() {
         <h2 className="font-mono text-lg font-semibold tracking-tight">How the football simulator works</h2>
         <div className="grid gap-3 sm:grid-cols-3">
           {[
-            ["01", "Pick two shirts", "A club peak, a World Cup side, or this season — Barcelona 2008/09, Brazil 1970, Madrid 2025/26, whatever the argument is."],
+            ["01", "Pick two shirts", "A club peak, a World Cup side, or a recent season — Barcelona 2008/09, Brazil 1970, Madrid 2025/26, whatever the argument is."],
             ["02", "The engine plays it", "Ratings, style and a seed. Score, xG, scorers, events. Optional prose comes after. It does not choose the winner."],
             ["03", "Again, or a hundred times", "Same seed is the same match. A new seed is another night. A hundred runs is the spread, not a trophy."],
           ].map(([step, title, copy]) => (

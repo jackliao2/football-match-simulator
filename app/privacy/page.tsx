@@ -84,8 +84,8 @@ export default function PrivacyPage() {
         <p>
           Match result is decided by the local engine. If you ask for a written report or pre-match
           note, the server may send the squad names, the score and the event list to an AI provider
-          (an OpenAI-compatible endpoint — currently configured toward xAI unless we point it
-          somewhere else). That payload is football: lineups and what happened on the pitch in the
+          (currently Volcano Engine Ark, using a Seed model through its OpenAI-compatible API).
+          That payload is football: lineups and what happened on the pitch in the
           simulation. It is not your name, email or IP packaged as a prompt. Still, it leaves our
           host and sits with that provider under their own terms. Do not put personal stories into
           a match you then ask the model to narrate; there is nowhere in the UI to type them

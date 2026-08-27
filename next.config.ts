@@ -12,6 +12,27 @@ const NATION_IDS = [
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+        ],
+      },
+      {
+        source: "/es/:path*",
+        headers: [{ key: "Content-Language", value: "es" }],
+      },
+      {
+        source: "/pt-br/:path*",
+        headers: [{ key: "Content-Language", value: "pt-BR" }],
+      },
+    ]
+  },
   async redirects() {
     return NATION_IDS.flatMap((id) => [
       {
