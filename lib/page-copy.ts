@@ -76,7 +76,7 @@ export function teamPageCopy(team: HistoricalTeam, opponentArg?: HistoricalTeam)
   const tag = team.styleTags[0]
   const feat = team.achievements[0]
 
-  const title = buildTitle(team, {
+  const generatedTitle = buildTitle(team, {
     slot,
     current,
     wonWorldCup,
@@ -109,7 +109,8 @@ export function teamPageCopy(team: HistoricalTeam, opponentArg?: HistoricalTeam)
       ? `${firstSentence(team.summary)} The label we stuck on them is ${tag.toLowerCase()}.`
       : team.summary,
   ]
-  const description = clip(closers[slot] ?? team.summary)
+  const title = team.seoTitle.trim() || generatedTitle
+  const description = clip(team.seoDescription.trim() || closers[slot] || team.summary)
 
   const kickers = current
     ? team.kind === "nation"
@@ -209,9 +210,9 @@ function buildTitle(
   if (bits.current) {
     const options = [
       `${name} ${year} squad`,
-      `${name} this season (${year})`,
+      `${name} ${year} lineup and formation`,
       `${team.manager}'s ${name} ${year}`,
-      `${name} ${year} — current XI`,
+      `${name} ${year} season squad`,
     ]
     return options[bits.slot % options.length]!
   }

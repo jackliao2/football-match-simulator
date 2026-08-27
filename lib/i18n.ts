@@ -28,6 +28,7 @@ export const LOCALIZED_COPY = {
     home: {
       kicker: "Simulador de partidos de fútbol",
       title: "Leyendas. Épocas. Un partido imposible.",
+      tagline: ["Elige un equipo", "Elige una época", "Resuelve el debate"],
       lead: "Elige dos equipos de temporadas distintas. Simula el marcador, los goleadores, el xG y cien versiones del mismo duelo.",
       metaTitle: "Simulador de Partidos de Fútbol | LegendaryMatch",
       metaDescription: "Simulador de fútbol online con equipos de distintas épocas. Enfrenta al Barcelona 2009, Brasil 1970, Real Madrid 2017 y más; descubre marcadores y probabilidades.",
@@ -54,6 +55,7 @@ export const LOCALIZED_COPY = {
     home: {
       kicker: "Simulador de partidas de futebol",
       title: "Lendas. Eras. Um jogo impossível.",
+      tagline: ["Escolha um time", "Escolha uma era", "Resolva o debate"],
       lead: "Escolha dois times de temporadas diferentes. Simule o placar, os gols, o xG e cem versões do mesmo confronto.",
       metaTitle: "Simulador de Jogos de Futebol | LegendaryMatch",
       metaDescription: "Simulador de futebol online com times de diferentes épocas. Coloque Barcelona 2009, Brasil 1970, Real Madrid 2017 e outros frente a frente.",

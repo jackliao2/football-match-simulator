@@ -38,10 +38,21 @@ export function LocalizedPage({ locale, section }: { locale: Locale; section?: L
 
   return (
     <div lang={locale === "pt-br" ? "pt-BR" : "es"} className="grid gap-5">
-      <section className="result-panel bg-[radial-gradient(circle_at_50%_0%,rgba(212,180,90,0.16),transparent_55%)] px-5 py-8 text-center sm:px-8">
-        <p className="font-display text-[9px] uppercase tracking-[0.24em] text-gold">{copy.home.kicker}</p>
-        <h1 className="mx-auto mt-3 max-w-4xl font-brand text-3xl font-semibold tracking-wide text-text sm:text-5xl">{copy.home.title}</h1>
-        <p className="mx-auto mt-4 max-w-3xl text-sm leading-6 text-text/80 sm:text-base">{copy.home.lead}</p>
+      <section className="home-hero">
+        <p className="home-hero-kicker">{copy.home.kicker}</p>
+        <h1 className="home-hero-title" aria-label="LegendaryMatch">
+          <span className="home-hero-legendary">Legendary</span>
+          <span className="home-hero-rule" aria-hidden="true" />
+          <span className="home-hero-match">Match</span>
+        </h1>
+        <p className="home-hero-tagline">
+          {copy.home.tagline.map((line, index) => (
+            <span key={line} className="contents">
+              {index > 0 ? <span className="home-hero-dot" aria-hidden="true">·</span> : null}
+              <span>{line}</span>
+            </span>
+          ))}
+        </p>
       </section>
       <MatchSetup teams={options} defaultHome="barcelona-2008-09" defaultAway="real-madrid-2016-17" locale={locale} />
       <LocalizedSection title={copy.sections.dream} href={localizedPath(locale, "/vs")} link={copy.links.all}><div className="grid gap-2">{matches.slice(0, 3).map((match) => <MatchupRow key={match.href} {...match} />)}</div></LocalizedSection>

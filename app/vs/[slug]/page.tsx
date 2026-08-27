@@ -3,9 +3,10 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { MatchSetup } from "@/components/simulator/MatchSetup"
 import { MonteCarloResults } from "@/components/simulator/MonteCarloResults"
-import { StarPlayers } from "@/components/teams/StarPlayers"
+import { FaceOffSquad } from "@/components/teams/SquadPanel"
 import { TeamRatings } from "@/components/teams/TeamRatings"
 import { PixelCrest } from "@/components/teams/PixelCrest"
+import { OvrStamp } from "@/components/ui/OvrStamp"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { allVsPairs } from "@/data/matchups"
 import { getTeam, teams, toTeamOption } from "@/data/teams"
@@ -14,6 +15,8 @@ import { vsPageCopy } from "@/lib/page-copy"
 import { teamPath } from "@/lib/paths"
 import { SITE, absoluteUrl } from "@/lib/site"
 import { simulateMany } from "@/lib/simulation"
+import { teamSquad } from "@/lib/stars"
+import type { HistoricalTeam } from "@/types"
 
 const VS_RUNS = 400
 
@@ -79,28 +82,11 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
         crumbs={[{ href: "/vs", label: "Dream matches" }]}
       />
 
-      <div className="grid gap-3 sm:grid-cols-2">
-        <Link href={teamPath(home)} className="result-panel flex items-center gap-3 p-3 no-underline hover:border-gold">
-          <PixelCrest clubId={home.clubId} size={40} />
-          <span>
-            <span className="block font-mono text-sm font-semibold">{home.clubName}</span>
-            <span className="font-mono text-xs text-gold">{home.displaySeason} squad</span>
-          </span>
-        </Link>
-        <Link href={teamPath(away)} className="result-panel flex items-center gap-3 p-3 no-underline hover:border-gold">
-          <PixelCrest clubId={away.clubId} size={40} />
-          <span>
-            <span className="block font-mono text-sm font-semibold">{away.clubName}</span>
-            <span className="font-mono text-xs text-gold">{away.displaySeason} squad</span>
-          </span>
-        </Link>
-      </div>
-
       <MonteCarloResults result={model} />
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <StarPlayers team={home} count={11} title={`${home.clubName} stars`} />
-        <StarPlayers team={away} count={11} title={`${away.clubName} stars`} />
+        <VsSquadCard team={home} />
+        <VsSquadCard team={away} away />
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
@@ -126,5 +112,25 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
         Choose different teams →
       </Link>
     </div>
+  )
+}
+
+function VsSquadCard({ team, away = false }: { team: HistoricalTeam; away?: boolean }) {
+  return (
+    <section className={`faceoff-card overflow-visible ${away ? "away faceoff-away" : "home faceoff-home"}`}>
+      <Link href={teamPath(team)} className={`faceoff-identity flex items-center gap-3 no-underline hover:bg-white/5 ${away ? "flex-row-reverse text-right" : ""}`}>
+        <PixelCrest clubId={team.clubId} size={48} />
+        <span className="min-w-0 flex-1">
+          <span className={`block font-display text-[8px] uppercase tracking-[0.2em] ${away ? "text-danger" : "text-gold"}`}>{away ? "Away XI" : "Home XI"}</span>
+          <span className="mt-1 block truncate font-brand text-xl font-semibold text-text">{team.clubName}</span>
+          <span className="mt-0.5 block font-mono text-xs text-gold">{team.displaySeason}</span>
+          <span className="mt-1 block truncate font-mono text-[10px] text-muted">{team.manager} · {team.formation}</span>
+        </span>
+        <OvrStamp value={team.overallRating} size="md" align={away ? "left" : "right"} />
+      </Link>
+      <div className="border-t border-line px-2 py-2">
+        <FaceOffSquad squad={teamSquad(team)} />
+      </div>
+    </section>
   )
 }

@@ -40,7 +40,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
             name: `${team.clubName} ${team.displaySeason}`,
             sport: "Soccer",
             url: absoluteUrl(teamPath(team)),
-            description: team.summary,
+            description: copy.description,
             athlete: team.players.map((player) => ({
               "@type": "Person",
               name: player.name,

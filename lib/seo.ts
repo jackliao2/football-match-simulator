@@ -183,6 +183,13 @@ export function teamMetadata(team: HistoricalTeam): Metadata {
       `${team.clubName} ${team.displaySeason}`,
       `${team.clubName} ${team.displaySeason} squad`,
       `${team.clubName} ${team.displaySeason} soccer team`,
+      `${team.manager} ${team.clubName}`,
+      `${team.clubName} ${team.displaySeason} ${team.formation}`,
+      ...team.players
+        .filter((player) => team.startingXI.includes(player.id))
+        .sort((a, b) => b.overall - a.overall)
+        .slice(0, 3)
+        .map((player) => `${player.name} ${team.clubName} ${team.displaySeason}`),
       team.kind === "nation" ? `${team.clubName} ${team.displaySeason} national team` : `${team.clubName} ${team.displaySeason} lineup`,
     ],
     alternates: { canonical: path },

@@ -65,16 +65,17 @@ export function MatchSetup({
   } : {
     home: "Home", away: "Away", legendary: "Legendary", now: "Recent", swap: "Swap", different: "Pick two different teams.", simulate: "Simulate", playing: "Playing…", hundred: "100 Matches", running: "Running…", expert: "Expert AI Analysis", analysing: "Analysing…", daily: "Daily", change: "Change team ▾", simulateAgain: "Simulate again", back: "Back to teams", copy: "Copy link", copied: "Copied", runAgain: "Run 100 again", expertAgain: "Expert AI again",
   }
-  const [includeCurrent, setIncludeCurrent] = useState(false)
-  const clubs = useMemo(() => uniqueOrgs(teams, "club", includeCurrent), [teams, includeCurrent])
-  const nations = useMemo(() => uniqueOrgs(teams, "nation", includeCurrent), [teams, includeCurrent])
-
   const homeDefault = teams.find((team) => team.id === defaultHome) ?? teams[0]!
   const awayDefault =
     teams.find((team) => team.id === defaultAway) ??
     teams.find((team) => team.id !== homeDefault.id) ??
     teams[1] ??
     teams[0]!
+  const [includeCurrent, setIncludeCurrent] = useState(
+    () => isCurrentSquad(homeDefault.team) || isCurrentSquad(awayDefault.team),
+  )
+  const clubs = useMemo(() => uniqueOrgs(teams, "club", includeCurrent), [teams, includeCurrent])
+  const nations = useMemo(() => uniqueOrgs(teams, "nation", includeCurrent), [teams, includeCurrent])
 
   const [homeClub, setHomeClub] = useState(homeDefault.clubId)
   const [awayClub, setAwayClub] = useState(awayDefault.clubId)
@@ -99,24 +100,6 @@ export function MatchSetup({
   const legendHomeId = useRef(homeDefault.id)
   const legendAwayId = useRef(awayDefault.id)
   const [scrollKey, setScrollKey] = useState(0)
-
-  useEffect(() => {
-    const hydration = window.setTimeout(() => {
-      try {
-        if (window.localStorage.getItem("lm-current-squads") !== "1") return
-        setIncludeCurrent(true)
-        const nextHome = preferredSeason(seasonsForClub(teams, homeClub, true), true)
-        const nextAway = preferredSeason(seasonsForClub(teams, awayClub, true), true)
-        if (nextHome) setHomeId(nextHome.id)
-        if (nextAway) setAwayId(nextAway.id)
-      } catch {
-        /* ignore */
-      }
-    }, 0)
-    return () => window.clearTimeout(hydration)
-    // Hydrate once from the saved Recent/Legend switch.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   useEffect(() => {
     const hydration = window.setTimeout(() => {
@@ -202,11 +185,6 @@ export function MatchSetup({
   function setCurrentSquads(next: boolean) {
     if (next === includeCurrent) return
     setIncludeCurrent(next)
-    try {
-      window.localStorage.setItem("lm-current-squads", next ? "1" : "0")
-    } catch {
-      /* ignore */
-    }
     if (next) {
       legendHomeId.current = homeId
       legendAwayId.current = awayId

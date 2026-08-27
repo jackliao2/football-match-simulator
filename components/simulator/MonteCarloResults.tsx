@@ -18,69 +18,72 @@ export function MonteCarloResults({ result }: { result: MonteCarloResult }) {
         : `Model lean: ${result.awayClub}`
 
   return (
-    <section className="result-panel">
-      <header className="flex items-end justify-between gap-3 border-b border-white/10 px-3 py-2.5 sm:px-4">
+    <section className="result-panel isolate overflow-hidden border-2 border-gold/45 shadow-[8px_8px_0_#000,0_0_0_1px_rgba(212,180,90,0.15)]">
+      <header className="flex items-center justify-between gap-4 border-b border-white/10 bg-[radial-gradient(circle_at_75%_0%,rgba(212,180,90,0.18),transparent_48%)] px-4 py-4 sm:px-6">
         <div className="min-w-0">
           <p className="font-display text-[8px] uppercase tracking-[0.22em] text-gold">
-            {result.runs} match model
+            {result.runs} alternate nights
           </p>
-          <p className="mt-1 truncate font-mono text-[11px] text-muted">{lean}</p>
+          <h2 className="mt-1 font-brand text-lg font-semibold tracking-wide text-text sm:text-2xl">
+            {result.homeClub} <span className="text-muted">vs</span> {result.awayClub}
+          </h2>
+          <p className="mt-1 font-mono text-[11px] text-text/70">{lean}</p>
         </div>
         <div className="shrink-0 text-right">
-          <p className="font-display text-[8px] uppercase tracking-[0.16em] text-muted">Most likely</p>
-          <p className="result-score mt-0.5 text-2xl leading-none">
+          <p className="font-display text-[8px] uppercase tracking-[0.16em] text-gold">Signature score</p>
+          <p className="result-score mt-1 text-4xl leading-none sm:text-5xl">
             {result.mostCommonScore.replace("-", "–")}
           </p>
-          <p className="mt-1 font-mono text-[10px] tabular-nums text-muted">
-            avg {formatXg(result.avgHomeGoals)}–{formatXg(result.avgAwayGoals)}
+          <p className="mt-1 font-mono text-[9px] tabular-nums text-muted">
+            average goals {formatXg(result.avgHomeGoals)}–{formatXg(result.avgAwayGoals)}
           </p>
         </div>
       </header>
 
-      <div className="grid grid-cols-3 gap-2 px-3 pt-3 sm:px-4">
-        <Pct value={result.homeWinPct} name={result.homeClub ?? result.homeTeam} tone="gold" />
-        <Pct value={result.drawPct} name="Draw" />
-        <Pct value={result.awayWinPct} name={result.awayClub ?? result.awayTeam} tone="danger" />
-      </div>
-      <div className="mc-bar mx-3 mt-2 mb-3 h-2 sm:mx-4" role="img" aria-label="Win split">
-        <i className="bg-gold" style={{ width: `${Math.max(1, result.homeWinPct)}%` }} />
-        <i className="bg-white/30" style={{ width: `${Math.max(1, result.drawPct)}%` }} />
-        <i className="bg-danger" style={{ width: `${Math.max(1, result.awayWinPct)}%` }} />
-      </div>
-
-      <section className="border-t border-white/10 px-3 py-3 sm:px-4">
-        <h3 className="mb-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
-          Most likely scores
-        </h3>
-        <ol className="grid gap-1.5 sm:grid-cols-2">
-          {result.scorelines.map((line) => (
-            <li key={line.score} className="mc-score">
-              <span className="tabular-nums text-text">{line.score.replace("-", "–")}</span>
-              <span className="mc-score-bar" aria-hidden>
-                <i style={{ width: `${Math.max(6, (line.pct / topScorePct) * 100)}%` }} />
-              </span>
-              <span className="tabular-nums text-muted">{line.pct}%</span>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section className="border-t border-white/10 px-3 py-3 sm:px-4">
-        <h3 className="mb-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
-          Match profile
-        </h3>
-        <Split label="xG" home={formatXg(result.avgHomeXg ?? 0)} away={formatXg(result.avgAwayXg ?? 0)} homeN={result.avgHomeXg ?? 0} awayN={result.avgAwayXg ?? 0} />
-        <Split label="Shots" home={String(result.avgHomeShots ?? 0)} away={String(result.avgAwayShots ?? 0)} homeN={result.avgHomeShots ?? 0} awayN={result.avgAwayShots ?? 0} />
-        <Split label="Poss" home={`${result.avgHomePoss ?? 0}%`} away={`${result.avgAwayPoss ?? 0}%`} homeN={result.avgHomePoss ?? 0} awayN={result.avgAwayPoss ?? 0} />
-        <Split label="CS" home={`${result.homeCleanPct ?? 0}%`} away={`${result.awayCleanPct ?? 0}%`} homeN={result.homeCleanPct ?? 0} awayN={result.awayCleanPct ?? 0} />
-        <div className="mt-2 grid grid-cols-2 gap-2">
-          <Chip label="BTTS" value={result.bttsPct ?? 0} />
-          <Chip label="Over 2.5" value={result.over25Pct ?? 0} />
+      <div className="grid gap-4 border-b border-white/10 bg-gold/[0.035] px-4 py-4 sm:grid-cols-[7rem_minmax(0,1fr)] sm:items-center sm:px-6">
+        <DistributionGrid home={result.homeWinPct} draw={result.drawPct} away={result.awayWinPct} />
+        <div className="grid grid-cols-3 gap-2">
+          <Pct value={result.homeWinPct} name={result.homeClub ?? result.homeTeam} tone="gold" />
+          <Pct value={result.drawPct} name="Draw" />
+          <Pct value={result.awayWinPct} name={result.awayClub ?? result.awayTeam} tone="danger" />
         </div>
-      </section>
+      </div>
+
+      <div className="grid lg:grid-cols-2">
+        <section className="px-4 py-4 sm:px-6 lg:border-r lg:border-white/10">
+          <h3 className="mb-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
+            Most likely scores
+          </h3>
+          <ol className="grid gap-1.5 sm:grid-cols-2">
+            {result.scorelines.map((line) => (
+              <li key={line.score} className="mc-score">
+                <span className="tabular-nums text-text">{line.score.replace("-", "–")}</span>
+                <span className="mc-score-bar" aria-hidden>
+                  <i style={{ width: `${Math.max(6, (line.pct / topScorePct) * 100)}%` }} />
+                </span>
+                <span className="tabular-nums text-muted">{line.pct}%</span>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section className="border-t border-white/10 px-4 py-4 sm:px-6 lg:border-t-0">
+          <h3 className="mb-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
+            Match profile
+          </h3>
+          <Split label="xG" home={formatXg(result.avgHomeXg ?? 0)} away={formatXg(result.avgAwayXg ?? 0)} homeN={result.avgHomeXg ?? 0} awayN={result.avgAwayXg ?? 0} />
+          <Split label="Shots" home={String(result.avgHomeShots ?? 0)} away={String(result.avgAwayShots ?? 0)} homeN={result.avgHomeShots ?? 0} awayN={result.avgAwayShots ?? 0} />
+          <Split label="Poss" home={`${result.avgHomePoss ?? 0}%`} away={`${result.avgAwayPoss ?? 0}%`} homeN={result.avgHomePoss ?? 0} awayN={result.avgAwayPoss ?? 0} />
+          <Split label="CS" home={`${result.homeCleanPct ?? 0}%`} away={`${result.awayCleanPct ?? 0}%`} homeN={result.homeCleanPct ?? 0} awayN={result.awayCleanPct ?? 0} />
+          <div className="mt-2 grid grid-cols-2 gap-2">
+            <Chip label="BTTS" value={result.bttsPct ?? 0} />
+            <Chip label="Over 2.5" value={result.over25Pct ?? 0} />
+          </div>
+        </section>
+      </div>
 
       {homeScorers.length > 0 || awayScorers.length > 0 ? (
-        <section className="border-t border-white/10 px-3 py-3 sm:px-4">
+        <section className="border-t border-white/10 px-4 py-4 sm:px-6">
           <h3 className="mb-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
             Goals in {result.runs} matches
           </h3>
@@ -117,11 +120,33 @@ function Pct({
 }) {
   const color = tone === "gold" ? "text-gold" : tone === "danger" ? "text-danger" : "text-text"
   return (
-    <div className="min-w-0 text-center">
-      <div className={`font-mono text-2xl font-semibold tabular-nums leading-none ${color}`}>{value}%</div>
+    <div className="min-w-0 border border-white/10 bg-black/25 px-2 py-3 text-center">
+      <div className={`font-mono text-2xl font-semibold tabular-nums leading-none sm:text-3xl ${color}`}>{value}%</div>
       <div className="mt-1 truncate font-mono text-[11px] text-muted" title={name}>
         {name}
       </div>
+    </div>
+  )
+}
+
+function DistributionGrid({ home, draw, away }: { home: number; draw: number; away: number }) {
+  const homeCells = Math.max(0, Math.min(100, Math.round(home)))
+  const drawCells = Math.max(0, Math.min(100 - homeCells, Math.round(draw)))
+  const awayCells = 100 - homeCells - drawCells
+  const cells = [
+    ...Array.from({ length: homeCells }, () => "bg-gold"),
+    ...Array.from({ length: drawCells }, () => "bg-white/30"),
+    ...Array.from({ length: awayCells }, () => "bg-danger"),
+  ]
+  return (
+    <div
+      className="mx-auto grid w-full max-w-[7rem] grid-cols-10 gap-[2px]"
+      role="img"
+      aria-label={`${home}% home wins, ${draw}% draws, ${away}% away wins`}
+    >
+      {cells.map((tone, index) => (
+        <span key={index} className={`aspect-square ${tone}`} />
+      ))}
     </div>
   )
 }

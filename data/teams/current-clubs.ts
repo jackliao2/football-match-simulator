@@ -60,7 +60,7 @@ export const barcelona202526: HistoricalTeam = makeTeam({
     "Flick's 2025/26 Barcelona. Yamal on the right, Pedri as the brain, a high line, and a side built to play anyone from any era.",
   seoTitle: "Barcelona 2025/26 Squad, Lineup, Formation & Ratings",
   seoDescription:
-    "Barcelona 2025/26 squad, starting XI, formation and ratings. Simulate Flick's current side against historical teams — Yamal, Pedri, Lewandowski.",
+    "Barcelona 2025/26 squad, starting XI, formation and ratings. Simulate Flick's high-line side against historical teams — Yamal, Pedri, Lewandowski.",
 })
 
 export const realMadrid202526: HistoricalTeam = makeTeam({
@@ -184,7 +184,7 @@ export const manchesterUnited202526: HistoricalTeam = makeTeam({
     "Amorim's 2025/26 United. A back three, Bruno as the creator, and a rebuild still looking for the night that matches the badge.",
   seoTitle: "Manchester United 2025/26 Squad, Lineup, Formation & Ratings",
   seoDescription:
-    "Manchester United 2025/26 squad, starting XI and ratings. Simulate Amorim's current side against historical football teams from any era.",
+    "Manchester United 2025/26 squad, starting XI and ratings. Simulate Amorim's 3-4-2-1 side against historical football teams from any era.",
 })
 
 export const arsenal202526: HistoricalTeam = makeTeam({
@@ -246,7 +246,7 @@ export const arsenal202526: HistoricalTeam = makeTeam({
     "Arteta's 2025/26 Arsenal. Saka as the edge, Rice as the spine, Saliba as the wall, and a side still hunting the league it has been built for.",
   seoTitle: "Arsenal 2025/26 Squad, Lineup, Formation & Ratings",
   seoDescription:
-    "Arsenal 2025/26 squad, starting XI and ratings. Simulate Arteta's current side — Saka, Rice, Ødegaard — against historical teams from any era.",
+    "Arsenal 2025/26 squad, starting XI and ratings. Simulate Arteta's side — Saka, Rice, Ødegaard — against historical teams from any era.",
 })
 
 export const liverpool202526: HistoricalTeam = makeTeam({
@@ -308,7 +308,7 @@ export const liverpool202526: HistoricalTeam = makeTeam({
     "Slot's 2025/26 Liverpool. Salah still finishing, Isak through the middle, Van Dijk as the wall, and a press that still looks like Anfield.",
   seoTitle: "Liverpool 2025/26 Squad, Lineup, Formation & Ratings",
   seoDescription:
-    "Liverpool 2025/26 squad, starting XI and ratings. Simulate Slot's current side — Salah, Isak, Van Dijk — against historical teams from any era.",
+    "Liverpool 2025/26 squad, starting XI and ratings. Simulate Slot's side — Salah, Isak, Van Dijk — against historical teams from any era.",
 })
 
 export const acMilan202526: HistoricalTeam = makeTeam({
@@ -370,7 +370,7 @@ export const acMilan202526: HistoricalTeam = makeTeam({
     "Allegri's 2025/26 Milan. Leão on the break, Maignan in goal, and a side that still lives on transition more than control.",
   seoTitle: "AC Milan 2025/26 Squad, Lineup, Formation & Ratings",
   seoDescription:
-    "AC Milan 2025/26 squad, starting XI and ratings. Simulate Allegri's current side against historical football teams from any era.",
+    "AC Milan 2025/26 squad, starting XI and ratings. Simulate Allegri's 2025/26 side against historical football teams from any era.",
 })
 
 export const interMilan202526: HistoricalTeam = makeTeam({
@@ -742,7 +742,7 @@ export const ajax202526: HistoricalTeam = makeTeam({
     "Farioli's 2025/26 Ajax. Hato as the prospect, Brobbey as the finish, and an academy side still trying to look like Vienna again.",
   seoTitle: "Ajax 2025/26 Squad, Lineup, Formation & Ratings",
   seoDescription:
-    "Ajax 2025/26 squad, starting XI and ratings. Simulate the current academy side against historical football teams from any era.",
+    "Ajax 2025/26 squad, starting XI and ratings. Simulate the academy-led side against historical football teams from any era.",
 })
 
 export const borussiaDortmund202526: HistoricalTeam = makeTeam({
@@ -866,7 +866,7 @@ export const porto202526: HistoricalTeam = makeTeam({
     "Anselmi's 2025/26 Porto. Costa in goal, Galeno on the break, and a side still built to punch above its market.",
   seoTitle: "Porto 2025/26 Squad, Lineup, Formation & Ratings",
   seoDescription:
-    "Porto 2025/26 squad, starting XI and ratings. Simulate the current Dragons against historical football teams from any era.",
+    "Porto 2025/26 squad, starting XI and ratings. Simulate the 2025/26 Dragons against historical football teams from any era.",
 })
 
 export const atleticoMadrid202526: HistoricalTeam = makeTeam({
@@ -1114,9 +1114,8 @@ export const napoli202526: HistoricalTeam = makeTeam({
     "Conte's 2025/26 Napoli. Lukaku as the battering ram, McTominay as the runner, and a side still trying to look like the scudetto year.",
   seoTitle: "Napoli 2025/26 Squad, Lineup, Formation & Ratings",
   seoDescription:
-    "Napoli 2025/26 squad, starting XI and ratings. Simulate Lukaku, McTominay and Conte's current side against historical teams from any era.",
+    "Napoli 2025/26 squad, starting XI and ratings. Simulate Lukaku, McTominay and Conte's 2025/26 side against historical teams from any era.",
 })
-
 
 
 
