@@ -57,15 +57,12 @@ export default function PrivacyPage() {
       </section>
 
       <section>
-        <h2>Analytics, if any</h2>
+        <h2>Google Analytics</h2>
         <p>
-          The code has a small <code>track()</code> helper. It will push events such as “match
-          simulated” or “team selected” into <code>dataLayer</code>, and it will call{" "}
-          <code>gtag</code> if that function already exists on the page. If no analytics tag is
-          loaded, those calls do not go to Google or anyone else. We are not quietly shipping a
-          measurement ID in the layout today. If that changes, this page’s date will move, and if
-          the law where you live needs a banner for that tag, we will put one up rather than
-          pretending a football site is exempt.
+          We use Google Analytics 4 to measure page visits and product actions such as selecting a
+          team, running one or 100 simulations, requesting Expert AI Analysis, changing language
+          and copying a match link. We do not send names, email addresses or AI API content.
+          Analytics storage is denied by default and is enabled only after you choose “Allow analytics”.
         </p>
       </section>
 

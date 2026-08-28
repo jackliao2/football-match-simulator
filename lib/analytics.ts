@@ -9,6 +9,11 @@ export type AnalyticsEvent =
   | "match_shared"
   | "team_selected"
   | "season_selected"
+  | "simulation_completed"
+  | "ai_analysis_completed"
+  | "ai_analysis_failed"
+  | "language_changed"
+  | "analytics_consent_updated"
 
 type AnalyticsPayload = Record<string, string | number | boolean | null | undefined>
 
@@ -27,10 +32,10 @@ export function track(event: AnalyticsEvent, payload: AnalyticsPayload = {}): vo
     if (value !== undefined) cleaned[key] = value
   }
 
-  window.dataLayer = window.dataLayer ?? []
-  window.dataLayer.push(cleaned)
-
   if (typeof window.gtag === "function") {
-    window.gtag("event", event, payload)
+    window.gtag("event", event, cleaned)
+  } else {
+    window.dataLayer = window.dataLayer ?? []
+    window.dataLayer.push(cleaned)
   }
 }

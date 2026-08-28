@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { track } from "@/lib/analytics"
 
 function sectionPath(pathname: string) {
   const stripped = pathname.replace(/^\/(?:es|pt-br)(?=\/|$)/, "") || "/"
@@ -20,7 +21,7 @@ export function LanguageSwitcher() {
         ["es", `/es${section === "/" ? "" : section}`, "ES", "Español"],
         ["pt-br", `/pt-br${section === "/" ? "" : section}`, "PT", "Português"],
       ].map(([locale, href, label, name]) => (
-        <Link key={locale} href={href} title={name} aria-current={current === locale ? "page" : undefined} hrefLang={locale === "pt-br" ? "pt-BR" : locale} className={current === locale ? "is-on" : ""}>{label}</Link>
+        <Link key={locale} href={href} title={name} aria-current={current === locale ? "page" : undefined} hrefLang={locale === "pt-br" ? "pt-BR" : locale} className={current === locale ? "is-on" : ""} onClick={() => track("language_changed", { from: current, to: locale })}>{label}</Link>
       ))}
     </div>
   )

@@ -1,0 +1,10 @@
+const site = (process.env.INDEXNOW_SITE_URL || "https://legendarymatch.com").replace(/\/$/, "")
+const key = "f6e236abbba54895b5fe23ad8732f9b9"
+const sitemapResponse = await fetch(`${site}/sitemap.xml`)
+if (!sitemapResponse.ok) throw new Error(`Could not read sitemap: ${sitemapResponse.status}`)
+const sitemap = await sitemapResponse.text()
+const urls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]).filter((url) => url.startsWith(site))
+if (urls.length === 0) throw new Error("No same-host URLs found in sitemap")
+const response = await fetch("https://api.indexnow.org/IndexNow", { method: "POST", headers: { "Content-Type": "application/json; charset=utf-8" }, body: JSON.stringify({ host: new URL(site).host, key, keyLocation: `${site}/${key}.txt`, urlList: urls }) })
+if (!response.ok) throw new Error(`IndexNow submission failed: ${response.status} ${await response.text()}`)
+console.log(`IndexNow accepted ${urls.length} URLs for ${site} (${response.status}).`)

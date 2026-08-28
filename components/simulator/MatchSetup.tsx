@@ -273,8 +273,14 @@ export function MatchSetup({
   }
 
   function finishPlay() {
-    if (play?.kind === "match") setMatch(play.match)
-    if (play?.kind === "batch") setBatch(play.result)
+    if (play?.kind === "match") {
+      setMatch(play.match)
+      track("simulation_completed", { mode: "single", home: home.id, away: away.id })
+    }
+    if (play?.kind === "batch") {
+      setBatch(play.result)
+      track("simulation_completed", { mode: "100", home: home.id, away: away.id })
+    }
     setPlay(null)
   }
 
@@ -287,6 +293,7 @@ export function MatchSetup({
     const url = absoluteUrl(`/match/${match.id}`)
     try {
       await navigator.clipboard.writeText(url)
+      track("match_shared", { method: "copy_link", home: home.id, away: away.id })
       setCopied(true)
       setTimeout(() => setCopied(false), 1600)
     } catch {
@@ -329,6 +336,7 @@ export function MatchSetup({
         throw new Error(data.error ?? "Could not generate analysis")
       }
       setAnalysis(data.analysis)
+      track("ai_analysis_completed", { home: home.id, away: away.id, source: data.source ?? "unknown" })
       const nextCount = Math.min(AI_DAILY_LIMIT, aiUsesToday + 1)
       setAiUsesToday(nextCount)
       try {
@@ -337,6 +345,7 @@ export function MatchSetup({
         /* ignore */
       }
     } catch (err) {
+      track("ai_analysis_failed", { home: home.id, away: away.id })
       setAnalysisError(err instanceof Error ? err.message : "Could not generate analysis")
     } finally {
       setAnalysisLoading(false)

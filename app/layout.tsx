@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next"
 import { Cinzel, IBM_Plex_Mono, Press_Start_2P } from "next/font/google"
 import { SiteFooter } from "@/components/ui/SiteFooter"
 import { SiteHeader } from "@/components/ui/SiteHeader"
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics"
 import { defaultMetadata } from "@/lib/seo"
 import "./globals.css"
 
@@ -37,7 +38,11 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${display.variable} ${brand.variable} ${mono.variable} h-full`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',wait_for_update:500});` }} />
+      </head>
       <body className="flex min-h-full flex-col font-mono antialiased">
+        <GoogleAnalytics />
         <SiteHeader />
         <div className="page-frame">
           <aside className="page-rail" aria-hidden="true" />
