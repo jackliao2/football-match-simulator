@@ -28,6 +28,58 @@ export function SimulationPlay({
   return null
 }
 
+export function SimulationStage({
+  mode,
+  home,
+  away,
+  progress,
+  primary,
+  secondary,
+}: {
+  mode: "match" | "batch" | "ai"
+  home: HistoricalTeam
+  away: HistoricalTeam
+  progress: number
+  primary: string
+  secondary: string
+}) {
+  const ai = mode === "ai"
+  const label = ai ? "Expert AI match lab" : mode === "batch" ? "100-match model" : "Live match simulation"
+  return (
+    <section
+      className={`simulation-stage ${ai ? "simulation-stage-ai" : ""}`}
+      aria-live="polite"
+      aria-label={`${label}: ${home.clubName} versus ${away.clubName}`}
+    >
+      <header className="simulation-stage-head">
+        <span>{label}</span>
+        <span className={ai ? "text-[#9ee7ff]" : "text-muted"}>{ai ? "AI EXPERT ONLINE" : "MATCH ENGINE"}</span>
+      </header>
+
+      <div className="simulation-stage-body">
+        <SideMark team={home} />
+        <div className="simulation-lab" aria-hidden="true">
+          <div className="simulation-pitch">
+            <i className="simulation-scan" />
+            <i className="simulation-ball" />
+            {ai ? <><i className="simulation-node node-a" /><i className="simulation-node node-b" /><i className="simulation-node node-c" /></> : null}
+          </div>
+          <p className="simulation-primary">{primary}</p>
+        </div>
+        <SideMark team={away} flip />
+      </div>
+
+      <div className="simulation-progress" aria-hidden="true">
+        <span style={{ width: `${Math.max(3, Math.min(100, progress))}%` }} />
+      </div>
+      <div className="simulation-stage-foot">
+        <span>{secondary}</span>
+        <span className="tabular-nums">{Math.round(progress)}%</span>
+      </div>
+    </section>
+  )
+}
+
 function MatchPlay({
   home,
   away,
@@ -74,25 +126,7 @@ function MatchPlay({
     return () => window.clearInterval(id)
   }, [match])
 
-  return (
-    <section className="result-panel sim-play">
-      <p className="font-display text-[8px] uppercase tracking-[0.22em] text-gold">Live simulation</p>
-      <div className="mt-3 flex items-center justify-between gap-3">
-        <SideMark team={home} />
-        <div className="text-center">
-          <div className="sim-score">
-            {homeGoals}–{awayGoals}
-          </div>
-          <div className="sim-clock mt-1">{minute}′</div>
-        </div>
-        <SideMark team={away} flip />
-      </div>
-      <div className="sim-meter mt-4">
-        <span style={{ width: `${(minute / 90) * 100}%` }} />
-      </div>
-      <p className="mt-3 truncate font-mono text-[12px] text-muted">{line}</p>
-    </section>
-  )
+  return <SimulationStage mode="match" home={home} away={away} progress={(minute / 90) * 100} primary={`${homeGoals}–${awayGoals}  ·  ${minute}′`} secondary={line} />
 }
 
 function BatchPlay({
@@ -131,27 +165,7 @@ function BatchPlay({
     return () => window.clearInterval(id)
   }, [batch])
 
-  return (
-    <section className="result-panel sim-play">
-      <p className="font-display text-[8px] uppercase tracking-[0.22em] text-gold">
-        Simulating {batch.runs} matches
-      </p>
-      <div className="mt-3 flex items-center justify-between gap-3">
-        <SideMark team={home} />
-        <div className="text-center">
-          <div className="sim-score">{line}</div>
-          <div className="mt-1 font-mono text-sm tabular-nums text-gold">
-            {done}/{batch.runs}
-          </div>
-        </div>
-        <SideMark team={away} flip />
-      </div>
-      <div className="sim-meter mt-4">
-        <span style={{ width: `${(done / batch.runs) * 100}%` }} />
-      </div>
-      <p className="mt-3 font-mono text-[12px] text-muted">Running seeded Poisson trials…</p>
-    </section>
-  )
+  return <SimulationStage mode="batch" home={home} away={away} progress={(done / batch.runs) * 100} primary={`${line}  ·  ${done}/${batch.runs}`} secondary="Testing alternate nights, tactics and scoring patterns…" />
 }
 
 function SideMark({ team, flip }: { team: HistoricalTeam; flip?: boolean }) {

@@ -119,8 +119,14 @@ export function MatchSetup({
 
   useEffect(() => {
     if (scrollKey === 0) return
-    const node = document.getElementById(`result-${scrollTarget.current}`) ?? resultRef.current
-    node?.scrollIntoView({ behavior: "smooth", block: "start" })
+    const firstFrame = window.requestAnimationFrame(() => {
+      const secondFrame = window.requestAnimationFrame(() => {
+        const node = document.getElementById(`result-${scrollTarget.current}`) ?? resultRef.current
+        node?.scrollIntoView({ behavior: "smooth", block: "center" })
+      })
+      return () => window.cancelAnimationFrame(secondFrame)
+    })
+    return () => window.cancelAnimationFrame(firstFrame)
   }, [scrollKey])
 
   function showResults(target: "match" | "batch" | "analysis") {
@@ -293,11 +299,15 @@ export function MatchSetup({
     showResults("analysis")
     track("ai_analysis", { home: home.id, away: away.id })
     try {
-      const response = await fetch("/api/analysis", {
+      const request = fetch("/api/analysis", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ homeId: home.id, awayId: away.id }),
       })
+      const [response] = await Promise.all([
+        request,
+        new Promise<void>((resolve) => window.setTimeout(resolve, 2400)),
+      ])
       const data = (await response.json()) as {
         analysis?: PreMatchAnalysis
         source?: "ai" | "template"
