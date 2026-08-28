@@ -13,13 +13,14 @@ export function LanguageSwitcher() {
   const section = sectionPath(pathname)
   const current = pathname.startsWith("/es") ? "es" : pathname.startsWith("/pt-br") ? "pt-br" : "en"
   return (
-    <div className="flex shrink-0 items-center gap-1 border-l border-line pl-2 font-mono text-[9px]" aria-label="Language">
+    <div className="language-switcher" aria-label="Language">
+      <span className="language-globe" aria-hidden="true">◎</span>
       {[
-        ["en", section, "EN"],
-        ["es", `/es${section === "/" ? "" : section}`, "ES"],
-        ["pt-br", `/pt-br${section === "/" ? "" : section}`, "PT"],
-      ].map(([locale, href, label]) => (
-        <Link key={locale} href={href} hrefLang={locale === "pt-br" ? "pt-BR" : locale} className={current === locale ? "text-gold" : "text-muted hover:text-text"}>{label}</Link>
+        ["en", section, "EN", "English"],
+        ["es", `/es${section === "/" ? "" : section}`, "ES", "Español"],
+        ["pt-br", `/pt-br${section === "/" ? "" : section}`, "PT", "Português"],
+      ].map(([locale, href, label, name]) => (
+        <Link key={locale} href={href} title={name} aria-current={current === locale ? "page" : undefined} hrefLang={locale === "pt-br" ? "pt-BR" : locale} className={current === locale ? "is-on" : ""}>{label}</Link>
       ))}
     </div>
   )

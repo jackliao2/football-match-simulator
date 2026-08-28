@@ -1,42 +1,38 @@
+"use client"
+
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { SITE } from "@/lib/site"
 
 export function SiteFooter() {
+  const pathname = usePathname()
+  const locale = pathname.startsWith("/es") ? "es" : pathname.startsWith("/pt-br") ? "pt-br" : "en"
+  const prefix = locale === "en" ? "" : `/${locale}`
+  const copy = locale === "es" ? {
+    about: "Proyecto independiente de simulación futbolística. No está afiliado, patrocinado ni respaldado por ningún club, liga, federación o jugador.",
+    explore: "Explorar", legal: "Información", simulator: "Simulador", teams: "Clubes", nations: "Selecciones", dreams: "Partidos soñados", terms: "Términos", privacy: "Privacidad", contact: "Contacto",
+  } : locale === "pt-br" ? {
+    about: "Projeto independente de simulação de futebol. Não é afiliado, patrocinado ou endossado por nenhum clube, liga, federação ou jogador.",
+    explore: "Explorar", legal: "Informações", simulator: "Simulador", teams: "Clubes", nations: "Seleções", dreams: "Jogos dos sonhos", terms: "Termos", privacy: "Privacidade", contact: "Contato",
+  } : {
+    about: SITE.disclaimer, explore: "Explore", legal: "Information", simulator: "Simulator", teams: "Teams", nations: "Nations", dreams: "Dream matches", terms: "Terms", privacy: "Privacy", contact: "Contact",
+  }
   return (
-    <footer className="mt-auto border-t-2 border-line bg-panel">
-      <div className="mx-auto flex max-w-[90rem] flex-col gap-4 px-4 py-6 text-xs leading-relaxed text-muted sm:flex-row sm:items-start sm:justify-between">
-        <p className="max-w-xl">{SITE.disclaimer}</p>
-        <div className="flex flex-col gap-3">
-          <div className="flex flex-wrap gap-4 uppercase tracking-[0.12em]">
-            <Link href="/simulate" className="text-muted hover:text-gold">
-              Simulator
-            </Link>
-            <Link href="/teams" className="text-muted hover:text-gold">
-              Teams
-            </Link>
-            <Link href="/national-teams" className="text-muted hover:text-gold">
-              Nations
-            </Link>
-            <Link href="/vs" className="text-muted hover:text-gold">
-              Dream matches
-            </Link>
-            <Link href="/prime" className="text-muted hover:text-gold">
-              Prime
-            </Link>
+    <footer className="site-footer">
+      <div className="site-footer-inner">
+        <div className="site-footer-brand">
+          <p className="site-footer-logo"><span>Legendary</span><i />Match</p>
+          <p>{copy.about}</p>
+          <span className="site-footer-status"><i /> Independent simulation · 2026</span>
+        </div>
+        <div className="site-footer-nav">
+          <div>
+            <p>{copy.explore}</p>
+            <Link href={`${prefix}/simulate`}>{copy.simulator}</Link><Link href={`${prefix}/teams`}>{copy.teams}</Link><Link href={`${prefix}/national-teams`}>{copy.nations}</Link><Link href={`${prefix}/vs`}>{copy.dreams}</Link><Link href="/prime">Prime</Link>
           </div>
-          <div className="flex flex-wrap gap-4 uppercase tracking-[0.12em]">
-            <Link href="/terms" className="text-muted hover:text-gold">
-              Terms
-            </Link>
-            <Link href="/privacy" className="text-muted hover:text-gold">
-              Privacy
-            </Link>
-            <Link href="/contact" className="text-muted hover:text-gold">
-              Contact
-            </Link>
-            <a href={`mailto:${SITE.email}`} className="text-muted hover:text-gold normal-case tracking-normal">
-              {SITE.email}
-            </a>
+          <div>
+            <p>{copy.legal}</p>
+            <Link href="/terms">{copy.terms}</Link><Link href="/privacy">{copy.privacy}</Link><Link href="/contact">{copy.contact}</Link><a href={`mailto:${SITE.email}`}>{SITE.email}</a>
           </div>
         </div>
       </div>
