@@ -119,14 +119,14 @@ export function MatchSetup({
 
   useEffect(() => {
     if (scrollKey === 0) return
-    const firstFrame = window.requestAnimationFrame(() => {
-      const secondFrame = window.requestAnimationFrame(() => {
-        const node = document.getElementById(`result-${scrollTarget.current}`) ?? resultRef.current
-        node?.scrollIntoView({ behavior: "smooth", block: "center" })
-      })
-      return () => window.cancelAnimationFrame(secondFrame)
-    })
-    return () => window.cancelAnimationFrame(firstFrame)
+    const timer = window.setTimeout(() => {
+      const node = document.getElementById(`result-${scrollTarget.current}`) ?? resultRef.current
+      if (!node) return
+      const rect = node.getBoundingClientRect()
+      const top = window.scrollY + rect.top - Math.max(76, (window.innerHeight - rect.height) / 2)
+      window.scrollTo({ top: Math.max(0, top), behavior: "smooth" })
+    }, 60)
+    return () => window.clearTimeout(timer)
   }, [scrollKey])
 
   function showResults(target: "match" | "batch" | "analysis") {
