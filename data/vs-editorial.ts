@@ -1,0 +1,37 @@
+import type { HistoricalTeam } from "@/types"
+
+const EDITORIAL: Record<string, string> = {
+  "ac-milan-1988-89|barcelona-2010-11": "Sacchi's Milan tried to compress the pitch until opponents had nowhere clean to play; Guardiola's Barcelona used Messi's false-nine movement to make that space appear anyway. Baresi stepping out against Messi, with Rijkaard screening behind Gullit and Van Basten, is the argument at the heart of this match.",
+  "barcelona-2010-11|real-madrid-2016-17": "Barcelona's most controlled Guardiola side meets Madrid's deepest Champions League team. The question is whether Xavi, Busquets and Iniesta can keep the match in midfield before Ronaldo and Bale turn one broken press into open grass.",
+  "ajax-1994-95|barcelona-2010-11": "Two descendants of the same football school meet at different stages of its evolution. Van Gaal's young Ajax could press, rotate and attack with width; Guardiola's Barcelona refined those ideas around Messi, Xavi and Iniesta.",
+  "ac-milan-1988-89|real-madrid-2016-17": "Milan's offside line and coordinated press face a Madrid side built to survive pressure and punish the first bad step. Baresi and Maldini must control Ronaldo without giving Kroos and Modrić time to change the point of attack.",
+  "barcelona-2010-11|manchester-united-1998-99": "Ferguson's treble winners could turn a losing match in minutes; Barcelona tried to deny opponents those minutes altogether. United's wide delivery and two-striker threat offer a route that does not require winning the midfield passing contest.",
+  "arsenal-2003-04|manchester-city-2022-23": "The Invincibles' speed through Henry and Pires meets Guardiola's treble-winning positional machine. Arsenal need the game to open; City want Rodri and Stones to close the central lanes before Haaland attacks the box.",
+  "arsenal-2003-04|manchester-united-2007-08": "Vieira's Invincibles meet the most balanced United side of the Ronaldo era. Arsenal can carry the ball through pressure, but Ferdinand and Vidić give United the recovery pace and penalty-box control needed to release Ronaldo, Rooney and Tevez.",
+  "ac-milan-1988-89|liverpool-2018-19": "Klopp's Liverpool attack the spaces beside a back line; Sacchi's Milan made those spaces move as one unit. The match turns on whether Liverpool's full-backs can deliver before Milan's press forces play back inside.",
+  "bayern-munich-2012-13|real-madrid-2016-17": "Bayern's treble side could overwhelm opponents from both wings, while Madrid's 2016/17 team carried elite answers from the starting XI and the bench. Lahm and Alaba advancing leaves exactly the transition space Ronaldo wants.",
+  "barcelona-2010-11|inter-milan-2009-10": "This is the rematch between Guardiola's control and Mourinho's resistance, now using Barcelona's stronger 2010/11 version. Inter do not need much of the ball, but they need Sneijder's first pass and Milito's hold-up play to be nearly perfect.",
+  "arsenal-2003-04|chelsea-2004-05": "The unbeaten champions meet the side that took the league from them a year later. Arsenal offer more freedom and transition flair; Mourinho's Chelsea bring the stronger defensive record and a midfield designed to remove space from Henry.",
+  "barcelona-2010-11|santos-1962": "Pelé's Santos cannot be reduced to one famous name: Coutinho, Pepe and an adventurous structure made them repeat world champions. Barcelona supply the modern pressing test, but Santos have the individual invention to escape a match that becomes unscripted.",
+  "argentina-1986|brazil-1970": "Brazil 1970 spread creation across a gifted front five; Argentina 1986 concentrated the decisive moments around Maradona. Brazil have more routes to goal, while Argentina possess the one player most capable of breaking the shape by himself.",
+  "brazil-1970|spain-2010": "Brazil's expressive front five meet the World Cup side that controlled matches through possession and rest defence. Spain can slow the rhythm, but Pelé and Jairzinho threaten precisely when a controlled game suddenly becomes individual.",
+  "brazil-2002|france-2018": "Two pragmatic world champions with devastating transition attacks. France have the pace and midfield legs to protect space; Brazil have Ronaldo, Rivaldo and Ronaldinho combining behind wing-backs who can turn defence into a five-man attack.",
+  "argentina-1986|argentina-2022": "Maradona's Mexico side and Messi's Qatar champions solved tournaments in different ways. The 1986 team placed more creation on one player; Scaloni's group changed shape, found goals around Messi and survived several kinds of match.",
+  "france-1998|france-2018": "Deschamps appears on both sides of the argument: midfield ballast in 1998, manager of the transition-heavy 2018 champions. The older defence is harder to move; the newer attack is far more dangerous when Mbappé sees open field.",
+  "germany-2014|spain-2010": "The two defining World Cup midfields of the era meet with different intentions. Spain use possession to reduce risk; Germany move the ball forward earlier and bring more runners beyond the striker.",
+  "brazil-1982|netherlands-1974": "Two beloved teams that did not win the World Cup meet without the burden of the result that ended them. Cruyff's movement tests Brazil's spacing, while Zico, Sócrates and Falcão can punish the aggressive positions Total Football requires.",
+  "brazil-1970|hungary-1954": "The most celebrated World Cup winners face the team whose defeat changed how greatness is remembered. Hungary's movement and early pressing were decades ahead; Brazil bring a deeper collection of one-on-one match-winners.",
+  "brazil-2002|italy-2006": "Ronaldo's redemption side meets the strongest defensive champion of the next World Cup. Italy can crowd the central forwards, but Brazil's wing-backs force that compact block to defend the entire width of the pitch.",
+  "brazil-1958|brazil-1970": "Pelé at 17 meets Pelé as the organiser of the game's most famous front five. The 1958 side have Garrincha's isolation threat; 1970 offer more coordinated routes through midfield and attack.",
+  "france-1984|netherlands-1988": "Platini's European champions meet the only Dutch side to turn their talent into a major trophy. France own the denser creative midfield, while Gullit and Van Basten give the Netherlands more power close to goal.",
+  "france-2018|italy-2006": "Italy's veteran defensive craft faces France's younger transition power. Cannavaro and Buffon can keep the box quiet, but Mbappé makes every Italian advance a decision about how much space to risk.",
+  "england-1966|germany-1990": "Two world champions built on defensive authority and midfield leadership. England have home-era attacking combinations around Charlton; Germany bring a more modern sweeper system and Matthäus driving through the centre.",
+}
+
+function key(a: string, b: string) {
+  return [a, b].sort().join("|")
+}
+
+export function matchupEditorial(home: HistoricalTeam, away: HistoricalTeam): string {
+  return EDITORIAL[key(home.id, away.id)] ?? `${home.manager}'s ${home.clubName} ${home.displaySeason} bring ${home.formation} and ${home.styleTags.slice(0, 2).join(" with ").toLowerCase()}. ${away.manager}'s ${away.clubName} ${away.displaySeason} answer with ${away.formation} and ${away.styleTags.slice(0, 2).join(" with ").toLowerCase()}; the matchup is decided by which side can impose that identity without exposing its weakest transition.`
+}

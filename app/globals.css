@@ -544,6 +544,20 @@ button {
 .comparison-row:first-child { border-top:0; }
 .comparison-row > span { padding:.65rem; font-size:.78rem; color:var(--color-text); }
 .comparison-row > b { align-self:stretch; display:grid; place-items:center; border-inline:1px solid rgba(255,255,255,.07); font-family:var(--font-display),sans-serif; font-size:6px; font-weight:400; letter-spacing:.12em; text-transform:uppercase; color:var(--color-gold); }
+.matchup-editorial { display:grid; gap:.8rem; border-left:2px solid var(--color-gold); background:linear-gradient(90deg,rgba(212,180,90,.07),transparent 70%); padding:.9rem 1rem; }
+.matchup-editorial > p { max-width:58rem; font-size:.84rem; line-height:1.75; color:var(--color-text); }
+.matchup-editorial-facts { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:.75rem; max-width:58rem; color:var(--color-muted); font-size:.7rem; line-height:1.55; }
+.matchup-editorial-facts span { display:grid; gap:.1rem; }
+.matchup-editorial-facts span:last-child { text-align:right; }
+.matchup-editorial-facts b { font-family:var(--font-brand),serif; font-size:.82rem; letter-spacing:.04em; color:var(--color-text); }
+.matchup-editorial-facts i { font-family:var(--font-display),sans-serif; font-size:7px; font-style:normal; color:var(--color-gold); }
+.vs-squad-card { min-width:0; overflow:hidden; border:2px solid #3a5230; background:linear-gradient(180deg,rgba(255,255,255,.03),transparent 22%),#0b100b; box-shadow:5px 5px 0 #000; }
+.vs-squad-card.home { border-color:#5a6e3a; box-shadow:5px 5px 0 #000,inset 5px 0 var(--color-gold); }
+.vs-squad-card.away { border-color:#6a3a34; box-shadow:5px 5px 0 #000,inset -5px 0 var(--color-danger); }
+.vs-squad-card .faceoff-identity { min-height:4.8rem; padding:.65rem .75rem; }
+.vs-squad-card .faceoff-identity > span { min-width:0; }
+.vs-squad-card .faceoff-identity + div { border-top:1px solid var(--color-line); padding:.45rem .55rem .6rem; }
+@media (max-width:520px) { .matchup-editorial-facts { grid-template-columns:1fr; }.matchup-editorial-facts i { display:none; }.matchup-editorial-facts span:last-child { border-top:1px solid rgba(255,255,255,.08); padding-top:.5rem; text-align:left; }.vs-squad-card .faceoff-identity { display:grid; grid-template-columns:40px minmax(0,1fr) auto; gap:.45rem; }.vs-squad-card.away .faceoff-identity { grid-template-columns:auto minmax(0,1fr) 40px; } }
 
 .catalog-filters {
   position: sticky;

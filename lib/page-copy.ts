@@ -2,6 +2,7 @@ import { FEATURED_MATCHUPS, defaultOpponent } from "@/data/matchups"
 import { getTeam, teams } from "@/data/teams"
 import { teamStars } from "@/lib/stars"
 import type { Club, ClubLeague, HistoricalTeam, NationRegion } from "@/types"
+import { matchupEditorial } from "@/data/vs-editorial"
 
 export function copySlot(id: string, modulo: number): number {
   let hash = 2166136261
@@ -550,32 +551,13 @@ export function catalogCounts(): { clubs: number; nations: number; clubSides: nu
 }
 
 export function vsPageCopy(home: HistoricalTeam, away: HistoricalTeam, runs: number) {
-  const slot = copySlot(`${home.id}|${away.id}`, 7)
   const matchup = `${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}`
-  const titles = [
-    `Who would win: ${matchup}?`,
-    `${home.clubName} ${home.displaySeason} against ${away.clubName} ${away.displaySeason}`,
-    `The ${home.clubName} / ${away.clubName} argument (${home.displaySeason} vs ${away.displaySeason})`,
-    `${matchup} — model, not memory`,
-    `${home.displaySeason} ${home.clubName} vs ${away.displaySeason} ${away.clubName}`,
-    `Can ${home.clubName} ${home.displaySeason} live with ${away.clubName} ${away.displaySeason}?`,
-    `${matchup}`,
-  ]
-  const leads = [
-    `${firstSentence(home.summary)} ${firstSentence(away.summary)} The percentages below are ${runs.toLocaleString()} seeds, not a result that already happened.`,
-    `Two XIs that did not share a pitch. ${home.manager}'s ${home.clubName} against ${away.manager}'s ${away.clubName}. Run it if you want a score; this page will not pick one for you.`,
-    `${home.clubName} ${home.displaySeason} (OVR ${home.overallRating}) and ${away.clubName} ${away.displaySeason} (OVR ${away.overallRating}). Ratings stay in their year — that is the whole joke of the site.`,
-    `If they had met: ${home.formation} versus ${away.formation}. ${runs.toLocaleString()} simulated matches sit under that sentence so one weird 4–0 does not become folklore.`,
-    `${firstSentence(home.summary)} Lined up against ${away.clubName} ${away.displaySeason}. Change the sides if this is not the fight you wanted.`,
-    `Not a recap of a real fixture. ${home.clubName} in ${home.displaySeason}, ${away.clubName} in ${away.displaySeason}, same engine as the rest of the site.`,
-    `${home.styleTags[0] ?? home.formation} against ${away.styleTags[0] ?? away.formation}. The bar chart is a model. The simulate button is the actual match.`,
-  ]
+  const editorial = matchupEditorial(home, away)
   return {
-    title: titles[slot]!,
-    description: clip(
-      `${firstSentence(home.summary)} ${firstSentence(away.summary)} ${runs} simulated matches, not a historical scoreline.`,
-    ),
-    lead: leads[slot]!,
-    kicker: ["Dream match", "Who would win", "Hypothetical", "Model matchup", "Catalogue fight"][slot % 5]!,
+    title: `${matchup}: Who Would Win?`,
+    description: clip(`${editorial} Compare the squads and ${runs} simulated matches.`),
+    lead: editorial,
+    editorial,
+    kicker: "Dream match",
   }
 }

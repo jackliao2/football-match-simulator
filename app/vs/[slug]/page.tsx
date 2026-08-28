@@ -84,6 +84,16 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
         crumbs={[{ href: "/vs", label: "Dream matches" }]}
       />
 
+      <section className="matchup-editorial">
+        <div><p className="page-kicker">Why this matchup matters</p><h2 className="section-title mt-1">Two football ideas, one impossible night</h2></div>
+        <p>{copy.editorial}</p>
+        <div className="matchup-editorial-facts">
+          <span><b>{home.clubName}</b>{home.manager} · {home.formation} · {home.styleTags.slice(0, 2).join(" · ")}</span>
+          <i aria-hidden="true">VS</i>
+          <span><b>{away.clubName}</b>{away.manager} · {away.formation} · {away.styleTags.slice(0, 2).join(" · ")}</span>
+        </div>
+      </section>
+
       <MonteCarloResults result={model} />
 
       <div className="grid gap-4 lg:grid-cols-2">
@@ -119,7 +129,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
 
 function VsSquadCard({ team, away = false }: { team: HistoricalTeam; away?: boolean }) {
   return (
-    <section className={`faceoff-card overflow-visible ${away ? "away faceoff-away" : "home faceoff-home"}`}>
+    <section className={`vs-squad-card ${away ? "away" : "home"}`}>
       <Link href={teamPath(team)} className={`faceoff-identity flex items-center gap-3 no-underline hover:bg-white/5 ${away ? "flex-row-reverse text-right" : ""}`}>
         <PixelCrest clubId={team.clubId} size={48} />
         <span className="min-w-0 flex-1">
