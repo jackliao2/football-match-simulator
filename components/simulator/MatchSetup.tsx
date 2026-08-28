@@ -510,7 +510,6 @@ function TeamColumn({
       </button>
 
       <div className="faceoff-seasons">
-        <EraQuickSwitch seasons={seasons} value={team} onChange={onSeason} />
         <EraSelect
           seasons={seasons}
           value={team}
@@ -524,17 +523,5 @@ function TeamColumn({
       </div>
       <input type="hidden" name={name} value={team.id} />
     </article>
-  )
-}
-
-function EraQuickSwitch({ seasons, value, onChange }: { seasons: TeamOption[]; value: TeamOption; onChange: (teamId: string) => void }) {
-  const legendary = preferredSeason(seasons)
-  const latest = [...seasons].sort((a, b) => b.team.eraYear - a.team.eraYear)[0]
-  if (!legendary || !latest || legendary.id === latest.id) return null
-  return (
-    <div className="era-quick" role="group" aria-label="Quick era selection">
-      <button type="button" className={value.id === legendary.id ? "is-on" : ""} onClick={() => onChange(legendary.id)}>Legend</button>
-      <button type="button" className={value.id === latest.id ? "is-on" : ""} onClick={() => onChange(latest.id)}>Latest</button>
-    </div>
   )
 }

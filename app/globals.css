@@ -932,7 +932,7 @@ a.result-panel:hover {
 
 .faceoff-card {
   display: grid;
-  grid-template-rows: 4.15rem 1.7rem 3rem minmax(0, 1fr);
+  grid-template-rows: 4.15rem 1.7rem 2.75rem minmax(0, 1fr);
   min-width: 0;
   border: 2px solid #3a5230;
   background:
@@ -1313,16 +1313,14 @@ a.result-panel:hover {
 }
 
 .faceoff-seasons {
-  display: grid;
-  grid-template-columns: minmax(7.25rem, 0.72fr) minmax(0, 1.28fr);
+  display: flex;
   align-items: center;
-  gap: 0.4rem;
   min-width: 0;
   overflow: visible;
   position: relative;
   z-index: 5;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 0.34rem 0.55rem;
+  padding: 0.3rem 0.55rem;
 }
 
 .era-select {
@@ -1736,36 +1734,6 @@ a.result-panel:hover {
   box-shadow: 4px 4px 0 #000, 0 0 18px rgba(212, 180, 90, 0.2);
 }
 
-.era-quick {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px;
-  height: 2.3rem;
-  margin: 0;
-  padding: 2px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  background: rgba(0, 0, 0, 0.28);
-}
-
-.era-quick button {
-  border: 0;
-  position: relative;
-  padding: 0.35rem 0.28rem;
-  background: transparent;
-  color: var(--color-muted);
-  font-family: var(--font-display), ui-monospace, monospace;
-  font-size: 7px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.era-quick button.is-on {
-  background: linear-gradient(180deg, #e2c565, #b89132);
-  color: #070907;
-  box-shadow: inset 0 1px 0 rgba(255, 247, 195, 0.6), 0 0 8px rgba(212, 180, 90, 0.14);
-  font-weight: 700;
-}
-
 .rail-btn:disabled {
   cursor: not-allowed;
   opacity: 0.4;
@@ -1868,7 +1836,7 @@ a.result-panel:hover {
   }
 
   .faceoff-card {
-    grid-template-rows: 4.1rem auto 3rem minmax(0, 1fr);
+    grid-template-rows: 4.1rem auto 2.75rem minmax(0, 1fr);
   }
 
   .faceoff-identity-wrap {
