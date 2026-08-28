@@ -497,6 +497,36 @@ button {
   color: var(--color-muted);
 }
 
+.catalog-filters {
+  position: sticky;
+  top: 4.25rem;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .35rem;
+  border: 1px solid rgba(212,180,90,.32);
+  background: rgba(8,12,8,.94);
+  padding: .55rem;
+  box-shadow: 5px 5px 0 #000;
+  backdrop-filter: blur(10px);
+}
+
+.catalog-filters button {
+  border: 1px solid rgba(255,255,255,.13);
+  background: transparent;
+  padding: .45rem .65rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: 7px;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.catalog-filters button:hover { border-color:var(--color-gold); color:var(--color-text); }
+.catalog-filters button.is-on { border-color:var(--color-gold); background:var(--color-gold); color:var(--color-ink); }
+.catalog-filters > span { margin-left:auto; font-family:var(--font-mono),monospace; font-size:10px; color:var(--color-gold); }
+
 .team-essay {
   display: grid;
   gap: 0.7rem;

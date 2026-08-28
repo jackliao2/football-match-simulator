@@ -56,50 +56,31 @@ export const HOMEPAGE_CURRENT_NATIONS = [
 ]
 
 export const FEATURED_MATCHUPS = [
-  ["barcelona-2008-09", "real-madrid-2016-17"],
-  ["barcelona-2025-26", "real-madrid-2025-26"],
-  ["england-2026", "brazil-2026"],
-  ["argentina-2026", "france-2026"],
-  ["arsenal-2025-26", "manchester-city-2025-26"],
-  ["manchester-united-2007-08", "barcelona-2010-11"],
+  ["barcelona-2010-11", "ac-milan-1988-89"],
+  ["barcelona-2010-11", "real-madrid-2016-17"],
+  ["barcelona-2010-11", "ajax-1994-95"],
+  ["ac-milan-1988-89", "real-madrid-2016-17"],
+  ["manchester-united-1998-99", "barcelona-2010-11"],
   ["arsenal-2003-04", "manchester-city-2022-23"],
-  ["manchester-united-1998-99", "arsenal-2003-04"],
-  ["ac-milan-2006-07", "liverpool-2004-05"],
-  ["barcelona-2014-15", "bayern-munich-2012-13"],
-  ["real-madrid-2016-17", "manchester-united-2007-08"],
+  ["manchester-united-2007-08", "arsenal-2003-04"],
+  ["liverpool-2018-19", "ac-milan-1988-89"],
+  ["bayern-munich-2012-13", "real-madrid-2016-17"],
   ["inter-milan-2009-10", "barcelona-2010-11"],
   ["chelsea-2004-05", "arsenal-2003-04"],
-  ["ajax-1994-95", "ac-milan-1988-89"],
-  ["borussia-dortmund-2012-13", "bayern-munich-2012-13"],
-  ["juventus-2016-17", "real-madrid-2016-17"],
-  ["atletico-madrid-2013-14", "real-madrid-2013-14"],
-  ["porto-2003-04", "chelsea-2004-05"],
-  ["brazil-2002", "argentina-2022"],
+  ["santos-1962", "barcelona-2010-11"],
+  ["brazil-1970", "argentina-1986"],
   ["brazil-1970", "spain-2010"],
-  ["argentina-1986", "france-1998"],
-  ["italy-2006", "france-2018"],
-  ["netherlands-1974", "germany-2014"],
-  ["england-1966", "hungary-1954"],
-  ["portugal-2016", "france-2018"],
-  ["croatia-2018", "france-2018"],
-  ["uruguay-2010", "netherlands-1974"],
-  ["belgium-2018", "france-2018"],
-  ["spain-2012", "italy-2006"],
-  ["england-1990", "germany-1990"],
-  ["england-2004", "portugal-2004"],
-  ["england-2018", "croatia-2018"],
-  ["england-2021", "italy-2021"],
-  ["brazil-1982", "italy-1994"],
+  ["brazil-2002", "france-2018"],
+  ["argentina-1986", "argentina-2022"],
+  ["france-1998", "france-2018"],
+  ["spain-2010", "germany-2014"],
+  ["netherlands-1974", "brazil-1982"],
+  ["hungary-1954", "brazil-1970"],
+  ["italy-2006", "brazil-2002"],
+  ["brazil-1958", "brazil-1970"],
   ["france-1984", "netherlands-1988"],
-  ["ajax-2018-19", "tottenham-2018-19"],
-  ["napoli-1986-87", "ac-milan-1988-89"],
-  ["paris-saint-germain-2022-23", "barcelona-2010-11"],
-  ["colombia-2014", "brazil-2002"],
-  ["denmark-1992", "germany-1990"],
-  ["brazil-1958", "england-1966"],
-  ["brazil-1994", "italy-1994"],
-  ["brazil-1998", "france-1998"],
-  ["brazil-2014", "germany-2014"],
+  ["italy-2006", "france-2018"],
+  ["england-1966", "germany-1990"],
 ] as const
 
 export const DEFAULT_RIVALS: Record<string, string> = {
@@ -280,7 +261,6 @@ export function allVsPairs(): Array<[string, string]> {
     pairs.push([a, b])
   }
   for (const [home, away] of FEATURED_MATCHUPS) add(home, away)
-  for (const [home, away] of Object.entries(DEFAULT_RIVALS)) add(home, away)
   return pairs
 }
 

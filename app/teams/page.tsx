@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { TeamCard } from "@/components/teams/TeamCard"
+import { FilteredCatalog } from "@/components/teams/FilteredCatalog"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { LEAGUES, clubs } from "@/data/clubs"
 import { getTeamsByClub } from "@/data/teams"
@@ -21,12 +21,14 @@ metadata.alternates = { canonical: "/teams", languages: languageAlternates("/tea
 
 export default function TeamsPage() {
   const sections = LEAGUES.map((league) => ({
-    league,
-    clubs: clubs
+    id: league.id,
+    label: league.label,
+    note: LEAGUE_NOTES[league.id],
+    orgs: clubs
       .filter((club) => club.league === league.id)
-      .map((club) => ({ club, teams: getTeamsByClub(club.id) }))
+      .map((club) => ({ id: club.id, name: club.name, detail: club.city, href: `/teams/${club.id}`, teams: getTeamsByClub(club.id) }))
       .filter((section) => section.teams.length > 0),
-  })).filter((section) => section.clubs.length > 0)
+  })).filter((section) => section.orgs.length > 0)
 
   return (
     <div className="grid gap-8">
@@ -40,10 +42,10 @@ export default function TeamsPage() {
             description: `${counts.clubSides} historical and current club squads for the football and soccer match simulator.`,
             url: absoluteUrl("/teams"),
             hasPart: sections.flatMap((section) =>
-              section.clubs.map((item) => ({
+              section.orgs.map((item) => ({
                 "@type": "SportsTeam",
-                name: item.club.name,
-                url: absoluteUrl(`/teams/${item.club.id}`),
+                name: item.name,
+                url: absoluteUrl(item.href),
               })),
             ),
           }),
@@ -58,29 +60,7 @@ export default function TeamsPage() {
           National teams instead →
         </Link>
       </PageHeader>
-      {sections.map(({ league, clubs: leagueClubs }) => (
-        <section key={league.id} className="grid gap-4">
-          <h2 className="font-display text-xs tracking-[0.18em] text-gold uppercase">{league.label}</h2>
-          <p className="catalog-note">{LEAGUE_NOTES[league.id]}</p>
-          {leagueClubs.map(({ club, teams }) => (
-            <div key={club.id} className="grid gap-3">
-              <h3 className="font-mono text-lg font-semibold tracking-tight">
-                <Link href={`/teams/${club.id}`} className="hover:text-gold">
-                  {club.name}
-                </Link>
-                <span className="ml-2 font-mono text-xs font-normal text-muted">
-                  {club.city} · {teams.map((team) => team.displaySeason).join(" / ")}
-                </span>
-              </h3>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {teams.map((team) => (
-                  <TeamCard key={team.id} team={team} showSquad={false} />
-                ))}
-              </div>
-            </div>
-          ))}
-        </section>
-      ))}
+      <FilteredCatalog mode="clubs" sections={sections} />
     </div>
   )
 }

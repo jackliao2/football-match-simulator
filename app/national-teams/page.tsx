@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { TeamCard } from "@/components/teams/TeamCard"
+import { FilteredCatalog } from "@/components/teams/FilteredCatalog"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { NATION_REGIONS, nations } from "@/data/clubs"
 import { getTeamsByClub } from "@/data/teams"
@@ -21,12 +21,14 @@ metadata.alternates = { canonical: "/national-teams", languages: languageAlterna
 
 export default function NationalTeamsPage() {
   const sections = NATION_REGIONS.map((region) => ({
-    region,
-    nations: nations
+    id: region.id,
+    label: region.label,
+    note: REGION_NOTES[region.id],
+    orgs: nations
       .filter((nation) => nation.region === region.id)
-      .map((nation) => ({ nation, teams: getTeamsByClub(nation.id) }))
+      .map((nation) => ({ id: nation.id, name: nation.name, detail: "National team", href: `/national-teams/${nation.id}`, teams: getTeamsByClub(nation.id) }))
       .filter((section) => section.teams.length > 0),
-  })).filter((section) => section.nations.length > 0)
+  })).filter((section) => section.orgs.length > 0)
 
   return (
     <div className="grid gap-8">
@@ -40,10 +42,10 @@ export default function NationalTeamsPage() {
             url: absoluteUrl("/national-teams"),
             description: `${counts.nationSides} World Cup and Euros squads, plus 2026 national sides.`,
             hasPart: sections.flatMap((section) =>
-              section.nations.map((item) => ({
+              section.orgs.map((item) => ({
                 "@type": "SportsTeam",
-                name: item.nation.name,
-                url: absoluteUrl(`/national-teams/${item.nation.id}`),
+                name: item.name,
+                url: absoluteUrl(item.href),
               })),
             ),
           }),
@@ -58,29 +60,7 @@ export default function NationalTeamsPage() {
           Club teams instead →
         </Link>
       </PageHeader>
-      {sections.map(({ region, nations: regionNations }) => (
-        <section key={region.id} className="grid gap-4">
-          <h2 className="font-display text-xs tracking-[0.18em] text-gold uppercase">{region.label}</h2>
-          <p className="catalog-note">{REGION_NOTES[region.id]}</p>
-          {regionNations.map(({ nation, teams }) => (
-            <div key={nation.id} className="grid gap-3">
-              <h3 className="font-mono text-lg font-semibold tracking-tight">
-                <Link href={`/national-teams/${nation.id}`} className="hover:text-gold">
-                  {nation.name}
-                </Link>
-                <span className="ml-2 font-mono text-xs font-normal text-muted">
-                  {teams.map((team) => team.displaySeason).join(" / ")}
-                </span>
-              </h3>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {teams.map((team) => (
-                  <TeamCard key={team.id} team={team} showSquad={false} />
-                ))}
-              </div>
-            </div>
-          ))}
-        </section>
-      ))}
+      <FilteredCatalog mode="nations" sections={sections} />
     </div>
   )
 }
