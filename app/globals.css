@@ -328,6 +328,34 @@ button {
   color: var(--color-gold-2);
 }
 
+.home-editorial-section { display:grid; gap:1rem; padding-top:1rem; border-top:1px solid rgba(92,138,72,.45); }
+.home-editorial-heading { display:grid; justify-items:start; gap:.28rem; }
+.home-editorial-heading > p { font-family:var(--font-display),sans-serif; font-size:7px; letter-spacing:.24em; text-transform:uppercase; color:var(--color-gold); }
+.home-editorial-heading h2 { font-family:var(--font-brand),"Cinzel",Palatino,serif; font-size:clamp(1.15rem,2.4vw,1.55rem); font-weight:600; letter-spacing:.045em; color:var(--color-text); }
+.home-editorial-heading i { display:block; width:3.2rem; height:1px; background:linear-gradient(90deg,var(--color-gold),transparent); }
+.home-how-grid { display:grid; gap:.7rem; }
+.home-how-card { position:relative; overflow:hidden; border:1px solid var(--color-line); background:linear-gradient(145deg,rgba(24,32,24,.92),rgba(10,14,10,.96)); padding:1rem; box-shadow:inset 0 1px rgba(255,255,255,.025); }
+.home-how-card::after { content:""; position:absolute; right:-1.5rem; bottom:-2.3rem; width:6rem; height:6rem; border:1px solid rgba(212,180,90,.09); transform:rotate(45deg); }
+.home-how-number { font-family:var(--font-display),sans-serif; font-size:8px; letter-spacing:.15em; color:var(--color-gold); }
+.home-how-card h3 { margin-top:.65rem; font-family:var(--font-brand),"Cinzel",Palatino,serif; font-size:.95rem; font-weight:600; letter-spacing:.035em; color:var(--color-text); }
+.home-how-card > p:last-child { position:relative; z-index:1; margin-top:.5rem; font-size:.8rem; line-height:1.65; color:var(--color-muted); }
+.home-faq-list { display:grid; gap:.45rem; }
+.home-faq-item { border:1px solid var(--color-line); background:rgba(14,19,14,.9); transition:border-color .18s ease,background-color .18s ease; }
+.home-faq-item:hover,.home-faq-item[open] { border-color:rgba(212,180,90,.55); background:#111811; }
+.home-faq-item summary { display:flex; cursor:pointer; list-style:none; align-items:center; justify-content:space-between; gap:1rem; padding:.85rem 1rem; font-family:var(--font-brand),"Cinzel",Palatino,serif; font-size:.86rem; font-weight:600; letter-spacing:.025em; color:var(--color-text); }
+.home-faq-item summary::-webkit-details-marker { display:none; }
+.home-faq-plus { flex:none; font-family:var(--font-display),sans-serif; font-size:8px; color:var(--color-gold); transition:transform .18s ease; }
+.home-faq-item[open] .home-faq-plus { transform:rotate(45deg); }
+.home-faq-item > p { max-width:56rem; margin:0 1rem; border-top:1px solid rgba(255,255,255,.08); padding:.8rem 0 1rem; font-size:.8rem; line-height:1.7; color:var(--color-muted); }
+.home-prime-grid { display:grid; gap:.7rem; }
+.home-prime-card { display:block; border:1px solid var(--color-line); background:linear-gradient(145deg,#111811,#0a0e0a); padding:1rem; color:inherit; text-decoration:none; transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease; }
+.home-prime-card:hover { transform:translateY(-2px); border-color:var(--color-gold); box-shadow:0 8px 24px rgba(0,0,0,.25); }
+.home-prime-card > span { font-family:var(--font-display),sans-serif; font-size:6px; letter-spacing:.2em; text-transform:uppercase; color:var(--color-gold); }
+.home-prime-card h3 { margin-top:.55rem; font-family:var(--font-brand),"Cinzel",Palatino,serif; font-size:1rem; font-weight:600; letter-spacing:.025em; color:var(--color-text); }
+.home-prime-card p { margin-top:.5rem; font-size:.8rem; line-height:1.65; color:var(--color-muted); }
+.home-prime-card b { display:block; margin-top:.8rem; font-family:var(--font-mono),monospace; font-size:.7rem; font-weight:500; color:var(--color-gold); }
+@media (min-width:640px) { .home-how-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }.home-prime-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+
 .dream-reel {
   display: grid;
   gap: 0.7rem;

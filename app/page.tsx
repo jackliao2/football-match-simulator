@@ -144,14 +144,14 @@ export default function HomePage() {
         <DreamMatchCarousel items={dreamMatches} />
       </section>
 
-      <section className="grid gap-4">
-        <h2 className="font-mono text-lg font-semibold tracking-tight">How the football simulator works</h2>
-        <div className="grid gap-3 sm:grid-cols-3">
+      <section className="home-editorial-section">
+        <EditorialHeading kicker="Three steps" title="How the football simulator works" />
+        <div className="home-how-grid">
           {HOW_STEPS.map(([step, title, copy]) => (
-            <div key={step} className="result-panel p-4">
-              <div className="font-display text-[10px] text-gold">{step}</div>
-              <h3 className="mt-2 font-mono text-sm font-semibold text-text">{title}</h3>
-              <p className="mt-2 text-sm leading-6 text-muted">{copy}</p>
+            <div key={step} className="home-how-card">
+              <div className="home-how-number">{step}</div>
+              <h3>{title}</h3>
+              <p>{copy}</p>
             </div>
           ))}
         </div>
@@ -191,15 +191,15 @@ export default function HomePage() {
         <TeamCardCarousel teams={nations} kind="nation" />
       </section>
 
-      <section className="grid gap-4">
-        <h2 className="font-mono text-lg font-semibold tracking-tight">Football match simulator FAQ</h2>
-        <div className="grid gap-2">
+      <section className="home-editorial-section">
+        <EditorialHeading kicker="The rules" title="Football match simulator FAQ" />
+        <div className="home-faq-list">
           {FAQ.map(([question, answer]) => (
-            <details key={question} className="result-panel group px-4 py-3">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-mono text-sm font-semibold text-text marker:hidden">
-                {question}<span className="font-display text-[10px] text-gold transition-transform group-open:rotate-45">+</span>
+            <details key={question} className="home-faq-item group">
+              <summary>
+                {question}<span className="home-faq-plus">+</span>
               </summary>
-              <p className="mt-3 max-w-4xl border-t border-white/10 pt-3 text-sm leading-6 text-muted">{answer}</p>
+              <p>{answer}</p>
             </details>
           ))}
         </div>
@@ -222,23 +222,29 @@ export default function HomePage() {
         />
       </section>
 
-      <section className="grid gap-4">
-        <h2 className="font-mono text-lg font-semibold tracking-tight">When was their prime?</h2>
-        <div className="grid gap-3 sm:grid-cols-2">
+      <section className="home-editorial-section">
+        <EditorialHeading kicker="Era debates" title="When was their prime?" />
+        <div className="home-prime-grid">
           {primeEntities
             .filter((entity) => entity.kind === "club")
             .map((entity) => (
               <Link
                 key={entity.slug}
                 href={`/prime/${entity.slug}`}
-                className="result-panel p-4 no-underline hover:border-gold"
+                className="home-prime-card"
               >
-                <h3 className="font-mono text-base font-semibold tracking-tight">{entity.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-muted">{entity.description}</p>
+                <span>Prime dossier</span>
+                <h3>{entity.title}</h3>
+                <p>{entity.description}</p>
+                <b>Explore the eras →</b>
               </Link>
             ))}
         </div>
       </section>
     </div>
   )
+}
+
+function EditorialHeading({ kicker, title }: { kicker: string; title: string }) {
+  return <div className="home-editorial-heading"><p>{kicker}</p><h2>{title}</h2><i aria-hidden="true" /></div>
 }

@@ -57,18 +57,22 @@ export function LocalizedPage({ locale, section }: { locale: Locale; section?: L
       </section>
       <MatchSetup teams={options} defaultHome="barcelona-2008-09" defaultAway="real-madrid-2016-17" locale={locale} />
       <LocalizedSection title={copy.sections.dream} href={localizedPath(locale, "/vs")} link={copy.links.all}><div className="grid gap-2">{matches.slice(0, 3).map((match) => <MatchupRow key={match.href} {...match} />)}</div></LocalizedSection>
-      <section className="grid gap-4">
-        <h2 className="font-mono text-lg font-semibold text-text">{copy.howTitle}</h2>
-        <div className="grid gap-3 sm:grid-cols-3">{copy.how.map(([step, title, body]) => <article key={step} className="result-panel p-4"><p className="font-display text-[10px] text-gold">{step}</p><h3 className="mt-2 font-mono text-sm font-semibold text-text">{title}</h3><p className="mt-2 text-sm leading-6 text-muted">{body}</p></article>)}</div>
+      <section className="home-editorial-section">
+        <LocalizedHeading title={copy.howTitle} />
+        <div className="home-how-grid">{copy.how.map(([step, title, body]) => <article key={step} className="home-how-card"><p className="home-how-number">{step}</p><h3>{title}</h3><p>{body}</p></article>)}</div>
       </section>
       <LocalizedSection title={copy.sections.clubs} href={localizedPath(locale, "/teams")} link={copy.links.all}><div className="grid gap-3 md:grid-cols-3">{clubs.slice(0, 3).map((team) => <TeamCard key={team.id} team={team} showSquad={false} />)}</div></LocalizedSection>
       <LocalizedSection title={copy.sections.nations} href={localizedPath(locale, "/national-teams")} link={copy.links.all}><div className="grid gap-3 md:grid-cols-3">{nations.slice(0, 3).map((team) => <TeamCard key={team.id} team={team} showSquad={false} />)}</div></LocalizedSection>
       <section className="result-panel px-4 py-4 sm:px-5"><h2 className="font-brand text-xl font-semibold text-text">{copy.aboutTitle}</h2><p className="mt-3 max-w-4xl text-sm leading-7 text-text/80">{copy.aboutBody}</p></section>
-      <section className="grid gap-3"><h2 className="font-mono text-lg font-semibold text-text">{copy.faqTitle}</h2>{copy.faq.map(([question, answer]) => <details key={question} className="result-panel group px-4 py-3"><summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-mono text-sm font-semibold text-text">{question}<span className="font-display text-[10px] text-gold transition-transform group-open:rotate-45">+</span></summary><p className="mt-3 border-t border-white/10 pt-3 text-sm leading-6 text-muted">{answer}</p></details>)}</section>
+      <section className="home-editorial-section"><LocalizedHeading title={copy.faqTitle} /><div className="home-faq-list">{copy.faq.map(([question, answer]) => <details key={question} className="home-faq-item group"><summary>{question}<span className="home-faq-plus">+</span></summary><p>{answer}</p></details>)}</div></section>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name: SITE.name, applicationCategory: "GameApplication", operatingSystem: "Web", url: absoluteUrl(localizedPath(locale)), description: copy.home.metaDescription, inLanguage: locale === "pt-br" ? "pt-BR" : "es" }) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", inLanguage: locale === "pt-br" ? "pt-BR" : "es", mainEntity: copy.faq.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) }) }} />
     </div>
   )
+}
+
+function LocalizedHeading({ title }: { title: string }) {
+  return <div className="home-editorial-heading"><h2>{title}</h2><i aria-hidden="true" /></div>
 }
 
 function LocalizedSection({ title, href, link, children }: { title: string; href: string; link: string; children: React.ReactNode }) {

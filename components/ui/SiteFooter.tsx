@@ -10,12 +10,12 @@ export function SiteFooter() {
   const prefix = locale === "en" ? "" : `/${locale}`
   const copy = locale === "es" ? {
     about: "Proyecto independiente de simulación futbolística. No está afiliado, patrocinado ni respaldado por ningún club, liga, federación o jugador.",
-    explore: "Explorar", legal: "Información", simulator: "Simulador", teams: "Clubes", nations: "Selecciones", dreams: "Partidos soñados", terms: "Términos", privacy: "Privacidad", contact: "Contacto",
+    explore: "Explorar", legal: "Información", simulator: "Simulador", teams: "Clubes", nations: "Selecciones", dreams: "Partidos soñados", terms: "Términos", privacy: "Privacidad", contact: "Contacto", status: "Simulación independiente · 2026",
   } : locale === "pt-br" ? {
     about: "Projeto independente de simulação de futebol. Não é afiliado, patrocinado ou endossado por nenhum clube, liga, federação ou jogador.",
-    explore: "Explorar", legal: "Informações", simulator: "Simulador", teams: "Clubes", nations: "Seleções", dreams: "Jogos dos sonhos", terms: "Termos", privacy: "Privacidade", contact: "Contato",
+    explore: "Explorar", legal: "Informações", simulator: "Simulador", teams: "Clubes", nations: "Seleções", dreams: "Jogos dos sonhos", terms: "Termos", privacy: "Privacidade", contact: "Contato", status: "Simulação independente · 2026",
   } : {
-    about: SITE.disclaimer, explore: "Explore", legal: "Information", simulator: "Simulator", teams: "Teams", nations: "Nations", dreams: "Dream matches", terms: "Terms", privacy: "Privacy", contact: "Contact",
+    about: SITE.disclaimer, explore: "Explore", legal: "Information", simulator: "Simulator", teams: "Teams", nations: "Nations", dreams: "Dream matches", terms: "Terms", privacy: "Privacy", contact: "Contact", status: "Independent simulation · 2026",
   }
   return (
     <footer className="site-footer">
@@ -23,7 +23,7 @@ export function SiteFooter() {
         <div className="site-footer-brand">
           <p className="site-footer-logo"><span>Legendary</span><i />Match</p>
           <p>{copy.about}</p>
-          <span className="site-footer-status"><i /> Independent simulation · 2026</span>
+          <span className="site-footer-status"><i /> {copy.status}</span>
         </div>
         <div className="site-footer-nav">
           <div>
