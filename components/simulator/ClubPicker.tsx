@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { PixelCrest } from "@/components/teams/PixelCrest"
 import { LEAGUES, NATION_REGIONS, clubs as clubCatalog, nations as nationCatalog, getClub } from "@/data/clubs"
 
@@ -34,9 +34,11 @@ export function ClubPicker({
     nations.some((item) => item.clubId === currentId) ? "nations" : "clubs",
   )
   const [query, setQuery] = useState("")
+  const searchRef = useRef<HTMLInputElement>(null)
   const q = query.trim().toLowerCase()
 
   useEffect(() => {
+    searchRef.current?.focus()
     function onKey(event: KeyboardEvent) {
       if (event.key === "Escape") onClose()
     }
@@ -113,6 +115,7 @@ export function ClubPicker({
             </button>
           </div>
           <input
+            ref={searchRef}
             className="picker-search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
@@ -141,7 +144,15 @@ export function ClubPicker({
                       onClick={() => onSelect(item.clubId)}
                     >
                       <PixelCrest clubId={item.clubId} size={22} />
-                      <span className="picker-code">{meta?.code ?? item.clubName.slice(0, 3).toUpperCase()}</span>
+                      <span className="picker-team-copy">
+                        <span className="picker-team-name">{item.clubName}</span>
+                        <span className="picker-code">{meta?.code ?? item.clubName.slice(0, 3).toUpperCase()}</span>
+                      </span>
+                      <span className="picker-rating">
+                        <strong>{item.overallRating}</strong>
+                        <small>PEAK</small>
+                      </span>
+                      {active ? <span className="picker-selected">Selected</span> : null}
                     </button>
                   )
                 })}

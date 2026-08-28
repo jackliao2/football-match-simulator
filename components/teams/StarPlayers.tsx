@@ -1,5 +1,5 @@
 import { PixelFlag } from "@/components/teams/PixelFlag"
-import { StatTip } from "@/components/teams/StatTip"
+import { StatStrip, StatTip } from "@/components/teams/StatTip"
 import { teamStars, type StarPlayer } from "@/lib/stars"
 import type { HistoricalTeam } from "@/types"
 
@@ -45,17 +45,39 @@ export function StarPlayers({
   }
 
   return (
-    <section className="result-panel">
-      <div className="flex items-center justify-between border-b border-white/10 px-3 py-2">
+    <section className="result-panel overflow-hidden border-2 border-gold/35 shadow-[6px_6px_0_#000]">
+      <div className="flex items-end justify-between gap-3 border-b border-white/10 bg-[radial-gradient(circle_at_85%_0%,rgba(212,180,90,0.12),transparent_45%)] px-4 py-3">
         <h2 className="font-display text-[8px] uppercase tracking-[0.18em] text-gold">{title}</h2>
-        <span className="font-mono text-[10px] text-muted">OVR</span>
+        <span className="font-mono text-[9px] text-muted">Hover or tap for player attributes</span>
       </div>
-      <ul>
+      <ul className="grid gap-px bg-white/10 sm:grid-cols-2 lg:grid-cols-3">
         {list.map((player, index) => (
-          <StarRow key={player.id} player={player} rank={index + 1} />
+          <StarProfile key={player.id} player={player} rank={index + 1} />
         ))}
       </ul>
     </section>
+  )
+}
+
+function StarProfile({ player, rank }: { player: StarPlayer; rank: number }) {
+  return (
+    <li className="group relative min-w-0 bg-[#0b100b] p-3 outline-none transition-colors hover:bg-[#111811] focus-within:bg-[#111811]" tabIndex={0}>
+      <div className="flex items-center gap-3">
+        <span className="font-display text-[8px] text-gold/55">{String(rank).padStart(2, "0")}</span>
+        <PixelFlag code={player.nation} size={18} />
+        <span className="min-w-0 flex-1">
+          <span className="block truncate font-brand text-sm font-semibold tracking-wide text-text">{player.name}</span>
+          <span className="mt-0.5 block font-mono text-[9px] uppercase tracking-[0.14em] text-muted">{player.position} · {player.nation}</span>
+        </span>
+        <span className="text-right">
+          <strong className="block font-mono text-xl leading-none text-gold">{player.overall}</strong>
+          <small className="font-display text-[6px] tracking-[0.16em] text-muted">PEAK</small>
+        </span>
+      </div>
+      <div className="mt-3 border-t border-white/10 pt-2 opacity-70 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
+        <StatStrip stats={player.stats} />
+      </div>
+    </li>
   )
 }
 

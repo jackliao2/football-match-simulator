@@ -113,7 +113,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
         </Link>
       </header>
 
-      <StarPlayers team={team} count={11} />
+      <StarPlayers team={team} count={6} title="Key Players" />
       <Formation team={team} />
       <SquadList team={team} />
       <TeamRatings team={team} />

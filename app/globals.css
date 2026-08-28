@@ -1352,13 +1352,13 @@ a.result-panel:hover {
 .picker-shell {
   display: flex;
   width: 100%;
-  max-width: 46rem;
-  max-height: 82dvh;
+  max-width: 64rem;
+  max-height: 88dvh;
   flex-direction: column;
   overflow: hidden;
   border: 2px solid var(--color-gold);
   background: var(--color-panel);
-  box-shadow: 6px 6px 0 #000;
+  box-shadow: 10px 10px 0 #000, 0 0 0 1px rgba(212,180,90,.15);
 }
 
 .picker-head {
@@ -1427,7 +1427,7 @@ a.result-panel:hover {
 
 .picker-body {
   overflow-y: auto;
-  padding: 0.4rem 0.5rem 0.55rem;
+  padding: 0.75rem;
 }
 
 .picker-empty {
@@ -1438,18 +1438,17 @@ a.result-panel:hover {
 }
 
 .picker-league {
-  display: grid;
-  grid-template-columns: 5.4rem minmax(0, 1fr);
-  gap: 0.18rem 0.35rem;
-  align-items: start;
+  display: block;
 }
 
 .picker-league + .picker-league {
-  margin-top: 0.28rem;
+  margin-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,.08);
+  padding-top: .8rem;
 }
 
 .picker-league h3 {
-  margin: 0.28rem 0 0;
+  margin: 0 0 .45rem;
   font-family: var(--font-display), ui-monospace, monospace;
   font-size: 7px;
   letter-spacing: 0.12em;
@@ -1459,24 +1458,29 @@ a.result-panel:hover {
 }
 
 .picker-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.16rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .35rem;
 }
 
 .picker-cell {
+  position: relative;
   display: flex;
-  width: 2.55rem;
-  flex-direction: column;
+  min-width: 0;
   align-items: center;
-  gap: 0.08rem;
+  gap: .55rem;
   border: 1px solid #2a462a;
-  background: #080c08;
-  padding: 0.16rem 0.04rem 0.12rem;
+  background: linear-gradient(135deg, rgba(255,255,255,.025), transparent 55%), #080c08;
+  padding: .55rem .6rem;
+  text-align: left;
+  transition: transform .14s ease, border-color .14s ease, background .14s ease;
 }
 
 .picker-cell:hover {
-  border-color: var(--color-line-hi);
+  z-index: 1;
+  transform: translateY(-1px);
+  border-color: var(--color-gold);
+  background: #101710;
 }
 
 .picker-cell.is-on {
@@ -1485,17 +1489,36 @@ a.result-panel:hover {
 }
 
 .picker-code {
+  display: block;
+  margin-top: .12rem;
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 8px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: var(--color-text);
+  letter-spacing: .12em;
+  color: var(--color-muted);
 }
 
+.picker-team-copy { min-width: 0; flex: 1; }
+.picker-team-name { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-family:var(--font-brand),serif; font-size:12px; font-weight:600; color:var(--color-text); }
+.picker-rating { display:flex; flex-direction:column; align-items:flex-end; flex-shrink:0; }
+.picker-rating strong { font-family:var(--font-mono),monospace; font-size:15px; line-height:1; color:var(--color-gold); }
+.picker-rating small { margin-top:2px; font-family:var(--font-display),sans-serif; font-size:5px; letter-spacing:.14em; color:var(--color-muted); }
+.picker-selected { position:absolute; top:-1px; right:-1px; border:1px solid var(--color-gold); background:var(--color-gold); padding:2px 4px; font-family:var(--font-display),sans-serif; font-size:5px; letter-spacing:.08em; text-transform:uppercase; color:var(--color-ink); }
+
 @media (min-width: 640px) {
-  .picker-cell {
-    width: 2.7rem;
-  }
+  .picker-row { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .picker-team-name { font-size:13px; }
+}
+
+@media (min-width: 900px) {
+  .picker-row { grid-template-columns:repeat(4,minmax(0,1fr)); }
+}
+
+@media (max-width: 520px) {
+  .picker-head { flex-wrap:wrap; }
+  .picker-tabs { width:calc(100% - 3.5rem); }
+  .picker-search { order:3; flex-basis:100%; padding:.5rem; }
+  .picker-cell { padding:.5rem; gap:.4rem; }
+  .picker-cell > :first-child { display:none; }
 }
 
 .faceoff-squad {
