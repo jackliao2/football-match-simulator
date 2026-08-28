@@ -7,7 +7,6 @@ import { EraSelect } from "@/components/simulator/EraSelect"
 import { MatchResult } from "@/components/simulator/MatchResult"
 import { MatchStats } from "@/components/simulator/MatchStats"
 import { MatchTimeline } from "@/components/simulator/MatchTimeline"
-import { MonteCarloResults } from "@/components/simulator/MonteCarloResults"
 import { SimulationPlay } from "@/components/simulator/SimulationPlay"
 import { FaceOffSquad } from "@/components/teams/SquadPanel"
 import { PixelCrest } from "@/components/teams/PixelCrest"
@@ -17,10 +16,10 @@ import { OvrStamp } from "@/components/ui/OvrStamp"
 import { track } from "@/lib/analytics"
 import { absoluteUrl } from "@/lib/site"
 import { createSeed } from "@/lib/match-id"
-import { simulateMany, simulateMatch } from "@/lib/simulation"
+import { simulateMatch } from "@/lib/simulation"
 import type { PreMatchAnalysis } from "@/lib/ai/analysis"
 import { teamSquad, type SquadMember } from "@/lib/stars"
-import type { HistoricalTeam, MonteCarloResult, SimulatedMatch, TeamKind } from "@/types"
+import type { HistoricalTeam, SimulatedMatch, TeamKind } from "@/types"
 import type { Locale } from "@/lib/i18n"
 
 const AI_DAILY_LIMIT = 10
@@ -57,11 +56,11 @@ export function MatchSetup({
   locale?: Locale
 }) {
   const ui = locale === "es" ? {
-    home: "Local", away: "Visitante", legendary: "Leyendas", now: "Recientes", swap: "Cambiar", different: "Elige dos equipos distintos.", simulate: "Simular", playing: "Jugando…", hundred: "100 partidos", running: "Calculando…", expert: "Análisis experto IA", analysing: "Analizando…", daily: "Hoy", change: "Cambiar equipo ▾", simulateAgain: "Simular de nuevo", back: "Volver a equipos", copy: "Copiar enlace", copied: "Copiado", runAgain: "Repetir 100", expertAgain: "Repetir análisis IA",
+    home: "Local", away: "Visitante", legendary: "Leyendas", now: "Recientes", swap: "Cambiar", different: "Elige dos equipos distintos.", simulate: "Simular", playing: "Jugando…", expert: "Análisis experto IA", analysing: "Analizando…", daily: "Hoy", change: "Cambiar equipo ▾", simulateAgain: "Simular de nuevo", back: "Volver a equipos", copy: "Copiar enlace", copied: "Copiado", expertAgain: "Repetir análisis IA",
   } : locale === "pt-br" ? {
-    home: "Casa", away: "Visitante", legendary: "Lendas", now: "Recentes", swap: "Trocar", different: "Escolha dois times diferentes.", simulate: "Simular", playing: "Jogando…", hundred: "100 partidas", running: "Calculando…", expert: "Análise especializada IA", analysing: "Analisando…", daily: "Hoje", change: "Trocar time ▾", simulateAgain: "Simular novamente", back: "Voltar aos times", copy: "Copiar link", copied: "Copiado", runAgain: "Repetir 100", expertAgain: "Repetir análise IA",
+    home: "Casa", away: "Visitante", legendary: "Lendas", now: "Recentes", swap: "Trocar", different: "Escolha dois times diferentes.", simulate: "Simular", playing: "Jogando…", expert: "Análise especializada IA", analysing: "Analisando…", daily: "Hoje", change: "Trocar time ▾", simulateAgain: "Simular novamente", back: "Voltar aos times", copy: "Copiar link", copied: "Copiado", expertAgain: "Repetir análise IA",
   } : {
-    home: "Home", away: "Away", legendary: "Legendary", now: "Recent", swap: "Swap", different: "Pick two different teams.", simulate: "Simulate", playing: "Playing…", hundred: "100 Matches", running: "Running…", expert: "Expert AI Analysis", analysing: "Analysing…", daily: "Daily", change: "Change team ▾", simulateAgain: "Simulate again", back: "Back to teams", copy: "Copy link", copied: "Copied", runAgain: "Run 100 again", expertAgain: "Expert AI again",
+    home: "Home", away: "Away", legendary: "Legendary", now: "Recent", swap: "Swap", different: "Pick two different teams.", simulate: "Simulate", playing: "Playing…", expert: "Expert AI Analysis", analysing: "Analysing…", daily: "Daily", change: "Change team ▾", simulateAgain: "Simulate again", back: "Back to teams", copy: "Copy link", copied: "Copied", expertAgain: "Expert AI again",
   }
   const homeDefault = teams.find((team) => team.id === defaultHome) ?? teams[0]!
   const awayDefault =
@@ -80,21 +79,15 @@ export function MatchSetup({
   const [homeId, setHomeId] = useState(homeDefault.id)
   const [awayId, setAwayId] = useState(awayDefault.id)
   const [picker, setPicker] = useState<"home" | "away" | null>(null)
-  const [running, setRunning] = useState(false)
   const [match, setMatch] = useState<SimulatedMatch | null>(null)
-  const [batch, setBatch] = useState<MonteCarloResult | null>(null)
-  const [play, setPlay] = useState<
-    | { kind: "match"; match: SimulatedMatch }
-    | { kind: "batch"; result: MonteCarloResult }
-    | null
-  >(null)
+  const [play, setPlay] = useState<{ kind: "match"; match: SimulatedMatch } | null>(null)
   const [analysis, setAnalysis] = useState<PreMatchAnalysis | null>(null)
   const [analysisLoading, setAnalysisLoading] = useState(false)
   const [analysisError, setAnalysisError] = useState<string | null>(null)
   const [aiUsesToday, setAiUsesToday] = useState(0)
   const [copied, setCopied] = useState(false)
   const resultRef = useRef<HTMLDivElement>(null)
-  const scrollTarget = useRef<"match" | "batch" | "analysis">("match")
+  const scrollTarget = useRef<"match" | "analysis">("match")
   const legendHomeId = useRef(homeDefault.id)
   const legendAwayId = useRef(awayDefault.id)
   const [scrollKey, setScrollKey] = useState(0)
@@ -141,14 +134,13 @@ export function MatchSetup({
     return () => window.clearTimeout(timer)
   }, [scrollKey])
 
-  function showResults(target: "match" | "batch" | "analysis") {
+  function showResults(target: "match" | "analysis") {
     scrollTarget.current = target
     setScrollKey((key) => key + 1)
   }
 
   function resetOutputs() {
     setMatch(null)
-    setBatch(null)
     setPlay(null)
     setAnalysis(null)
     setAnalysisError(null)
@@ -249,7 +241,6 @@ export function MatchSetup({
     track("simulator_started", { home: home.id, away: away.id })
     const next = simulateMatch(home.team, away.team, createSeed())
     setMatch(null)
-    setBatch(null)
     setAnalysis(null)
     setAnalysisError(null)
     setAnalysisLoading(false)
@@ -257,29 +248,10 @@ export function MatchSetup({
     showResults("match")
   }
 
-  function simulateHundred() {
-    if (sameTeam || play) return
-    setRunning(true)
-    track("simulate_100", { home: home.id, away: away.id })
-    const result = simulateMany(home.team, away.team, 100, createSeed())
-    setMatch(null)
-    setBatch(null)
-    setAnalysis(null)
-    setAnalysisError(null)
-    setAnalysisLoading(false)
-    setPlay({ kind: "batch", result })
-    setRunning(false)
-    showResults("batch")
-  }
-
   function finishPlay() {
-    if (play?.kind === "match") {
+    if (play) {
       setMatch(play.match)
       track("simulation_completed", { mode: "single", home: home.id, away: away.id })
-    }
-    if (play?.kind === "batch") {
-      setBatch(play.result)
-      track("simulation_completed", { mode: "100", home: home.id, away: away.id })
     }
     setPlay(null)
   }
@@ -304,7 +276,6 @@ export function MatchSetup({
   async function runAnalysis() {
     if (sameTeam) return
     setMatch(null)
-    setBatch(null)
     setPlay(null)
     if (aiRemaining <= 0) {
       setAnalysis(null)
@@ -407,16 +378,8 @@ export function MatchSetup({
               </button>
               <button
                 type="button"
-                disabled={sameTeam || running || Boolean(play)}
-                className="rail-btn"
-                onClick={simulateHundred}
-              >
-                {play?.kind === "batch" ? ui.running : ui.hundred}
-              </button>
-              <button
-                type="button"
                 disabled={sameTeam || analysisLoading}
-                className="rail-btn"
+                className="rail-btn rail-btn-ai"
                 onClick={runAnalysis}
               >
                 <span className="flex flex-col items-center gap-0.5">
@@ -445,7 +408,7 @@ export function MatchSetup({
         </div>
       </div>
 
-      {play || match || batch || analysis || analysisLoading || analysisError ? (
+      {play || match || analysis || analysisLoading || analysisError ? (
       <div ref={resultRef} className="mt-6 mb-10 grid scroll-mt-20 gap-4">
         {play?.kind === "match" ? (
           <div id="result-match">
@@ -464,14 +427,6 @@ export function MatchSetup({
               <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={simulateOnce}>
                 {ui.simulateAgain}
               </button>
-              <button
-                type="button"
-                className="rail-btn rail-btn-inline"
-                disabled={running}
-                onClick={simulateHundred}
-              >
-                {running ? ui.running : ui.hundred}
-              </button>
               <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>
                 {ui.back}
               </button>
@@ -486,33 +441,6 @@ export function MatchSetup({
           </div>
         ) : null}
 
-        {play?.kind === "batch" ? (
-          <div id="result-batch">
-            <SimulationPlay
-              kind="batch"
-              home={home.team}
-              away={away.team}
-              batch={play.result}
-              onDone={finishPlay}
-            />
-          </div>
-        ) : batch ? (
-          <div id="result-batch" className="grid gap-2">
-            <MonteCarloResults result={batch} />
-            <div className="flex flex-wrap gap-2">
-              <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={simulateOnce}>
-                {ui.simulate}
-              </button>
-              <button type="button" className="rail-btn rail-btn-inline" onClick={simulateHundred}>
-                {ui.runAgain}
-              </button>
-              <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>
-                {ui.back}
-              </button>
-            </div>
-          </div>
-        ) : null}
-
         {analysisError ? (
           <section id="result-analysis" className="result-panel border-2 border-gold/40 px-5 py-6 shadow-[8px_8px_0_#000]">
             <p className="font-display text-[8px] uppercase tracking-[0.24em] text-gold">Expert AI Analysis</p>
@@ -520,7 +448,6 @@ export function MatchSetup({
             <p className="mt-2 font-mono text-sm leading-6 text-text/80">{analysisError}</p>
             <div className="mt-4 flex flex-wrap gap-2">
               <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={simulateOnce}>{ui.simulate}</button>
-              <button type="button" className="rail-btn rail-btn-inline" onClick={simulateHundred}>{ui.hundred}</button>
               <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>{ui.back}</button>
             </div>
           </section>
@@ -533,8 +460,7 @@ export function MatchSetup({
             <AiAnalysisResult analysis={analysis} home={home.team} away={away.team} />
             <div className="flex flex-wrap gap-2">
               <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={simulateOnce}>{ui.simulate}</button>
-              <button type="button" className="rail-btn rail-btn-inline" onClick={simulateHundred}>{ui.hundred}</button>
-              <button type="button" className="rail-btn rail-btn-inline" onClick={runAnalysis}>{ui.expertAgain} · {aiRemaining}/{AI_DAILY_LIMIT}</button>
+              <button type="button" className="rail-btn rail-btn-ai rail-btn-inline" onClick={runAnalysis}>{ui.expertAgain} · {aiRemaining}/{AI_DAILY_LIMIT}</button>
               <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>{ui.back}</button>
             </div>
           </div>

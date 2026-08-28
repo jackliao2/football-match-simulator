@@ -30,7 +30,7 @@ export async function generateMetadata({
   const title = `${home.clubName} ${home.displaySeason} ${match.score.home}–${match.score.away} ${away.clubName} ${away.displaySeason}`
   return {
     title,
-    description: `Simulated football match: ${title}. Seed ${parsed.seed}. Replay it or run 100 matches.`,
+    description: `Simulated football match: ${title}. Seed ${parsed.seed}. Replay the result or choose another era matchup.`,
     robots: { index: false, follow: true },
     openGraph: {
       title,

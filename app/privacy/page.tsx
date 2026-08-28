@@ -60,7 +60,7 @@ export default function PrivacyPage() {
         <h2>Google Analytics</h2>
         <p>
           We use Google Analytics 4 to measure page visits and product actions such as selecting a
-          team, running one or 100 simulations, requesting Expert AI Analysis, changing language
+          team, running a simulation, requesting Expert AI Analysis, changing language
           and copying a match link. We do not send names, email addresses or AI API content.
           Analytics storage is denied by default and is enabled only after you choose “Allow analytics”.
         </p>

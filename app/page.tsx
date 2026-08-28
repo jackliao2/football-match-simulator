@@ -45,11 +45,11 @@ const FAQ = [
   ],
   [
     "Can I simulate a custom football match online?",
-    "Yes. Open the simulator, choose any two teams in the database, and simulate a football match online. Same sides and seed always replay the same result. Run 100 matches for who-would-win probabilities.",
+    "Yes. Open the simulator, choose any two teams in the database, and simulate a football match online. Run it again for another plausible night, or use Expert AI Analysis for a 100-match probability read.",
   ],
   [
     "Why does the result change when I simulate again?",
-    "A great team does not win every night. Each new seed creates another plausible game, so the score and scorers can change. Use 100 Matches when you want the distribution rather than one dramatic result.",
+    "A great team does not win every night. Each new seed creates another plausible game, so the score and scorers can change. Expert AI Analysis adds a fresh 100-match distribution behind its tactical verdict.",
   ],
   [
     "What does Expert AI Analysis do?",
@@ -68,7 +68,7 @@ const FAQ = [
 const HOW_STEPS = [
   ["01", "Pick two shirts", "Choose a club peak, a World Cup side or a recent named season. Every card opens the actual squad and era behind the rating."],
   ["02", "Play one possible night", "The engine combines player ratings, team style and a seed into the score, xG, scorers and match events."],
-  ["03", "Test the argument", "Run it again for a different night, run 100 for the distribution, or ask Expert AI to explain the tactical evidence."],
+  ["03", "Test the argument", "Run it again for a different night, or ask Expert AI for a tactical verdict backed by 100 alternate matches."],
 ] as const
 
 export default function HomePage() {
