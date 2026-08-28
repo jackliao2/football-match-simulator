@@ -141,20 +141,18 @@ export function MatchSetup({
     setAnalysisError(null)
   }
 
-  const homeSeasons = seasonsForClub(teams, homeClub)
-  const awaySeasons = seasonsForClub(teams, awayClub)
-  const home =
-    homeSeasons.find((team) => team.id === homeId) ??
-    preferredSeason(homeSeasons) ??
-    homeSeasons[0]!
-  const away =
-    awaySeasons.find((team) => team.id === awayId) ??
-    preferredSeason(awaySeasons) ??
-    awaySeasons[0]!
+  const homeSeasons = useMemo(() => seasonsForClub(teams, homeClub), [teams, homeClub])
+  const awaySeasons = useMemo(() => seasonsForClub(teams, awayClub), [teams, awayClub])
+  const home = useMemo(() =>
+    homeSeasons.find((team) => team.id === homeId) ?? preferredSeason(homeSeasons) ?? homeSeasons[0]!,
+  [homeSeasons, homeId])
+  const away = useMemo(() =>
+    awaySeasons.find((team) => team.id === awayId) ?? preferredSeason(awaySeasons) ?? awaySeasons[0]!,
+  [awaySeasons, awayId])
   const sameTeam = home.id === away.id
   const aiRemaining = Math.max(0, AI_DAILY_LIMIT - aiUsesToday)
-  const homeSquad = teamSquad(home.team)
-  const awaySquad = teamSquad(away.team)
+  const homeSquad = useMemo(() => teamSquad(home.team), [home.team])
+  const awaySquad = useMemo(() => teamSquad(away.team), [away.team])
 
   function changeClub(side: "home" | "away", clubId: string) {
     if (clubId === (side === "home" ? homeClub : awayClub)) {
