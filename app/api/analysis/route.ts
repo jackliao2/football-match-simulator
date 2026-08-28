@@ -38,7 +38,7 @@ export async function POST(request: Request) {
       )
     }
 
-    const cacheKey = `analysis:v2:${getAiCacheNamespace()}:${home.id}:${away.id}`
+    const cacheKey = `analysis:v3:${getAiCacheNamespace()}:${home.id}:${away.id}`
     const cached = await withAiCache(
       cacheKey,
       aiCacheTtlMs("analysis"),

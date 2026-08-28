@@ -11,13 +11,18 @@ const DEF_POS = new Set(["CB", "LB", "RB", "LCB", "RCB", "LWB", "RWB"])
 export const ANALYSIS_SYSTEM_PROMPT = `You write premium, fan-first matchup copy for a historical football team simulator.
 
 Hard rules:
-- Return valid JSON only, with exactly these string fields: headline, matchupStory, callTitle, callBody, decidingSequence, pressurePoint.
+- Return valid JSON only, with exactly these string fields: headline, matchupStory, callTitle, callBody, decidingSequence, pressurePoint, openingPhase, keyDuel, coachingMove, chaosFactor, finalWord.
 - headline: 6-14 words. Celebrate the collision of eras; no winner and no markdown.
 - matchupStory: maximum 42 words. Mention both full team seasons, both managers, and what makes their football identities collide.
 - callTitle: 4-9 words. Make one match-specific football assertion. Never write "Too close to call", generic probability language, ratings, numbers or markdown.
 - callBody: maximum 38 words. Use engineRead to make the call, but translate it into football. Name supplied players and identify the single tactical pattern most likely to tilt the game. If the win split is close, explain the decisive pattern instead of hedging. Do not repeat win totals, percentages or ratings.
 - decidingSequence: maximum 38 words. Describe one vivid, concrete sequence likely to decide the game, naming players from both supplied squads.
 - pressurePoint: maximum 28 words. Identify one specific zone or unit where the matchup advantage is most likely to appear. Write a statement, not a question.
+- openingPhase: maximum 42 words. Explain how the first 20 minutes are likely to look: who takes territory, how the press begins, and where the first clean progression comes from. Name at least two supplied players.
+- keyDuel: maximum 42 words. Analyse one player-versus-player or player-versus-unit duel. Explain the football mechanism, not career status. Avoid declaring either player categorically better.
+- coachingMove: maximum 42 words. Give the most plausible in-match adjustment for the manager whose initial plan is under greater pressure. Use the supplied formation and players; do not invent substitutions.
+- chaosFactor: maximum 34 words. Identify the one variable that could break the model's expected pattern: set pieces, transition volume, goalkeeper performance, aerial play, or another input-supported detail.
+- finalWord: maximum 34 words. End with a clear, memorable verdict naming the side with the better repeatable route, while acknowledging what could reverse it. No percentages and no generic hedging.
 - This is NOT a match report. Do not invent scorers, cards, events or statistics.
 - Never invent players who are not in the supplied squads.
 - Never claim this was a real historical fixture. These sides may be from different eras.
@@ -35,6 +40,11 @@ export interface AnalysisCopy {
   callBody: string
   decidingSequence: string
   pressurePoint: string
+  openingPhase: string
+  keyDuel: string
+  coachingMove: string
+  chaosFactor: string
+  finalWord: string
 }
 
 export interface PreMatchAnalysis {
@@ -269,6 +279,11 @@ function shortFallback(home: HistoricalTeam, away: HistoricalTeam, simulation: M
       : `${leaderNames[1] ?? leaderNames[0]} finding ${leaderNames[0]} before the opposing block resets is the repeatable pattern that gives ${leader.clubName} the sharper route to goal.`,
     decidingSequence: `${homeNames[1] ?? homeNames[0]} looks for ${homeNames[0]}, while ${awayNames[1] ?? awayNames[0]}'s first forward pass releases ${awayNames[0]} into the space left behind.`,
     pressurePoint: `The space around the two midfields is where ${home.formation} and ${away.formation} stop being shapes and become a direct duel.`,
+    openingPhase: `${home.manager}'s first test is whether ${homeNames[1] ?? homeNames[0]} can establish possession before ${awayNames[1] ?? awayNames[0]} turns the opening exchanges into a transition game.`,
+    keyDuel: `${homeNames[0]} attacking the space around ${awayNames[2] ?? awayNames[0]} is the sharpest individual contest; the response depends on cover arriving before the final action, not on either name alone.`,
+    coachingMove: `${leader.manager} can protect the model's preferred route by keeping the ${leader.formation} compact and giving ${leaderNames[0]} earlier support rather than adding more bodies to the last line.`,
+    chaosFactor: `A set piece or an exceptional goalkeeper night could pull this away from the repeatable open-play pattern seen across the simulations.`,
+    finalWord: `${leader.clubName} own the cleaner repeatable route through ${leaderNames[0]}, but the margin survives only while they control the space around the first broken midfield line.`,
   }
 }
 
@@ -299,7 +314,7 @@ function parseAnalysisCopy(raw: string): AnalysisCopy | null {
   try {
     const cleaned = raw.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "")
     const value = JSON.parse(cleaned) as Partial<AnalysisCopy>
-    const fields: Array<keyof AnalysisCopy> = ["headline", "matchupStory", "callTitle", "callBody", "decidingSequence", "pressurePoint"]
+    const fields: Array<keyof AnalysisCopy> = ["headline", "matchupStory", "callTitle", "callBody", "decidingSequence", "pressurePoint", "openingPhase", "keyDuel", "coachingMove", "chaosFactor", "finalWord"]
     if (!fields.every((field) => typeof value[field] === "string" && value[field]!.trim())) return null
     const copy = {
       headline: cleanCopy(value.headline!, 120),
@@ -308,6 +323,11 @@ function parseAnalysisCopy(raw: string): AnalysisCopy | null {
       callBody: cleanCopy(value.callBody!, 300),
       decidingSequence: cleanCopy(value.decidingSequence!, 320),
       pressurePoint: cleanCopy(value.pressurePoint!, 240),
+      openingPhase: cleanCopy(value.openingPhase!, 360),
+      keyDuel: cleanCopy(value.keyDuel!, 360),
+      coachingMove: cleanCopy(value.coachingMove!, 360),
+      chaosFactor: cleanCopy(value.chaosFactor!, 300),
+      finalWord: cleanCopy(value.finalWord!, 300),
     }
     const banned = /\b(?:will|unstoppable|cannot|can't|nobody|no one|destroy|outclass|superior|definitely)\b/i
     if (Object.values(copy).some((text) => banned.test(text))) return null
@@ -328,7 +348,7 @@ export async function generatePreMatchAnalysis(
 
   try {
     const raw = await provider.generate(ANALYSIS_SYSTEM_PROMPT, analysisPayload(home, away, simulation), {
-      maxTokens: 420,
+      maxTokens: 760,
       temperature: 0.5,
     })
     const copy = parseAnalysisCopy(raw)

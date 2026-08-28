@@ -75,6 +75,22 @@ export function AiAnalysisResult({ analysis, home, away }: { analysis: PreMatchA
         </div>
       </section>
 
+      <section className="border-b border-white/10 bg-black/10 px-4 py-4 sm:px-6 sm:py-5">
+        <div className="flex flex-wrap items-end justify-between gap-2">
+          <div>
+            <p className="font-display text-[8px] uppercase tracking-[0.24em] text-gold">Expert dossier</p>
+            <h3 className="mt-1 font-brand text-lg font-semibold tracking-wide text-text">How the match develops</h3>
+          </div>
+          <p className="font-mono text-[9px] text-muted">Tactics · personnel · game state</p>
+        </div>
+        <div className="mt-3 grid gap-px overflow-hidden border border-white/10 bg-white/10 md:grid-cols-2">
+          <DossierCard number="01" label="The opening 20" text={copy.openingPhase} />
+          <DossierCard number="02" label="The duel to watch" text={copy.keyDuel} />
+          <DossierCard number="03" label="The manager's move" text={copy.coachingMove} />
+          <DossierCard number="04" label="The chaos factor" text={copy.chaosFactor} />
+        </div>
+      </section>
+
       <section className="px-4 py-4 sm:px-6">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
@@ -116,8 +132,17 @@ export function AiAnalysisResult({ analysis, home, away }: { analysis: PreMatchA
           </div>
         </div>
       </section>
+
+      <footer className="border-t border-gold/25 bg-[linear-gradient(90deg,rgba(212,180,90,0.09),transparent)] px-4 py-4 sm:px-6">
+        <p className="font-display text-[8px] uppercase tracking-[0.24em] text-gold">Final word</p>
+        <p className="mt-2 max-w-4xl font-brand text-base leading-7 font-semibold tracking-wide text-text sm:text-lg">{copy.finalWord}</p>
+      </footer>
     </section>
   )
+}
+
+function DossierCard({ number, label, text }: { number: string; label: string; text: string }) {
+  return <article className="relative bg-[#0b100b] px-4 py-4 sm:px-5"><span className="absolute top-3 right-3 font-display text-[7px] tracking-[0.14em] text-gold/45">{number}</span><p className="pr-8 font-display text-[8px] uppercase tracking-[0.2em] text-gold">{label}</p><p className="mt-2 text-sm leading-6 text-text/90">{text}</p></article>
 }
 
 function TeamMark({ team, away = false }: { team: HistoricalTeam; away?: boolean }) {
