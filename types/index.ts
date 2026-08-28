@@ -90,11 +90,12 @@ export interface PrimeCandidate {
 export interface PrimeEntity {
   slug: string
   name: string
-  kind: "club" | "player"
+    kind: "club" | "nation" | "player"
   title: string
   description: string
   seoTitle: string
-  seoDescription: string
+    seoDescription: string
+    verdict: string
   candidates: PrimeCandidate[]
 }
 

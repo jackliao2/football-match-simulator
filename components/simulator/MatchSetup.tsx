@@ -23,7 +23,7 @@ import { teamSquad, type SquadMember, type StarPlayer } from "@/lib/stars"
 import type { HistoricalTeam, MonteCarloResult, SimulatedMatch, TeamKind } from "@/types"
 import type { Locale } from "@/lib/i18n"
 
-const AI_DAILY_LIMIT = 5
+const AI_DAILY_LIMIT = 10
 const AI_USAGE_KEY = "lm-ai-daily-usage"
 
 function localDayKey(date = new Date()) {
@@ -116,6 +116,20 @@ export function MatchSetup({
     }, 0)
     return () => window.clearTimeout(hydration)
   }, [])
+
+  useEffect(() => {
+    const now = new Date()
+    const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
+    const timer = window.setTimeout(() => {
+      setAiUsesToday(0)
+      try {
+        window.localStorage.setItem(AI_USAGE_KEY, JSON.stringify({ date: localDayKey(), count: 0 }))
+      } catch {
+        /* ignore */
+      }
+    }, nextMidnight.getTime() - now.getTime() + 250)
+    return () => window.clearTimeout(timer)
+  }, [aiUsesToday])
 
   useEffect(() => {
     if (scrollKey === 0) return
@@ -289,7 +303,7 @@ export function MatchSetup({
     setPlay(null)
     if (aiRemaining <= 0) {
       setAnalysis(null)
-      setAnalysisError("You have used today’s 5 free AI analyses. Come back tomorrow.")
+      setAnalysisError("You have used today’s 10 free AI analyses. Your quota resets at midnight.")
       showResults("analysis")
       return
     }
@@ -400,7 +414,7 @@ export function MatchSetup({
               >
                 <span className="flex flex-col items-center gap-0.5">
                   <span>{analysisLoading ? ui.analysing : ui.expert}</span>
-                  <span className="font-mono text-[8px] normal-case tracking-normal opacity-70">{ui.daily} {aiRemaining}/5</span>
+                  <span className="font-mono text-[8px] normal-case tracking-normal opacity-70">{ui.daily} {aiRemaining}/{AI_DAILY_LIMIT}</span>
                 </span>
               </button>
               <p className="rail-hint">
@@ -513,7 +527,7 @@ export function MatchSetup({
             <div className="flex flex-wrap gap-2">
               <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={simulateOnce}>{ui.simulate}</button>
               <button type="button" className="rail-btn rail-btn-inline" onClick={simulateHundred}>{ui.hundred}</button>
-              <button type="button" className="rail-btn rail-btn-inline" onClick={runAnalysis}>{ui.expertAgain} · {aiRemaining}/5</button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={runAnalysis}>{ui.expertAgain} · {aiRemaining}/{AI_DAILY_LIMIT}</button>
               <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>{ui.back}</button>
             </div>
           </div>
