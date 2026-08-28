@@ -19,9 +19,15 @@ type AnalyticsPayload = Record<string, string | number | boolean | null | undefi
 
 declare global {
   interface Window {
-    dataLayer?: Array<Record<string, unknown>>
+    dataLayer?: unknown[]
     gtag?: (...args: unknown[]) => void
   }
+}
+
+export function ensureGtag(): (...args: unknown[]) => void {
+  window.dataLayer = window.dataLayer ?? []
+  window.gtag = window.gtag ?? ((...args: unknown[]) => window.dataLayer?.push(args))
+  return window.gtag
 }
 
 export function track(event: AnalyticsEvent, payload: AnalyticsPayload = {}): void {
@@ -32,10 +38,5 @@ export function track(event: AnalyticsEvent, payload: AnalyticsPayload = {}): vo
     if (value !== undefined) cleaned[key] = value
   }
 
-  if (typeof window.gtag === "function") {
-    window.gtag("event", event, cleaned)
-  } else {
-    window.dataLayer = window.dataLayer ?? []
-    window.dataLayer.push(cleaned)
-  }
+  ensureGtag()("event", event, cleaned)
 }

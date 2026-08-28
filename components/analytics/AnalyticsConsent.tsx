@@ -1,13 +1,13 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { track } from "@/lib/analytics"
+import { ensureGtag, track } from "@/lib/analytics"
 
 const CONSENT_KEY = "legendarymatch_analytics_consent"
 type Consent = "granted" | "denied"
 
 function updateConsent(value: Consent) {
-  window.gtag?.("consent", "update", { analytics_storage: value, ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" })
+  ensureGtag()("consent", "update", { analytics_storage: value, ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" })
 }
 
 export function AnalyticsConsent() {
