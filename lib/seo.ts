@@ -180,6 +180,7 @@ export function teamMetadata(team: HistoricalTeam): Metadata {
     title: { absolute: `${copy.title} | ${SITE.name}` },
     description: copy.description,
     keywords: [
+      ...squadKeywords(team),
       `${team.clubName} ${team.displaySeason}`,
       `${team.clubName} ${team.displaySeason} squad`,
       `${team.clubName} ${team.displaySeason} soccer team`,

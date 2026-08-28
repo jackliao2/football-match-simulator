@@ -241,6 +241,22 @@ export default function HomePage() {
             ))}
         </div>
       </section>
+
+      <section className="home-editorial-section">
+        <EditorialHeading kicker="Big arguments" title="Go beyond one simulated night" />
+        <div className="home-prime-grid">
+          <Link href="/best-football-team-ever" className="home-prime-card">
+            <span>Editorial ranking</span><h3>What is the best football team ever?</h3>
+            <p>Six historically great sides, one set of criteria and a clear answer — with every candidate playable.</p>
+            <b>Read the verdict →</b>
+          </Link>
+          <Link href="/compare/barcelona-vs-real-madrid" className="home-prime-card">
+            <span>Club comparison</span><h3>Barcelona or Real Madrid: which is better?</h3>
+            <p>Separate the all-time club argument from the prime-team matchup, then test the best versions.</p>
+            <b>Compare the giants →</b>
+          </Link>
+        </div>
+      </section>
     </div>
   )
 }

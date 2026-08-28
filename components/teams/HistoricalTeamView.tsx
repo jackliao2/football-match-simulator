@@ -17,6 +17,19 @@ import { relatedMatchups, teamPageCopy } from "@/lib/page-copy"
 import { absoluteUrl } from "@/lib/site"
 import type { HistoricalTeam } from "@/types"
 
+const SEARCH_YEAR_NOTES: Record<string, string> = {
+  "real-madrid-2016-17": "Often searched as the Real Madrid 2017 squad, this is Zidane's full 2016/17 team: starting XI, formation, manager and supporting players.",
+  "barcelona-2014-15": "Often searched as the Barcelona 2015 squad or 2015 Barça team, this is Luis Enrique's complete 2014/15 treble-winning group.",
+  "barcelona-2008-09": "The Barcelona 2009 squad search usually means this 2008/09 treble side, with its starting XI, formation and full supporting cast.",
+  "barcelona-2010-11": "The Barcelona 2011 squad search usually points here: Guardiola's 2010/11 team, its Wembley lineup and the players behind the starting XI.",
+  "manchester-united-2007-08": "Often searched as the Manchester United 2008 squad, this is Ferguson's complete 2007/08 Champions League-winning team.",
+  "manchester-united-1998-99": "Often searched as the Manchester United 1999 squad, this is the complete 1998/99 treble team rather than only the Champions League final XI.",
+  "arsenal-2003-04": "Arsenal 03/04 and Arsenal 2004 searches point to the Invincibles: the full squad, preferred lineup and shape used across the unbeaten league season.",
+  "liverpool-2004-05": "Often searched as the Liverpool 2005 squad, this is Benítez's complete 2004/05 group rather than only the Istanbul final lineup.",
+  "liverpool-2018-19": "Often searched as the Liverpool 2019 squad, this is Klopp's full 2018/19 Champions League-winning team and preferred formation.",
+  "ac-milan-2006-07": "Often searched as the AC Milan 2007 squad, this is Ancelotti's complete 2006/07 Champions League-winning group and Athens-era lineup.",
+}
+
 export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
   const siblings = getTeamsByClub(team.clubId).filter((item) => item.id !== team.id)
   const prime = getPrimeEntity(team.clubId)
@@ -100,6 +113,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
           <OvrStamp value={team.overallRating} size="xl" />
         </div>
         <div className="team-essay">
+          {SEARCH_YEAR_NOTES[team.id] ? <p className="search-year-note">{SEARCH_YEAR_NOTES[team.id]}</p> : null}
           <p>{team.summary}</p>
           {copy.paragraphs.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>

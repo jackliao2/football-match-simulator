@@ -535,6 +535,16 @@ button {
   color: var(--color-muted);
 }
 
+.team-essay .search-year-note { border-left:2px solid var(--color-gold); padding:.65rem .8rem; background:rgba(212,180,90,.055); color:var(--color-text); }
+.editorial-verdict { border:1px solid rgba(212,180,90,.5); background:linear-gradient(145deg,rgba(212,180,90,.09),rgba(12,17,12,.96)); box-shadow:4px 4px 0 #000; }
+.editorial-copy { display:grid; gap:.75rem; max-width:56rem; font-size:.875rem; line-height:1.75; color:var(--color-muted); }
+.editorial-copy strong { color:var(--color-text); }
+.comparison-table { display:grid; overflow:hidden; border:1px solid var(--color-line); background:var(--color-panel); }
+.comparison-row { display:grid; grid-template-columns:minmax(0,1fr) 5.5rem minmax(0,1fr); align-items:center; min-height:3.2rem; border-top:1px solid rgba(255,255,255,.07); text-align:center; }
+.comparison-row:first-child { border-top:0; }
+.comparison-row > span { padding:.65rem; font-size:.78rem; color:var(--color-text); }
+.comparison-row > b { align-self:stretch; display:grid; place-items:center; border-inline:1px solid rgba(255,255,255,.07); font-family:var(--font-display),sans-serif; font-size:6px; font-weight:400; letter-spacing:.12em; text-transform:uppercase; color:var(--color-gold); }
+
 .catalog-filters {
   position: sticky;
   top: 4.25rem;
