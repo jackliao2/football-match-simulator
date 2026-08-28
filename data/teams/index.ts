@@ -1,4 +1,3 @@
-import { teamSquad, teamStars } from "@/lib/stars"
 import { trophiesFor } from "@/data/trophies"
 import type { HistoricalTeam } from "@/types"
 import { acMilan198889, acMilan200607 } from "@/data/teams/ac-milan"
@@ -383,8 +382,6 @@ export function toTeamOption(team: HistoricalTeam) {
     manager: team.manager,
     formation: team.formation,
     styleTags: team.styleTags,
-    stars: teamStars(team, 6),
-    squad: teamSquad(team),
     team,
   }
 }

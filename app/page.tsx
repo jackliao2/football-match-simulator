@@ -40,20 +40,20 @@ const FAQ = [
     "Yes. Football and soccer describe the same sport here. US fans can use this soccer match simulator to match squads from different seasons, play one game, or run 100 simulations for win probabilities.",
   ],
   [
-    "What is a football match simulator?",
-    "This football match simulator lets you pick two squads from different seasons and play a seeded match. Ratings, style and chance produce a score, scorers, xG and events. AI never picks the winner.",
+    "Is this predicting a real match?",
+    "No. It is a counterfactual game built for historical what-if debates, not betting advice or a forecast. Team ratings, tactical profiles and a random seed create one plausible match between the selected squads.",
   ],
   [
     "Can I simulate a custom football match online?",
     "Yes. Open the simulator, choose any two teams in the database, and simulate a football match online. Same sides and seed always replay the same result. Run 100 matches for who-would-win probabilities.",
   ],
   [
-    "Who would win: Barcelona 2009 vs Real Madrid 2017?",
-    "That is the point of the site. Barcelona 2008/09 and Real Madrid 2016/17 are both playable, with squad pages for the 2009 Barcelona squad and the 2017 Real Madrid squad. Simulate the dream match instead of arguing.",
+    "Why does the result change when I simulate again?",
+    "A great team does not win every night. Each new seed creates another plausible game, so the score and scorers can change. Use 100 Matches when you want the distribution rather than one dramatic result.",
   ],
   [
-    "Do you include recent squads?",
-    "Yes. The latest club dataset is 2025/26 and the latest national-team set is 2026, alongside the legendary years. Turn on Recent in the picker, then simulate that season against any era.",
+    "What does Expert AI Analysis do?",
+    "The match engine produces the numbers first. Expert AI then reads the two real squad lists, managers, shapes and the 100-match evidence to explain the tactical matchup. It does not secretly replace the simulated result.",
   ],
   [
     "How do you rate players?",
@@ -63,6 +63,12 @@ const FAQ = [
     "When was Barcelona's prime?",
     "Prime pages compare candidate seasons — Barcelona 2008/09, 2010/11 and 2014/15, plus the latest dataset — then send you into the simulator. Same idea for Real Madrid, Manchester United, Messi, Brazil and Argentina.",
   ],
+] as const
+
+const HOW_STEPS = [
+  ["01", "Pick two shirts", "Choose a club peak, a World Cup side or a recent named season. Every card opens the actual squad and era behind the rating."],
+  ["02", "Play one possible night", "The engine combines player ratings, team style and a seed into the score, xG, scorers and match events."],
+  ["03", "Test the argument", "Run it again for a different night, run 100 for the distribution, or ask Expert AI to explain the tactical evidence."],
 ] as const
 
 export default function HomePage() {
@@ -138,6 +144,19 @@ export default function HomePage() {
         <DreamMatchCarousel items={dreamMatches} />
       </section>
 
+      <section className="grid gap-4">
+        <h2 className="font-mono text-lg font-semibold tracking-tight">How the football simulator works</h2>
+        <div className="grid gap-3 sm:grid-cols-3">
+          {HOW_STEPS.map(([step, title, copy]) => (
+            <div key={step} className="result-panel p-4">
+              <div className="font-display text-[10px] text-gold">{step}</div>
+              <h3 className="mt-2 font-mono text-sm font-semibold text-text">{title}</h3>
+              <p className="mt-2 text-sm leading-6 text-muted">{copy}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section className="home-section">
         <div className="home-section-head">
           <div>
@@ -173,30 +192,15 @@ export default function HomePage() {
       </section>
 
       <section className="grid gap-4">
-        <h2 className="font-mono text-lg font-semibold tracking-tight">How the football simulator works</h2>
-        <div className="grid gap-3 sm:grid-cols-3">
-          {[
-            ["01", "Pick two shirts", "A club peak, a World Cup side, or a recent season — Barcelona 2008/09, Brazil 1970, Madrid 2025/26, whatever the argument is."],
-            ["02", "The engine plays it", "Ratings, style and a seed. Score, xG, scorers, events. Optional prose comes after. It does not choose the winner."],
-            ["03", "Again, or a hundred times", "Same seed is the same match. A new seed is another night. A hundred runs is the spread, not a trophy."],
-          ].map(([step, title, copy]) => (
-            <div key={step} className="result-panel p-4">
-              <div className="font-display text-[10px] text-gold">{step}</div>
-              <h3 className="mt-2 font-mono text-sm font-semibold text-text">{title}</h3>
-              <p className="mt-2 text-sm leading-6 text-muted">{copy}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="grid gap-4">
         <h2 className="font-mono text-lg font-semibold tracking-tight">Football match simulator FAQ</h2>
-        <div className="grid gap-3">
+        <div className="grid gap-2">
           {FAQ.map(([question, answer]) => (
-            <article key={question} className="result-panel px-4 py-3">
-              <h3 className="font-mono text-sm font-semibold text-text">{question}</h3>
-              <p className="mt-2 text-sm leading-6 text-muted">{answer}</p>
-            </article>
+            <details key={question} className="result-panel group px-4 py-3">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-mono text-sm font-semibold text-text marker:hidden">
+                {question}<span className="font-display text-[10px] text-gold transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p className="mt-3 max-w-4xl border-t border-white/10 pt-3 text-sm leading-6 text-muted">{answer}</p>
+            </details>
           ))}
         </div>
         <script

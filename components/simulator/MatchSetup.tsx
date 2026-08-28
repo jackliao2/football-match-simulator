@@ -19,7 +19,7 @@ import { absoluteUrl } from "@/lib/site"
 import { createSeed } from "@/lib/match-id"
 import { simulateMany, simulateMatch } from "@/lib/simulation"
 import type { PreMatchAnalysis } from "@/lib/ai/analysis"
-import { teamSquad, type SquadMember, type StarPlayer } from "@/lib/stars"
+import { teamSquad, type SquadMember } from "@/lib/stars"
 import type { HistoricalTeam, MonteCarloResult, SimulatedMatch, TeamKind } from "@/types"
 import type { Locale } from "@/lib/i18n"
 
@@ -42,8 +42,6 @@ export interface TeamOption {
   manager: string
   formation: string
   styleTags: string[]
-  stars: StarPlayer[]
-  squad: SquadMember[]
   team: HistoricalTeam
 }
 
@@ -168,8 +166,8 @@ export function MatchSetup({
     awaySeasons[0]!
   const sameTeam = home.id === away.id
   const aiRemaining = Math.max(0, AI_DAILY_LIMIT - aiUsesToday)
-  const homeSquad = home.squad.length > 0 ? home.squad : teamSquad(home.team)
-  const awaySquad = away.squad.length > 0 ? away.squad : teamSquad(away.team)
+  const homeSquad = teamSquad(home.team)
+  const awaySquad = teamSquad(away.team)
 
   function changeClub(side: "home" | "away", clubId: string) {
     if (clubId === (side === "home" ? homeClub : awayClub)) {
