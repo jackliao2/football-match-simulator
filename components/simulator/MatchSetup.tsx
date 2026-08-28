@@ -300,7 +300,6 @@ export function MatchSetup({
           <div className="faceoff-rail">
             <div className="faceoff-rail-inner">
               <div className="faceoff-vs">VS</div>
-              <p className="era-mix-label">Mix any eras</p>
               <button type="button" onClick={swapSides} className="rail-swap">
                 {ui.swap}
               </button>

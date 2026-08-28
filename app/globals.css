@@ -1441,15 +1441,6 @@ a.result-panel:hover {
   color: var(--color-muted);
 }
 
-.era-mix-label {
-  padding-block: 0.35rem;
-  font-family: var(--font-display), ui-monospace, monospace;
-  font-size: 7px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(212, 180, 90, 0.7);
-}
-
 .picker-shell {
   display: flex;
   width: 100%;

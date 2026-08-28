@@ -59,7 +59,7 @@ export function AiAnalysisResult({ analysis, home, away }: { analysis: PreMatchA
           <TeamMark team={away} away />
         </div>
 
-        <ForecastGoals match={featuredMatch} />
+        <ForecastGoals match={featuredMatch} home={home} away={away} />
 
         <p className="mx-auto mt-3 max-w-3xl border-t border-white/10 pt-3 text-center text-sm leading-5 text-text">{copy.matchupStory}</p>
       </header>
@@ -145,19 +145,35 @@ export function AiAnalysisResult({ analysis, home, away }: { analysis: PreMatchA
   )
 }
 
-function ForecastGoals({ match }: { match: PreMatchAnalysis["featuredMatch"] }) {
+function ForecastGoals({ match, home, away }: { match: PreMatchAnalysis["featuredMatch"]; home: HistoricalTeam; away: HistoricalTeam }) {
   if (match.scorers.length === 0) {
     return <p className="mx-auto mt-3 max-w-xl text-center font-mono text-[10px] text-text/70">No scorer in this forecast · both goalkeepers hold the line</p>
   }
+  const homeGoals = match.scorers.filter((goal) => goal.team === "home")
+  const awayGoals = match.scorers.filter((goal) => goal.team === "away")
   return (
-    <ol className="mx-auto mt-3 flex max-w-2xl flex-wrap justify-center gap-x-4 gap-y-1 border-y border-white/10 py-2">
-      {match.scorers.map((goal, index) => (
-        <li key={`${goal.displayMinute}-${goal.player}-${index}`} className="font-mono text-[10px] text-text">
-          <span className={goal.team === "home" ? "text-gold" : "text-danger"}>{goal.displayMinute}&apos;</span>{" "}
-          {goal.player}{goal.assist ? <span className="text-muted"> · assist {goal.assist}</span> : null}
-        </li>
-      ))}
-    </ol>
+    <div className="mx-auto mt-3 grid max-w-3xl grid-cols-2 border-y border-white/10 py-2.5">
+      <GoalColumn team={home.clubName} goals={homeGoals} />
+      <GoalColumn team={away.clubName} goals={awayGoals} away />
+    </div>
+  )
+}
+
+function GoalColumn({ team, goals, away = false }: { team: string; goals: PreMatchAnalysis["featuredMatch"]["scorers"]; away?: boolean }) {
+  return (
+    <div className={`min-w-0 px-3 ${away ? "border-l border-white/10 text-right" : ""}`}>
+      <p className="truncate font-display text-[7px] uppercase tracking-[0.16em] text-muted">{team} scorers</p>
+      {goals.length > 0 ? (
+        <ul className="mt-1.5 grid list-none gap-1 p-0">
+          {goals.map((goal, index) => (
+            <li key={`${goal.displayMinute}-${goal.player}-${index}`} className="font-mono text-[10px] leading-4 text-text">
+              {away ? <>{goal.player} <span className="text-danger">{goal.displayMinute}</span></> : <><span className="text-gold">{goal.displayMinute}</span> {goal.player}</>}
+              {goal.assist ? <span className="block text-[9px] text-muted">assist · {goal.assist}</span> : null}
+            </li>
+          ))}
+        </ul>
+      ) : <p className="mt-1.5 font-mono text-[9px] text-muted">No goals</p>}
+    </div>
   )
 }
 
