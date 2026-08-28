@@ -10,7 +10,7 @@ import { OvrStamp } from "@/components/ui/OvrStamp"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { allVsPairs } from "@/data/matchups"
 import { getTeam, teams, toTeamOption } from "@/data/teams"
-import { parseVsSlug } from "@/lib/match-id"
+import { canonicalVsSlug, parseVsSlug } from "@/lib/match-id"
 import { vsPageCopy } from "@/lib/page-copy"
 import { teamPath } from "@/lib/paths"
 import { SITE, absoluteUrl } from "@/lib/site"
@@ -36,10 +36,12 @@ export async function generateMetadata({
   const away = getTeam(parsed.awayId)
   if (!home || !away) return { title: "Dream Match" }
   const copy = vsPageCopy(home, away, VS_RUNS)
+  const indexable = allVsPairs().some(([a, b]) => canonicalVsSlug(a, b) === slug)
   return {
     title: { absolute: `${copy.title} | ${SITE.name}` },
     description: copy.description,
     alternates: { canonical: `/vs/${slug}` },
+    robots: indexable ? { index: true, follow: true } : { index: false, follow: true },
     openGraph: {
       title: copy.title,
       description: copy.description,
