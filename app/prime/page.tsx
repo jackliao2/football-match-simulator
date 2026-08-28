@@ -45,9 +45,11 @@ export default function PrimeIndexPage() {
       />
       <div className="grid gap-3 sm:grid-cols-2">
         {primeEntities.map((entity) => (
-          <Link key={entity.slug} href={`/prime/${entity.slug}`} className="result-panel p-4 no-underline hover:border-gold">
-            <h2 className="font-mono text-base font-semibold tracking-tight">{entity.title}</h2>
+          <Link key={entity.slug} href={`/prime/${entity.slug}`} className="home-prime-card">
+            <span>Prime dossier</span>
+            <h2>{entity.title}</h2>
             <p className="mt-2 text-sm leading-6 text-muted">{entity.description}</p>
+            <b>Explore the eras →</b>
           </Link>
         ))}
       </div>

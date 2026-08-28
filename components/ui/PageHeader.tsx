@@ -15,9 +15,9 @@ export function PageHeader({
   children?: ReactNode
 }) {
   return (
-    <header className="grid gap-2">
+    <header className="page-header">
       {crumbs && crumbs.length > 0 ? (
-        <p className="font-mono text-xs text-muted">
+        <p className="page-breadcrumbs">
           {crumbs.map((crumb, index) => (
             <span key={crumb.href}>
               {index > 0 ? <span className="px-2 text-line-hi">/</span> : null}
@@ -29,10 +29,11 @@ export function PageHeader({
         </p>
       ) : null}
       {kicker ? (
-        <p className="font-display text-[9px] uppercase tracking-[0.28em] text-gold">{kicker}</p>
+        <p className="page-kicker">{kicker}</p>
       ) : null}
-      <h1 className="font-mono text-xl font-semibold tracking-tight text-text sm:text-3xl">{title}</h1>
-      {lead ? <p className="max-w-2xl font-mono text-sm leading-6 text-muted">{lead}</p> : null}
+      <h1 className="page-title">{title}</h1>
+      <i className="page-title-rule" aria-hidden="true" />
+      {lead ? <p className="page-lead">{lead}</p> : null}
       {children}
     </header>
   )

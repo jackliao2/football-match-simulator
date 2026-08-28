@@ -18,7 +18,7 @@ export function TeamCard({ team, showSquad = true }: { team: HistoricalTeam; sho
       <div className="flex items-start gap-3">
         <PixelCrest clubId={team.clubId} size={48} />
         <div className="min-w-0 flex-1">
-          <h3 className="truncate font-mono text-base font-semibold tracking-tight text-text">
+          <h3 className="truncate font-brand text-base font-semibold tracking-wide text-text">
             {team.clubName}
           </h3>
           <p className="font-mono text-sm text-gold">{team.displaySeason}</p>

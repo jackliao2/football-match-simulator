@@ -29,7 +29,7 @@ export function FilteredCatalog({ mode, sections }: { mode: "clubs" | "nations";
         <h2 className="font-display text-xs tracking-[0.18em] text-gold uppercase">{section.label}</h2>
         <p className="catalog-note">{section.note}</p>
         {orgs.map((org) => <div key={org.id} className="grid gap-3">
-          <h3 className="font-mono text-lg font-semibold tracking-tight"><Link href={org.href} className="hover:text-gold">{org.name}</Link><span className="ml-2 font-mono text-xs font-normal text-muted">{org.detail} · {org.teams.map((team) => team.displaySeason).join(" / ")}</span></h3>
+          <h3 className="font-brand text-lg font-semibold tracking-wide"><Link href={org.href} className="hover:text-gold">{org.name}</Link><span className="ml-2 font-mono text-xs font-normal tracking-normal text-muted">{org.detail} · {org.teams.map((team) => team.displaySeason).join(" / ")}</span></h3>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{org.teams.map((team) => <TeamCard key={team.id} team={team} showSquad={false} />)}</div>
         </div>)}
       </section>

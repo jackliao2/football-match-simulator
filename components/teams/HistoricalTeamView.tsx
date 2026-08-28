@@ -84,7 +84,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
         <div className={`flex items-start gap-4 ${eraGlow(team.trophies) ? "era-sheen" : ""}`}>
           <PixelCrest clubId={team.clubId} size={64} />
           <div className="min-w-0 flex-1">
-            <h1 className="font-mono text-xl font-semibold leading-snug tracking-tight sm:text-3xl">
+            <h1 className="page-title leading-snug">
               {team.clubName} {team.displaySeason}
             </h1>
             <p className="mt-1 font-mono text-sm text-muted">{copy.deck}</p>
@@ -153,7 +153,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
 
       {popular.length > 0 ? (
         <section className="grid gap-2">
-          <h2 className="font-mono text-lg font-semibold tracking-tight">{copy.matchupHeading}</h2>
+          <h2 className="section-title">{copy.matchupHeading}</h2>
           {popular.map((other) => (
             <MatchupRow key={other.id} href={vsPath(team.id, other.id)} home={team} away={other} />
           ))}

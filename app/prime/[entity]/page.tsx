@@ -99,7 +99,7 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
               <p className="font-display text-[8px] uppercase tracking-[0.18em] text-gold">
                 Candidate {index + 1}
               </p>
-              <h2 className="mt-2 font-mono text-base font-semibold tracking-tight">
+              <h2 className="mt-2 font-brand text-lg font-semibold tracking-wide">
                 {candidate.team.clubName} {candidate.team.displaySeason}
               </h2>
               <p className="mt-3 text-sm leading-6 text-muted">{candidate.argument}</p>
@@ -117,7 +117,7 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
 
       {first && second ? (
         <section className="result-panel p-4">
-          <h2 className="font-mono text-base font-semibold tracking-tight">Settle it in the simulator</h2>
+          <h2 className="font-brand text-lg font-semibold tracking-wide">Settle it in the simulator</h2>
           <p className="mt-2 font-mono text-sm text-muted">
             {first.clubName} {first.displaySeason} vs {second.clubName} {second.displaySeason}
           </p>
@@ -133,7 +133,7 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
           <h2 className="mt-1 font-brand text-lg font-semibold text-text">Other primes worth arguing about</h2>
         </div>
         <div className="grid gap-2 sm:grid-cols-2">
-          {related.map((item) => <Link key={item.slug} href={`/prime/${item.slug}`} className="result-panel p-3 no-underline hover:border-gold"><span className="font-mono text-sm font-semibold text-text">{item.title}</span><span className="mt-1 block line-clamp-2 text-xs leading-5 text-muted">{item.description}</span></Link>)}
+          {related.map((item) => <Link key={item.slug} href={`/prime/${item.slug}`} className="result-panel p-3 no-underline hover:border-gold"><span className="font-brand text-sm font-semibold tracking-wide text-text">{item.title}</span><span className="mt-1 block line-clamp-2 text-xs leading-5 text-muted">{item.description}</span></Link>)}
         </div>
       </section>
     </div>

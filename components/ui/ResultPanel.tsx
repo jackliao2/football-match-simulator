@@ -19,7 +19,7 @@ export function ResultPanel({
         <div className="min-w-0">
           <p className="font-display text-[8px] uppercase tracking-[0.22em] text-gold">{kicker}</p>
           {title ? (
-            <h2 className="mt-1 font-mono text-lg font-semibold tracking-tight text-text sm:text-xl">{title}</h2>
+            <h2 className="panel-title">{title}</h2>
           ) : null}
         </div>
         {aside ? <div className="shrink-0 font-mono text-xs text-muted">{aside}</div> : null}

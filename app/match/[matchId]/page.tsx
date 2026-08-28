@@ -63,7 +63,7 @@ export default async function MatchPage({ params }: PageProps<"/match/[matchId]"
           <span className="px-2 text-muted">/</span>
           Simulated match
         </p>
-        <h1 className="font-mono text-2xl font-semibold tracking-tight sm:text-3xl">
+        <h1 className="page-title">
           {home.clubName} {home.displaySeason}
           <span className="mx-2 text-gold">vs</span>
           {away.clubName} {away.displaySeason}

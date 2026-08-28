@@ -98,8 +98,8 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
 
       <section className="grid gap-3" aria-labelledby="replay-this-matchup">
         <div>
-          <p className="font-mono text-xs uppercase tracking-[0.22em] text-gold">Your turn</p>
-          <h2 id="replay-this-matchup" className="mt-1 text-2xl font-semibold tracking-tight text-ink">
+          <p className="page-kicker">Your turn</p>
+          <h2 id="replay-this-matchup" className="section-title mt-1">
             Simulate this matchup
           </h2>
           <p className="mt-1 max-w-2xl text-sm leading-6 text-muted">
