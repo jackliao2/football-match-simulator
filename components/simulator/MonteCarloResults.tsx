@@ -4,6 +4,8 @@ import type { MonteCarloResult } from "@/types"
 export function MonteCarloResults({ result }: { result: MonteCarloResult }) {
   const homeScorers = result.topScorers?.home ?? []
   const awayScorers = result.topScorers?.away ?? []
+  const homeAssists = result.topAssists?.home ?? []
+  const awayAssists = result.topAssists?.away ?? []
   const topScorePct = Math.max(1, result.scorelines[0]?.pct ?? 1)
   const topGoals = Math.max(
     1,
@@ -103,10 +105,24 @@ export function MonteCarloResults({ result }: { result: MonteCarloResult }) {
               tone="danger"
             />
           </div>
+          {homeAssists.length > 0 || awayAssists.length > 0 ? (
+            <div className="mt-4 border-t border-white/10 pt-4">
+              <h3 className="mb-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">Assists in {result.runs} matches</h3>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <Assists label={result.homeClub} rows={homeAssists} tone="gold" />
+                <Assists label={result.awayClub} rows={awayAssists} tone="danger" />
+              </div>
+            </div>
+          ) : null}
         </section>
       ) : null}
     </section>
   )
+}
+
+function Assists({ label, rows, tone }: { label?: string; rows: Array<{ player: string; assists: number }>; tone: "gold" | "danger" }) {
+  const color = tone === "gold" ? "text-gold" : "text-danger"
+  return <ol className="grid gap-1">{label ? <li className="flex justify-between font-display text-[8px] uppercase tracking-[0.12em] text-muted"><span>{label}</span><span>A</span></li> : null}{rows.map((row) => <li key={row.player} className="flex items-center justify-between gap-3 border-t border-white/5 py-1 font-mono text-[10px]"><span className="truncate text-text">{row.player}</span><strong className={`tabular-nums ${color}`}>{row.assists}</strong></li>)}</ol>
 }
 
 function Pct({

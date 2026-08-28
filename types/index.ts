@@ -171,6 +171,10 @@ export interface MonteCarloResult {
     home: Array<{ player: string; goals: number }>
     away: Array<{ player: string; goals: number }>
   }
+  topAssists: {
+    home: Array<{ player: string; assists: number }>
+    away: Array<{ player: string; assists: number }>
+  }
   samples: Array<{ home: number; away: number }>
   avgHomeXg: number
   avgAwayXg: number

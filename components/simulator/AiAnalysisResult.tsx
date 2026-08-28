@@ -37,8 +37,8 @@ export function AiAnalysisLoading({ home, away }: { home: HistoricalTeam; away: 
 }
 
 export function AiAnalysisResult({ analysis, home, away }: { analysis: PreMatchAnalysis; home: HistoricalTeam; away: HistoricalTeam }) {
-  const { copy, simulation: sim } = analysis
-  const score = sim.mostCommonScore.replace("-", "–")
+  const { copy, featuredMatch, simulation: sim } = analysis
+  const score = `${featuredMatch.score.home}–${featuredMatch.score.away}`
 
   return (
     <section id="result-analysis" className="result-panel isolate overflow-hidden border-2 border-gold/50 shadow-[8px_8px_0_#000,0_0_0_1px_rgba(212,180,90,0.18)]">
@@ -52,12 +52,14 @@ export function AiAnalysisResult({ analysis, home, away }: { analysis: PreMatchA
         <div className="mx-auto mt-3 grid max-w-3xl grid-cols-[minmax(0,1fr)_5rem_minmax(0,1fr)] items-center gap-2 sm:grid-cols-[minmax(0,1fr)_7rem_minmax(0,1fr)] sm:gap-4">
           <TeamMark team={home} />
           <div className="text-center">
-            <p className="font-display text-[7px] uppercase tracking-[0.18em] text-muted">Most seen</p>
+            <p className="font-display text-[7px] uppercase tracking-[0.18em] text-muted">Match forecast</p>
             <p className="result-score mt-1 text-4xl leading-none sm:text-5xl">{score}</p>
-            <p className="mt-1 font-mono text-[9px] text-muted">in 100 runs</p>
+            <p className="mt-1 font-mono text-[9px] text-muted">one simulated night</p>
           </div>
           <TeamMark team={away} away />
         </div>
+
+        <ForecastGoals match={featuredMatch} />
 
         <p className="mx-auto mt-3 max-w-3xl border-t border-white/10 pt-3 text-center text-sm leading-5 text-text">{copy.matchupStory}</p>
       </header>
@@ -131,6 +133,8 @@ export function AiAnalysisResult({ analysis, home, away }: { analysis: PreMatchA
             </div>
           </div>
         </div>
+
+        <Leaderboards sim={sim} home={home} away={away} />
       </section>
 
       <footer className="border-t border-gold/25 bg-[linear-gradient(90deg,rgba(212,180,90,0.09),transparent)] px-4 py-4 sm:px-6">
@@ -138,6 +142,50 @@ export function AiAnalysisResult({ analysis, home, away }: { analysis: PreMatchA
         <p className="mt-2 max-w-4xl font-brand text-base leading-7 font-semibold tracking-wide text-text sm:text-lg">{copy.finalWord}</p>
       </footer>
     </section>
+  )
+}
+
+function ForecastGoals({ match }: { match: PreMatchAnalysis["featuredMatch"] }) {
+  if (match.scorers.length === 0) {
+    return <p className="mx-auto mt-3 max-w-xl text-center font-mono text-[10px] text-text/70">No scorer in this forecast · both goalkeepers hold the line</p>
+  }
+  return (
+    <ol className="mx-auto mt-3 flex max-w-2xl flex-wrap justify-center gap-x-4 gap-y-1 border-y border-white/10 py-2">
+      {match.scorers.map((goal, index) => (
+        <li key={`${goal.displayMinute}-${goal.player}-${index}`} className="font-mono text-[10px] text-text">
+          <span className={goal.team === "home" ? "text-gold" : "text-danger"}>{goal.displayMinute}&apos;</span>{" "}
+          {goal.player}{goal.assist ? <span className="text-muted"> · assist {goal.assist}</span> : null}
+        </li>
+      ))}
+    </ol>
+  )
+}
+
+function Leaderboards({ sim, home, away }: { sim: PreMatchAnalysis["simulation"]; home: HistoricalTeam; away: HistoricalTeam }) {
+  const scorers = [
+    ...sim.topScorers.home.map((row) => ({ player: row.player, value: row.goals, club: home.clubName, tone: "text-gold" })),
+    ...sim.topScorers.away.map((row) => ({ player: row.player, value: row.goals, club: away.clubName, tone: "text-danger" })),
+  ].sort((a, b) => b.value - a.value).slice(0, 5)
+  const assists = [
+    ...(sim.topAssists?.home ?? []).map((row) => ({ player: row.player, value: row.assists, club: home.clubName, tone: "text-gold" })),
+    ...(sim.topAssists?.away ?? []).map((row) => ({ player: row.player, value: row.assists, club: away.clubName, tone: "text-danger" })),
+  ].sort((a, b) => b.value - a.value).slice(0, 5)
+  return (
+    <div className="mt-4 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2">
+      <Ranking title="Golden boot race" suffix="goals / 100" rows={scorers} />
+      <Ranking title="Top creators" suffix="assists / 100" rows={assists} />
+    </div>
+  )
+}
+
+function Ranking({ title, suffix, rows }: { title: string; suffix: string; rows: Array<{ player: string; value: number; club: string; tone: string }> }) {
+  return (
+    <div className="bg-[#0b100b] p-4">
+      <div className="flex items-center justify-between gap-3"><h4 className="font-display text-[8px] uppercase tracking-[0.18em] text-gold">{title}</h4><span className="font-mono text-[8px] text-muted">{suffix}</span></div>
+      <ol className="mt-2 grid gap-1.5">
+        {rows.map((row, index) => <li key={`${title}-${row.player}`} className="grid grid-cols-[1rem_minmax(0,1fr)_auto] items-center gap-2 font-mono text-[10px]"><span className="text-muted">{index + 1}</span><span className="truncate text-text" title={`${row.player} · ${row.club}`}>{row.player} <span className="text-muted">· {row.club}</span></span><strong className={`tabular-nums ${row.tone}`}>{row.value}</strong></li>)}
+      </ol>
+    </div>
   )
 }
 

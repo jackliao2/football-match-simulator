@@ -1,6 +1,6 @@
-import type { HistoricalTeam, Player } from "@/types"
+import type { HistoricalTeam, Player, SimulatedMatch } from "@/types"
 import { createCommentaryProvider } from "@/lib/ai/provider"
-import { simulateMany } from "@/lib/simulation"
+import { simulateMany, simulateMatch } from "@/lib/simulation"
 import { starters } from "@/lib/simulation/ratings"
 import type { MonteCarloResult } from "@/types"
 
@@ -50,6 +50,7 @@ export interface AnalysisCopy {
 
 export interface PreMatchAnalysis {
   copy: AnalysisCopy
+  featuredMatch: SimulatedMatch
   simulation: MonteCarloResult
 }
 
@@ -342,10 +343,12 @@ export async function generatePreMatchAnalysis(
   home: HistoricalTeam,
   away: HistoricalTeam,
 ): Promise<{ analysis: PreMatchAnalysis; source: "ai" | "template" }> {
-  const simulation = simulateMany(home, away, 100, `ai-analysis:${home.id}:${away.id}`)
+  const requestSeed = `ai-analysis:${home.id}:${away.id}:${crypto.randomUUID()}`
+  const featuredMatch = simulateMatch(home, away, `${requestSeed}:forecast`)
+  const simulation = simulateMany(home, away, 100, `${requestSeed}:alternates`)
   const fallback = shortFallback(home, away, simulation)
   const provider = createCommentaryProvider()
-  if (!provider) return { analysis: { copy: fallback, simulation }, source: "template" }
+  if (!provider) return { analysis: { copy: fallback, featuredMatch, simulation }, source: "template" }
 
   try {
     const raw = await provider.generate(ANALYSIS_SYSTEM_PROMPT, analysisPayload(home, away, simulation), {
@@ -354,7 +357,7 @@ export async function generatePreMatchAnalysis(
     })
     const copy = parseAnalysisCopy(raw)
     if (!copy) throw new Error("AI provider returned invalid analysis JSON")
-    return { analysis: { copy, simulation }, source: "ai" }
+    return { analysis: { copy, featuredMatch, simulation }, source: "ai" }
   } catch (error) {
     console.error(
       "[ai-provider]",
@@ -363,6 +366,6 @@ export async function generatePreMatchAnalysis(
         feature: "analysis",
       }),
     )
-    return { analysis: { copy: fallback, simulation }, source: "template" }
+    return { analysis: { copy: fallback, featuredMatch, simulation }, source: "template" }
   }
 }

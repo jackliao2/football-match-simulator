@@ -139,6 +139,13 @@ function topFromMap(map: Map<string, number>, limit: number) {
     .map(([player, goals]) => ({ player, goals }))
 }
 
+function topAssistsFromMap(map: Map<string, number>, limit: number) {
+  return [...map.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, limit)
+    .map(([player, assists]) => ({ player, assists }))
+}
+
 export function simulateMany(
   home: HistoricalTeam,
   away: HistoricalTeam,
@@ -163,6 +170,8 @@ export function simulateMany(
   const scoreCounts = new Map<string, number>()
   const homeScorers = new Map<string, number>()
   const awayScorers = new Map<string, number>()
+  const homeAssists = new Map<string, number>()
+  const awayAssists = new Map<string, number>()
   const samples: Array<{ home: number; away: number }> = []
 
   for (let i = 0; i < runs; i++) {
@@ -188,6 +197,10 @@ export function simulateMany(
     for (const scorer of match.scorers) {
       const bucket = scorer.team === "home" ? homeScorers : awayScorers
       bucket.set(scorer.player, (bucket.get(scorer.player) ?? 0) + 1)
+      if (scorer.assist) {
+        const assistBucket = scorer.team === "home" ? homeAssists : awayAssists
+        assistBucket.set(scorer.assist, (assistBucket.get(scorer.assist) ?? 0) + 1)
+      }
     }
   }
 
@@ -219,6 +232,10 @@ export function simulateMany(
     topScorers: {
       home: topFromMap(homeScorers, 4),
       away: topFromMap(awayScorers, 4),
+    },
+    topAssists: {
+      home: topAssistsFromMap(homeAssists, 4),
+      away: topAssistsFromMap(awayAssists, 4),
     },
     samples,
     avgHomeXg: round2(homeXg / runs),
