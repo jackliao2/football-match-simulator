@@ -370,6 +370,16 @@ export function nationSeasonTeams() {
 }
 
 export function toTeamOption(team: HistoricalTeam) {
+  // Client-side simulation needs ratings and squads, not the long-form SEO copy
+  // already rendered by server pages. Keeping that copy out of the client payload
+  // reduces the amount of data parsed before the simulator becomes interactive.
+  const simulatorTeam: HistoricalTeam = {
+    ...team,
+    achievements: [],
+    summary: "",
+    seoTitle: "",
+    seoDescription: "",
+  }
   return {
     id: team.id,
     clubId: team.clubId,
@@ -382,6 +392,6 @@ export function toTeamOption(team: HistoricalTeam) {
     manager: team.manager,
     formation: team.formation,
     styleTags: team.styleTags,
-    team,
+    team: simulatorTeam,
   }
 }

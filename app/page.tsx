@@ -37,7 +37,7 @@ export const metadata: Metadata = {
 const FAQ = [
   [
     "Is this also a soccer match simulator?",
-    "Yes. Football and soccer describe the same sport here. US fans can use this soccer match simulator to match squads from different seasons, play one game, or run 100 simulations for win probabilities.",
+    "Yes. Football and soccer describe the same sport here. US fans can use this soccer match simulator to match squads from different seasons, play one game, or open Expert AI Analysis for a 100-match probability read.",
   ],
   [
     "Is this predicting a real match?",
@@ -139,7 +139,7 @@ export default function HomePage() {
           </Link>
         </div>
         <p className="home-section-lead">
-          The fights people type into a search bar. Three at a time; the rest live on the matchups page.
+          The matchups football fans keep debating. Three at a time; the rest live on the matchups page.
         </p>
         <DreamMatchCarousel items={dreamMatches} />
       </section>
