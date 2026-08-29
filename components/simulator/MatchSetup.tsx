@@ -123,12 +123,10 @@ export function MatchSetup({
   useEffect(() => {
     if (scrollKey === 0) return
     const timer = window.setTimeout(() => {
-      const node = document.getElementById(`result-${scrollTarget.current}`) ?? resultRef.current
+      const node = resultRef.current ?? document.getElementById(`result-${scrollTarget.current}`)
       if (!node) return
-      const rect = node.getBoundingClientRect()
-      const top = window.scrollY + rect.top - Math.max(76, (window.innerHeight - rect.height) / 2)
-      window.scrollTo({ top: Math.max(0, top), behavior: "smooth" })
-    }, 60)
+      node.scrollIntoView({ behavior: "smooth", block: "start" })
+    }, 180)
     return () => window.clearTimeout(timer)
   }, [scrollKey])
 
