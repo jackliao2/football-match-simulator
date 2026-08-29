@@ -10,6 +10,7 @@ import { OvrStamp } from "@/components/ui/OvrStamp"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { allVsPairs } from "@/data/matchups"
 import { getTeam, teams, toTeamOption } from "@/data/teams"
+import { matchupFeature } from "@/data/vs-editorial"
 import { canonicalVsSlug, parseVsSlug } from "@/lib/match-id"
 import { matchupDossier, vsPageCopy } from "@/lib/page-copy"
 import { teamPath } from "@/lib/paths"
@@ -65,6 +66,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
 
   const copy = vsPageCopy(home, away, VS_RUNS)
   const dossier = matchupDossier(home, away)
+  const feature = matchupFeature(home, away)
 
   return (
     <div className="grid gap-6">
@@ -109,6 +111,32 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
           <span><b>{away.clubName}</b>{away.manager} · {away.formation} · {away.styleTags.slice(0, 2).join(" · ")}</span>
         </div>
       </section>
+
+      {feature ? (
+        <article className="grid gap-4" aria-labelledby="long-read-heading">
+          <div>
+            <p className="page-kicker">The long read</p>
+            <h2 id="long-read-heading" className="section-title mt-1">{feature.title}</h2>
+          </div>
+          <div className="grid gap-3 lg:grid-cols-3">
+            <section className="result-panel p-4 sm:p-5">
+              <p className="page-kicker">Why this game</p>
+              <h3 className="mt-2 font-brand text-lg font-semibold text-text">The argument behind the teams</h3>
+              <p className="mt-3 text-sm leading-7 text-muted">{feature.context}</p>
+            </section>
+            <section className="result-panel p-4 sm:p-5">
+              <p className="page-kicker">Tactical hinge</p>
+              <h3 className="mt-2 font-brand text-lg font-semibold text-text">Where the match turns</h3>
+              <p className="mt-3 text-sm leading-7 text-muted">{feature.hinge}</p>
+            </section>
+            <section className="result-panel p-4 sm:p-5">
+              <p className="page-kicker">Reading the game</p>
+              <h3 className="mt-2 font-brand text-lg font-semibold text-text">What a convincing result looks like</h3>
+              <p className="mt-3 text-sm leading-7 text-muted">{feature.reading}</p>
+            </section>
+          </div>
+        </article>
+      ) : null}
 
       <section className="result-panel p-4 sm:p-5" aria-labelledby="matchup-dossier">
         <p className="page-kicker">Matchup dossier</p>
