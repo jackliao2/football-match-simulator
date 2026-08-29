@@ -29,6 +29,11 @@ function localDayKey(date = new Date()) {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`
 }
 
+function scrollToNode(node: HTMLElement) {
+  const top = window.scrollY + node.getBoundingClientRect().top - 72
+  window.scrollTo({ top: Math.max(0, top), behavior: "auto" })
+}
+
 export interface TeamOption {
   id: string
   clubId: string
@@ -125,8 +130,8 @@ export function MatchSetup({
     const timer = window.setTimeout(() => {
       const node = resultRef.current ?? document.getElementById(`result-${scrollTarget.current}`)
       if (!node) return
-      node.scrollIntoView({ behavior: "smooth", block: "start" })
-    }, 180)
+      scrollToNode(node)
+    }, 260)
     return () => window.clearTimeout(timer)
   }, [scrollKey])
 
@@ -220,7 +225,8 @@ export function MatchSetup({
   }
 
   function scrollToSetup() {
-    document.getElementById("setup")?.scrollIntoView({ behavior: "smooth", block: "start" })
+    const setup = document.getElementById("setup")
+    if (setup) scrollToNode(setup)
   }
 
   async function shareMatch() {
