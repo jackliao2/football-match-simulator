@@ -20,7 +20,9 @@ import type { HistoricalTeam } from "@/types"
 
 const VS_RUNS = 400
 
-export const dynamicParams = true
+// Only publish the curated dream matches returned by generateStaticParams.
+// This prevents crawlers from turning arbitrary team combinations into new ISR entries.
+export const dynamicParams = false
 
 export function generateStaticParams() {
   return allVsPairs().map(([a, b]) => ({ slug: `${a}-vs-${b}` }))
