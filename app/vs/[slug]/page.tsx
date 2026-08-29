@@ -11,7 +11,7 @@ import { PageHeader } from "@/components/ui/PageHeader"
 import { allVsPairs } from "@/data/matchups"
 import { getTeam, teams, toTeamOption } from "@/data/teams"
 import { canonicalVsSlug, parseVsSlug } from "@/lib/match-id"
-import { vsPageCopy } from "@/lib/page-copy"
+import { matchupDossier, vsPageCopy } from "@/lib/page-copy"
 import { teamPath } from "@/lib/paths"
 import { SITE, absoluteUrl } from "@/lib/site"
 import { simulateMany } from "@/lib/simulation"
@@ -64,6 +64,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
   const options = teams.map(toTeamOption)
 
   const copy = vsPageCopy(home, away, VS_RUNS)
+  const dossier = matchupDossier(home, away)
 
   return (
     <div className="grid gap-6">
@@ -106,6 +107,17 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
           <span><b>{home.clubName}</b>{home.manager} · {home.formation} · {home.styleTags.slice(0, 2).join(" · ")}</span>
           <i aria-hidden="true">VS</i>
           <span><b>{away.clubName}</b>{away.manager} · {away.formation} · {away.styleTags.slice(0, 2).join(" · ")}</span>
+        </div>
+      </section>
+
+      <section className="result-panel p-4 sm:p-5" aria-labelledby="matchup-dossier">
+        <p className="page-kicker">Matchup dossier</p>
+        <h2 id="matchup-dossier" className="section-title mt-2">What separates these two sides</h2>
+        <div className="editorial-copy mt-3">
+          <p>{dossier.edge}</p>
+          <p>{dossier.gameState}</p>
+          <p>{dossier.selection}</p>
+          <p><strong>How to read the result:</strong> the percentages below come from {VS_RUNS} seeded simulations using the squads, ratings and tactical tendencies shown on this page. They are a modelled matchup, not a record of a real fixture and not a betting prediction.</p>
         </div>
       </section>
 

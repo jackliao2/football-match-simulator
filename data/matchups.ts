@@ -267,3 +267,8 @@ export function allVsPairs(): Array<[string, string]> {
 export function vsPath(a: string, b: string): string {
   return `/vs/${canonicalVsSlug(a, b)}`
 }
+
+export function isFeaturedMatchup(a: string, b: string): boolean {
+  const wanted = canonicalVsSlug(a, b)
+  return allVsPairs().some(([left, right]) => canonicalVsSlug(left, right) === wanted)
+}

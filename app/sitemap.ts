@@ -21,6 +21,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: absoluteUrl("/terms"), changeFrequency: "yearly", priority: 0.3 },
     { url: absoluteUrl("/privacy"), changeFrequency: "yearly", priority: 0.3 },
     { url: absoluteUrl("/contact"), changeFrequency: "yearly", priority: 0.3 },
+    { url: absoluteUrl("/about"), changeFrequency: "yearly", priority: 0.5 },
+    { url: absoluteUrl("/methodology"), changeFrequency: "yearly", priority: 0.5 },
   ]
 
   for (const route of staticRoutes) {

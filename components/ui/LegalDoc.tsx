@@ -21,6 +21,8 @@ export function LegalDoc({
       <p className="legal-updated">Last updated {updated}</p>
       <div className="legal-body">{children}</div>
       <nav className="legal-siblings" aria-label="Site policies">
+        <Link href="/about">About</Link>
+        <Link href="/methodology">Methodology</Link>
         <Link href="/terms">Terms</Link>
         <Link href="/privacy">Privacy</Link>
         <Link href="/contact">Contact</Link>

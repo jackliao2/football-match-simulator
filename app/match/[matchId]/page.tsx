@@ -9,7 +9,7 @@ import { MatchStats } from "@/components/simulator/MatchStats"
 import { MatchTimeline } from "@/components/simulator/MatchTimeline"
 import { StarPlayers } from "@/components/teams/StarPlayers"
 import { getTeam } from "@/data/teams"
-import { vsPath } from "@/data/matchups"
+import { isFeaturedMatchup, vsPath } from "@/data/matchups"
 import { parseMatchId } from "@/lib/match-id"
 import { teamPath } from "@/lib/paths"
 import { absoluteUrl } from "@/lib/site"
@@ -94,9 +94,11 @@ export default async function MatchPage({ params }: PageProps<"/match/[matchId]"
         <Link href={teamPath(away)} className="text-gold hover:text-gold-2">
           {away.clubName} {away.displaySeason}
         </Link>
-        <Link href={vsPath(home.id, away.id)} className="text-muted hover:text-gold">
-          Dream match
-        </Link>
+        {isFeaturedMatchup(home.id, away.id) ? (
+          <Link href={vsPath(home.id, away.id)} className="text-muted hover:text-gold">Dream match dossier</Link>
+        ) : (
+          <Link href={`/simulate?home=${home.id}&away=${away.id}`} className="text-muted hover:text-gold">Change matchup</Link>
+        )}
       </div>
     </div>
   )

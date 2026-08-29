@@ -422,13 +422,6 @@ export function relatedMatchups(team: HistoricalTeam, limit = 4): HistoricalTeam
     if (out.length >= limit) return out.slice(0, limit)
   }
 
-  const pool = teams.filter((item) => item.clubId !== team.clubId)
-  if (pool.length === 0) return out.slice(0, limit)
-  const start = copySlot(team.id, pool.length)
-  const step = 17
-  for (let i = 0; i < pool.length && out.length < limit; i += 1) {
-    add(pool[(start + i * step) % pool.length]!.id)
-  }
   return out.slice(0, limit)
 }
 
@@ -560,4 +553,28 @@ export function vsPageCopy(home: HistoricalTeam, away: HistoricalTeam, runs: num
     editorial,
     kicker: "Dream match",
   }
+}
+
+export function matchupDossier(home: HistoricalTeam, away: HistoricalTeam) {
+  const ratingEdges = [
+    { label: "attack", home: home.attackRating, away: away.attackRating },
+    { label: "midfield", home: home.midfieldRating, away: away.midfieldRating },
+    { label: "defence", home: home.defenseRating, away: away.defenseRating },
+    { label: "goalkeeper", home: home.goalkeeperRating, away: away.goalkeeperRating },
+  ]
+  const biggest = [...ratingEdges].sort((a, b) => Math.abs(b.home - b.away) - Math.abs(a.home - a.away))[0]!
+  const edgeTeam = biggest.home === biggest.away ? undefined : biggest.home > biggest.away ? home : away
+  const edge = edgeTeam
+    ? `${edgeTeam.clubName} hold the clearest numerical edge in ${biggest.label}, ${Math.max(biggest.home, biggest.away)}–${Math.min(biggest.home, biggest.away)} on our era-relative scale.`
+    : `The largest headline category is level: both sides rate ${biggest.home} for ${biggest.label}.`
+
+  const paceTeam = home.tempo === away.tempo ? undefined : home.tempo > away.tempo ? home : away
+  const controlTeam = home.possession === away.possession ? undefined : home.possession > away.possession ? home : away
+  const gameState = `${paceTeam ? `${paceTeam.clubName} carry the higher tempo rating (${paceTeam.tempo})` : `Both sides share a tempo rating of ${home.tempo}`}; ${controlTeam ? `${controlTeam.clubName} are more strongly tilted toward possession (${controlTeam.possession})` : `their possession ratings are level at ${home.possession}`}. Those numbers describe intentions, not a guaranteed share of the ball.`
+
+  const homeNames = stars(home, 3).map((player) => player.name)
+  const awayNames = stars(away, 3).map((player) => player.name)
+  const selection = `${home.manager}'s likely core is ${homeNames.join(", ")}; ${away.manager}'s is ${awayNames.join(", ")}. The lineups use a representative XI for the named season rather than claiming that the same eleven started every match.`
+
+  return { edge, gameState, selection }
 }

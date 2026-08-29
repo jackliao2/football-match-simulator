@@ -5,7 +5,7 @@ import { TeamCard } from "@/components/teams/TeamCard"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { getPrimeEntity, primeEntities } from "@/data/prime"
 import { getTeam } from "@/data/teams"
-import { vsPath } from "@/data/matchups"
+import { isFeaturedMatchup, vsPath } from "@/data/matchups"
 import { teamPath } from "@/lib/paths"
 import { SITE, absoluteUrl } from "@/lib/site"
 
@@ -121,8 +121,8 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
           <p className="mt-2 font-mono text-sm text-muted">
             {first.clubName} {first.displaySeason} vs {second.clubName} {second.displaySeason}
           </p>
-          <Link href={vsPath(first.id, second.id)} className="mt-3 inline-block font-mono text-sm text-gold hover:text-gold-2">
-            Open this dream match →
+          <Link href={isFeaturedMatchup(first.id, second.id) ? vsPath(first.id, second.id) : `/simulate?home=${first.id}&away=${second.id}`} className="mt-3 inline-block font-mono text-sm text-gold hover:text-gold-2">
+            {isFeaturedMatchup(first.id, second.id) ? "Open this dream match →" : "Simulate these two eras →"}
           </Link>
         </section>
       ) : null}

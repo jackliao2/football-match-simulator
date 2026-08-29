@@ -46,13 +46,11 @@ export default function PrivacyPage() {
           agent, the URL you hit, a timestamp. That is how they bill, debug and stop abuse. We do
           not sit each evening building a dossier of “the person who always picks 2004 Arsenal.” We
           also cannot promise those logs vanish the second you close the tab; they follow the host’s
-          retention, which is measured in weeks or months, not forever-and-a-day marketing storage.
+          retention period rather than a profile controlled inside LegendaryMatch.
         </p>
         <p>
-          Cookies: we are not running an ad network on this page. The simulator does not need a
-          tracking cookie to play a match. If the host or the browser sets a technical cookie to
-          serve the site, that is plumbing. There is no cookie wall because we are not stuffing
-          fifteen pixels into the footer.
+          The simulator does not need an advertising cookie to play a match. Optional analytics
+          stays disabled until a visitor chooses to allow it in the consent panel.
         </p>
       </section>
 
@@ -120,9 +118,8 @@ export default function PrivacyPage() {
         <h2>Legal bases, rights, children</h2>
         <p>
           If GDPR or UK GDPR applies to you: answering the HTTP request you made is why logs exist
-          at all. Email exists because you sent it. Analytics, if we ever load a tag, would be
-          either a legitimate interest in seeing which squad pages are used, or consent if we ship
-          something that needs a banner — we will not hide that distinction behind a slogan.
+          at all. Email exists because you sent it. Google Analytics is based on consent: analytics
+          storage remains denied unless you choose “Allow analytics” in the site panel.
         </p>
         <p>
           You can ask what we have, ask for a copy, ask us to delete a mail thread, or object. For
@@ -153,7 +150,7 @@ export default function PrivacyPage() {
       <section>
         <h2>Changes</h2>
         <p>
-          If the setup changes — a real analytics tag, a different host, a contact form we do not
+          If the setup changes — a different analytics provider, a different host, a contact form we do not
           have today — the date at the top of this page moves. We will not pretend we mailed you.
           Questions: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>. The{" "}
           <a href="/contact">contact page</a> is the same address with more on what to put in the
