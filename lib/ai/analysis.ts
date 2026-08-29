@@ -409,6 +409,23 @@ function respectsNarrativeHierarchy(
   })
 }
 
+function strengthenDominantCall(
+  copy: AnalysisCopy,
+  home: HistoricalTeam,
+  away: HistoricalTeam,
+  simulation: MonteCarloResult,
+): AnalysisCopy {
+  const leaderIsHome = simulation.homeWins >= simulation.awayWins
+  const leaderWins = leaderIsHome ? simulation.homeWins : simulation.awayWins
+  const trailerWins = leaderIsHome ? simulation.awayWins : simulation.homeWins
+  if (leaderWins < 65 || leaderWins - trailerWins < 35) return copy
+
+  const weakTitle = /\b(?:edge|control|impose|rhythm|favourite|favou?red|tilt|narrow|slight|could|may|might)\b/i
+  if (!weakTitle.test(copy.callTitle)) return copy
+  const leader = leaderIsHome ? home : away
+  return { ...copy, callTitle: `${leader.clubName} turn this into an attacking siege` }
+}
+
 export async function generatePreMatchAnalysis(
   home: HistoricalTeam,
   away: HistoricalTeam,
@@ -425,10 +442,11 @@ export async function generatePreMatchAnalysis(
       maxTokens: 760,
       temperature: 0.5,
     })
-    const copy = parseAnalysisCopy(raw)
-    if (!copy || !respectsNarrativeHierarchy(copy, home, away, simulation)) {
+    const parsedCopy = parseAnalysisCopy(raw)
+    if (!parsedCopy || !respectsNarrativeHierarchy(parsedCopy, home, away, simulation)) {
       throw new Error("AI provider returned invalid or unfocused analysis JSON")
     }
+    const copy = strengthenDominantCall(parsedCopy, home, away, simulation)
     return { analysis: { copy, featuredMatch, simulation }, source: "ai" }
   } catch (error) {
     console.error(
