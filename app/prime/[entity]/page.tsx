@@ -4,6 +4,7 @@ import { notFound } from "next/navigation"
 import { TeamCard } from "@/components/teams/TeamCard"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { getPrimeEntity, primeEntities } from "@/data/prime"
+import { getPrimeEditorial } from "@/data/prime-editorial"
 import { getTeam } from "@/data/teams"
 import { isFeaturedMatchup, vsPath } from "@/data/matchups"
 import { teamPath } from "@/lib/paths"
@@ -56,6 +57,7 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
   const second = candidates[1]?.team
   const related = primeEntities.filter((item) => item.slug !== page.slug).slice(0, 4)
   const pageUrl = absoluteUrl(`/prime/${page.slug}`)
+  const editorial = getPrimeEditorial(page.slug)
 
   return (
     <div className="grid gap-6">
@@ -91,6 +93,16 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
         </div>
         <p className="max-w-4xl px-4 py-4 text-[15px] leading-7 text-text/90 sm:px-5">{page.verdict}</p>
       </section>
+
+      {editorial ? (
+        <section className="grid gap-3" aria-labelledby="prime-reasoning">
+          <div><p className="page-kicker">The reasoning</p><h2 id="prime-reasoning" className="section-title mt-1">Why this verdict — and why it is arguable</h2></div>
+          <div className="grid gap-3 md:grid-cols-2">
+            <article className="result-panel p-4 sm:p-5"><h3 className="font-brand text-lg font-semibold text-text">The case for our pick</h3><p className="mt-3 text-sm leading-7 text-muted">{editorial.caseFor}</p></article>
+            <article className="result-panel p-4 sm:p-5"><h3 className="font-brand text-lg font-semibold text-text">The strongest counter-case</h3><p className="mt-3 text-sm leading-7 text-muted">{editorial.counterCase}</p></article>
+          </div>
+        </section>
+      ) : null}
 
       <div className="grid gap-4">
         {candidates.map((candidate, index) => (
