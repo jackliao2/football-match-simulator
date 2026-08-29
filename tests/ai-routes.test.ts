@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest"
 import { POST as analyse } from "@/app/api/analysis/route"
 import { POST as commentate } from "@/app/api/commentary/route"
+import { analysisPayload } from "@/lib/ai/analysis"
+import { getTeam } from "@/data/teams"
+import { simulateMany } from "@/lib/simulation"
 
 function jsonRequest(path: string, body: unknown, ip = crypto.randomUUID()) {
   return new Request(`https://example.test${path}`, {
@@ -14,6 +17,25 @@ function jsonRequest(path: string, body: unknown, ip = crypto.randomUUID()) {
 }
 
 describe("AI route handlers", () => {
+  it("tells the writer when a mismatch needs a forceful star-led forecast", () => {
+    const barcelona = getTeam("barcelona-2014-15")!
+    const japan = getTeam("japan-2002")!
+    const simulation = simulateMany(barcelona, japan, 1_000, "narrative-calibration")
+    const payload = analysisPayload(barcelona, japan, simulation) as {
+      narrativeGuide: { tier: string; favourite: string; primaryThreats: string[] }
+      engineRead: { topScorers: { home: Array<{ player: string }> } }
+    }
+
+    expect(payload.narrativeGuide.tier).toBe("overwhelming")
+    expect(payload.narrativeGuide.favourite).toBe("Barcelona")
+    expect(payload.narrativeGuide.primaryThreats).toEqual(
+      expect.arrayContaining(["Lionel Messi", "Luis Suárez", "Neymar"]),
+    )
+    expect(payload.engineRead.topScorers.home.map((row) => row.player)).toEqual(
+      expect.arrayContaining(["Lionel Messi", "Luis Suárez", "Neymar"]),
+    )
+  })
+
   it("returns a fresh protected pre-match analysis without an API key", async () => {
     const response = await analyse(
       jsonRequest("/api/analysis", {

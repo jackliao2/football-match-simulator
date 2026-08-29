@@ -16,7 +16,7 @@ Hard rules:
 - Every field except headline and callTitle must be a complete grammatical sentence, not a label or sentence fragment.
 - matchupStory: maximum 42 words. Mention both full team seasons, both managers, and what makes their football identities collide.
 - callTitle: 4-9 words. Make one match-specific football assertion. Never write "Too close to call", generic probability language, ratings, numbers or markdown.
-- callBody: maximum 38 words. Use engineRead to make the call, but translate it into football. Name supplied players and identify the single tactical pattern most likely to tilt the game. If the win split is close, explain the decisive pattern instead of hedging. Do not repeat win totals, percentages or ratings.
+- callBody: maximum 38 words. Use engineRead and narrativeGuide to make the call, but translate it into football. Name supplied players and identify the single tactical pattern most likely to tilt the game. Do not repeat win totals, percentages or ratings.
 - decidingSequence: maximum 38 words. Describe one vivid, concrete sequence likely to decide the game, naming players from both supplied squads.
 - pressurePoint: maximum 28 words. Identify one specific zone or unit where the matchup advantage is most likely to appear. Write a statement, not a question.
 - openingPhase: maximum 42 words. Explain how the first 20 minutes are likely to look: who takes territory, how the press begins, and where the first clean progression comes from. Name at least two supplied players.
@@ -29,8 +29,12 @@ Hard rules:
 - Never claim this was a real historical fixture. These sides may be from different eras.
 - Ratings are era-relative: a 95 in 1970 is greatness in 1970, not a claim about modern athleticism.
 - Judge this team-vs-team matchup without ranking players' careers or settling GOAT debates.
-- Avoid absolutes and insults. Never use: unstoppable, cannot cope, no answer, destroy, carve apart, outclass, superior, easy win, definitely, will punish.
-- Sound like the opening of a great Champions League broadcast: vivid, specific and respectful. No markdown and no headings.
+- Match the force of the language to narrativeGuide.tier. For "overwhelming", write a commanding forecast: the favourite can overwhelm, suffocate, swarm, tear open, turn the match into a siege, or make it a survival test. Do not soften a major mismatch into "could control large spells", "may have an edge", or "could create chances". For "strong", make the favourite and repeatable route unmistakable. For "competitive", stay balanced without writing "too close to call".
+- A commanding forecast is not a guarantee. Preserve one credible underdog escape route in chaosFactor or finalWord, but do not let that counter-pattern dilute callTitle or callBody.
+- Follow narrativeGuide.primaryThreats and engineRead.topScorers/topAssists. In a mismatch, the dominant side's elite forwards and main creators must be the story. At least two of callBody, decidingSequence, openingPhase and keyDuel must name a primaryThreat. If a famous front two or front three lead the scoring model, foreground that combination.
+- Full-backs and supporting defenders may explain width, but must not take over the report. Do not name the same non-primary player in more than one of decidingSequence, openingPhase, keyDuel and coachingMove unless engineRead lists that player among the top two creators.
+- Avoid categorical player-ranking claims and insults. Never use: unstoppable, cannot cope, no answer, destroy, outclass, superior, easy win, definitely, will punish. "Overwhelm" describes a projected team pattern and is allowed only for an overwhelming tier.
+- Sound like the opening of a great Champions League broadcast: vivid, specific, decisive and respectful. No markdown and no headings.
 
 The JSON is the source of truth.`
 
@@ -76,6 +80,16 @@ function styleLine(team: HistoricalTeam): string {
 }
 
 export function analysisPayload(home: HistoricalTeam, away: HistoricalTeam, simulation?: MonteCarloResult) {
+  const leaderIsHome = simulation ? simulation.homeWins >= simulation.awayWins : home.overallRating >= away.overallRating
+  const leader = leaderIsHome ? home : away
+  const trailer = leaderIsHome ? away : home
+  const leaderWins = simulation ? (leaderIsHome ? simulation.homeWins : simulation.awayWins) : 0
+  const trailerWins = simulation ? (leaderIsHome ? simulation.awayWins : simulation.homeWins) : 0
+  const winGap = leaderWins - trailerWins
+  const tier = leaderWins >= 65 && winGap >= 35 ? "overwhelming" : leaderWins >= 55 && winGap >= 20 ? "strong" : "competitive"
+  const leaderScorers = simulation ? (leaderIsHome ? simulation.topScorers.home : simulation.topScorers.away) : []
+  const leaderAssists = simulation ? (leaderIsHome ? simulation.topAssists.home : simulation.topAssists.away) : []
+  const primaryThreats = [...new Set([...leaderScorers.slice(0, 3).map((row) => row.player), ...leaderAssists.slice(0, 2).map((row) => row.player)])]
   return {
     disclaimer: "Pre-match analysis of two historical squads. Not a simulated result.",
     engineRead: simulation
@@ -88,8 +102,28 @@ export function analysisPayload(home: HistoricalTeam, away: HistoricalTeam, simu
           avgGoals: [simulation.avgHomeGoals, simulation.avgAwayGoals],
           avgXg: [simulation.avgHomeXg, simulation.avgAwayXg],
           avgPossession: [simulation.avgHomePoss, simulation.avgAwayPoss],
+          topScorers: {
+            home: simulation.topScorers.home,
+            away: simulation.topScorers.away,
+          },
+          topAssists: {
+            home: simulation.topAssists.home,
+            away: simulation.topAssists.away,
+          },
         }
       : undefined,
+    narrativeGuide: {
+      tier,
+      favourite: leader.clubName,
+      underdog: trailer.clubName,
+      winGap,
+      primaryThreats,
+      instruction: tier === "overwhelming"
+        ? `${leader.clubName} are a heavy favourite in the model. Make ${primaryThreats.slice(0, 3).join(", ")} the attacking centre of the forecast and describe the likely territorial or scoring pressure with conviction.`
+        : tier === "strong"
+          ? `${leader.clubName} have the clearer repeatable route. State it directly and centre the supplied primary threats.`
+          : "The matchup remains competitive. Choose a specific tactical lean rather than hiding behind generic balance.",
+    },
     home: {
       id: home.id,
       name: home.clubName,
@@ -271,21 +305,29 @@ function shortFallback(home: HistoricalTeam, away: HistoricalTeam, simulation: M
   const close = Math.abs(simulation.homeWins - simulation.awayWins) <= 5
   const leader = simulation.homeWins >= simulation.awayWins ? home : away
   const leaderNames = simulation.homeWins >= simulation.awayWins ? homeNames : awayNames
+  const leaderWins = Math.max(simulation.homeWins, simulation.awayWins)
+  const trailerWins = Math.min(simulation.homeWins, simulation.awayWins)
+  const overwhelming = leaderWins >= 65 && leaderWins - trailerWins >= 35
+  const strong = leaderWins >= 55 && leaderWins - trailerWins >= 20
 
   return {
     headline: "Two great eras, one match they never got to play",
     matchupStory: `${home.manager}'s ${home.clubName} ${home.displaySeason} bring ${home.styleTags[0] ?? "their defining style"}; ${away.manager}'s ${away.clubName} ${away.displaySeason} answer with ${away.styleTags[0] ?? "a different rhythm"}.`,
-    callTitle: close ? "The first broken line decides it" : `${leader.clubName}'s transition tilts the night`,
+    callTitle: close ? "The first broken line decides it" : overwhelming ? `${leader.clubName} turn this into a siege` : strong ? `${leader.clubName} own the clearer route` : `${leader.clubName}'s transition tilts the night`,
     callBody: close
       ? `${homeNames[0]} and ${awayNames[0]} headline it, but the decisive detail is which midfield plays through the first press and releases its front line facing goal.`
-      : `${leaderNames[1] ?? leaderNames[0]} finding ${leaderNames[0]} before the opposing block resets is the repeatable pattern that gives ${leader.clubName} the sharper route to goal.`,
+      : overwhelming
+        ? `${leaderNames.slice(0, 3).join(", ")} give ${leader.clubName} too many elite routes through the final third; the likeliest pattern is sustained pressure rather than a narrow territorial edge.`
+        : `${leaderNames[1] ?? leaderNames[0]} finding ${leaderNames[0]} before the opposing block resets is the repeatable pattern that gives ${leader.clubName} the sharper route to goal.`,
     decidingSequence: `${homeNames[1] ?? homeNames[0]} looks for ${homeNames[0]}, while ${awayNames[1] ?? awayNames[0]}'s first forward pass releases ${awayNames[0]} into the space left behind.`,
     pressurePoint: `The space around the two midfields is where ${home.formation} and ${away.formation} stop being shapes and become a direct duel.`,
     openingPhase: `${home.manager}'s first test is whether ${homeNames[1] ?? homeNames[0]} can establish possession before ${awayNames[1] ?? awayNames[0]} turns the opening exchanges into a transition game.`,
     keyDuel: `${homeNames[0]} attacking the space around ${awayNames[2] ?? awayNames[0]} is the sharpest individual contest; the response depends on cover arriving before the final action, not on either name alone.`,
     coachingMove: `${leader.manager} can protect the model's preferred route by keeping the ${leader.formation} compact and giving ${leaderNames[0]} earlier support rather than adding more bodies to the last line.`,
     chaosFactor: `A set piece or an exceptional goalkeeper night could pull this away from the repeatable open-play pattern seen across the simulations.`,
-    finalWord: `${leader.clubName} own the cleaner repeatable route through ${leaderNames[0]}, but the margin survives only while they control the space around the first broken midfield line.`,
+    finalWord: overwhelming
+      ? `${leader.clubName} should make their attacking depth count through ${leaderNames.slice(0, 3).join(", ")}; the underdog's escape requires an exceptional goalkeeper night and a clinical first transition.`
+      : `${leader.clubName} own the cleaner repeatable route through ${leaderNames[0]}, but the margin survives only while they control the space around the first broken midfield line.`,
   }
 }
 
@@ -294,7 +336,6 @@ function cleanCopy(value: string, maxLength: number): string {
     .replace(/^[\s#>*_`-]+/, "")
     .replace(/[*_`#]/g, "")
     .replace(/\bwill punish\b/gi, "could test")
-    .replace(/\bwill\b/gi, "could")
     .replace(/\bcannot cope\b/gi, "may find it difficult")
     .replace(/\b(?:can't|cannot) handle\b/gi, "may struggle to contain")
     .replace(/\b(?:nobody|no one) can stop\b/gi, "few defenders would enjoy facing")
@@ -331,12 +372,41 @@ function parseAnalysisCopy(raw: string): AnalysisCopy | null {
       chaosFactor: cleanCopy(value.chaosFactor!, 300),
       finalWord: cleanCopy(value.finalWord!, 300),
     }
-    const banned = /\b(?:will|unstoppable|cannot|can't|nobody|no one|destroy|outclass|superior|definitely)\b/i
+    const banned = /\b(?:unstoppable|cannot|can't|nobody|no one|destroy|outclass|superior|definitely)\b/i
     if (Object.values(copy).some((text) => banned.test(text))) return null
     return copy
   } catch {
     return null
   }
+}
+
+function respectsNarrativeHierarchy(
+  copy: AnalysisCopy,
+  home: HistoricalTeam,
+  away: HistoricalTeam,
+  simulation: MonteCarloResult,
+): boolean {
+  const leaderIsHome = simulation.homeWins >= simulation.awayWins
+  const leaderWins = leaderIsHome ? simulation.homeWins : simulation.awayWins
+  const trailerWins = leaderIsHome ? simulation.awayWins : simulation.homeWins
+  if (leaderWins < 55 || leaderWins - trailerWins < 20) return true
+
+  const scorers = leaderIsHome ? simulation.topScorers.home : simulation.topScorers.away
+  const assists = leaderIsHome ? simulation.topAssists.home : simulation.topAssists.away
+  const primary = new Set(
+    [...scorers.slice(0, 3), ...assists.slice(0, 2)].map((row) => row.player.toLocaleLowerCase()),
+  )
+  const focusFields = [copy.callBody, copy.decidingSequence, copy.openingPhase, copy.keyDuel]
+    .map((text) => text.toLocaleLowerCase())
+  const focused = focusFields.filter((text) => [...primary].some((name) => text.includes(name))).length
+  if (focused < 2) return false
+
+  const supportingPlayers = [...starters(home), ...starters(away)]
+    .filter((player) => !primary.has(player.name.toLocaleLowerCase()))
+  return supportingPlayers.every((player) => {
+    const name = player.name.toLocaleLowerCase()
+    return focusFields.filter((text) => text.includes(name)).length <= 1
+  })
 }
 
 export async function generatePreMatchAnalysis(
@@ -356,7 +426,9 @@ export async function generatePreMatchAnalysis(
       temperature: 0.5,
     })
     const copy = parseAnalysisCopy(raw)
-    if (!copy) throw new Error("AI provider returned invalid analysis JSON")
+    if (!copy || !respectsNarrativeHierarchy(copy, home, away, simulation)) {
+      throw new Error("AI provider returned invalid or unfocused analysis JSON")
+    }
     return { analysis: { copy, featuredMatch, simulation }, source: "ai" }
   } catch (error) {
     console.error(
