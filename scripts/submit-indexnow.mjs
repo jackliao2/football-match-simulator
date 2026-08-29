@@ -1,5 +1,5 @@
 const site = (process.env.INDEXNOW_SITE_URL || "https://legendarymatch.com").replace(/\/$/, "")
-const key = "f6e236abbba54895b5fe23ad8732f9b9"
+const key = "b7d0e2ad752b430e8ef7704c8286aa6e"
 const sitemapResponse = await fetch(`${site}/sitemap.xml`)
 if (!sitemapResponse.ok) throw new Error(`Could not read sitemap: ${sitemapResponse.status}`)
 const sitemap = await sitemapResponse.text()
