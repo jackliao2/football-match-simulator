@@ -104,6 +104,29 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
         </section>
       ) : null}
 
+      {editorial?.sections?.length ? (
+        <section className="grid gap-4 border-y border-white/10 py-6" aria-labelledby="prime-deep-dive">
+          <div className="max-w-3xl">
+            <p className="page-kicker">Deep dive</p>
+            <h2 id="prime-deep-dive" className="section-title mt-1">The seasons behind the answer</h2>
+            <p className="mt-2 text-sm leading-7 text-muted">A prime is a claim that needs a definition, evidence and a limit. These are the parts of the argument the short verdict cannot carry.</p>
+          </div>
+          <div className="grid gap-3">
+            {editorial.sections.map((section, index) => (
+              <article key={section.heading} className="result-panel grid gap-3 p-4 sm:grid-cols-[3rem_1fr] sm:p-5">
+                <span className="font-display text-xl tabular-nums text-gold/60">{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3 className="font-brand text-lg font-semibold tracking-wide text-text">{section.heading}</h3>
+                  <div className="mt-3 grid gap-3 text-sm leading-7 text-muted">
+                    {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
       <div className="grid gap-4">
         {candidates.map((candidate, index) => (
           <article key={candidate.teamId} className="result-panel grid gap-4 p-4 sm:grid-cols-[1fr_16rem] sm:items-center">

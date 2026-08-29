@@ -1,4 +1,13 @@
-export type PrimeEditorial = { caseFor: string; counterCase: string }
+export type PrimeEditorialSection = {
+  heading: string
+  paragraphs: string[]
+}
+
+export type PrimeEditorial = {
+  caseFor: string
+  counterCase: string
+  sections?: PrimeEditorialSection[]
+}
 
 const PRIME_EDITORIAL: Record<string, PrimeEditorial> = {
   barcelona: {
@@ -12,10 +21,77 @@ const PRIME_EDITORIAL: Record<string, PrimeEditorial> = {
   "manchester-united": {
     caseFor: "The 2007/08 selection is about balance in every line. Ferdinand and Vidić protected a mobile attack, Carrick and Scholes could play through pressure, and Ronaldo's goals did not require United to become a one-player side. They won England and Europe while adapting between possession, counterattack and deep knockout defending.",
     counterCase: "The 1998/99 team own the harder achievement and a deeper cultural claim. Their wide delivery, two-striker rotations and ability to change matches from the bench produced a treble no later United side matched. If prime means the season that most completely expressed Ferguson's club, 1999 can still be the answer.",
+    sections: [
+      {
+        heading: "First decide what ‘prime’ means",
+        paragraphs: [
+          "Manchester United do not have one uncontested peak because the two best answers measure different things. The 1998/99 side completed the achievement no English club had managed before: league, FA Cup and European Cup in one season. The 2007/08 side did not win the treble, but it was stronger defensively, more flexible without the ball and built around Cristiano Ronaldo at the most destructive point of his United career.",
+          "That distinction matters. Calling 1999 the defining United season is not the same as calling it Ferguson’s strongest starting XI. Our verdict separates historical greatness from probable playing strength instead of using the trophy count as a shortcut for both.",
+        ],
+      },
+      {
+        heading: "Why 1998/99 remains the emotional answer",
+        paragraphs: [
+          "The treble side carried danger from more places. Beckham and Giggs supplied width, Keane and Scholes attacked from midfield, and the Yorke–Cole partnership could be replaced by Sheringham and Solskjær without turning United into a lesser version of the same plan. The comeback away to Juventus was the clearest footballing proof: United recovered from two early goals and played their way back into the tie rather than waiting for another miracle.",
+          "Its weakness in this comparison is control. The season is remembered through decisive escapes because opponents could reach United’s goal and force volatile matches. That made the team irresistible to watch and exceptionally hard to kill, but it also means the treble story can sometimes obscure how often Ferguson had to repair games in motion.",
+        ],
+      },
+      {
+        heading: "Why 2007/08 is the stronger football team",
+        paragraphs: [
+          "Nine years later, United could win several kinds of match. Ronaldo, Rooney and Tevez pressed, rotated and attacked space without behaving like a fixed front three. Behind them, Carrick’s positioning and Scholes’s passing gave the side an exit against pressure; Ferdinand and Vidić combined recovery speed, aerial authority and penalty-area defending. Ronaldo scored 42 goals in all competitions, yet the structure did not simply wait for him to rescue it.",
+          "The Champions League run showed the range of that structure. United could attack Roma at speed, survive long defensive stretches against Barcelona and manage the Moscow final against Chelsea. The league title adds the week-to-week case: this was not only a cup side catching fire for three spring nights.",
+        ],
+      },
+      {
+        heading: "The verdict, with the argument left open",
+        paragraphs: [
+          "If one match had to be played against another elite historical side, we would select 2007/08. The defence is more secure, the attack has greater one-on-one power and the team can counter without surrendering every route through midfield. That is why it receives the higher simulator rating here.",
+          "If the question is which season most completely represents Manchester United, choose 1998/99. Academy players, wing play, late goals, a comeback in Turin and the final turn in Barcelona form a club story that a marginally stronger XI cannot replace. Playing peak: 2007/08. Defining peak: 1998/99.",
+        ],
+      },
+    ],
   },
   messi: {
     caseFor: "Messi's 2010/11 role joins individual output to collective control. From false nine he could leave the centre-backs, overload midfield and still arrive as the main scorer. The choice therefore says more than 'best statistics': it identifies the season when his movement made an already historic midfield almost impossible to assign defensively.",
     counterCase: "The 2014/15 argument is that Messi had become the broader attacker. He could begin from the right, create for Suárez and Neymar, carry transitions and decide settled possessions. Readers who value versatility against different defensive schemes may see the MSN season as the fuller version of the player.",
+    sections: [
+      {
+        heading: "There are several correct versions of peak Messi",
+        paragraphs: [
+          "A serious answer has to separate four questions: Messi’s best season inside the best team, his greatest scoring year, his most complete attacking role and his best late-career tournament. Those questions point to different dates. This page chooses 2010/11 for the cleanest union of individual level, tactical influence and collective dominance, not because every statistical record belongs to that season.",
+          "The candidate cards below are playable Barcelona squads in this simulator. They are not a claim that 2008/09, 2010/11 and 2014/15 are the only seasons in the debate. In particular, leaving 2011/12 and 2018/19 unexplained would make any Messi-prime article incomplete.",
+        ],
+      },
+      {
+        heading: "2010/11: the false nine at the centre of everything",
+        paragraphs: [
+          "By 2010/11, Messi was neither a conventional right winger nor a striker waiting between centre-backs. Dropping from the front line placed an extra player beside Xavi, Iniesta and Busquets, but following him opened the space that Pedro and David Villa attacked. Defenders faced a bad choice before Messi even received the ball: step into midfield and expose the channel, or hold the line and let him turn.",
+          "The Wembley final against Manchester United is the best single-match exhibit. Messi’s goal matters, but so does the geography of the performance: he received between midfield and defence, accelerated through central spaces and helped Barcelona keep returning the match to the areas they controlled. This was peak Messi as the organising problem an opponent could never fully solve.",
+        ],
+      },
+      {
+        heading: "2011/12 and 2012: the statistical peak",
+        paragraphs: [
+          "The strongest numbers-based answer comes one season later. Messi scored 73 goals for Barcelona in all competitions in 2011/12 and 91 for club and country across the 2012 calendar year. If ‘prime’ means the greatest volume of goals ever produced by an elite creator, that is the answer and it should be stated plainly.",
+          "Why do we still prefer 2010/11 for this page’s main verdict? Barcelona lost the league and Champions League in 2011/12, while the earlier side joined Messi’s brilliance to a more complete collective peak. That does not reduce the individual feat; it explains why a best-player-season question and a best-version-inside-a-team question can split.",
+        ],
+      },
+      {
+        heading: "2014/15 and 2018/19: the complete attacker",
+        paragraphs: [
+          "In 2014/15, Suárez occupied the centre and Neymar threatened from the left, allowing Messi to begin on the right and choose when to create, carry or arrive to finish. The Champions League semi-final against Bayern displayed that range: control from deeper positions, the one-on-one destruction of Jérôme Boateng and the pass that released Neymar. This is the best counter-case for versatility against more varied game states.",
+          "By 2018/19, Messi carried even more of Barcelona’s progression and chance creation. The team was less complete, which is precisely why that season belongs in the discussion: the individual could dominate matches as scorer, passer and set-piece specialist without the old Xavi–Iniesta platform. It may be his greatest one-man Barcelona season even if the campaign ended at Anfield.",
+        ],
+      },
+      {
+        heading: "Our answer depends on the wording",
+        paragraphs: [
+          "Best Messi season in the best functioning team: 2010/11. Greatest scoring campaign: 2011/12, with the 2012 calendar record alongside it. Broadest version in a devastating front three: 2014/15. Most demanding creative carry at Barcelona: 2018/19. Best international ending: 2022 with Argentina.",
+          "For a historical match simulator, 2010/11 is the most useful definition of prime because the player and the team amplify one another. It is not a refusal to choose; it is a precise answer to a precise version of the question.",
+        ],
+      },
+    ],
   },
   brazil: {
     caseFor: "Brazil 1970 pair a perfect tournament with a front line in which creation did not belong to one player. Pelé connected, Jairzinho scored in every match, Gérson passed through pressure and Carlos Alberto supplied width from behind. The final against Italy remains an unusually clear demonstration of the team's range.",

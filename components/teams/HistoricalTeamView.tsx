@@ -11,6 +11,7 @@ import { MatchupRow } from "@/components/ui/MatchupRow"
 import { OvrStamp } from "@/components/ui/OvrStamp"
 import { defaultOpponent, vsPath } from "@/data/matchups"
 import { getPrimeEntity } from "@/data/prime"
+import { getTeamEditorial } from "@/data/team-editorial"
 import { getTeam, getTeamsByClub } from "@/data/teams"
 import { orgIndexPath, orgPath, teamPath } from "@/lib/paths"
 import { relatedMatchups, teamPageCopy } from "@/lib/page-copy"
@@ -37,6 +38,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
   const opponent = getTeam(opponentId)
   const popular = relatedMatchups(team, 4)
   const copy = teamPageCopy(team, opponent)
+  const editorial = getTeamEditorial(team.id)
   const indexLabel = team.kind === "nation" ? "National teams" : "Teams"
   const orgHref = orgPath(team.kind, team.clubId)
   const orgIndexHref = orgIndexPath(team.kind)
@@ -115,9 +117,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
         <div className="team-essay">
           {SEARCH_YEAR_NOTES[team.id] ? <p className="search-year-note">{SEARCH_YEAR_NOTES[team.id]}</p> : null}
           <p>{team.summary}</p>
-          {copy.paragraphs.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
+          {editorial ? <p>{editorial.intro}</p> : copy.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
         </div>
         <Link
           href={`/simulate?home=${team.id}&away=${opponentId}`}
@@ -126,6 +126,26 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
           Simulate this team
         </Link>
       </header>
+
+      {editorial ? (
+        <section className="grid gap-4 border-y border-white/10 py-6" aria-labelledby="season-dossier">
+          <div className="max-w-3xl">
+            <p className="page-kicker">Season dossier</p>
+            <h2 id="season-dossier" className="section-title mt-1">Why this team mattered</h2>
+          </div>
+          <div className="grid gap-3 md:grid-cols-2">
+            {editorial.sections.map((section, index) => (
+              <article key={section.heading} className={`result-panel p-4 sm:p-5 ${index === editorial.sections.length - 1 && editorial.sections.length % 2 === 1 ? "md:col-span-2" : ""}`}>
+                <p className="font-display text-[8px] uppercase tracking-[0.2em] text-gold">Chapter {String(index + 1).padStart(2, "0")}</p>
+                <h3 className="mt-2 font-brand text-lg font-semibold tracking-wide text-text">{section.heading}</h3>
+                <div className="mt-3 grid gap-3 text-sm leading-7 text-muted">
+                  {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <StarPlayers team={team} count={6} title="Key Players" />
       <Formation team={team} />
