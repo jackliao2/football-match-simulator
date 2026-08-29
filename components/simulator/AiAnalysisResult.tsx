@@ -166,9 +166,14 @@ function GoalColumn({ team, goals, away = false }: { team: string; goals: PreMat
       {goals.length > 0 ? (
         <ul className="mt-1.5 grid list-none gap-1 p-0">
           {goals.map((goal, index) => (
-            <li key={`${goal.displayMinute}-${goal.player}-${index}`} className="font-mono text-[10px] leading-4 text-text">
-              {away ? <>{goal.player} <span className="text-danger">{goal.displayMinute}</span></> : <><span className="text-gold">{goal.displayMinute}</span> {goal.player}</>}
-              {goal.assist ? <span className="block text-[9px] text-muted">assist · {goal.assist}</span> : null}
+            <li
+              key={`${goal.displayMinute}-${goal.player}-${index}`}
+              className="overflow-hidden text-ellipsis whitespace-nowrap font-mono text-[9px] leading-4 text-text sm:text-[10px]"
+              title={`${goal.displayMinute} ${goal.player}${goal.assist ? ` · assist ${goal.assist}` : ""}`}
+            >
+              <span className={away ? "text-danger" : "text-gold"}>{goal.displayMinute}</span>{" "}
+              {goal.player}
+              {goal.assist ? <span className="text-[8px] text-muted sm:text-[9px]"> · assist {goal.assist}</span> : null}
             </li>
           ))}
         </ul>
