@@ -54,4 +54,15 @@ describe("simulation engine", () => {
     expect(result.avgAwayGoals).toBeGreaterThanOrEqual(0)
     expect(result.scorelines.length).toBeGreaterThan(0)
   })
+
+  it("makes a ten-point overall gap meaningful without removing upsets", () => {
+    const usa = getTeam("usa-2002")!
+    const madrid = getTeam("real-madrid-2013-14")!
+    const result = simulateMany(usa, madrid, 2_000, "quality-gap-calibration")
+
+    expect(madrid.overallRating - usa.overallRating).toBeGreaterThanOrEqual(10)
+    expect(result.awayWinPct).toBeGreaterThanOrEqual(60)
+    expect(result.homeWinPct).toBeLessThanOrEqual(20)
+    expect(result.homeWinPct).toBeGreaterThan(0)
+  })
 })

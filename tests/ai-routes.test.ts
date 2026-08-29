@@ -14,7 +14,7 @@ function jsonRequest(path: string, body: unknown, ip = crypto.randomUUID()) {
 }
 
 describe("AI route handlers", () => {
-  it("returns protected pre-match analysis without an API key", async () => {
+  it("returns a fresh protected pre-match analysis without an API key", async () => {
     const response = await analyse(
       jsonRequest("/api/analysis", {
         awayId: "real-madrid-2016-17",
@@ -22,17 +22,27 @@ describe("AI route handlers", () => {
       }),
     )
     const body = (await response.json()) as {
-      analysis?: { copy?: { headline?: string; decidingSequence?: string }; simulation?: { runs?: number } }
+      analysis?: { copy?: { headline?: string; decidingSequence?: string }; featuredMatch?: { seed?: string }; simulation?: { runs?: number } }
       source?: string
     }
 
     expect(response.status).toBe(200)
     expect(Number(response.headers.get("X-RateLimit-Limit"))).toBeGreaterThan(0)
-    expect(response.headers.get("X-AI-Cache")).toBe("miss")
+    expect(response.headers.get("X-AI-Cache")).toBe("disabled")
     expect(body.source).toBe("template")
     expect(body.analysis?.copy?.headline?.length).toBeGreaterThan(20)
     expect(body.analysis?.copy?.decidingSequence?.length).toBeGreaterThan(40)
     expect(body.analysis?.simulation?.runs).toBe(100)
+
+    const repeat = await analyse(
+      jsonRequest("/api/analysis", {
+        awayId: "real-madrid-2016-17",
+        homeId: "barcelona-2008-09",
+      }),
+    )
+    const repeatedBody = (await repeat.json()) as { analysis?: { featuredMatch?: { seed?: string } } }
+    expect(repeat.headers.get("X-AI-Cache")).toBe("disabled")
+    expect(repeatedBody.analysis?.featuredMatch?.seed).not.toBe(body.analysis?.featuredMatch?.seed)
   })
 
   it("reuses a deterministic match report", async () => {

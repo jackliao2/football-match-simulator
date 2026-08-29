@@ -2,12 +2,9 @@ import { NextResponse } from "next/server"
 import { generatePreMatchAnalysis } from "@/lib/ai/analysis"
 import {
   AiRequestBodyError,
-  aiCacheTtlMs,
   guardAiRequest,
   readAiJson,
-  withAiCache,
 } from "@/lib/ai/guard"
-import { getAiCacheNamespace, isAiConfigured } from "@/lib/ai/provider"
 import { getTeam } from "@/data/teams"
 
 export const runtime = "nodejs"
@@ -38,24 +35,21 @@ export async function POST(request: Request) {
       )
     }
 
-    const cacheKey = `analysis:v4:${getAiCacheNamespace()}:${home.id}:${away.id}`
-    const cached = await withAiCache(
-      cacheKey,
-      aiCacheTtlMs("analysis"),
-      () => generatePreMatchAnalysis(home, away),
-      (result) => result.source === "ai" || !isAiConfigured(),
-    )
+    // Every Expert AI request represents a fresh simulated night. Caching the
+    // complete response would also cache its seed, score, scorers and 100-run
+    // distribution, making repeated analyses appear fixed.
+    const result = await generatePreMatchAnalysis(home, away)
     console.info(
       "[ai-request]",
       JSON.stringify({
-        cache: cached.status,
+        cache: "disabled",
         durationMs: Date.now() - startedAt,
         feature: "analysis",
-        source: cached.value.source,
+        source: result.source,
       }),
     )
-    return NextResponse.json(cached.value, {
-      headers: { ...guard.headers, "X-AI-Cache": cached.status },
+    return NextResponse.json(result, {
+      headers: { ...guard.headers, "X-AI-Cache": "disabled" },
     })
   } catch (error) {
     if (error instanceof AiRequestBodyError) {
