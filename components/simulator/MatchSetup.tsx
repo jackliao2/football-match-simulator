@@ -56,11 +56,11 @@ export function MatchSetup({
   locale?: Locale
 }) {
   const ui = locale === "es" ? {
-    home: "Local", away: "Visitante", legendary: "Leyendas", now: "Recientes", swap: "Cambiar", different: "Elige dos equipos distintos.", simulate: "Simular", playing: "Jugando…", expert: "Análisis experto IA", analysing: "Analizando…", daily: "Hoy", change: "Cambiar equipo ▾", simulateAgain: "Simular de nuevo", back: "Volver a equipos", copy: "Copiar enlace", copied: "Copiado", expertAgain: "Repetir análisis IA",
+    home: "Local", away: "Visitante", legendary: "Leyendas", now: "Recientes", swap: "Cambiar", different: "Elige dos equipos distintos.", simulate: "Simular", playing: "Jugando…", expert: "Análisis experto IA", analysing: "Analizando…", daily: "Hoy", change: "Cambiar equipo ▾", simulateAgain: "Simular de nuevo", back: "Cambiar duelo", copy: "Copiar enlace", copied: "Copiado", expertAgain: "Repetir análisis IA",
   } : locale === "pt-br" ? {
-    home: "Casa", away: "Visitante", legendary: "Lendas", now: "Recentes", swap: "Trocar", different: "Escolha dois times diferentes.", simulate: "Simular", playing: "Jogando…", expert: "Análise especializada IA", analysing: "Analisando…", daily: "Hoje", change: "Trocar time ▾", simulateAgain: "Simular novamente", back: "Voltar aos times", copy: "Copiar link", copied: "Copiado", expertAgain: "Repetir análise IA",
+    home: "Casa", away: "Visitante", legendary: "Lendas", now: "Recentes", swap: "Trocar", different: "Escolha dois times diferentes.", simulate: "Simular", playing: "Jogando…", expert: "Análise especializada IA", analysing: "Analisando…", daily: "Hoje", change: "Trocar time ▾", simulateAgain: "Simular novamente", back: "Trocar confronto", copy: "Copiar link", copied: "Copiado", expertAgain: "Repetir análise IA",
   } : {
-    home: "Home", away: "Away", legendary: "Legendary", now: "Recent", swap: "Swap", different: "Pick two different teams.", simulate: "Simulate", playing: "Playing…", expert: "Expert AI Analysis", analysing: "Analysing…", daily: "Daily", change: "Change team ▾", simulateAgain: "Simulate again", back: "Back to teams", copy: "Copy link", copied: "Copied", expertAgain: "Expert AI again",
+    home: "Home", away: "Away", legendary: "Legendary", now: "Recent", swap: "Swap", different: "Pick two different teams.", simulate: "Simulate", playing: "Playing…", expert: "Expert AI Analysis", analysing: "Analysing…", daily: "Daily", change: "Change team ▾", simulateAgain: "Simulate again", back: "Change matchup", copy: "Copy link", copied: "Copied", expertAgain: "Expert AI again",
   }
   const homeDefault = teams.find((team) => team.id === defaultHome) ?? teams[0]!
   const awayDefault =
@@ -84,6 +84,7 @@ export function MatchSetup({
   const [aiUsesToday, setAiUsesToday] = useState(0)
   const [copied, setCopied] = useState(false)
   const resultRef = useRef<HTMLDivElement>(null)
+  const analysisRequest = useRef<AbortController | null>(null)
   const scrollTarget = useRef<"match" | "analysis">("match")
   const [scrollKey, setScrollKey] = useState(0)
 
@@ -117,6 +118,8 @@ export function MatchSetup({
     return () => window.clearTimeout(timer)
   }, [aiUsesToday])
 
+  useEffect(() => () => analysisRequest.current?.abort(), [])
+
   useEffect(() => {
     if (scrollKey === 0) return
     const timer = window.setTimeout(() => {
@@ -135,9 +138,12 @@ export function MatchSetup({
   }
 
   function resetOutputs() {
+    analysisRequest.current?.abort()
+    analysisRequest.current = null
     setMatch(null)
     setPlay(null)
     setAnalysis(null)
+    setAnalysisLoading(false)
     setAnalysisError(null)
   }
 
@@ -195,7 +201,7 @@ export function MatchSetup({
   }
 
   function simulateOnce() {
-    if (sameTeam || play) return
+    if (sameTeam || play || analysisLoading) return
     track("simulator_started", { home: home.id, away: away.id })
     const next = simulateMatch(home.team, away.team, createSeed())
     setMatch(null)
@@ -212,6 +218,7 @@ export function MatchSetup({
       track("simulation_completed", { mode: "single", home: home.id, away: away.id })
     }
     setPlay(null)
+    showResults("match")
   }
 
   function scrollToSetup() {
@@ -232,7 +239,7 @@ export function MatchSetup({
   }
 
   async function runAnalysis() {
-    if (sameTeam) return
+    if (sameTeam || play || analysisLoading) return
     setMatch(null)
     setPlay(null)
     if (aiRemaining <= 0) {
@@ -246,11 +253,15 @@ export function MatchSetup({
     setAnalysisError(null)
     showResults("analysis")
     track("ai_analysis", { home: home.id, away: away.id })
+    analysisRequest.current?.abort()
+    const controller = new AbortController()
+    analysisRequest.current = controller
     try {
       const request = fetch("/api/analysis", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ homeId: home.id, awayId: away.id }),
+        signal: controller.signal,
       })
       const [response] = await Promise.all([
         request,
@@ -264,6 +275,7 @@ export function MatchSetup({
       if (!response.ok || !data.analysis) {
         throw new Error(data.error ?? "Could not generate analysis")
       }
+      if (controller.signal.aborted) return
       setAnalysis(data.analysis)
       track("ai_analysis_completed", { home: home.id, away: away.id, source: data.source ?? "unknown" })
       const nextCount = Math.min(AI_DAILY_LIMIT, aiUsesToday + 1)
@@ -274,10 +286,14 @@ export function MatchSetup({
         /* ignore */
       }
     } catch (err) {
+      if (controller.signal.aborted) return
       track("ai_analysis_failed", { home: home.id, away: away.id })
       setAnalysisError(err instanceof Error ? err.message : "Could not generate analysis")
     } finally {
-      setAnalysisLoading(false)
+      if (analysisRequest.current === controller) {
+        analysisRequest.current = null
+        setAnalysisLoading(false)
+      }
     }
   }
 
@@ -308,7 +324,7 @@ export function MatchSetup({
               ) : null}
               <button
                 type="button"
-                disabled={sameTeam || Boolean(play)}
+                disabled={sameTeam || Boolean(play) || analysisLoading}
                 className="rail-btn rail-btn-primary"
                 onClick={simulateOnce}
               >
@@ -316,7 +332,7 @@ export function MatchSetup({
               </button>
               <button
                 type="button"
-                disabled={sameTeam || analysisLoading}
+                disabled={sameTeam || analysisLoading || Boolean(play)}
                 className="rail-btn rail-btn-ai"
                 onClick={runAnalysis}
               >
