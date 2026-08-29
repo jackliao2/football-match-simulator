@@ -46,7 +46,7 @@ export const LOCALIZED_COPY = {
     how: [
       ["01", "Elige dos plantillas", "Selecciona un club histórico, una campeona del mundo o una temporada reciente con su once real."],
       ["02", "Juega una noche posible", "El motor combina valoraciones, estilo y una semilla para generar marcador, xG, goleadores y eventos."],
-      ["03", "Pon a prueba el debate", "Repite el partido, ejecuta cien simulaciones o usa el análisis experto para entender la táctica."],
+      ["03", "Pon a prueba el debate", "Repite el partido o pide al análisis experto una lectura táctica respaldada por cien simulaciones."],
     ],
     aboutTitle: "Un simulador para partidos que el tiempo hizo imposibles",
     aboutBody: "LegendaryMatch no intenta reescribir resultados históricos ni predecir apuestas. Convierte plantillas concretas —con temporada, entrenador, formación y jugadores— en enfrentamientos hipotéticos que se pueden repetir y comparar.",
@@ -54,9 +54,9 @@ export const LOCALIZED_COPY = {
     faq: [
       ["¿Cómo funciona el simulador?", "Las valoraciones, el estilo, la química y una semilla generan el marcador, el xG, los goleadores y los eventos. La IA solo explica el enfrentamiento."],
       ["¿Puedo enfrentar equipos de épocas distintas?", "Sí. Puedes jugar con Brasil 1970 contra España 2010 o Barcelona 2008/09 contra Real Madrid 2016/17."],
-      ["¿Qué significan las 100 simulaciones?", "Muestran la distribución de victorias, empates y marcadores posibles. No convierten un duelo hipotético en una certeza."],
+      ["¿Qué significan las 100 simulaciones del análisis experto?", "Muestran la distribución de victorias, empates y marcadores posibles. No convierten un duelo hipotético en una certeza."],
       ["¿Predice partidos reales?", "No. Es una experiencia contrafactual para comparar equipos históricos, no un pronóstico ni una herramienta de apuestas."],
-      ["¿Por qué cambia el resultado al repetir?", "Cada nueva semilla representa otra noche posible. Un gran equipo no gana siempre; usa cien partidos para ver la distribución."],
+      ["¿Por qué cambia el resultado al repetir?", "Cada nueva semilla representa otra noche posible. Un gran equipo no gana siempre; el análisis experto muestra la distribución de cien partidos."],
       ["¿Qué hace el análisis experto con IA?", "Lee las plantillas, los entrenadores, las formaciones y la evidencia de cien simulaciones para explicar el duelo. El motor decide los números primero."],
     ],
   },
@@ -84,7 +84,7 @@ export const LOCALIZED_COPY = {
     how: [
       ["01", "Escolha dois elencos", "Selecione um clube histórico, uma campeã mundial ou uma temporada recente com seu time real."],
       ["02", "Jogue uma noite possível", "O motor combina notas, estilo e uma semente para gerar placar, xG, gols e acontecimentos."],
-      ["03", "Teste o debate", "Repita a partida, rode cem simulações ou use a análise especializada para entender a tática."],
+      ["03", "Teste o debate", "Repita a partida ou peça à análise especializada uma leitura tática apoiada por cem simulações."],
     ],
     aboutTitle: "Um simulador para jogos que o tempo tornou impossíveis",
     aboutBody: "LegendaryMatch não tenta reescrever resultados históricos nem prever apostas. Ele transforma elencos específicos —com temporada, treinador, formação e jogadores— em confrontos hipotéticos que podem ser repetidos e comparados.",
@@ -92,9 +92,9 @@ export const LOCALIZED_COPY = {
     faq: [
       ["Como funciona o simulador?", "Notas, estilo, entrosamento e uma semente geram placar, xG, gols e eventos. A IA apenas explica o confronto."],
       ["Posso enfrentar times de épocas diferentes?", "Sim. Você pode jogar Brasil 1970 contra Espanha 2010 ou Barcelona 2008/09 contra Real Madrid 2016/17."],
-      ["O que significam as 100 simulações?", "Elas mostram a distribuição de vitórias, empates e placares possíveis. Não transformam um duelo hipotético em certeza."],
+      ["O que significam as 100 simulações da análise?", "Elas mostram a distribuição de vitórias, empates e placares possíveis. Não transformam um duelo hipotético em certeza."],
       ["Ele prevê partidas reais?", "Não. É uma experiência contrafactual para comparar times históricos, não um palpite ou uma ferramenta de apostas."],
-      ["Por que o resultado muda quando repito?", "Cada nova semente representa outra noite possível. Um grande time não vence sempre; use cem partidas para ver a distribuição."],
+      ["Por que o resultado muda quando repito?", "Cada nova semente representa outra noite possível. Um grande time não vence sempre; a análise especializada mostra a distribuição de cem partidas."],
       ["O que a análise especializada por IA faz?", "Ela lê os elencos, treinadores, formações e a evidência de cem simulações para explicar o duelo. O motor produz os números primeiro."],
     ],
   },

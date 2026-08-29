@@ -77,6 +77,19 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
           }),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Dream matches", item: absoluteUrl("/vs") },
+              { "@type": "ListItem", position: 2, name: `${home.clubName} vs ${away.clubName}`, item: absoluteUrl(`/vs/${slug}`) },
+            ],
+          }),
+        }}
+      />
       <PageHeader
         kicker={copy.kicker}
         title={`${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}`}
@@ -113,8 +126,8 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
             Simulate this matchup
           </h2>
           <p className="mt-1 max-w-2xl text-sm leading-6 text-muted">
-            The teams are already selected. Run the match yourself for a fresh seeded result, or test
-            the matchup 100 times.
+            The teams are already selected. Run the match yourself for a fresh seeded result, or ask
+            Expert AI for a tactical verdict backed by 100 alternate matches.
           </p>
         </div>
         <MatchSetup teams={options} defaultHome={home.id} defaultAway={away.id} />
