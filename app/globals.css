@@ -611,6 +611,7 @@ button {
 @media (min-width:720px) { .consent-banner { grid-template-columns:minmax(0,1fr) auto; align-items:center; }.consent-actions { justify-content:flex-end; } }
 .site-footer-inner { display:grid; max-width:90rem; margin:0 auto; gap:2rem; padding:2rem 1rem; }
 .site-footer-brand { max-width:38rem; font-size:12px; line-height:1.75; color:var(--color-muted); }
+.site-footer-notice { margin-top:.7rem; max-width:46rem; color:rgba(232,240,220,.64); }
 .site-footer-logo { display:flex; align-items:center; gap:.55rem; margin-bottom:.8rem; font-family:var(--font-brand),serif; font-size:18px; font-weight:600; letter-spacing:.05em; color:var(--color-text); }
 .site-footer-logo span { color:var(--color-gold); }.site-footer-logo i { width:2.5rem; height:1px; background:linear-gradient(90deg,var(--color-gold),transparent); }
 .site-footer-status { display:inline-flex; align-items:center; gap:.45rem; margin-top:.8rem; font-family:var(--font-mono),monospace; font-size:9px; text-transform:uppercase; letter-spacing:.1em; color:rgba(255,255,255,.42); }
@@ -620,6 +621,7 @@ button {
 .site-footer-nav p { margin-bottom:.2rem; font-family:var(--font-display),sans-serif; font-size:7px; text-transform:uppercase; letter-spacing:.2em; color:var(--color-gold); }
 .site-footer-nav a { font-family:var(--font-mono),monospace; font-size:11px; color:var(--color-muted); text-decoration:none; }
 .site-footer-nav a:hover { color:var(--color-gold); }
+.site-footer-bottom { display:flex; max-width:90rem; margin:0 auto; flex-wrap:wrap; justify-content:space-between; gap:.5rem 1rem; border-top:1px solid rgba(255,255,255,.07); padding:.8rem 1rem 1rem; font-family:var(--font-mono),monospace; font-size:9px; letter-spacing:.06em; color:rgba(255,255,255,.36); }
 @media (min-width:700px) { .site-footer-inner { grid-template-columns:minmax(0,1.4fr) minmax(20rem,.8fr); align-items:start; padding:2.4rem 1rem; } }
 @media (max-width:520px) { .language-globe { display:none; }.language-switcher a { min-width:1.55rem; padding:.28rem .22rem; }.site-footer-nav { gap:1rem; } }
 
