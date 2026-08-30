@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
-import { FEATURED_MATCHUPS, vsPath } from "@/data/matchups"
+import Link from "next/link"
+import { FEATURED_MATCHUPS, allVsPairs, vsPath } from "@/data/matchups"
 import { getTeam } from "@/data/teams"
 import { MatchupRow } from "@/components/ui/MatchupRow"
 import { PageHeader } from "@/components/ui/PageHeader"
@@ -23,6 +24,14 @@ export default function VsIndexPage() {
     if (!home || !away) return null
     return { home, away, href: vsPath(homeId, awayId) }
   }).filter(Boolean)
+
+  const featured = new Set(FEATURED_MATCHUPS.map(([home, away]) => vsPath(home, away)))
+  const extra = allVsPairs().flatMap(([homeId, awayId]) => {
+    if (featured.has(vsPath(homeId, awayId))) return []
+    const home = getTeam(homeId)
+    const away = getTeam(awayId)
+    return home && away ? [{ home, away, href: vsPath(homeId, awayId) }] : []
+  })
 
   return (
     <div className="grid gap-6">
@@ -61,6 +70,25 @@ export default function VsIndexPage() {
           </div>
         </section>
       ))}
+      {extra.length > 0 ? (
+        <section className="grid gap-3">
+          <div>
+            <h2 className="font-brand text-xl font-semibold text-text">More who-would-win matchups</h2>
+            <p className="mt-1 font-mono text-xs text-muted">
+              Same-club eras, default rivals and derbies — each page runs the model and opens the simulator.
+            </p>
+          </div>
+          <ul className="grid gap-x-6 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
+            {extra.map((row) => (
+              <li key={row.href}>
+                <Link href={row.href} className="font-mono text-sm text-gold hover:text-gold-2">
+                  {row.home.clubName} {row.home.displaySeason} vs {row.away.clubName} {row.away.displaySeason}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
     </div>
   )
 }

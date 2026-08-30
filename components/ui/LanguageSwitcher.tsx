@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useEffect } from "react"
 import { track } from "@/lib/analytics"
 
 function sectionPath(pathname: string) {
@@ -13,6 +14,10 @@ export function LanguageSwitcher() {
   const pathname = usePathname()
   const section = sectionPath(pathname)
   const current = pathname.startsWith("/es") ? "es" : pathname.startsWith("/pt-br") ? "pt-br" : "en"
+
+  useEffect(() => {
+    document.documentElement.lang = current === "pt-br" ? "pt-BR" : current
+  }, [current])
   return (
     <div className="language-switcher" aria-label="Language">
       <span className="language-globe" aria-hidden="true">◎</span>

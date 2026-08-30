@@ -4,6 +4,7 @@ import { FilteredCatalog } from "@/components/teams/FilteredCatalog"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { LEAGUES, clubs } from "@/data/clubs"
 import { getTeamsByClub } from "@/data/teams"
+import { parseCatalogTrophy } from "@/lib/catalog-filters"
 import { LEAGUE_NOTES, catalogCounts } from "@/lib/page-copy"
 import { pageMetadata } from "@/lib/seo"
 import { absoluteUrl } from "@/lib/site"
@@ -11,15 +12,25 @@ import { languageAlternates } from "@/lib/i18n"
 
 const counts = catalogCounts()
 
-export const metadata: Metadata = pageMetadata({
-  title: "Club squads by season",
-  description: `${counts.clubSides} playable club sides across ${counts.clubs} clubs — Guardiola’s Barça, Istanbul, the Invincibles and the 2025/26 season. Open a year and run the match.`,
-  path: "/teams",
-  keywords: ["historical soccer teams", "legendary football squads", "soccer teams by season", "football match simulator"],
-})
-metadata.alternates = { canonical: "/teams", languages: languageAlternates("/teams") }
+export async function generateMetadata({
+  searchParams,
+}: PageProps<"/teams">): Promise<Metadata> {
+  const params = await searchParams
+  const trophy = parseCatalogTrophy("clubs", params.trophy)
+  const meta = pageMetadata({
+    title: "Club squads by season",
+    description: `${counts.clubSides} playable club sides across ${counts.clubs} clubs — Guardiola’s Barça, Istanbul, the Invincibles and the 2025/26 season. Open a year and run the match.`,
+    path: "/teams",
+    keywords: ["historical soccer teams", "legendary football squads", "soccer teams by season", "football match simulator"],
+  })
+  meta.alternates = { canonical: "/teams", languages: languageAlternates("/teams") }
+  if (trophy !== "all") meta.robots = { index: false, follow: true }
+  return meta
+}
 
-export default function TeamsPage() {
+export default async function TeamsPage({ searchParams }: PageProps<"/teams">) {
+  const params = await searchParams
+  const trophy = parseCatalogTrophy("clubs", params.trophy)
   const sections = LEAGUES.map((league) => ({
     id: league.id,
     label: league.label,
@@ -60,7 +71,7 @@ export default function TeamsPage() {
           National teams instead →
         </Link>
       </PageHeader>
-      <FilteredCatalog mode="clubs" sections={sections} />
+      <FilteredCatalog mode="clubs" sections={sections} initialFilter={trophy} />
     </div>
   )
 }

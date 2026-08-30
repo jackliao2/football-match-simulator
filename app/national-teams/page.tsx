@@ -4,6 +4,7 @@ import { FilteredCatalog } from "@/components/teams/FilteredCatalog"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { NATION_REGIONS, nations } from "@/data/clubs"
 import { getTeamsByClub } from "@/data/teams"
+import { parseCatalogTrophy } from "@/lib/catalog-filters"
 import { REGION_NOTES, catalogCounts } from "@/lib/page-copy"
 import { pageMetadata } from "@/lib/seo"
 import { absoluteUrl } from "@/lib/site"
@@ -11,15 +12,25 @@ import { languageAlternates } from "@/lib/i18n"
 
 const counts = catalogCounts()
 
-export const metadata: Metadata = pageMetadata({
-  title: "National teams by tournament year",
-  description: `${counts.nationSides} national sides — Brazil 1970, Argentina 1986, Spain 2010, France 2026 — World Cup and Euros XIs you can play against club sides from any era.`,
-  path: "/national-teams",
-  keywords: ["historical soccer national teams", "World Cup teams simulator", "international football simulator", "soccer match simulator"],
-})
-metadata.alternates = { canonical: "/national-teams", languages: languageAlternates("/national-teams") }
+export async function generateMetadata({
+  searchParams,
+}: PageProps<"/national-teams">): Promise<Metadata> {
+  const params = await searchParams
+  const trophy = parseCatalogTrophy("nations", params.trophy)
+  const meta = pageMetadata({
+    title: "National teams by tournament year",
+    description: `${counts.nationSides} national sides — Brazil 1970, Argentina 1986, Spain 2010, France 2026 — World Cup and Euros XIs you can play against club sides from any era.`,
+    path: "/national-teams",
+    keywords: ["historical soccer national teams", "World Cup teams simulator", "international football simulator", "soccer match simulator"],
+  })
+  meta.alternates = { canonical: "/national-teams", languages: languageAlternates("/national-teams") }
+  if (trophy !== "all") meta.robots = { index: false, follow: true }
+  return meta
+}
 
-export default function NationalTeamsPage() {
+export default async function NationalTeamsPage({ searchParams }: PageProps<"/national-teams">) {
+  const params = await searchParams
+  const trophy = parseCatalogTrophy("nations", params.trophy)
   const sections = NATION_REGIONS.map((region) => ({
     id: region.id,
     label: region.label,
@@ -60,7 +71,7 @@ export default function NationalTeamsPage() {
           Club teams instead →
         </Link>
       </PageHeader>
-      <FilteredCatalog mode="nations" sections={sections} />
+      <FilteredCatalog mode="nations" sections={sections} initialFilter={trophy} />
     </div>
   )
 }

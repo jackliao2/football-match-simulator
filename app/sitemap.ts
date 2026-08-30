@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next"
 import { allVsPairs } from "@/data/matchups"
+import { CLUB_COMPARES } from "@/data/compare"
 import { primeEntities } from "@/data/prime"
 import { clubs, nations } from "@/data/clubs"
 import { teams } from "@/data/teams"
@@ -17,7 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: absoluteUrl("/prime"), changeFrequency: "monthly", priority: 0.6 },
     { url: absoluteUrl("/vs"), changeFrequency: "weekly", priority: 0.7 },
     { url: absoluteUrl("/best-football-team-ever"), changeFrequency: "monthly", priority: 0.8 },
-    { url: absoluteUrl("/compare/barcelona-vs-real-madrid"), changeFrequency: "monthly", priority: 0.8 },
+    { url: absoluteUrl("/compare"), changeFrequency: "monthly", priority: 0.7 },
     { url: absoluteUrl("/terms"), changeFrequency: "yearly", priority: 0.3 },
     { url: absoluteUrl("/privacy"), changeFrequency: "yearly", priority: 0.3 },
     { url: absoluteUrl("/contact"), changeFrequency: "yearly", priority: 0.3 },
@@ -72,6 +73,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.55,
   }))
 
+  const compareRoutes = CLUB_COMPARES.map((pair) => ({
+    url: absoluteUrl(`/compare/${pair.slug}`),
+    changeFrequency: "monthly" as const,
+    priority: pair.slug === "barcelona-vs-real-madrid" ? 0.8 : 0.6,
+  }))
+
   return [
     ...staticRoutes,
     ...localizedRoutes,
@@ -80,5 +87,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...teamRoutes,
     ...primeRoutes,
     ...vsRoutes,
+    ...compareRoutes,
   ]
 }

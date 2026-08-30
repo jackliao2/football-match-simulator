@@ -280,6 +280,9 @@ function buildPixels(clubId: string): string[] {
 }
 
 const cache = new Map<string, string[]>()
+const rectCache = new Map<string, CrestRect[]>()
+
+export type CrestRect = { x: number; y: number; w: number; color: string }
 
 function pixelsFor(clubId: string): string[] {
   const hit = cache.get(clubId)
@@ -287,6 +290,29 @@ function pixelsFor(clubId: string): string[] {
   const built = buildPixels(clubId)
   cache.set(clubId, built)
   return built
+}
+
+export function crestRects(clubId: string): CrestRect[] {
+  const hit = rectCache.get(clubId)
+  if (hit) return hit
+  const pixels = pixelsFor(clubId)
+  const rects: CrestRect[] = []
+  for (let y = 0; y < SIZE; y++) {
+    let x = 0
+    while (x < SIZE) {
+      const color = pixels[y * SIZE + x]!
+      if (color === "transparent") {
+        x += 1
+        continue
+      }
+      let w = 1
+      while (x + w < SIZE && pixels[y * SIZE + x + w] === color) w += 1
+      rects.push({ x, y, w, color })
+      x += w
+    }
+  }
+  rectCache.set(clubId, rects)
+  return rects
 }
 
 export function PixelCrest({
@@ -298,23 +324,19 @@ export function PixelCrest({
   size?: number
   className?: string
 }) {
-  const pixels = pixelsFor(clubId)
+  const rects = crestRects(clubId)
   return (
-    <div
+    <svg
       aria-hidden
       className={`shrink-0 ${className}`}
-      style={{
-        width: size,
-        height: size,
-        display: "grid",
-        gridTemplateColumns: `repeat(${SIZE}, 1fr)`,
-        imageRendering: "pixelated",
-        filter: "drop-shadow(2px 2px 0 #000)",
-      }}
+      width={size}
+      height={size}
+      viewBox={`0 0 ${SIZE} ${SIZE}`}
+      style={{ imageRendering: "pixelated", filter: "drop-shadow(2px 2px 0 #000)", shapeRendering: "crispEdges" }}
     >
-      {pixels.map((color, index) => (
-        <span key={index} style={{ backgroundColor: color }} />
+      {rects.map((rect) => (
+        <rect key={`${rect.x}-${rect.y}`} x={rect.x} y={rect.y} width={rect.w} height={1} fill={rect.color} />
       ))}
-    </div>
+    </svg>
   )
 }

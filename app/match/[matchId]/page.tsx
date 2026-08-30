@@ -4,12 +4,13 @@ import { notFound } from "next/navigation"
 import { TrackOnMount } from "@/components/TrackOnMount"
 import { CommentaryPanel } from "@/components/simulator/CommentaryPanel"
 import { MatchActions } from "@/components/simulator/MatchActions"
+import { MatchReplay } from "@/components/simulator/MatchReplay"
 import { MatchResult } from "@/components/simulator/MatchResult"
 import { MatchStats } from "@/components/simulator/MatchStats"
 import { MatchTimeline } from "@/components/simulator/MatchTimeline"
 import { StarPlayers } from "@/components/teams/StarPlayers"
 import { getTeam } from "@/data/teams"
-import { isFeaturedMatchup, vsPath } from "@/data/matchups"
+import { isPublishedMatchup, vsPath } from "@/data/matchups"
 import { parseMatchId } from "@/lib/match-id"
 import { teamPath } from "@/lib/paths"
 import { absoluteUrl } from "@/lib/site"
@@ -70,11 +71,14 @@ export default async function MatchPage({ params }: PageProps<"/match/[matchId]"
         </h1>
       </header>
       <MatchResult match={match} home={home} away={away} />
+      <div className="flex flex-wrap gap-2">
+        <MatchReplay match={match} home={home} away={away} />
+      </div>
       <div className="grid gap-6 lg:grid-cols-2">
         <StarPlayers team={home} count={6} title={`${home.clubName} stars`} />
         <StarPlayers team={away} count={6} title={`${away.clubName} stars`} />
       </div>
-      <MatchActions home={home} away={away} />
+      <MatchActions home={home} away={away} match={match} />
       <div className="grid gap-6 lg:grid-cols-2">
         <MatchTimeline match={match} home={home} away={away} />
         <MatchStats match={match} />
@@ -94,7 +98,7 @@ export default async function MatchPage({ params }: PageProps<"/match/[matchId]"
         <Link href={teamPath(away)} className="text-gold hover:text-gold-2">
           {away.clubName} {away.displaySeason}
         </Link>
-        {isFeaturedMatchup(home.id, away.id) ? (
+        {isPublishedMatchup(home.id, away.id) ? (
           <Link href={vsPath(home.id, away.id)} className="text-muted hover:text-gold">Dream match dossier</Link>
         ) : (
           <Link href={`/simulate?home=${home.id}&away=${away.id}`} className="text-muted hover:text-gold">Change matchup</Link>

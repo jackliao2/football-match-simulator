@@ -1,6 +1,7 @@
 import type { HistoricalTeam } from "@/types"
 
 const EDITORIAL: Record<string, string> = {
+  "barcelona-2008-09|real-madrid-2016-17": "Guardiola's first treble side against Zidane's third consecutive Champions League winners. Barcelona 2008/09 invented a new way of occupying the pitch; Madrid 2016/17 specialised in surviving every kind of night and still finding Ronaldo. The argument is control versus a team that did not need control to win.",
   "ac-milan-1988-89|barcelona-2010-11": "Sacchi's Milan tried to compress the pitch until opponents had nowhere clean to play; Guardiola's Barcelona used Messi's false-nine movement to make that space appear anyway. Baresi stepping out against Messi, with Rijkaard screening behind Gullit and Van Basten, is the argument at the heart of this match.",
   "barcelona-2010-11|real-madrid-2016-17": "Barcelona's most controlled Guardiola side meets Madrid's deepest Champions League team. The question is whether Xavi, Busquets and Iniesta can keep the match in midfield before Ronaldo and Bale turn one broken press into open grass.",
   "ajax-1994-95|barcelona-2010-11": "Two descendants of the same football school meet at different stages of its evolution. Van Gaal's young Ajax could press, rotate and attack with width; Guardiola's Barcelona refined those ideas around Messi, Xavi and Iniesta.",
@@ -36,6 +37,12 @@ export type MatchupFeature = {
 }
 
 const FEATURES: Record<string, MatchupFeature> = {
+  "barcelona-2008-09|real-madrid-2016-17": {
+    title: "The first Pep midfield against a side that never needed the ball",
+    context: "Barcelona 2008/09 are the origin story of the modern possession argument: Messi beginning to play as a false nine, Xavi and Iniesta circulating until the press broke, and a treble that made the method look inevitable. Madrid 2016/17 are the counter-argument from the next decade. Zidane's side could lose territory for long spells, keep a route to Ronaldo, and still win a Champions League knockout night after the match had seemed to slip away.",
+    hinge: "Busquets receiving on the half-turn is the first test. If he can play through Casemiro, Xavi and Iniesta pin Kroos and Modrić into a defensive match and Messi receives between Madrid's lines. If that first connection is broken, Marcelo and Carvajal are already high enough for Bale and Ronaldo to attack the space behind Alves and Abidal. The full-back duel decides whether Barcelona's control becomes a siege or a trap.",
+    reading: "A Barcelona win should look territorial: long spells around the Madrid box and a goal after the press has been moved, not a transition race. A Madrid win is more likely to feel stolen — a regain, two vertical passes and elite finishing. Do not read a Barcelona possession advantage as the result; the 2016/17 side were built to stay alive while losing the ball.",
+  },
   "ac-milan-1988-89|barcelona-2010-11": {
     title: "Can the greatest press close a false nine?",
     context: "This is more than an argument between two famous possession teams. Milan's reputation was built on collective distances: the back four stepped together, Rijkaard protected the centre and the forwards began the press. Barcelona's answer was to remove the obvious centre-forward altogether. Messi dropping away from Baresi asks whether Milan hold the line, follow him, or hand him to midfield.",

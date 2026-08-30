@@ -2,13 +2,15 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { TeamCard } from "@/components/teams/TeamCard"
+import { QuickMatch } from "@/components/simulator/QuickMatch"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { getClub } from "@/data/clubs"
+import { playablePairForOrg } from "@/data/matchups"
 import { getPrimeEntity } from "@/data/prime"
 import { allClubIds, getTeamsByClub } from "@/data/teams"
 import { firstSentence, orgHubCopy } from "@/lib/page-copy"
 import { teamPath } from "@/lib/paths"
-import { pageMetadata } from "@/lib/seo"
+import { clubHubKeywords, pageMetadata } from "@/lib/seo"
 import { absoluteUrl } from "@/lib/site"
 
 export const dynamicParams = false
@@ -29,6 +31,7 @@ export async function generateMetadata({
     title: copy.title,
     description: copy.description,
     path: `/teams/${club}`,
+    keywords: clubHubKeywords(clubMeta.name, club, clubTeams),
   })
 }
 
@@ -39,6 +42,7 @@ export default async function ClubPage({ params }: PageProps<"/teams/[club]">) {
   if (!clubMeta || clubTeams.length === 0) notFound()
   const prime = getPrimeEntity(club)
   const copy = orgHubCopy(clubMeta, clubTeams)
+  const playable = playablePairForOrg(club)
 
   return (
     <div className="grid gap-6">
@@ -85,6 +89,7 @@ export default async function ClubPage({ params }: PageProps<"/teams/[club]">) {
           <TeamCard key={team.id} team={team} />
         ))}
       </div>
+      {playable ? <QuickMatch home={playable[0]} away={playable[1]} /> : null}
     </div>
   )
 }

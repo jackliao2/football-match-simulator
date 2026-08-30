@@ -2,11 +2,12 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { TeamCard } from "@/components/teams/TeamCard"
+import { QuickMatch } from "@/components/simulator/QuickMatch"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { getPrimeEntity, primeEntities } from "@/data/prime"
 import { getPrimeEditorial } from "@/data/prime-editorial"
 import { getTeam } from "@/data/teams"
-import { isFeaturedMatchup, vsPath } from "@/data/matchups"
+import { isPublishedMatchup, vsPath } from "@/data/matchups"
 import { teamPath } from "@/lib/paths"
 import { SITE, absoluteUrl } from "@/lib/site"
 
@@ -151,13 +152,17 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
       </div>
 
       {first && second ? (
+        <QuickMatch home={first} away={second} />
+      ) : null}
+
+      {first && second ? (
         <section className="result-panel p-4">
           <h2 className="font-brand text-lg font-semibold tracking-wide">Settle it in the simulator</h2>
           <p className="mt-2 font-mono text-sm text-muted">
             {first.clubName} {first.displaySeason} vs {second.clubName} {second.displaySeason}
           </p>
-          <Link href={isFeaturedMatchup(first.id, second.id) ? vsPath(first.id, second.id) : `/simulate?home=${first.id}&away=${second.id}`} className="mt-3 inline-block font-mono text-sm text-gold hover:text-gold-2">
-            {isFeaturedMatchup(first.id, second.id) ? "Open this dream match →" : "Simulate these two eras →"}
+          <Link href={isPublishedMatchup(first.id, second.id) ? vsPath(first.id, second.id) : `/simulate?home=${first.id}&away=${second.id}`} className="mt-3 inline-block font-mono text-sm text-gold hover:text-gold-2">
+            {isPublishedMatchup(first.id, second.id) ? "Open this dream match →" : "Simulate these two eras →"}
           </Link>
         </section>
       ) : null}

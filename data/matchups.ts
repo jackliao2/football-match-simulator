@@ -1,5 +1,7 @@
-import { canonicalVsSlug } from "@/lib/match-id"
+import { canonicalVsPair, canonicalVsSlug } from "@/lib/match-id"
+import { isCurrentSquad } from "@/lib/seo"
 import { teams } from "@/data/teams"
+import type { HistoricalTeam } from "@/types"
 
 export const HOMEPAGE_TEAMS = [
   "barcelona-2008-09",
@@ -56,6 +58,7 @@ export const HOMEPAGE_CURRENT_NATIONS = [
 ]
 
 export const FEATURED_MATCHUPS = [
+  ["barcelona-2008-09", "real-madrid-2016-17"],
   ["barcelona-2010-11", "ac-milan-1988-89"],
   ["barcelona-2010-11", "real-madrid-2016-17"],
   ["barcelona-2010-11", "ajax-1994-95"],
@@ -242,6 +245,12 @@ export const DEFAULT_RIVALS: Record<string, string> = {
   "czechia-1996": "france-1984",
 }
 
+export function todaysDebate(date = new Date()): [string, string] {
+  const day = Math.floor(date.getTime() / 86_400_000)
+  const pair = FEATURED_MATCHUPS[((day % FEATURED_MATCHUPS.length) + FEATURED_MATCHUPS.length) % FEATURED_MATCHUPS.length]
+  return [pair![0], pair![1]]
+}
+
 export function defaultOpponent(teamId: string): string {
   const rival = DEFAULT_RIVALS[teamId]
   if (rival) return rival
@@ -249,19 +258,96 @@ export function defaultOpponent(teamId: string): string {
   return other?.id ?? teamId
 }
 
-export function allVsPairs(): Array<[string, string]> {
+const DERBY_CLUBS: Array<[string, string]> = [
+  ["barcelona", "real-madrid"],
+  ["real-madrid", "atletico-madrid"],
+  ["manchester-united", "liverpool"],
+  ["manchester-united", "manchester-city"],
+  ["manchester-united", "arsenal"],
+  ["liverpool", "everton"],
+  ["liverpool", "manchester-city"],
+  ["arsenal", "tottenham"],
+  ["arsenal", "chelsea"],
+  ["chelsea", "tottenham"],
+  ["ac-milan", "inter-milan"],
+  ["juventus", "ac-milan"],
+  ["juventus", "inter-milan"],
+  ["bayern-munich", "borussia-dortmund"],
+  ["ajax", "feyenoord"],
+  ["porto", "benfica"],
+  ["celtic", "rangers"],
+  ["boca-juniors", "river-plate"],
+  ["paris-saint-germain", "marseille"],
+  ["barcelona", "ac-milan"],
+  ["real-madrid", "bayern-munich"],
+  ["liverpool", "ac-milan"],
+]
+
+function peakOf(clubId: string) {
+  const sides = teams.filter((team) => team.clubId === clubId)
+  if (sides.length === 0) return undefined
+  const historic = sides.filter((team) => !isCurrentSquad(team))
+  const pool = historic.length > 0 ? historic : sides
+  return [...pool].sort((a, b) => b.overallRating - a.overallRating || b.eraYear - a.eraYear)[0]
+}
+
+function extraVsPairs(): Array<[string, string]> {
+  const pairs: Array<[string, string]> = []
+  const add = (left: string | undefined, right: string | undefined) => {
+    if (!left || !right || left === right) return
+    pairs.push([left, right])
+  }
+
+  const byClub = new Map<string, typeof teams>()
+  for (const team of teams) {
+    const list = byClub.get(team.clubId) ?? []
+    list.push(team)
+    byClub.set(team.clubId, list)
+  }
+
+  for (const sides of byClub.values()) {
+    const historic = sides.filter((team) => !isCurrentSquad(team)).sort((a, b) => a.eraYear - b.eraYear)
+    const current = sides.find((team) => isCurrentSquad(team))
+    for (let i = 0; i < historic.length - 1; i++) add(historic[i]?.id, historic[i + 1]?.id)
+    const ranked = [...historic].sort((a, b) => b.overallRating - a.overallRating || b.eraYear - a.eraYear)
+    if (ranked[0] && ranked[1] && ranked[0].id !== ranked[1].id) add(ranked[0].id, ranked[1].id)
+    if (current && ranked[0]) add(ranked[0].id, current.id)
+  }
+
+  for (const [home, away] of Object.entries(DEFAULT_RIVALS)) add(home, away)
+
+  for (const [leftClub, rightClub] of DERBY_CLUBS) {
+    const left = peakOf(leftClub)
+    const right = peakOf(rightClub)
+    add(left?.id, right?.id)
+  }
+
+  return pairs
+}
+
+function collectVsPairs(source: Iterable<readonly [string, string]>): Array<[string, string]> {
+  const known = new Set(teams.map((team) => team.id))
   const seen = new Set<string>()
   const pairs: Array<[string, string]> = []
-  const add = (left: string, right: string) => {
-    if (!left || !right || left === right) return
-    const [a, b] = left < right ? [left, right] : [right, left]
+  for (const [left, right] of source) {
+    if (!left || !right || left === right) continue
+    if (!known.has(left) || !known.has(right)) continue
+    const [a, b] = canonicalVsPair(left, right)
     const key = `${a}|${b}`
-    if (seen.has(key)) return
+    if (seen.has(key)) continue
     seen.add(key)
     pairs.push([a, b])
   }
-  for (const [home, away] of FEATURED_MATCHUPS) add(home, away)
   return pairs
+}
+
+let publishedPairs: Array<[string, string]> | undefined
+
+const MAX_PUBLISHED_VS = 200
+
+export function allVsPairs(): Array<[string, string]> {
+  publishedPairs ??= collectVsPairs([...FEATURED_MATCHUPS, ...extraVsPairs()]).slice(0, MAX_PUBLISHED_VS)
+  return publishedPairs
 }
 
 export function vsPath(a: string, b: string): string {
@@ -270,5 +356,31 @@ export function vsPath(a: string, b: string): string {
 
 export function isFeaturedMatchup(a: string, b: string): boolean {
   const wanted = canonicalVsSlug(a, b)
+  return FEATURED_MATCHUPS.some(([left, right]) => canonicalVsSlug(left, right) === wanted)
+}
+
+export function isPublishedMatchup(a: string, b: string): boolean {
+  const wanted = canonicalVsSlug(a, b)
   return allVsPairs().some(([left, right]) => canonicalVsSlug(left, right) === wanted)
+}
+
+export function vsSimulationRuns(a: string, b: string) {
+  return isFeaturedMatchup(a, b) ? 400 : 100
+}
+
+export function peakTeamOf(clubId: string): HistoricalTeam | undefined {
+  return peakOf(clubId)
+}
+
+export function playablePairForOrg(clubId: string): [HistoricalTeam, HistoricalTeam] | undefined {
+  const sides = teams.filter((team) => team.clubId === clubId)
+  const historic = sides
+    .filter((team) => !isCurrentSquad(team))
+    .sort((a, b) => b.overallRating - a.overallRating || b.eraYear - a.eraYear)
+  if (historic[0] && historic[1]) return [historic[0], historic[1]]
+  const peak = historic[0] ?? sides[0]
+  if (!peak) return undefined
+  const rival = teams.find((team) => team.id === defaultOpponent(peak.id))
+  if (rival && rival.id !== peak.id) return [peak, rival]
+  return undefined
 }

@@ -1,4 +1,4 @@
-import { FEATURED_MATCHUPS, defaultOpponent } from "@/data/matchups"
+import { FEATURED_MATCHUPS, allVsPairs, defaultOpponent } from "@/data/matchups"
 import { getTeam, teams } from "@/data/teams"
 import { teamStars } from "@/lib/stars"
 import type { Club, ClubLeague, HistoricalTeam, NationRegion } from "@/types"
@@ -416,7 +416,7 @@ export function relatedMatchups(team: HistoricalTeam, limit = 4): HistoricalTeam
   }
 
   add(defaultOpponent(team.id))
-  for (const [home, away] of FEATURED_MATCHUPS) {
+  for (const [home, away] of [...FEATURED_MATCHUPS, ...allVsPairs()]) {
     if (home === team.id) add(away)
     if (away === team.id) add(home)
     if (out.length >= limit) return out.slice(0, limit)

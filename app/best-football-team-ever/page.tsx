@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { TeamCard } from "@/components/teams/TeamCard"
+import { QuickMatch } from "@/components/simulator/QuickMatch"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { getTeam } from "@/data/teams"
 import { pageMetadata } from "@/lib/seo"
@@ -39,5 +40,6 @@ export default function BestFootballTeamEverPage() {
       <div className="grid gap-4 lg:grid-cols-2">{picks.map(({ team, rank, label, argument }) => <article key={team.id} className="result-panel p-4"><p className="font-display text-[7px] tracking-[.18em] text-gold">{rank} · {label}</p><div className="mt-3"><TeamCard team={team as HistoricalTeam} showSquad={false} /></div><p className="mt-3 text-sm leading-6 text-muted">{argument}</p></article>)}</div>
     </section>
     <section className="result-panel p-4 sm:p-5"><p className="page-kicker">How to read the list</p><h2 className="section-title mt-2">Greatest is not the same as unbeatable</h2><div className="editorial-copy mt-3"><p>A simulated result is one possible match, not proof that a modern side erases an older achievement. Ratings are era-relative. Expert AI adds a 100-match distribution when you want the wider pattern.</p><p><Link href="/simulate" className="text-gold">Choose any two candidates and simulate the argument →</Link></p></div></section>
+    {picks[0] && picks[1] ? <QuickMatch home={picks[0].team as HistoricalTeam} away={picks[1].team as HistoricalTeam} /> : null}
   </div>
 }

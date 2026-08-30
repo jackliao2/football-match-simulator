@@ -4,6 +4,7 @@ import {
   HOMEPAGE_MATCHUPS,
   HOMEPAGE_NATIONS,
   HOMEPAGE_TEAMS,
+  todaysDebate,
   vsPath,
 } from "@/data/matchups"
 import { primeEntities } from "@/data/prime"
@@ -78,6 +79,9 @@ export default function HomePage() {
   const nations = HOMEPAGE_NATIONS.map((id) => getTeam(id)).filter(
     (team): team is HistoricalTeam => Boolean(team),
   )
+  const [todayHomeId, todayAwayId] = todaysDebate()
+  const todayHome = getTeam(todayHomeId)
+  const todayAway = getTeam(todayAwayId)
   const dreamMatches = HOMEPAGE_MATCHUPS.flatMap(([homeId, awayId]) => {
     const home = getTeam(homeId)
     const away = getTeam(awayId)
@@ -121,9 +125,15 @@ export default function HomePage() {
         </p>
       </section>
 
+      {todayHome && todayAway ? (
+        <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-gold">
+          Today&apos;s debate · {todayHome.clubName} {todayHome.displaySeason} vs {todayAway.clubName} {todayAway.displaySeason}
+        </p>
+      ) : null}
+
       <MatchSetup
-        defaultHome="barcelona-2008-09"
-        defaultAway="real-madrid-2016-17"
+        defaultHome={todayHomeId}
+        defaultAway={todayAwayId}
       />
 
       <section className="home-section">

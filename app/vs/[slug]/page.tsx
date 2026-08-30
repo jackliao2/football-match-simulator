@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import { MatchSetup } from "@/components/simulator/MatchSetup"
 import { MonteCarloResults } from "@/components/simulator/MonteCarloResults"
 import { FaceOffSquad } from "@/components/teams/SquadPanel"
@@ -8,22 +8,19 @@ import { TeamRatings } from "@/components/teams/TeamRatings"
 import { PixelCrest } from "@/components/teams/PixelCrest"
 import { OvrStamp } from "@/components/ui/OvrStamp"
 import { PageHeader } from "@/components/ui/PageHeader"
-import { allVsPairs } from "@/data/matchups"
+import { allVsPairs, isPublishedMatchup, vsSimulationRuns } from "@/data/matchups"
 import { getTeam } from "@/data/teams"
 import { matchupFeature } from "@/data/vs-editorial"
 import { canonicalVsSlug, parseVsSlug } from "@/lib/match-id"
 import { matchupDossier, vsPageCopy } from "@/lib/page-copy"
 import { teamPath } from "@/lib/paths"
 import { SITE, absoluteUrl } from "@/lib/site"
-import { simulateMany } from "@/lib/simulation"
+import { cachedMatchupModel } from "@/lib/matchup-model"
 import { teamSquad } from "@/lib/stars"
 import type { HistoricalTeam } from "@/types"
 
-const VS_RUNS = 400
-
-// Only publish the curated dream matches returned by generateStaticParams.
-// This prevents crawlers from turning arbitrary team combinations into new ISR entries.
-export const dynamicParams = false
+// Published matchups are prebuilt. Other valid pairs render a noindex playable page.
+export const dynamicParams = true
 
 export function generateStaticParams() {
   return allVsPairs().map(([a, b]) => ({ slug: `${a}-vs-${b}` }))
@@ -38,17 +35,18 @@ export async function generateMetadata({
   const home = getTeam(parsed.homeId)
   const away = getTeam(parsed.awayId)
   if (!home || !away) return { title: "Dream Match" }
-  const copy = vsPageCopy(home, away, VS_RUNS)
-  const indexable = allVsPairs().some(([a, b]) => canonicalVsSlug(a, b) === slug)
+  const copy = vsPageCopy(home, away, vsSimulationRuns(home.id, away.id))
+  const canonical = canonicalVsSlug(home.id, away.id)
+  const indexable = slug === canonical && isPublishedMatchup(home.id, away.id)
   return {
     title: { absolute: `${copy.title} | ${SITE.name}` },
     description: copy.description,
-    alternates: { canonical: `/vs/${slug}` },
+    alternates: { canonical: `/vs/${canonical}` },
     robots: indexable ? { index: true, follow: true } : { index: false, follow: true },
     openGraph: {
       title: copy.title,
       description: copy.description,
-      url: absoluteUrl(`/vs/${slug}`),
+      url: absoluteUrl(`/vs/${canonical}`),
     },
   }
 }
@@ -60,8 +58,27 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
   const home = getTeam(parsed.homeId)
   const away = getTeam(parsed.awayId)
   if (!home || !away) notFound()
+  const canonical = canonicalVsSlug(home.id, away.id)
+  if (slug !== canonical) redirect(`/vs/${canonical}`)
+  if (!isPublishedMatchup(home.id, away.id)) {
+    return (
+      <div className="grid gap-6">
+        <PageHeader
+          kicker="Playable matchup"
+          title={`${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}`}
+          lead="Both squads are in the database, but this pairing is not one of the curated dream-match dossiers. Simulate it here, or open the written matchups."
+          crumbs={[{ href: "/vs", label: "Dream matches" }]}
+        />
+        <MatchSetup defaultHome={home.id} defaultAway={away.id} />
+        <Link href="/vs" className="font-mono text-sm text-gold hover:text-gold-2">
+          Browse curated dream matches →
+        </Link>
+      </div>
+    )
+  }
 
-  const model = simulateMany(home, away, VS_RUNS, `vs:${slug}`)
+  const VS_RUNS = vsSimulationRuns(home.id, away.id)
+  const model = cachedMatchupModel(home, away, VS_RUNS, `vs:${slug}`)
 
   const copy = vsPageCopy(home, away, VS_RUNS)
   const dossier = matchupDossier(home, away)
@@ -90,6 +107,41 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
             itemListElement: [
               { "@type": "ListItem", position: 1, name: "Dream matches", item: absoluteUrl("/vs") },
               { "@type": "ListItem", position: 2, name: `${home.clubName} vs ${away.clubName}`, item: absoluteUrl(`/vs/${slug}`) },
+            ],
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: `Who would win between ${home.clubName} ${home.displaySeason} and ${away.clubName} ${away.displaySeason}?`,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: `Across ${VS_RUNS} seeded simulations, ${home.clubName} won ${model.homeWinPct}%, ${away.clubName} won ${model.awayWinPct}%, and ${model.drawPct}% finished level. The most common score was ${model.mostCommonScore.replace("-", "–")}. This is a modelled hypothetical, not a prediction of a real fixture.`,
+                },
+              },
+              {
+                "@type": "Question",
+                name: `What was the ${home.clubName} vs ${away.clubName} simulated score?`,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: `There is no single official score. The model's most frequent scoreline across ${VS_RUNS} matches was ${model.mostCommonScore.replace("-", "–")}, with average goals ${model.avgHomeGoals}–${model.avgAwayGoals}.`,
+                },
+              },
+              {
+                "@type": "Question",
+                name: `How many times did ${home.clubName} ${home.displaySeason} win in 100 simulations?`,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: `Scaled to 100 matches, ${home.clubName} would win about ${Math.round(model.homeWinPct)}. The page actually runs ${VS_RUNS} matches so the percentages are more stable.`,
+                },
+              },
             ],
           }),
         }}

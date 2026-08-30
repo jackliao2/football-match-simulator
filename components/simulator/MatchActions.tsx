@@ -4,17 +4,20 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { track } from "@/lib/analytics"
 import { buildMatchId, createSeed } from "@/lib/match-id"
-import type { HistoricalTeam } from "@/types"
+import { copyOrShare, matchShareCopy } from "@/lib/share"
+import type { HistoricalTeam, SimulatedMatch } from "@/types"
 
 export function MatchActions({
   home,
   away,
+  match,
 }: {
   home: HistoricalTeam
   away: HistoricalTeam
+  match: SimulatedMatch
 }) {
   const router = useRouter()
-  const [copied, setCopied] = useState(false)
+  const [shareStatus, setShareStatus] = useState<"idle" | "copied" | "shared">("idle")
 
   function simulateAgain() {
     track("simulate_again", { home: home.id, away: away.id })
@@ -22,14 +25,20 @@ export function MatchActions({
   }
 
   async function shareMatch() {
-    track("match_shared", { home: home.id, away: away.id })
     const url = window.location.href
-    try {
-      await navigator.clipboard.writeText(url)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 1600)
-    } catch {
-      window.prompt("Copy this match URL", url)
+    const copy = matchShareCopy(
+      home.clubName,
+      home.displaySeason,
+      match.score.home,
+      away.clubName,
+      away.displaySeason,
+      match.score.away,
+    )
+    const result = await copyOrShare({ url, ...copy })
+    track("match_shared", { method: result, home: home.id, away: away.id })
+    if (result === "copied" || result === "shared") {
+      setShareStatus(result)
+      setTimeout(() => setShareStatus("idle"), 1600)
     }
   }
 
@@ -40,7 +49,7 @@ export function MatchActions({
           Simulate again
         </button>
         <button type="button" className="rail-btn" onClick={shareMatch}>
-          {copied ? "Copied" : "Share match"}
+          {shareStatus === "shared" ? "Shared" : shareStatus === "copied" ? "Copied" : "Share match"}
         </button>
       </div>
       <button

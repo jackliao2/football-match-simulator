@@ -39,10 +39,10 @@ export default async function TeamOpenGraphImage({
         <div style={{ fontSize: 24, marginTop: 16, color: "#7e9876" }}>{subtitle}</div>
         {team ? (
           <div style={{ display: "flex", gap: 28, marginTop: 40, fontSize: 22, color: "#d4b45a" }}>
-            <span>ATK {team.attackRating}</span>
-            <span>MID {team.midfieldRating}</span>
-            <span>DEF {team.defenseRating}</span>
-            <span>OVR {team.overallRating}</span>
+            <span>{`ATK ${team.attackRating}`}</span>
+            <span>{`MID ${team.midfieldRating}`}</span>
+            <span>{`DEF ${team.defenseRating}`}</span>
+            <span>{`OVR ${team.overallRating}`}</span>
           </div>
         ) : null}
       </div>

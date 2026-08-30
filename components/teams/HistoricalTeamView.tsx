@@ -1,4 +1,6 @@
 import Link from "next/link"
+import { MonteCarloResults } from "@/components/simulator/MonteCarloResults"
+import { QuickMatch } from "@/components/simulator/QuickMatch"
 import { TrackOnMount } from "@/components/TrackOnMount"
 import { Formation } from "@/components/teams/Formation"
 import { SquadList } from "@/components/teams/SquadList"
@@ -13,6 +15,7 @@ import { defaultOpponent, vsPath } from "@/data/matchups"
 import { getPrimeEntity } from "@/data/prime"
 import { getTeamEditorial } from "@/data/team-editorial"
 import { getTeam, getTeamsByClub } from "@/data/teams"
+import { cachedMatchupModel } from "@/lib/matchup-model"
 import { orgIndexPath, orgPath, teamPath } from "@/lib/paths"
 import { relatedMatchups, teamPageCopy } from "@/lib/page-copy"
 import { absoluteUrl } from "@/lib/site"
@@ -20,15 +23,53 @@ import type { HistoricalTeam } from "@/types"
 
 const SEARCH_YEAR_NOTES: Record<string, string> = {
   "real-madrid-2016-17": "Often searched as the Real Madrid 2017 squad, this is Zidane's full 2016/17 team: starting XI, formation, manager and supporting players.",
+  "real-madrid-2013-14": "Real Madrid 2014 squad searches usually mean this 2013/14 La Décima side rather than a later Zidane team.",
   "barcelona-2014-15": "Often searched as the Barcelona 2015 squad or 2015 Barça team, this is Luis Enrique's complete 2014/15 treble-winning group.",
   "barcelona-2008-09": "The Barcelona 2009 squad search usually means this 2008/09 treble side, with its starting XI, formation and full supporting cast.",
   "barcelona-2010-11": "The Barcelona 2011 squad search usually points here: Guardiola's 2010/11 team, its Wembley lineup and the players behind the starting XI.",
   "manchester-united-2007-08": "Often searched as the Manchester United 2008 squad, this is Ferguson's complete 2007/08 Champions League-winning team.",
   "manchester-united-1998-99": "Often searched as the Manchester United 1999 squad, this is the complete 1998/99 treble team rather than only the Champions League final XI.",
   "arsenal-2003-04": "Arsenal 03/04 and Arsenal 2004 searches point to the Invincibles: the full squad, preferred lineup and shape used across the unbeaten league season.",
+  "arsenal-1997-98": "Arsenal 1998 squad searches usually mean Wenger's first Double team, with Overmars, Anelka and Vieira still building the later Invincibles core.",
   "liverpool-2004-05": "Often searched as the Liverpool 2005 squad, this is Benítez's complete 2004/05 group rather than only the Istanbul final lineup.",
   "liverpool-2018-19": "Often searched as the Liverpool 2019 squad, this is Klopp's full 2018/19 Champions League-winning team and preferred formation.",
   "ac-milan-2006-07": "Often searched as the AC Milan 2007 squad, this is Ancelotti's complete 2006/07 Champions League-winning group and Athens-era lineup.",
+  "ac-milan-1988-89": "Milan 1989 or Sacchi Milan searches land here: the 1988/89 European Cup side with Baresi, Rijkaard, Gullit and Van Basten.",
+  "inter-milan-2009-10": "Inter 2010 treble searches point to Mourinho's 2009/10 squad, not a later Inter side with a similar badge.",
+  "inter-milan-1988-89": "Inter 1989 squad searches usually mean the record Serie A winners with Matthäus, Klinsmann and Brehme.",
+  "bayern-munich-2012-13": "Bayern 2013 treble searches mean Heynckes' 2012/13 team — the complete squad, not only the Wembley final XI.",
+  "bayern-munich-2019-20": "Bayern 2020 sextuple searches point to Flick's 2019/20 side after he replaced Kovac mid-season.",
+  "manchester-city-2022-23": "City 2023 treble searches mean Guardiola's 2022/23 squad with Haaland, Rodri and Stones stepping into midfield.",
+  "manchester-city-2017-18": "City 2018 squad searches usually mean the 100-point 2017/18 Premier League winners.",
+  "chelsea-2004-05": "Chelsea 2005 squad searches point to Mourinho's first title side, not the 2012 Champions League winners.",
+  "chelsea-2011-12": "Chelsea 2012 Champions League searches mean Di Matteo's 2011/12 knockout team rather than the earlier Mourinho sides.",
+  "juventus-2016-17": "Juve 2017 squad searches usually mean Allegri's Champions League finalists with Buffon, Chiellini and Dybala.",
+  "ajax-1994-95": "Ajax 1995 squad searches mean Van Gaal's young European Cup winners, not a later Ajax generation.",
+  "borussia-dortmund-2012-13": "Dortmund 2013 squad searches point to Klopp's Champions League finalists, one year after the 2011/12 title.",
+  "atletico-madrid-2013-14": "Atlético 2014 league title searches mean Simeone's 2013/14 side that beat Barcelona and Madrid over a season.",
+  "porto-2003-04": "Porto 2004 Champions League searches mean Mourinho's 2003/04 squad, not a later Dragões team.",
+  "paris-saint-germain-2022-23": "PSG 2023 squad searches usually mean the Messi–Mbappé–Neymar season rather than a later rebuild.",
+  "napoli-1986-87": "Napoli 1987 scudetto searches mean Maradona's first Serie A winning side.",
+  "santos-1962": "Santos 1962 squad searches point to Pelé's Intercontinental Cup side, not a modern Santos roster.",
+  "brazil-1970": "Brazil 1970 World Cup squad searches mean Zagallo's Mexico winners — the complete tournament group, not a later Seleção.",
+  "brazil-2002": "Brazil 2002 World Cup squad searches mean Scolari's Ronaldo–Rivaldo–Ronaldinho winners.",
+  "brazil-1958": "Brazil 1958 World Cup squad searches mean the Sweden tournament side, with a 17-year-old Pelé.",
+  "brazil-1982": "Brazil 1982 World Cup squad searches mean Telê Santana's side, not a later trophy-winning Brazil team.",
+  "argentina-1986": "Argentina 1986 World Cup squad searches mean Bilardo's Mexico winners built around Maradona.",
+  "argentina-2022": "Argentina 2022 World Cup squad searches mean Scaloni's Qatar winners, not the 1986 side.",
+  "france-1998": "France 1998 World Cup squad searches mean Jacquet's home-tournament winners.",
+  "france-2018": "France 2018 World Cup squad searches mean Deschamps' Russia winners with Mbappé, Kanté and Griezmann.",
+  "spain-2010": "Spain 2010 World Cup squad searches mean Del Bosque's tiki-taka winners, not the later Euro sides alone.",
+  "germany-2014": "Germany 2014 World Cup squad searches mean Löw's Brazil-tournament winners.",
+  "germany-1990": "Germany 1990 World Cup squad searches mean Beckenbauer's West Germany winners.",
+  "italy-2006": "Italy 2006 World Cup squad searches mean Lippi's Berlin winners, not a later Azzurri cycle.",
+  "netherlands-1974": "Netherlands 1974 World Cup squad searches mean Michels' Total Football side, not the 1988 Euros winners.",
+  "england-1966": "England 1966 World Cup squad searches mean Ramsey's home winners rather than a later tournament XI.",
+  "portugal-2016": "Portugal 2016 Euros squad searches mean Santos' tournament winners, not a World Cup cycle.",
+  "croatia-2018": "Croatia 2018 World Cup squad searches mean Dalić's finalists with Modrić, Rakitic and Mandzukic.",
+  "hungary-1954": "Hungary 1954 World Cup squad searches mean the Mighty Magyars, not a later Hungary team.",
+  "celtic-1966-67": "Celtic 1967 Lisbon Lions searches mean Stein's European Cup winners.",
+  "nottingham-forest-1979-80": "Forest 1980 European Cup searches mean Clough's second successive winners.",
 }
 
 export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
@@ -42,6 +83,32 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
   const indexLabel = team.kind === "nation" ? "National teams" : "Teams"
   const orgHref = orgPath(team.kind, team.clubId)
   const orgIndexHref = orgIndexPath(team.kind)
+  const TEAM_RUNS = 100
+  const model = opponent ? cachedMatchupModel(team, opponent, TEAM_RUNS, `team:${team.id}`) : null
+  const faqs = [
+    opponent && model
+      ? {
+          q: `Who would win between ${team.clubName} ${team.displaySeason} and ${opponent.clubName} ${opponent.displaySeason}?`,
+          a: `Across ${TEAM_RUNS} seeded simulations, ${team.clubName} won ${model.homeWinPct}%, ${opponent.clubName} won ${model.awayWinPct}%, and ${model.drawPct}% finished level. The most common score was ${model.mostCommonScore.replace("-", "–")}. This is a modelled hypothetical, not a prediction of a real fixture.`,
+        }
+      : {
+          q: `Can I simulate the ${team.clubName} ${team.displaySeason} squad?`,
+          a: `Yes. Open the simulator from this page, pick an opponent, and run a single match or 100 matches with the same ratings and formation shown here.`,
+        },
+    {
+      q: `What formation did ${team.clubName} ${team.displaySeason} play?`,
+      a: `${team.clubName} ${team.displaySeason} is modelled in a ${team.formation} under ${team.manager}, with attack ${team.attackRating}, midfield ${team.midfieldRating} and defence ${team.defenseRating}.`,
+    },
+    opponent
+      ? {
+          q: `How do I play ${team.clubName} ${team.displaySeason} against ${opponent.clubName}?`,
+          a: `Use the simulator on this page for a fresh seeded result, or open the dream-match page for the written dossier and the 100-match distribution.`,
+        }
+      : {
+          q: `Where is the ${team.clubName} ${team.displaySeason} starting XI?`,
+          a: `The starting XI, bench and ratings are listed on this page. They are the squad the match simulator uses.`,
+        },
+  ]
 
   return (
     <div className="grid gap-6">
@@ -83,6 +150,20 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
           }),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqs.map((item) => ({
+              "@type": "Question",
+              name: item.q,
+              acceptedAnswer: { "@type": "Answer", text: item.a },
+            })),
+          }),
+        }}
+      />
       <header className="grid gap-3">
         <p className="font-mono text-xs text-muted">
           <Link href={orgIndexPath(team.kind)} className="hover:text-gold">
@@ -119,13 +200,15 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
           <p>{team.summary}</p>
           {editorial ? <p>{editorial.intro}</p> : copy.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
         </div>
-        <Link
-          href={`/simulate?home=${team.id}&away=${opponentId}`}
-          className="rail-btn rail-btn-primary rail-btn-inline"
-        >
-          Simulate this team
-        </Link>
+        {opponent ? (
+          <QuickMatch home={team} away={opponent} />
+        ) : (
+          <Link href={`/simulate?home=${team.id}&away=${opponentId}`} className="rail-btn rail-btn-primary rail-btn-inline">
+            Simulate this team
+          </Link>
+        )}
       </header>
+      {model ? <MonteCarloResults result={model} /> : null}
 
       {editorial ? (
         <section className="grid gap-4 border-y border-white/10 py-6" aria-labelledby="season-dossier">
@@ -193,6 +276,19 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
           ))}
         </section>
       ) : null}
+
+      <section className="result-panel p-4 sm:p-5">
+        <p className="page-kicker">FAQ</p>
+        <h2 className="section-title mt-1">Questions about this squad</h2>
+        <dl className="mt-3 grid gap-3">
+          {faqs.map((item) => (
+            <div key={item.q}>
+              <dt className="font-brand text-base font-semibold text-text">{item.q}</dt>
+              <dd className="mt-1 text-sm leading-6 text-muted">{item.a}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
 
       <div className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-sm">
         {siblings.map((item) => (
