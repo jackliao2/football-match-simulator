@@ -26,8 +26,8 @@ export default function NationalTeamsPage() {
     note: REGION_NOTES[region.id],
     orgs: nations
       .filter((nation) => nation.region === region.id)
-      .map((nation) => ({ id: nation.id, name: nation.name, detail: "National team", href: `/national-teams/${nation.id}`, teams: getTeamsByClub(nation.id) }))
-      .filter((section) => section.teams.length > 0),
+      .map((nation) => ({ id: nation.id, name: nation.name, detail: "National team", href: `/national-teams/${nation.id}`, teamIds: getTeamsByClub(nation.id).map((team) => team.id) }))
+      .filter((section) => section.teamIds.length > 0),
   })).filter((section) => section.orgs.length > 0)
 
   return (

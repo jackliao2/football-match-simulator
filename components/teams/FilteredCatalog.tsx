@@ -3,9 +3,10 @@
 import { useState } from "react"
 import Link from "next/link"
 import { TeamCard } from "@/components/teams/TeamCard"
+import { getTeam } from "@/data/teams"
 import type { HistoricalTeam } from "@/types"
 
-type Section = { id: string; label: string; note: string; orgs: Array<{ id: string; name: string; detail: string; href: string; teams: HistoricalTeam[] }> }
+type Section = { id: string; label: string; note: string; orgs: Array<{ id: string; name: string; detail: string; href: string; teamIds: string[] }> }
 type Filter = { id: string; label: string }
 
 export function FilteredCatalog({ mode, sections }: { mode: "clubs" | "nations"; sections: Section[] }) {
@@ -14,15 +15,16 @@ export function FilteredCatalog({ mode, sections }: { mode: "clubs" | "nations";
     ? [{ id: "all", label: "All eras" }, { id: "world", label: "World Cup winners" }, { id: "euros", label: "Euro winners" }, { id: "copa", label: "Copa América winners" }, { id: "finalists", label: "Finalists" }]
     : [{ id: "all", label: "All eras" }, { id: "europe", label: "European champions" }, { id: "league", label: "League champions" }, { id: "treble", label: "Treble winners" }]
 
+  const expanded = sections.map((section) => ({ ...section, orgs: section.orgs.map((org) => ({ ...org, teams: org.teamIds.map(getTeam).filter((team): team is HistoricalTeam => Boolean(team)) })) }))
   const visible = (team: HistoricalTeam) => filter === "all" || honours(team, mode).includes(filter)
-  const count = sections.flatMap((section) => section.orgs.flatMap((org) => org.teams)).filter(visible).length
+  const count = expanded.flatMap((section) => section.orgs.flatMap((org) => org.teams)).filter(visible).length
 
   return <>
     <div className="catalog-filters" role="group" aria-label="Filter squads by achievement">
       {filters.map((item) => <button key={item.id} type="button" aria-pressed={filter === item.id} className={filter === item.id ? "is-on" : ""} onClick={() => setFilter(item.id)}>{item.label}</button>)}
       <span>{count} squads</span>
     </div>
-    {sections.map((section) => {
+    {expanded.map((section) => {
       const orgs = section.orgs.map((org) => ({ ...org, teams: org.teams.filter(visible) })).filter((org) => org.teams.length)
       if (!orgs.length) return null
       return <section key={section.id} className="grid gap-4">

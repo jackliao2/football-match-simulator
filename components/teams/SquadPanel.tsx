@@ -76,7 +76,7 @@ export function CompactSquad({
   )
 }
 
-export function FaceOffSquad({ squad }: { squad: SquadMember[] }) {
+export function FaceOffSquad({ squad, benchLabel = "Bench" }: { squad: SquadMember[]; benchLabel?: string }) {
   const xi = squad.filter((player) => player.starter)
   const bench = squad.filter((player) => !player.starter)
 
@@ -91,7 +91,7 @@ export function FaceOffSquad({ squad }: { squad: SquadMember[] }) {
       {bench.length > 0 ? (
         <details className="mt-1">
           <summary className="cursor-pointer list-none px-1 font-display text-[7px] uppercase tracking-[0.16em] text-muted hover:text-gold">
-            Bench · {bench.length} ▾
+            {benchLabel} · {bench.length} ▾
           </summary>
           <ul className="mt-0.5 grid gap-px">
             {bench.map((player) => (

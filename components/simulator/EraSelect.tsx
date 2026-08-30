@@ -14,11 +14,13 @@ export function EraSelect({
   seasons,
   value,
   align = "left",
+  labels = { latest: "Latest squad", season: "Season" },
   onChange,
 }: {
   seasons: EraOption[]
   value: EraOption
   align?: "left" | "right"
+  labels?: { latest: string; season: string }
   onChange: (teamId: string) => void
 }) {
   const [open, setOpen] = useState(false)
@@ -50,7 +52,7 @@ export function EraSelect({
         aria-expanded={open}
         onClick={() => setOpen((open) => !open)}
       >
-        <span className="era-select-kicker">{current ? "Latest squad" : "Season"}</span>
+        <span className="era-select-kicker">{current ? labels.latest : labels.season}</span>
         <span className="era-select-year">{value.displaySeason}</span>
         <Cups trophies={cups} />
         <span className="era-select-caret" aria-hidden>
@@ -76,7 +78,7 @@ export function EraSelect({
                 >
                   <span className="era-select-item-year">{season.displaySeason}</span>
                   <span className="era-select-item-meta">
-                    {now ? "Latest squad" : season.team.manager}
+                    {now ? labels.latest : season.team.manager}
                   </span>
                   <Cups trophies={season.team.trophies} />
                 </button>

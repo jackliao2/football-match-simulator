@@ -62,11 +62,11 @@ export function MatchSetup({
 }) {
   const teams = useMemo(() => historicalTeams.map(toTeamOption), [])
   const ui = locale === "es" ? {
-    home: "Local", away: "Visitante", legendary: "Leyendas", now: "Recientes", swap: "Cambiar", different: "Elige dos equipos distintos.", simulate: "Simular", playing: "Jugando…", expert: "Análisis experto IA", analysing: "Analizando…", daily: "Hoy", change: "Cambiar equipo ▾", simulateAgain: "Simular de nuevo", back: "Cambiar duelo", copy: "Copiar enlace", copied: "Copiado", expertAgain: "Repetir análisis IA", next: "Siguiente duelo soñado",
+    home: "Local", away: "Visitante", legendary: "Leyendas", now: "Recientes", swap: "Cambiar", different: "Elige dos equipos distintos.", simulate: "Simular", playing: "Jugando…", expert: "Análisis experto IA", analysing: "Analizando…", daily: "Hoy", change: "Cambiar equipo ▾", simulateAgain: "Simular de nuevo", back: "Cambiar duelo", copy: "Copiar enlace", copied: "Copiado", expertAgain: "Repetir análisis IA", next: "Siguiente duelo soñado", season: "Temporada", latest: "Plantilla reciente", bench: "Suplentes", playerHint: "Toca o pasa sobre un jugador para ver PAC SHO PAS DRI DEF PHY", separateAi: "Pronóstico independiente de 100 partidos. Tu partido anterior sigue disponible en la pestaña Match result.",
   } : locale === "pt-br" ? {
-    home: "Casa", away: "Visitante", legendary: "Lendas", now: "Recentes", swap: "Trocar", different: "Escolha dois times diferentes.", simulate: "Simular", playing: "Jogando…", expert: "Análise especializada IA", analysing: "Analisando…", daily: "Hoje", change: "Trocar time ▾", simulateAgain: "Simular novamente", back: "Trocar confronto", copy: "Copiar link", copied: "Copiado", expertAgain: "Repetir análise IA", next: "Próximo jogo dos sonhos",
+    home: "Casa", away: "Visitante", legendary: "Lendas", now: "Recentes", swap: "Trocar", different: "Escolha dois times diferentes.", simulate: "Simular", playing: "Jogando…", expert: "Análise especializada IA", analysing: "Analisando…", daily: "Hoje", change: "Trocar time ▾", simulateAgain: "Simular novamente", back: "Trocar confronto", copy: "Copiar link", copied: "Copiado", expertAgain: "Repetir análise IA", next: "Próximo jogo dos sonhos", season: "Temporada", latest: "Elenco recente", bench: "Banco", playerHint: "Toque ou passe sobre um jogador para ver PAC SHO PAS DRI DEF PHY", separateAi: "Previsão independente de 100 partidas. Seu jogo anterior continua disponível na aba Match result.",
   } : {
-    home: "Home", away: "Away", legendary: "Legendary", now: "Recent", swap: "Swap", different: "Pick two different teams.", simulate: "Simulate", playing: "Playing…", expert: "Expert AI Analysis", analysing: "Analysing…", daily: "Daily", change: "Change team ▾", simulateAgain: "Simulate again", back: "Change matchup", copy: "Copy link", copied: "Copied", expertAgain: "Expert AI again", next: "Next dream match",
+    home: "Home", away: "Away", legendary: "Legendary", now: "Recent", swap: "Swap", different: "Pick two different teams.", simulate: "Simulate", playing: "Playing…", expert: "Expert AI Analysis", analysing: "Analysing…", daily: "Daily", change: "Change team ▾", simulateAgain: "Simulate again", back: "Change matchup", copy: "Copy link", copied: "Copied", expertAgain: "Expert AI again", next: "Next dream match", season: "Season", latest: "Latest squad", bench: "Bench", playerHint: "Tap or hover a player for PAC SHO PAS DRI DEF PHY", separateAi: "A separate 100-match forecast. Your previous match remains available under Match result.",
   }
   const homeDefault = teams.find((team) => team.id === defaultHome) ?? teams[0]!
   const awayDefault =
@@ -342,6 +342,8 @@ export function MatchSetup({
             onSeason={(value) => changeSeason("home", value)}
             name="home"
             changeLabel={ui.change}
+            seasonLabels={{ latest: ui.latest, season: ui.season }}
+            benchLabel={ui.bench}
           />
 
           <div className="faceoff-rail">
@@ -373,8 +375,7 @@ export function MatchSetup({
                 </span>
               </button>
               <p className="rail-hint">
-                <span className="md:hidden">Tap a player for PAC SHO PAS DRI DEF PHY</span>
-                <span className="hidden md:inline">Hover a player for PAC SHO PAS DRI DEF PHY</span>
+                <span>{ui.playerHint}</span>
               </p>
             </div>
           </div>
@@ -389,6 +390,8 @@ export function MatchSetup({
             onSeason={(value) => changeSeason("away", value)}
             name="away"
             changeLabel={ui.change}
+            seasonLabels={{ latest: ui.latest, season: ui.season }}
+            benchLabel={ui.bench}
           />
         </div>
       </div>
@@ -451,6 +454,7 @@ export function MatchSetup({
           <AiAnalysisLoading home={home.team} away={away.team} />
         ) : resultMode === "analysis" && analysis ? (
           <div className="grid gap-3">
+            {match ? <p className="border-l-2 border-gold/60 px-3 font-mono text-[10px] leading-5 text-muted">{ui.separateAi}</p> : null}
             <AiAnalysisResult analysis={analysis} home={home.team} away={away.team} />
             <div className="flex flex-wrap gap-2">
               <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={simulateOnce}>{ui.simulate}</button>
@@ -518,6 +522,8 @@ function TeamColumn({
   onSeason,
   name,
   changeLabel,
+  seasonLabels,
+  benchLabel,
 }: {
   label: string
   side: "home" | "away"
@@ -528,6 +534,8 @@ function TeamColumn({
   onSeason: (teamId: string) => void
   name: "home" | "away"
   changeLabel: string
+  seasonLabels: { latest: string; season: string }
+  benchLabel: string
 }) {
   const away = side === "away"
   const accent = away ? "text-danger" : "text-gold"
@@ -570,12 +578,13 @@ function TeamColumn({
           seasons={seasons}
           value={team}
           align={away ? "right" : "left"}
+          labels={seasonLabels}
           onChange={onSeason}
         />
       </div>
 
       <div className="faceoff-squad">
-        <FaceOffSquad squad={squad} />
+        <FaceOffSquad squad={squad} benchLabel={benchLabel} />
       </div>
       <input type="hidden" name={name} value={team.id} />
     </article>

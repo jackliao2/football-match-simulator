@@ -103,7 +103,6 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
 
       <section className="matchup-editorial">
         <div><p className="page-kicker">Why this matchup matters</p><h2 className="section-title mt-1">Two football ideas, one impossible night</h2></div>
-        <p>{copy.editorial}</p>
         <div className="matchup-editorial-facts">
           <span><b>{home.clubName}</b>{home.manager} · {home.formation} · {home.styleTags.slice(0, 2).join(" · ")}</span>
           <i aria-hidden="true">VS</i>
