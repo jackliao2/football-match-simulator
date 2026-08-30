@@ -58,6 +58,28 @@ export interface PreMatchAnalysis {
   simulation: MonteCarloResult
 }
 
+function representativeNight(
+  home: HistoricalTeam,
+  away: HistoricalTeam,
+  simulation: MonteCarloResult,
+  seed: string,
+): SimulatedMatch {
+  const lean = simulation.homeWins - simulation.awayWins
+  const desired = lean >= 5 ? "home" : lean <= -5 ? "away" : "any"
+  const candidates = Array.from({ length: 24 }, (_, index) =>
+    simulateMatch(home, away, `${seed}:forecast:${index}`),
+  )
+  const outcome = (match: SimulatedMatch) =>
+    match.score.home === match.score.away ? "draw" : match.score.home > match.score.away ? "home" : "away"
+  const matching = desired === "any" ? candidates : candidates.filter((match) => outcome(match) === desired)
+  const usable = matching.length > 0 ? matching : candidates
+  return [...usable].sort((a, b) => {
+    const aDistance = Math.abs(a.score.home - simulation.avgHomeGoals) + Math.abs(a.score.away - simulation.avgAwayGoals)
+    const bDistance = Math.abs(b.score.home - simulation.avgHomeGoals) + Math.abs(b.score.away - simulation.avgAwayGoals)
+    return aDistance - bDistance
+  })[0]!
+}
+
 function byOverall(a: Player, b: Player) {
   return b.overall - a.overall
 }
@@ -431,8 +453,8 @@ export async function generatePreMatchAnalysis(
   away: HistoricalTeam,
 ): Promise<{ analysis: PreMatchAnalysis; source: "ai" | "template" }> {
   const requestSeed = `ai-analysis:${home.id}:${away.id}:${crypto.randomUUID()}`
-  const featuredMatch = simulateMatch(home, away, `${requestSeed}:forecast`)
   const simulation = simulateMany(home, away, 100, `${requestSeed}:alternates`)
+  const featuredMatch = representativeNight(home, away, simulation, requestSeed)
   const fallback = shortFallback(home, away, simulation)
   const provider = createCommentaryProvider()
   if (!provider) return { analysis: { copy: fallback, featuredMatch, simulation }, source: "template" }

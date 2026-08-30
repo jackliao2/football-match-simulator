@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest"
 import { POST as analyse } from "@/app/api/analysis/route"
 import { POST as commentate } from "@/app/api/commentary/route"
-import { analysisPayload } from "@/lib/ai/analysis"
+import { analysisPayload, generatePreMatchAnalysis } from "@/lib/ai/analysis"
 import { getTeam } from "@/data/teams"
 import { simulateMany } from "@/lib/simulation"
 
@@ -17,6 +17,15 @@ function jsonRequest(path: string, body: unknown, ip = crypto.randomUUID()) {
 }
 
 describe("AI route handlers", () => {
+  it("uses a representative night that follows a clear 100-match lean", async () => {
+    const home = getTeam("barcelona-2014-15")!
+    const away = getTeam("japan-2002")!
+    const { analysis } = await generatePreMatchAnalysis(home, away)
+    const lean = analysis.simulation.homeWins - analysis.simulation.awayWins
+    expect(lean).toBeGreaterThanOrEqual(5)
+    expect(analysis.featuredMatch.score.home).toBeGreaterThan(analysis.featuredMatch.score.away)
+  })
+
   it("tells the writer when a mismatch needs a forceful star-led forecast", () => {
     const barcelona = getTeam("barcelona-2014-15")!
     const japan = getTeam("japan-2002")!

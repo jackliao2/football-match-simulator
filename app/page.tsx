@@ -7,7 +7,7 @@ import {
   vsPath,
 } from "@/data/matchups"
 import { primeEntities } from "@/data/prime"
-import { getTeam, teams, toTeamOption } from "@/data/teams"
+import { getTeam } from "@/data/teams"
 import { DreamMatchCarousel } from "@/components/ui/DreamMatchCarousel"
 import { TeamCardCarousel } from "@/components/ui/TeamCardCarousel"
 import { SITE, absoluteUrl } from "@/lib/site"
@@ -72,7 +72,6 @@ const HOW_STEPS = [
 ] as const
 
 export default function HomePage() {
-  const options = teams.map(toTeamOption)
   const legendary = HOMEPAGE_TEAMS.map((id) => getTeam(id)).filter(
     (team): team is HistoricalTeam => Boolean(team),
   )
@@ -123,7 +122,6 @@ export default function HomePage() {
       </section>
 
       <MatchSetup
-        teams={options}
         defaultHome="barcelona-2008-09"
         defaultAway="real-madrid-2016-17"
       />

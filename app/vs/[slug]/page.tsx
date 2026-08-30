@@ -9,7 +9,7 @@ import { PixelCrest } from "@/components/teams/PixelCrest"
 import { OvrStamp } from "@/components/ui/OvrStamp"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { allVsPairs } from "@/data/matchups"
-import { getTeam, teams, toTeamOption } from "@/data/teams"
+import { getTeam } from "@/data/teams"
 import { matchupFeature } from "@/data/vs-editorial"
 import { canonicalVsSlug, parseVsSlug } from "@/lib/match-id"
 import { matchupDossier, vsPageCopy } from "@/lib/page-copy"
@@ -62,7 +62,6 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
   if (!home || !away) notFound()
 
   const model = simulateMany(home, away, VS_RUNS, `vs:${slug}`)
-  const options = teams.map(toTeamOption)
 
   const copy = vsPageCopy(home, away, VS_RUNS)
   const dossier = matchupDossier(home, away)
@@ -172,7 +171,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
             Expert AI for a tactical verdict backed by 100 alternate matches.
           </p>
         </div>
-        <MatchSetup teams={options} defaultHome={home.id} defaultAway={away.id} />
+        <MatchSetup defaultHome={home.id} defaultAway={away.id} />
       </section>
 
       <Link href="/simulate" className="font-mono text-sm text-gold hover:text-gold-2">

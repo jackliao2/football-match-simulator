@@ -11,6 +11,8 @@ import { SimulationPlay } from "@/components/simulator/SimulationPlay"
 import { FaceOffSquad } from "@/components/teams/SquadPanel"
 import { PixelCrest } from "@/components/teams/PixelCrest"
 import { eraGlow } from "@/data/trophies"
+import { FEATURED_MATCHUPS } from "@/data/matchups"
+import { teams as historicalTeams, toTeamOption } from "@/data/teams"
 import { isCurrentSquad } from "@/lib/seo"
 import { OvrStamp } from "@/components/ui/OvrStamp"
 import { track } from "@/lib/analytics"
@@ -50,22 +52,21 @@ export interface TeamOption {
 }
 
 export function MatchSetup({
-  teams,
   defaultHome,
   defaultAway,
   locale,
 }: {
-  teams: TeamOption[]
   defaultHome?: string
   defaultAway?: string
   locale?: Locale
 }) {
+  const teams = useMemo(() => historicalTeams.map(toTeamOption), [])
   const ui = locale === "es" ? {
-    home: "Local", away: "Visitante", legendary: "Leyendas", now: "Recientes", swap: "Cambiar", different: "Elige dos equipos distintos.", simulate: "Simular", playing: "Jugando…", expert: "Análisis experto IA", analysing: "Analizando…", daily: "Hoy", change: "Cambiar equipo ▾", simulateAgain: "Simular de nuevo", back: "Cambiar duelo", copy: "Copiar enlace", copied: "Copiado", expertAgain: "Repetir análisis IA",
+    home: "Local", away: "Visitante", legendary: "Leyendas", now: "Recientes", swap: "Cambiar", different: "Elige dos equipos distintos.", simulate: "Simular", playing: "Jugando…", expert: "Análisis experto IA", analysing: "Analizando…", daily: "Hoy", change: "Cambiar equipo ▾", simulateAgain: "Simular de nuevo", back: "Cambiar duelo", copy: "Copiar enlace", copied: "Copiado", expertAgain: "Repetir análisis IA", next: "Siguiente duelo soñado",
   } : locale === "pt-br" ? {
-    home: "Casa", away: "Visitante", legendary: "Lendas", now: "Recentes", swap: "Trocar", different: "Escolha dois times diferentes.", simulate: "Simular", playing: "Jogando…", expert: "Análise especializada IA", analysing: "Analisando…", daily: "Hoje", change: "Trocar time ▾", simulateAgain: "Simular novamente", back: "Trocar confronto", copy: "Copiar link", copied: "Copiado", expertAgain: "Repetir análise IA",
+    home: "Casa", away: "Visitante", legendary: "Lendas", now: "Recentes", swap: "Trocar", different: "Escolha dois times diferentes.", simulate: "Simular", playing: "Jogando…", expert: "Análise especializada IA", analysing: "Analisando…", daily: "Hoje", change: "Trocar time ▾", simulateAgain: "Simular novamente", back: "Trocar confronto", copy: "Copiar link", copied: "Copiado", expertAgain: "Repetir análise IA", next: "Próximo jogo dos sonhos",
   } : {
-    home: "Home", away: "Away", legendary: "Legendary", now: "Recent", swap: "Swap", different: "Pick two different teams.", simulate: "Simulate", playing: "Playing…", expert: "Expert AI Analysis", analysing: "Analysing…", daily: "Daily", change: "Change team ▾", simulateAgain: "Simulate again", back: "Change matchup", copy: "Copy link", copied: "Copied", expertAgain: "Expert AI again",
+    home: "Home", away: "Away", legendary: "Legendary", now: "Recent", swap: "Swap", different: "Pick two different teams.", simulate: "Simulate", playing: "Playing…", expert: "Expert AI Analysis", analysing: "Analysing…", daily: "Daily", change: "Change team ▾", simulateAgain: "Simulate again", back: "Change matchup", copy: "Copy link", copied: "Copied", expertAgain: "Expert AI again", next: "Next dream match",
   }
   const homeDefault = teams.find((team) => team.id === defaultHome) ?? teams[0]!
   const awayDefault =
@@ -88,6 +89,7 @@ export function MatchSetup({
   const [analysisError, setAnalysisError] = useState<string | null>(null)
   const [aiUsesToday, setAiUsesToday] = useState(0)
   const [copied, setCopied] = useState(false)
+  const [resultMode, setResultMode] = useState<"match" | "analysis">("match")
   const resultRef = useRef<HTMLDivElement>(null)
   const analysisRequest = useRef<AbortController | null>(null)
   const scrollTarget = useRef<"match" | "analysis">("match")
@@ -137,6 +139,7 @@ export function MatchSetup({
 
   function showResults(target: "match" | "analysis") {
     scrollTarget.current = target
+    setResultMode(target)
     setScrollKey((key) => key + 1)
   }
 
@@ -244,7 +247,6 @@ export function MatchSetup({
 
   async function runAnalysis() {
     if (sameTeam || play || analysisLoading) return
-    setMatch(null)
     setPlay(null)
     if (aiRemaining <= 0) {
       setAnalysis(null)
@@ -299,6 +301,31 @@ export function MatchSetup({
         setAnalysisLoading(false)
       }
     }
+  }
+
+  function playNextDreamMatch() {
+    if (play || analysisLoading) return
+    const currentIndex = FEATURED_MATCHUPS.findIndex(([left, right]) =>
+      (left === home.id && right === away.id) || (left === away.id && right === home.id),
+    )
+    const [nextHomeId, nextAwayId] = FEATURED_MATCHUPS[(currentIndex + 1) % FEATURED_MATCHUPS.length]!
+    const nextHome = teams.find((team) => team.id === nextHomeId)
+    const nextAway = teams.find((team) => team.id === nextAwayId)
+    if (!nextHome || !nextAway) return
+    analysisRequest.current?.abort()
+    analysisRequest.current = null
+    setHomeClub(nextHome.clubId)
+    setHomeId(nextHome.id)
+    setAwayClub(nextAway.clubId)
+    setAwayId(nextAway.id)
+    setMatch(null)
+    setAnalysis(null)
+    setAnalysisError(null)
+    setAnalysisLoading(false)
+    const next = simulateMatch(nextHome.team, nextAway.team, createSeed())
+    setPlay({ kind: "match", match: next })
+    track("next_dream_match_started", { home: nextHome.id, away: nextAway.id })
+    showResults("match")
   }
 
   return (
@@ -368,6 +395,12 @@ export function MatchSetup({
 
       {play || match || analysis || analysisLoading || analysisError ? (
       <div ref={resultRef} className="mt-6 mb-10 grid scroll-mt-20 gap-4">
+        {!play && match && (analysis || analysisLoading || analysisError) ? (
+          <div className="inline-flex w-fit overflow-hidden border border-white/15 bg-black/25 p-1" role="tablist" aria-label="Result view">
+            <button type="button" role="tab" aria-selected={resultMode === "match"} onClick={() => showResults("match")} className={`px-3 py-2 font-display text-[8px] uppercase tracking-[0.14em] ${resultMode === "match" ? "bg-gold text-ink" : "text-muted hover:text-text"}`}>Match result</button>
+            <button type="button" role="tab" aria-selected={resultMode === "analysis"} onClick={() => showResults("analysis")} className={`px-3 py-2 font-display text-[8px] uppercase tracking-[0.14em] ${resultMode === "analysis" ? "bg-gold text-ink" : "text-muted hover:text-text"}`}>Expert AI</button>
+          </div>
+        ) : null}
         {play?.kind === "match" ? (
           <div id="result-match">
             <SimulationPlay
@@ -378,7 +411,7 @@ export function MatchSetup({
               onDone={finishPlay}
             />
           </div>
-        ) : match ? (
+        ) : match && resultMode === "match" ? (
           <div id="result-match" className="grid gap-4">
             <MatchResult match={match} home={home.team} away={away.team} />
             <div className="flex flex-wrap gap-2">
@@ -391,6 +424,9 @@ export function MatchSetup({
               <button type="button" className="rail-btn rail-btn-inline" onClick={shareMatch}>
                 {copied ? ui.copied : ui.copy}
               </button>
+              <button type="button" className="rail-btn rail-btn-ai rail-btn-inline" onClick={playNextDreamMatch}>
+                {ui.next}
+              </button>
             </div>
             <div className="grid gap-4 lg:grid-cols-2">
               <MatchStats match={match} />
@@ -399,7 +435,7 @@ export function MatchSetup({
           </div>
         ) : null}
 
-        {analysisError ? (
+        {resultMode === "analysis" && analysisError ? (
           <section id="result-analysis" className="result-panel border-2 border-gold/40 px-5 py-6 shadow-[8px_8px_0_#000]">
             <p className="font-display text-[8px] uppercase tracking-[0.24em] text-gold">Expert AI Analysis</p>
             <h2 className="mt-2 font-brand text-xl font-semibold text-text">{aiRemaining <= 0 ? "Daily free quota used" : "Analysis unavailable"}</h2>
@@ -411,15 +447,16 @@ export function MatchSetup({
           </section>
         ) : null}
 
-        {analysisLoading ? (
+        {resultMode === "analysis" && analysisLoading ? (
           <AiAnalysisLoading home={home.team} away={away.team} />
-        ) : analysis ? (
+        ) : resultMode === "analysis" && analysis ? (
           <div className="grid gap-3">
             <AiAnalysisResult analysis={analysis} home={home.team} away={away.team} />
             <div className="flex flex-wrap gap-2">
               <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={simulateOnce}>{ui.simulate}</button>
               <button type="button" className="rail-btn rail-btn-ai rail-btn-inline" onClick={runAnalysis}>{ui.expertAgain} · {aiRemaining}/{AI_DAILY_LIMIT}</button>
               <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>{ui.back}</button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={playNextDreamMatch}>{ui.next}</button>
             </div>
           </div>
         ) : null}

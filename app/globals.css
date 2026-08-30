@@ -625,6 +625,12 @@ button {
 @media (min-width:700px) { .site-footer-inner { grid-template-columns:minmax(0,1.4fr) minmax(20rem,.8fr); align-items:start; padding:2.4rem 1rem; } }
 @media (max-width:520px) { .language-globe { display:none; }.language-switcher a { min-width:1.55rem; padding:.28rem .22rem; }.site-footer-nav { gap:1rem; } }
 
+@media (max-width: 639px) {
+  .site-header-inner { flex-wrap:wrap; gap:.35rem .75rem; }
+  .site-header-inner > nav { order:3; width:100%; flex-basis:100%; justify-content:center; overflow-x:visible; }
+  .site-header-inner > nav a { flex:1 1 0; padding-inline:.2rem; text-align:center; }
+}
+
 .team-essay {
   display: grid;
   gap: 0.7rem;
@@ -668,6 +674,15 @@ optgroup {
   max-width: 90rem;
   margin-inline: auto;
   grid-template-columns: minmax(0, 1fr);
+}
+
+.page-frame > main > *,
+.home-section,
+.home-editorial-section,
+.faceoff-board,
+.dream-reel {
+  min-width: 0;
+  max-width: 100%;
 }
 
 @media (min-width: 1280px) {

@@ -10,6 +10,7 @@ export type AnalyticsEvent =
   | "team_selected"
   | "season_selected"
   | "simulation_completed"
+  | "next_dream_match_started"
   | "ai_analysis_completed"
   | "ai_analysis_failed"
   | "language_changed"

@@ -3,8 +3,8 @@ import { MatchSetup } from "@/components/simulator/MatchSetup"
 import { TeamCard } from "@/components/teams/TeamCard"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { MatchupRow } from "@/components/ui/MatchupRow"
-import { FEATURED_MATCHUPS, HOMEPAGE_NATIONS, HOMEPAGE_TEAMS } from "@/data/matchups"
-import { getTeam, teams, toTeamOption } from "@/data/teams"
+import { FEATURED_MATCHUPS, HOMEPAGE_NATIONS, HOMEPAGE_TEAMS, vsPath } from "@/data/matchups"
+import { getTeam } from "@/data/teams"
 import { LOCALIZED_COPY, localizedPath, type Locale, type LocalizedSection } from "@/lib/i18n"
 import type { HistoricalTeam } from "@/types"
 import { SITE, absoluteUrl } from "@/lib/site"
@@ -35,17 +35,16 @@ function LocalizedEditorial({ locale, section }: { locale: Locale; section: Loca
 
 export function LocalizedPage({ locale, section }: { locale: Locale; section?: LocalizedSection }) {
   const copy = LOCALIZED_COPY[locale]
-  const options = teams.map(toTeamOption)
   const clubs = selected(HOMEPAGE_TEAMS).slice(0, 6)
   const nations = selected(HOMEPAGE_NATIONS).slice(0, 6)
   const matches = FEATURED_MATCHUPS.slice(0, section === "vs" ? 18 : 6).flatMap(([homeId, awayId]) => {
     const home = getTeam(homeId)
     const away = getTeam(awayId)
-    return home && away ? [{ home, away, href: `/vs/${homeId}-vs-${awayId}` }] : []
+    return home && away ? [{ home, away, href: vsPath(homeId, awayId) }] : []
   })
 
   if (section === "simulate") {
-    return <div lang={locale === "pt-br" ? "pt-BR" : "es"} className="grid gap-5"><PageHeader kicker={copy.nav.simulate} title={copy.simulate.title} lead={copy.simulate.lead} /><MatchSetup teams={options} defaultHome="barcelona-2008-09" defaultAway="real-madrid-2016-17" locale={locale} /><LocalizedEditorial locale={locale} section="simulate" /></div>
+    return <div lang={locale === "pt-br" ? "pt-BR" : "es"} className="grid gap-5"><PageHeader kicker={copy.nav.simulate} title={copy.simulate.title} lead={copy.simulate.lead} /><MatchSetup defaultHome="barcelona-2008-09" defaultAway="real-madrid-2016-17" locale={locale} /><LocalizedEditorial locale={locale} section="simulate" /></div>
   }
   if (section === "teams" || section === "national-teams") {
     const isNations = section === "national-teams"
@@ -75,7 +74,7 @@ export function LocalizedPage({ locale, section }: { locale: Locale; section?: L
           ))}
         </p>
       </section>
-      <MatchSetup teams={options} defaultHome="barcelona-2008-09" defaultAway="real-madrid-2016-17" locale={locale} />
+      <MatchSetup defaultHome="barcelona-2008-09" defaultAway="real-madrid-2016-17" locale={locale} />
       <LocalizedSection title={copy.sections.dream} href={localizedPath(locale, "/vs")} link={copy.links.all}><div className="grid gap-2">{matches.slice(0, 3).map((match) => <MatchupRow key={match.href} {...match} />)}</div></LocalizedSection>
       <section className="home-editorial-section">
         <LocalizedHeading title={copy.howTitle} />

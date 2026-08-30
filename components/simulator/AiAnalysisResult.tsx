@@ -52,9 +52,9 @@ export function AiAnalysisResult({ analysis, home, away }: { analysis: PreMatchA
         <div className="mx-auto mt-3 grid max-w-3xl grid-cols-[minmax(0,1fr)_5rem_minmax(0,1fr)] items-center gap-2 sm:grid-cols-[minmax(0,1fr)_7rem_minmax(0,1fr)] sm:gap-4">
           <TeamMark team={home} />
           <div className="text-center">
-            <p className="font-display text-[7px] uppercase tracking-[0.18em] text-muted">Match forecast</p>
+            <p className="font-display text-[7px] uppercase tracking-[0.18em] text-muted">Representative night</p>
             <p className="result-score mt-1 text-4xl leading-none sm:text-5xl">{score}</p>
-            <p className="mt-1 font-mono text-[9px] text-muted">one simulated night</p>
+            <p className="mt-1 font-mono text-[9px] text-muted">aligned with the 100-match lean</p>
           </div>
           <TeamMark team={away} away />
         </div>

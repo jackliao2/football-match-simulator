@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { MatchSetup } from "@/components/simulator/MatchSetup"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { defaultOpponent } from "@/data/matchups"
-import { getTeam, teams, toTeamOption } from "@/data/teams"
+import { getTeam } from "@/data/teams"
 import { pageMetadata } from "@/lib/seo"
 import { languageAlternates } from "@/lib/i18n"
 
@@ -27,7 +27,6 @@ export default async function SimulatePage({
       ? requestedAway
       : defaultOpponent(home)
 
-  const options = teams.map(toTeamOption)
 
   return (
     <div className="grid gap-5">
@@ -36,7 +35,7 @@ export default async function SimulatePage({
         title="Simulate a football or soccer match"
         lead="Pick two squads from any available season. The match engine writes the score; Expert AI Analysis explains the matchup but never gets a vote."
       />
-      <MatchSetup teams={options} defaultHome={home} defaultAway={away} />
+      <MatchSetup defaultHome={home} defaultAway={away} />
       <section className="grid gap-3 border-t border-white/10 pt-6" aria-labelledby="simulator-guide">
         <div>
           <p className="page-kicker">Before kick-off</p>

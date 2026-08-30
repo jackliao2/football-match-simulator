@@ -14,15 +14,15 @@ export const HOMEPAGE_TEAMS = [
 ]
 
 export const HOMEPAGE_MATCHUPS = [
-  ["barcelona-2008-09", "real-madrid-2016-17"],
-  ["manchester-united-2007-08", "barcelona-2010-11"],
-  ["ac-milan-2006-07", "liverpool-2004-05"],
+  ["barcelona-2010-11", "real-madrid-2016-17"],
+  ["manchester-united-1998-99", "barcelona-2010-11"],
+  ["ac-milan-1988-89", "real-madrid-2016-17"],
   ["brazil-1970", "spain-2010"],
-  ["argentina-1986", "france-1998"],
-  ["manchester-united-1998-99", "arsenal-2003-04"],
-  ["barcelona-2014-15", "bayern-munich-2012-13"],
-  ["brazil-2002", "argentina-2022"],
-  ["ajax-1994-95", "ac-milan-1988-89"],
+  ["argentina-1986", "argentina-2022"],
+  ["arsenal-2003-04", "manchester-city-2022-23"],
+  ["bayern-munich-2012-13", "real-madrid-2016-17"],
+  ["brazil-2002", "france-2018"],
+  ["barcelona-2010-11", "ajax-1994-95"],
 ] as const
 
 export const HOMEPAGE_CURRENT_CLUBS = [

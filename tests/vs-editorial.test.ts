@@ -1,9 +1,17 @@
 import { describe, expect, it } from "vitest"
-import { FEATURED_MATCHUPS } from "@/data/matchups"
+import { allVsPairs, FEATURED_MATCHUPS, HOMEPAGE_MATCHUPS } from "@/data/matchups"
+import { canonicalVsSlug } from "@/lib/match-id"
 import { getTeam } from "@/data/teams"
 import { matchupFeature } from "@/data/vs-editorial"
 
 describe("curated dream-match editorial", () => {
+  it("only promotes homepage matchups that have a published canonical page", () => {
+    const published = new Set(allVsPairs().map(([home, away]) => canonicalVsSlug(home, away)))
+    for (const [home, away] of HOMEPAGE_MATCHUPS) {
+      expect(published.has(canonicalVsSlug(home, away)), `${home} vs ${away}`).toBe(true)
+    }
+  })
+
   it("gives every published matchup substantial hand-written analysis", () => {
     for (const [homeId, awayId] of FEATURED_MATCHUPS) {
       const home = getTeam(homeId)
