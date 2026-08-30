@@ -6,7 +6,7 @@ import { SITE } from "@/lib/site"
 export const metadata: Metadata = pageMetadata({
   title: "Privacy",
   description:
-    "What LegendaryMatch actually collects: host logs, email you send us, and optional match commentary. No accounts, no newsletter list.",
+    "What LegendaryMatch actually collects: host logs, email you send us, optional match commentary, and — only with consent — analytics and advertising cookies. No accounts, no newsletter list.",
   path: "/privacy",
 })
 
@@ -49,8 +49,8 @@ export default function PrivacyPage() {
           retention period rather than a profile controlled inside LegendaryMatch.
         </p>
         <p>
-          The simulator does not need an advertising cookie to play a match. Optional analytics
-          stays disabled until a visitor chooses to allow it in the consent panel.
+          The simulator does not need an advertising cookie to play a match. Analytics and advertising
+          stay disabled until a visitor chooses to allow them in the consent panel.
         </p>
       </section>
 
@@ -60,7 +60,30 @@ export default function PrivacyPage() {
           We use Google Analytics 4 to measure page visits and product actions such as selecting a
           team, running a simulation, requesting Expert AI Analysis, changing language
           and copying a match link. We do not send names, email addresses or AI API content.
-          Analytics storage is denied by default and is enabled only after you choose “Allow analytics”.
+          Analytics storage is denied by default and is enabled only after you choose “Accept analytics & ads”.
+        </p>
+      </section>
+
+      <section>
+        <h2>Advertising</h2>
+        <p>
+          LegendaryMatch may show ads served by Google AdSense so the site can stay free. Ad storage,
+          ad user data and ad personalisation are denied by default. They are enabled only if you choose
+          “Accept analytics & ads” in the consent panel. If you choose “Essential only”, we ask Google
+          not to use advertising cookies for you.
+        </p>
+        <p>
+          Google and its partners may use cookies to serve ads, measure how ads perform, and — where
+          you have allowed it — show ads based on previous visits. You can change your mind by clearing
+          site data for {SITE.domain} and answering the banner again. Google also publishes an{" "}
+          <a href="https://policies.google.com/technologies/ads" rel="noreferrer">advertising cookie explanation</a>{" "}
+          and an{" "}
+          <a href="https://adssettings.google.com/" rel="noreferrer">ad settings page</a>.
+        </p>
+        <p>
+          Ads are not the match engine. A simulated score is never written to sell a product, and we do
+          not let an advertiser pick a winner. If you are in a region that requires extra consent for
+          personalised ads, the same banner is the control.
         </p>
       </section>
 
@@ -118,8 +141,9 @@ export default function PrivacyPage() {
         <h2>Legal bases, rights, children</h2>
         <p>
           If GDPR or UK GDPR applies to you: answering the HTTP request you made is why logs exist
-          at all. Email exists because you sent it. Google Analytics is based on consent: analytics
-          storage remains denied unless you choose “Allow analytics” in the site panel.
+          at all. Email exists because you sent it. Google Analytics and AdSense are based on consent:
+          analytics and advertising storage remain denied unless you choose “Accept analytics & ads”
+          in the site panel.
         </p>
         <p>
           You can ask what we have, ask for a copy, ask us to delete a mail thread, or object. For
@@ -141,7 +165,8 @@ export default function PrivacyPage() {
         <p>
           Vercel hosts the Next.js app. DNS and the inbox for {SITE.domain} sit with whoever the
           domain is pointed at. Your mail also passes through your provider and ours. AI commentary,
-          when you request it, goes to that API vendor. Hosts move data between the US and the EU
+          when you request it, goes to that API vendor. Google Analytics and Google AdSense, when you
+          allow them, are processed by Google. Hosts move data between the US and the EU
           depending on how the project is set up; that is the tradeoff of running a small site on
           someone else’s platform rather than a rack in a cupboard.
         </p>
@@ -150,7 +175,7 @@ export default function PrivacyPage() {
       <section>
         <h2>Changes</h2>
         <p>
-          If the setup changes — a different analytics provider, a different host, a contact form we do not
+          If the setup changes — a different analytics provider, advertising partner, a different host, a contact form we do not
           have today — the date at the top of this page moves. We will not pretend we mailed you.
           Questions: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>. The{" "}
           <a href="/contact">contact page</a> is the same address with more on what to put in the

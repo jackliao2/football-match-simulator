@@ -11,11 +11,11 @@ import { getClub } from "@/data/clubs"
 import { getTeam } from "@/data/teams"
 
 describe("published dream matches", () => {
-  it("expands beyond the handwritten featured card without dumping hundreds of pages", () => {
+  it("indexes the handwritten featured card and does not dump filler who-would-win pages", () => {
     const pairs = allVsPairs()
-    expect(pairs.length).toBeGreaterThanOrEqual(100)
-    expect(pairs.length).toBeLessThanOrEqual(200)
-    expect(pairs.length).toBeGreaterThan(FEATURED_MATCHUPS.length)
+    expect(pairs.length).toBe(FEATURED_MATCHUPS.length)
+    expect(pairs.length).toBeGreaterThanOrEqual(20)
+    expect(pairs.length).toBeLessThanOrEqual(40)
   })
 
   it("only publishes pairs whose team IDs exist", () => {

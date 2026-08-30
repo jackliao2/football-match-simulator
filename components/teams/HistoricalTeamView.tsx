@@ -5,9 +5,11 @@ import { TrackOnMount } from "@/components/TrackOnMount"
 import { Formation } from "@/components/teams/Formation"
 import { SquadList } from "@/components/teams/SquadList"
 import { StarPlayers } from "@/components/teams/StarPlayers"
+import { StyleProfile } from "@/components/teams/StyleProfile"
 import { TeamRatings } from "@/components/teams/TeamRatings"
 import { PixelCrest } from "@/components/teams/PixelCrest"
 import { TrophyBadges } from "@/components/teams/TrophyBadges"
+import { EditorialByline, personSchema } from "@/components/ui/EditorialByline"
 import { eraGlow } from "@/data/trophies"
 import { MatchupRow } from "@/components/ui/MatchupRow"
 import { OvrStamp } from "@/components/ui/OvrStamp"
@@ -18,7 +20,7 @@ import { getTeam, getTeamsByClub } from "@/data/teams"
 import { cachedMatchupModel } from "@/lib/matchup-model"
 import { orgIndexPath, orgPath, teamPath } from "@/lib/paths"
 import { relatedMatchups, teamPageCopy } from "@/lib/page-copy"
-import { absoluteUrl } from "@/lib/site"
+import { SITE, absoluteUrl } from "@/lib/site"
 import type { HistoricalTeam } from "@/types"
 
 const SEARCH_YEAR_NOTES: Record<string, string> = {
@@ -150,20 +152,40 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
           }),
         }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: faqs.map((item) => ({
-              "@type": "Question",
-              name: item.q,
-              acceptedAnswer: { "@type": "Answer", text: item.a },
-            })),
-          }),
-        }}
-      />
+      {editorial ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Article",
+              headline: `${team.clubName} ${team.displaySeason}`,
+              description: copy.description,
+              url: absoluteUrl(teamPath(team)),
+              datePublished: SITE.legalUpdatedIso,
+              dateModified: SITE.legalUpdatedIso,
+              author: personSchema(),
+              publisher: { "@type": "Organization", name: SITE.name, url: absoluteUrl("/") },
+            }),
+          }}
+        />
+      ) : null}
+      {editorial ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: faqs.map((item) => ({
+                "@type": "Question",
+                name: item.q,
+                acceptedAnswer: { "@type": "Answer", text: item.a },
+              })),
+            }),
+          }}
+        />
+      ) : null}
       <header className="grid gap-3">
         <p className="font-mono text-xs text-muted">
           <Link href={orgIndexPath(team.kind)} className="hover:text-gold">
@@ -192,6 +214,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
             <div className="mt-2">
               <TrophyBadges trophies={team.trophies} />
             </div>
+            {editorial ? <EditorialByline /> : null}
           </div>
           <OvrStamp value={team.overallRating} size="xl" />
         </div>
@@ -234,17 +257,11 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
       <Formation team={team} />
       <SquadList team={team} />
       <TeamRatings team={team} />
+      <StyleProfile team={team} />
 
       <section className="result-panel">
         <h2 className="border-b border-white/10 px-3 py-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
-          {copy.playHeading}
-        </h2>
-        <p className="px-3 py-3 font-mono text-[12px] leading-6 text-muted">{copy.playNotes}</p>
-      </section>
-
-      <section className="result-panel">
-        <h2 className="border-b border-white/10 px-3 py-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
-          Style
+          Style tags
         </h2>
         <div className="flex flex-wrap gap-1.5 p-3">
           {team.styleTags.map((tag) => (
@@ -277,18 +294,20 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
         </section>
       ) : null}
 
-      <section className="result-panel p-4 sm:p-5">
-        <p className="page-kicker">FAQ</p>
-        <h2 className="section-title mt-1">Questions about this squad</h2>
-        <dl className="mt-3 grid gap-3">
-          {faqs.map((item) => (
-            <div key={item.q}>
-              <dt className="font-brand text-base font-semibold text-text">{item.q}</dt>
-              <dd className="mt-1 text-sm leading-6 text-muted">{item.a}</dd>
-            </div>
-          ))}
-        </dl>
-      </section>
+      {editorial ? (
+        <section className="result-panel p-4 sm:p-5">
+          <p className="page-kicker">FAQ</p>
+          <h2 className="section-title mt-1">Questions about this squad</h2>
+          <dl className="mt-3 grid gap-3">
+            {faqs.map((item) => (
+              <div key={item.q}>
+                <dt className="font-brand text-base font-semibold text-text">{item.q}</dt>
+                <dd className="mt-1 text-sm leading-6 text-muted">{item.a}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      ) : null}
 
       <div className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-sm">
         {siblings.map((item) => (

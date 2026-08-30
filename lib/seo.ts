@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { getTeamEditorial } from "@/data/team-editorial"
 import { teamPageCopy } from "@/lib/page-copy"
 import { teamPath } from "@/lib/paths"
 import { SITE, absoluteUrl } from "@/lib/site"
@@ -194,6 +195,9 @@ export function teamMetadata(team: HistoricalTeam): Metadata {
       team.kind === "nation" ? `${team.clubName} ${team.displaySeason} national team` : `${team.clubName} ${team.displaySeason} lineup`,
     ],
     alternates: { canonical: path },
+    robots: getTeamEditorial(team.id)
+      ? { index: true, follow: true }
+      : { index: false, follow: true },
     openGraph: {
       title: copy.title,
       description: copy.description,

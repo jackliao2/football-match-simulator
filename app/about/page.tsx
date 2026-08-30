@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { LegalDoc } from "@/components/ui/LegalDoc"
+import { EditorialByline, personSchema } from "@/components/ui/EditorialByline"
 import { pageMetadata } from "@/lib/seo"
 import { SITE, absoluteUrl } from "@/lib/site"
 
@@ -14,9 +15,15 @@ export default function AboutPage() {
   return <>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
       "@context": "https://schema.org", "@type": "AboutPage", name: "About LegendaryMatch", url: absoluteUrl("/about"),
-      mainEntity: { "@type": "Organization", name: SITE.name, url: absoluteUrl("/"), email: SITE.email },
+      mainEntity: { "@type": "Organization", name: SITE.name, url: absoluteUrl("/"), email: SITE.email, founder: personSchema() },
     }) }} />
     <LegalDoc kicker="The project" title="About LegendaryMatch" lead="A football time machine built for one question: what happens when the teams in two different memories have to share a pitch?" updated={SITE.legalUpdated}>
+      <EditorialByline />
+      <section>
+        <h2>Who writes this</h2>
+        <p>{SITE.editorName} edits LegendaryMatch: the squad catalogue, the ratings arguments, the dream-match long reads and the methodology. It is a named independent project, not an anonymous template farm. Corrections and disagreements go to the same inbox as legal mail: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+        <p>The voice on the pages is editorial on purpose. A season dossier is a claim about how a team played, not a generated caption on a ratings card. If a paragraph is wrong, it has an author who can change it.</p>
+      </section>
       <section>
         <h2>Why this site exists</h2>
         <p>Football arguments usually collapse into clips, trophy counts or the age of the person making the argument. LegendaryMatch gives the debate a playable form. Choose two named seasons, inspect the actual squad choices and run one possible match. The result is not history rewritten; it is a transparent way to test the assumptions behind the argument.</p>

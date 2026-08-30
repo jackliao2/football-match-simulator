@@ -3,6 +3,7 @@ import { Cinzel, IBM_Plex_Mono, Press_Start_2P } from "next/font/google"
 import { SiteFooter } from "@/components/ui/SiteFooter"
 import { SiteHeader } from "@/components/ui/SiteHeader"
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics"
+import { AdSense } from "@/components/ads/AdSense"
 import { defaultMetadata } from "@/lib/seo"
 import "./globals.css"
 
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       <body className="flex min-h-full flex-col font-mono antialiased">
         <GoogleAnalytics />
+        <AdSense />
         <SiteHeader />
         <div className="page-frame">
           <aside className="page-rail" aria-hidden="true" />

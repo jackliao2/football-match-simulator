@@ -258,71 +258,12 @@ export function defaultOpponent(teamId: string): string {
   return other?.id ?? teamId
 }
 
-const DERBY_CLUBS: Array<[string, string]> = [
-  ["barcelona", "real-madrid"],
-  ["real-madrid", "atletico-madrid"],
-  ["manchester-united", "liverpool"],
-  ["manchester-united", "manchester-city"],
-  ["manchester-united", "arsenal"],
-  ["liverpool", "everton"],
-  ["liverpool", "manchester-city"],
-  ["arsenal", "tottenham"],
-  ["arsenal", "chelsea"],
-  ["chelsea", "tottenham"],
-  ["ac-milan", "inter-milan"],
-  ["juventus", "ac-milan"],
-  ["juventus", "inter-milan"],
-  ["bayern-munich", "borussia-dortmund"],
-  ["ajax", "feyenoord"],
-  ["porto", "benfica"],
-  ["celtic", "rangers"],
-  ["boca-juniors", "river-plate"],
-  ["paris-saint-germain", "marseille"],
-  ["barcelona", "ac-milan"],
-  ["real-madrid", "bayern-munich"],
-  ["liverpool", "ac-milan"],
-]
-
 function peakOf(clubId: string) {
   const sides = teams.filter((team) => team.clubId === clubId)
   if (sides.length === 0) return undefined
   const historic = sides.filter((team) => !isCurrentSquad(team))
   const pool = historic.length > 0 ? historic : sides
   return [...pool].sort((a, b) => b.overallRating - a.overallRating || b.eraYear - a.eraYear)[0]
-}
-
-function extraVsPairs(): Array<[string, string]> {
-  const pairs: Array<[string, string]> = []
-  const add = (left: string | undefined, right: string | undefined) => {
-    if (!left || !right || left === right) return
-    pairs.push([left, right])
-  }
-
-  const byClub = new Map<string, typeof teams>()
-  for (const team of teams) {
-    const list = byClub.get(team.clubId) ?? []
-    list.push(team)
-    byClub.set(team.clubId, list)
-  }
-
-  for (const sides of byClub.values()) {
-    const historic = sides.filter((team) => !isCurrentSquad(team)).sort((a, b) => a.eraYear - b.eraYear)
-    const current = sides.find((team) => isCurrentSquad(team))
-    for (let i = 0; i < historic.length - 1; i++) add(historic[i]?.id, historic[i + 1]?.id)
-    const ranked = [...historic].sort((a, b) => b.overallRating - a.overallRating || b.eraYear - a.eraYear)
-    if (ranked[0] && ranked[1] && ranked[0].id !== ranked[1].id) add(ranked[0].id, ranked[1].id)
-    if (current && ranked[0]) add(ranked[0].id, current.id)
-  }
-
-  for (const [home, away] of Object.entries(DEFAULT_RIVALS)) add(home, away)
-
-  for (const [leftClub, rightClub] of DERBY_CLUBS) {
-    const left = peakOf(leftClub)
-    const right = peakOf(rightClub)
-    add(left?.id, right?.id)
-  }
-
-  return pairs
 }
 
 function collectVsPairs(source: Iterable<readonly [string, string]>): Array<[string, string]> {
@@ -343,10 +284,8 @@ function collectVsPairs(source: Iterable<readonly [string, string]>): Array<[str
 
 let publishedPairs: Array<[string, string]> | undefined
 
-const MAX_PUBLISHED_VS = 200
-
 export function allVsPairs(): Array<[string, string]> {
-  publishedPairs ??= collectVsPairs([...FEATURED_MATCHUPS, ...extraVsPairs()]).slice(0, MAX_PUBLISHED_VS)
+  publishedPairs ??= collectVsPairs(FEATURED_MATCHUPS)
   return publishedPairs
 }
 

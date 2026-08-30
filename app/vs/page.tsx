@@ -6,7 +6,6 @@ import { MatchupRow } from "@/components/ui/MatchupRow"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { pageMetadata } from "@/lib/seo"
 import { absoluteUrl } from "@/lib/site"
-import { languageAlternates } from "@/lib/i18n"
 
 export const metadata: Metadata = pageMetadata({
   title: "Dream matches you can actually play",
@@ -15,7 +14,6 @@ export const metadata: Metadata = pageMetadata({
   path: "/vs",
   keywords: ["dream soccer matches", "who would win soccer", "historical football matchups", "soccer match simulator"],
 })
-metadata.alternates = { canonical: "/vs", languages: languageAlternates("/vs") }
 
 export default function VsIndexPage() {
   const rows = FEATURED_MATCHUPS.map(([homeId, awayId]) => {

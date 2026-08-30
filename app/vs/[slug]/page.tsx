@@ -8,11 +8,12 @@ import { TeamRatings } from "@/components/teams/TeamRatings"
 import { PixelCrest } from "@/components/teams/PixelCrest"
 import { OvrStamp } from "@/components/ui/OvrStamp"
 import { PageHeader } from "@/components/ui/PageHeader"
+import { EditorialByline, personSchema } from "@/components/ui/EditorialByline"
 import { allVsPairs, isPublishedMatchup, vsSimulationRuns } from "@/data/matchups"
 import { getTeam } from "@/data/teams"
 import { matchupFeature } from "@/data/vs-editorial"
 import { canonicalVsSlug, parseVsSlug } from "@/lib/match-id"
-import { matchupDossier, vsPageCopy } from "@/lib/page-copy"
+import { vsPageCopy } from "@/lib/page-copy"
 import { teamPath } from "@/lib/paths"
 import { SITE, absoluteUrl } from "@/lib/site"
 import { cachedMatchupModel } from "@/lib/matchup-model"
@@ -81,8 +82,21 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
   const model = cachedMatchupModel(home, away, VS_RUNS, `vs:${slug}`)
 
   const copy = vsPageCopy(home, away, VS_RUNS)
-  const dossier = matchupDossier(home, away)
   const feature = matchupFeature(home, away)
+  const faqs = [
+    {
+      q: `Who would win between ${home.clubName} ${home.displaySeason} and ${away.clubName} ${away.displaySeason}?`,
+      a: `Across ${VS_RUNS} seeded simulations, ${home.clubName} won ${model.homeWinPct}%, ${away.clubName} won ${model.awayWinPct}%, and ${model.drawPct}% finished level. The most common score was ${model.mostCommonScore.replace("-", "–")}. This is a modelled hypothetical, not a prediction of a real fixture.`,
+    },
+    {
+      q: `What was the ${home.clubName} vs ${away.clubName} simulated score?`,
+      a: `There is no single official score. The model's most frequent scoreline across ${VS_RUNS} matches was ${model.mostCommonScore.replace("-", "–")}, with average goals ${model.avgHomeGoals}–${model.avgAwayGoals}.`,
+    },
+    {
+      q: `How do I simulate ${home.clubName} ${home.displaySeason} against ${away.clubName} ${away.displaySeason}?`,
+      a: `The simulator on this page is already loaded with both squads. Run one match for a fresh seed, or read the ${VS_RUNS}-match distribution above for the model's range of results.`,
+    },
+  ]
 
   return (
     <div className="grid gap-6">
@@ -95,6 +109,9 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
             name: copy.title,
             url: absoluteUrl(`/vs/${slug}`),
             description: copy.description,
+            author: personSchema(),
+            datePublished: SITE.legalUpdatedIso,
+            dateModified: SITE.legalUpdatedIso,
           }),
         }}
       />
@@ -111,47 +128,29 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
           }),
         }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: [
-              {
+      {feature ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: faqs.map((item) => ({
                 "@type": "Question",
-                name: `Who would win between ${home.clubName} ${home.displaySeason} and ${away.clubName} ${away.displaySeason}?`,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: `Across ${VS_RUNS} seeded simulations, ${home.clubName} won ${model.homeWinPct}%, ${away.clubName} won ${model.awayWinPct}%, and ${model.drawPct}% finished level. The most common score was ${model.mostCommonScore.replace("-", "–")}. This is a modelled hypothetical, not a prediction of a real fixture.`,
-                },
-              },
-              {
-                "@type": "Question",
-                name: `What was the ${home.clubName} vs ${away.clubName} simulated score?`,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: `There is no single official score. The model's most frequent scoreline across ${VS_RUNS} matches was ${model.mostCommonScore.replace("-", "–")}, with average goals ${model.avgHomeGoals}–${model.avgAwayGoals}.`,
-                },
-              },
-              {
-                "@type": "Question",
-                name: `How many times did ${home.clubName} ${home.displaySeason} win in 100 simulations?`,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: `Scaled to 100 matches, ${home.clubName} would win about ${Math.round(model.homeWinPct)}. The page actually runs ${VS_RUNS} matches so the percentages are more stable.`,
-                },
-              },
-            ],
-          }),
-        }}
-      />
+                name: item.q,
+                acceptedAnswer: { "@type": "Answer", text: item.a },
+              })),
+            }),
+          }}
+        />
+      ) : null}
       <PageHeader
         kicker={copy.kicker}
         title={`${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}`}
         lead={copy.lead}
         crumbs={[{ href: "/vs", label: "Dream matches" }]}
       />
+      {feature ? <EditorialByline /> : null}
 
       <section className="matchup-editorial">
         <div><p className="page-kicker">Why this matchup matters</p><h2 className="section-title mt-1">Two football ideas, one impossible night</h2></div>
@@ -188,18 +187,51 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
         </article>
       ) : null}
 
-      <section className="result-panel p-4 sm:p-5" aria-labelledby="matchup-dossier">
-        <p className="page-kicker">Matchup dossier</p>
-        <h2 id="matchup-dossier" className="section-title mt-2">What separates these two sides</h2>
-        <div className="editorial-copy mt-3">
-          <p>{dossier.edge}</p>
-          <p>{dossier.gameState}</p>
-          <p>{dossier.selection}</p>
-          <p><strong>How to read the result:</strong> the percentages below come from {VS_RUNS} seeded simulations using the squads, ratings and tactical tendencies shown on this page. They are a modelled matchup, not a record of a real fixture and not a betting prediction.</p>
+      <section className="result-panel p-4 sm:p-5" aria-labelledby="matchup-snapshot">
+        <p className="page-kicker">Rating snapshot</p>
+        <h2 id="matchup-snapshot" className="section-title mt-2">How the two sides compare on the model</h2>
+        <div className="comparison-table mt-3">
+          <div className="comparison-row">
+            <span>{home.clubName} {home.displaySeason}</span>
+            <b>Axis</b>
+            <span>{away.clubName} {away.displaySeason}</span>
+          </div>
+          {[
+            ["Attack", home.attackRating, away.attackRating],
+            ["Midfield", home.midfieldRating, away.midfieldRating],
+            ["Defence", home.defenseRating, away.defenseRating],
+            ["Goalkeeping", home.goalkeeperRating, away.goalkeeperRating],
+            ["Possession", home.possession, away.possession],
+            ["Pressing", home.pressing, away.pressing],
+          ].map(([label, left, right]) => (
+            <div key={String(label)} className="comparison-row">
+              <span>{left}</span>
+              <b>{label}</b>
+              <span>{right}</span>
+            </div>
+          ))}
         </div>
+        <p className="mt-3 max-w-3xl text-sm leading-6 text-muted">
+          Percentages below come from {VS_RUNS} seeded simulations using these squads and ratings. They are a modelled matchup, not a record of a real fixture and not betting advice.
+        </p>
       </section>
 
       <MonteCarloResults result={model} />
+
+      {feature ? (
+        <section className="result-panel p-4 sm:p-5">
+          <p className="page-kicker">FAQ</p>
+          <h2 className="section-title mt-1">Questions about this matchup</h2>
+          <dl className="mt-3 grid gap-3">
+            {faqs.map((item) => (
+              <div key={item.q}>
+                <dt className="font-brand text-base font-semibold text-text">{item.q}</dt>
+                <dd className="mt-1 text-sm leading-6 text-muted">{item.a}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      ) : null}
 
       <div className="grid gap-4 lg:grid-cols-2">
         <VsSquadCard team={home} />

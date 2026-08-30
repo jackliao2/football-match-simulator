@@ -78,6 +78,12 @@ export default function TermsPage() {
           lose money on. The model is entertainment. If you still put a stake on a 2004 Arsenal
           replay, that is your evening, not our liability.
         </p>
+        <p>
+          The site may display advertising, including Google AdSense, so that LegendaryMatch can stay
+          free. Ads are separate from the simulation. They do not change a score, a rating or a
+          who-would-win percentage. Cookie and consent details sit on the{" "}
+          <a href="/privacy">privacy page</a>.
+        </p>
       </section>
 
       <section>
@@ -131,7 +137,7 @@ export default function TermsPage() {
         <p>
           If these terms change, the date at the top moves. There is no account, so there is no
           email. Keep using the site after that and the new page is the agreement. The{" "}
-          <a href="/privacy">privacy page</a> covers logs, email and optional commentary.{" "}
+          <a href="/privacy">privacy page</a> covers logs, email, analytics, advertising and optional commentary.{" "}
           <a href="/contact">Contact</a> is the same address as everything else.
         </p>
       </section>

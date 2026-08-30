@@ -2,14 +2,15 @@ import type { MetadataRoute } from "next"
 import { allVsPairs } from "@/data/matchups"
 import { CLUB_COMPARES } from "@/data/compare"
 import { primeEntities } from "@/data/prime"
+import { isIndexableTeamPage } from "@/data/team-editorial"
 import { clubs, nations } from "@/data/clubs"
 import { teams } from "@/data/teams"
 import { teamPath } from "@/lib/paths"
-import { absoluteUrl } from "@/lib/site"
+import { SITE, absoluteUrl } from "@/lib/site"
 import { LOCALES, languageAlternates, localizedPath } from "@/lib/i18n"
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const multilingualPaths = new Set(["/", "/simulate", "/teams", "/national-teams", "/vs"])
+  const multilingualPaths = new Set(["/"])
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl("/"), changeFrequency: "weekly", priority: 1 },
     { url: absoluteUrl("/simulate"), changeFrequency: "weekly", priority: 0.9 },
@@ -31,14 +32,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     if (multilingualPaths.has(path)) route.alternates = { languages: languageAlternates(path) }
   }
 
-  const localizedRoutes: MetadataRoute.Sitemap = LOCALES.flatMap((locale) =>
-    ["/", "/simulate", "/teams", "/national-teams", "/vs"].map((path) => ({
-      url: absoluteUrl(localizedPath(locale, path)),
-      changeFrequency: "weekly" as const,
-      priority: path === "/" ? 0.85 : 0.7,
-      alternates: { languages: languageAlternates(path) },
-    })),
-  )
+  const localizedRoutes: MetadataRoute.Sitemap = LOCALES.map((locale) => ({
+    url: absoluteUrl(localizedPath(locale, "/")),
+    changeFrequency: "weekly" as const,
+    priority: 0.85,
+    lastModified: SITE.legalUpdatedIso,
+    alternates: { languages: languageAlternates("/") },
+  }))
 
   const clubRoutes = clubs.map((club) => ({
     url: absoluteUrl(`/teams/${club.id}`),
@@ -52,7 +52,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
-  const teamRoutes = teams.map((team) => {
+  const teamRoutes = teams.filter((team) => isIndexableTeamPage(team.id)).map((team) => {
     const current = team.kind === "nation" ? team.eraYear >= 2026 : team.eraYear >= 2025
     return {
       url: absoluteUrl(teamPath(team)),
@@ -88,5 +88,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...primeRoutes,
     ...vsRoutes,
     ...compareRoutes,
-  ]
+  ].map((route) => ({ ...route, lastModified: SITE.legalUpdatedIso }))
 }

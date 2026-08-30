@@ -1,3 +1,5 @@
+import { readConsent } from "@/lib/consent"
+
 export type AnalyticsEvent =
   | "team_page_view"
   | "simulator_started"
@@ -33,6 +35,7 @@ export function ensureGtag(): (...args: unknown[]) => void {
 
 export function track(event: AnalyticsEvent, payload: AnalyticsPayload = {}): void {
   if (typeof window === "undefined") return
+  if (readConsent() !== "granted") return
 
   const cleaned: Record<string, unknown> = { event }
   for (const [key, value] of Object.entries(payload)) {

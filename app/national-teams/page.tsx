@@ -8,7 +8,6 @@ import { parseCatalogTrophy } from "@/lib/catalog-filters"
 import { REGION_NOTES, catalogCounts } from "@/lib/page-copy"
 import { pageMetadata } from "@/lib/seo"
 import { absoluteUrl } from "@/lib/site"
-import { languageAlternates } from "@/lib/i18n"
 
 const counts = catalogCounts()
 
@@ -23,7 +22,6 @@ export async function generateMetadata({
     path: "/national-teams",
     keywords: ["historical soccer national teams", "World Cup teams simulator", "international football simulator", "soccer match simulator"],
   })
-  meta.alternates = { canonical: "/national-teams", languages: languageAlternates("/national-teams") }
   if (trophy !== "all") meta.robots = { index: false, follow: true }
   return meta
 }

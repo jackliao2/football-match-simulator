@@ -637,6 +637,27 @@ button {
   max-width: 44rem;
 }
 
+.editorial-byline {
+  margin-top: 0.35rem;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  color: var(--color-muted);
+}
+
+.editorial-byline a {
+  color: var(--color-gold);
+  text-decoration: none;
+}
+
+.editorial-byline a:hover {
+  color: var(--color-gold-2, var(--color-gold));
+}
+
+.style-radar {
+  display: block;
+}
+
 .season-sketches {
   display: grid;
   gap: 0.65rem;

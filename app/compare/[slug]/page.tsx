@@ -10,7 +10,8 @@ import { getPrimeEntity } from "@/data/prime"
 import { vsPath } from "@/data/matchups"
 import { getTeam } from "@/data/teams"
 import { pageMetadata } from "@/lib/seo"
-import { absoluteUrl } from "@/lib/site"
+import { SITE, absoluteUrl } from "@/lib/site"
+import { EditorialByline, personSchema } from "@/components/ui/EditorialByline"
 
 export const dynamicParams = false
 
@@ -58,6 +59,10 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
             headline: pair.title,
             description: pair.description,
             mainEntityOfPage: absoluteUrl(`/compare/${pair.slug}`),
+            author: personSchema(),
+            publisher: { "@type": "Organization", name: SITE.name, url: absoluteUrl("/") },
+            datePublished: SITE.legalUpdatedIso,
+            dateModified: SITE.legalUpdatedIso,
             about: [leftClub.name, rightClub.name],
           }),
         }}
@@ -68,6 +73,7 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
         lead={pair.lead}
         crumbs={[{ href: "/compare", label: "Compare" }]}
       />
+      <EditorialByline />
       <section className="editorial-verdict p-4 sm:p-5">
         <p className="page-kicker">The call</p>
         <h2 className="section-title mt-2">{pair.verdictHeading}</h2>

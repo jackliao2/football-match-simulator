@@ -8,7 +8,6 @@ import { parseCatalogTrophy } from "@/lib/catalog-filters"
 import { LEAGUE_NOTES, catalogCounts } from "@/lib/page-copy"
 import { pageMetadata } from "@/lib/seo"
 import { absoluteUrl } from "@/lib/site"
-import { languageAlternates } from "@/lib/i18n"
 
 const counts = catalogCounts()
 
@@ -23,7 +22,6 @@ export async function generateMetadata({
     path: "/teams",
     keywords: ["historical soccer teams", "legendary football squads", "soccer teams by season", "football match simulator"],
   })
-  meta.alternates = { canonical: "/teams", languages: languageAlternates("/teams") }
   if (trophy !== "all") meta.robots = { index: false, follow: true }
   return meta
 }

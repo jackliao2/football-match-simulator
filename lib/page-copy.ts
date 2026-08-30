@@ -40,25 +40,12 @@ function trophyBits(team: HistoricalTeam): string {
   return team.trophies.map((trophy) => trophy.label).join(", ")
 }
 
-function axis(team: HistoricalTeam): "attack" | "mid" | "defence" | "keeper" {
-  const scores: Array<["attack" | "mid" | "defence" | "keeper", number]> = [
-    ["attack", team.attackRating],
-    ["mid", team.midfieldRating],
-    ["defence", team.defenseRating],
-    ["keeper", team.goalkeeperRating],
-  ]
-  scores.sort((a, b) => b[1] - a[1])
-  return scores[0]![0]
-}
-
 export type TeamPageCopy = {
   title: string
   description: string
   kicker: string
   deck: string
   paragraphs: string[]
-  playHeading: string
-  playNotes: string
   matchupHeading: string
 }
 
@@ -145,19 +132,7 @@ export function teamPageCopy(team: HistoricalTeam, opponentArg?: HistoricalTeam)
   ]
   const deck = decks[slot]!
 
-  const paragraphs = extraParagraphs(team, opponent, slot, names)
-
-  const playHeadings = [
-    "How they play",
-    "What the numbers say",
-    "Shape",
-    "On the pitch",
-    "The idea",
-    "Where it hurts",
-    "Style in the engine",
-    "How this XI is built",
-    "Not a vibe — ratings",
-  ]
+  const paragraphs = extraParagraphs(team)
 
   const matchupHeadings = [
     "Who they get thrown at",
@@ -177,8 +152,6 @@ export function teamPageCopy(team: HistoricalTeam, opponentArg?: HistoricalTeam)
     kicker,
     deck,
     paragraphs,
-    playHeading: playHeadings[slot]!,
-    playNotes: playParagraph(team, slot),
     matchupHeading: matchupHeadings[copySlot(`${team.id}-m`, matchupHeadings.length)]!,
   }
 }
@@ -252,64 +225,9 @@ function buildTitle(
   return rest[bits.slot]!
 }
 
-function extraParagraphs(
-  team: HistoricalTeam,
-  opponent: HistoricalTeam | undefined,
-  slot: number,
-  names: ReturnType<typeof stars>,
-): string[] {
-  const extra = 1 + (slot % 3)
-  const pool: string[] = []
-  const top = names[0]
-  const second = names[1]
-  const siblingsNote = siblingNote(team)
-  const feat = team.achievements.filter((item) => item.length > 8)
-
-  if (top && second) {
-    pool.push(
-      [
-        `${top.name} (${top.overall}) is the headline. ${second.name} sits behind that in the ratings, which is not the same as who actually ran the dressing room.`,
-        `If you only remember one name from this ${team.displaySeason} side it is probably ${top.name}. The engine also has to live with ${second.name} every week.`,
-        `Highest rated: ${top.name}. Not a slight on ${second.name} — the scale is era-relative and a bit argumentative on purpose.`,
-      ][copySlot(`${team.id}-s`, 3)]!,
-    )
-  }
-
-  if (feat[0]) {
-    pool.push(
-      feat.length > 1
-        ? `What they actually did that year: ${feat[0].replace(/\.$/, "")}. Also on the list: ${feat[1]}.`
-        : `The honour this page is built around: ${feat[0].replace(/\.$/, "")}.`,
-    )
-  }
-
-  if (opponent) {
-    pool.push(
-      [
-        `People open this squad and immediately queue ${opponent.clubName} ${opponent.displaySeason}. That pairing is a rivalry in the catalogue, not a historical fixture unless the years actually met.`,
-        `If you came to beat a particular ghost, ${opponent.clubName} ${opponent.displaySeason} is the default other shirt.`,
-        `The simulate button on this page points at ${opponent.clubName} ${opponent.displaySeason} first. Change it. The engine does not mind.`,
-      ][copySlot(`${team.id}-o`, 3)]!,
-    )
-  }
-
-  if (siblingsNote) pool.push(siblingsNote)
-
-  if (team.styleTags.length >= 2) {
-    pool.push(
-      `Tags on the page — ${team.styleTags.slice(0, 3).join(", ").toLowerCase()} — are shorthand for how the model leans, not a documentary.`,
-    )
-  }
-
-  pool.push(chemistryLine(team, slot))
-
-  const out: string[] = []
-  const start = copySlot(`${team.id}-p`, pool.length)
-  for (let i = 0; i < extra && i < pool.length; i += 1) {
-    const next = pool[(start + i) % pool.length]
-    if (next && !out.includes(next)) out.push(next)
-  }
-  return out
+function extraParagraphs(team: HistoricalTeam): string[] {
+  const note = siblingNote(team)
+  return note ? [note] : []
 }
 
 function siblingNote(team: HistoricalTeam): string | undefined {
@@ -319,88 +237,12 @@ function siblingNote(team: HistoricalTeam): string | undefined {
   if (others.length === 0) return undefined
   const years = others.map((item) => item.displaySeason)
   if (years.length === 1) {
-    return `The other ${team.clubName} page here is ${years[0]}. Different year, different ratings, same shirt.`
+    return `The other ${team.clubName} season in this catalogue is ${years[0]}.`
   }
   if (isCurrentSquad(team)) {
-    return `Older ${team.clubName} sides on the site: ${years.join(", ")}. Use those if the argument is about a peak, not this cycle.`
+    return `Older ${team.clubName} sides on the site: ${years.join(", ")}.`
   }
-  return `Same club, other years in the database: ${years.join(", ")}.`
-}
-
-function chemistryLine(team: HistoricalTeam, slot: number): string {
-  const chem = team.chemistryRating
-  if (chem >= 94) {
-    return [
-      `Chemistry is ${chem}. The model treats this as a side that has played together, not eleven strangers in a photoshoot.`,
-      `Cohesion sits at ${chem} — high on purpose. Famous XIs usually get that bump.`,
-    ][slot % 2]!
-  }
-  if (chem <= 82) {
-    return `Chemistry is only ${chem}. Talent on the page, less of a locked dressing room than the holy sides.`
-  }
-  return `Chemistry ${chem}, overall ${team.overallRating}. Neither number is a FIFA card from a shop.`
-}
-
-function playParagraph(team: HistoricalTeam, slot: number): string {
-  const strong = axis(team)
-  const possess = team.possession
-  const press = team.pressing
-  const counter = team.counterAttack
-  const tempo = team.tempo
-  const bits: string[] = []
-
-  if (possess >= 68) {
-    bits.push(
-      `Possession is rated ${possess} — they want the ball, or at least the model thinks they did.`,
-    )
-  } else if (possess <= 48) {
-    bits.push(`Possession ${possess}. This is not a keep-ball souvenir.`)
-  } else {
-    bits.push(`Possession sits at ${possess}, not a religion.`)
-  }
-
-  if (press >= 80) {
-    bits.push(`Pressing ${press}, so turnovers are supposed to happen high up.`)
-  } else if (press <= 58) {
-    bits.push(`They do not hunt in packs (${press} press). The work is further back.`)
-  }
-
-  if (counter >= 80 && possess < 62) {
-    bits.push(`Counter-attack ${counter}: the point is the break, not the concert.`)
-  }
-
-  if (tempo >= 80) {
-    bits.push(`Tempo ${tempo} — the engine will try to rush the game.`)
-  } else if (tempo <= 58) {
-    bits.push(`Tempo ${tempo}. Patience, or at least the impression of it.`)
-  }
-
-  const axisLine = {
-    attack: `Attack ${team.attackRating} is the loud number.`,
-    mid: `Midfield ${team.midfieldRating} is where this side actually lives.`,
-    defence: `Defence ${team.defenseRating} is the thing the model respects most.`,
-    keeper: `The goalkeeper rating (${team.goalkeeperRating}) is doing more work than the outfield glamour.`,
-  }[strong]
-
-  const width =
-    team.width >= 82
-      ? `Width ${team.width}: both touchlines in play.`
-      : team.width <= 60
-        ? `Narrow-ish (width ${team.width}).`
-        : undefined
-
-  const aerial =
-    team.aerialThreat >= 78
-      ? `They will ask a question at set pieces (aerial ${team.aerialThreat}).`
-      : team.aerialThreat <= 52
-        ? `Aerial threat ${team.aerialThreat} — do not expect a barrage of flicks.`
-        : undefined
-
-  const ordered = [axisLine, ...bits, width, aerial].filter((item): item is string => Boolean(item))
-  const start = slot % ordered.length
-  const rotated = [...ordered.slice(start), ...ordered.slice(0, start)]
-  const take = 3 + (slot % 2)
-  return rotated.slice(0, take).join(" ")
+  return `Other ${team.clubName} seasons in the catalogue: ${years.join(", ")}.`
 }
 
 export function relatedMatchups(team: HistoricalTeam, limit = 4): HistoricalTeam[] {
@@ -553,28 +395,4 @@ export function vsPageCopy(home: HistoricalTeam, away: HistoricalTeam, runs: num
     editorial,
     kicker: "Dream match",
   }
-}
-
-export function matchupDossier(home: HistoricalTeam, away: HistoricalTeam) {
-  const ratingEdges = [
-    { label: "attack", home: home.attackRating, away: away.attackRating },
-    { label: "midfield", home: home.midfieldRating, away: away.midfieldRating },
-    { label: "defence", home: home.defenseRating, away: away.defenseRating },
-    { label: "goalkeeper", home: home.goalkeeperRating, away: away.goalkeeperRating },
-  ]
-  const biggest = [...ratingEdges].sort((a, b) => Math.abs(b.home - b.away) - Math.abs(a.home - a.away))[0]!
-  const edgeTeam = biggest.home === biggest.away ? undefined : biggest.home > biggest.away ? home : away
-  const edge = edgeTeam
-    ? `${edgeTeam.clubName} hold the clearest numerical edge in ${biggest.label}, ${Math.max(biggest.home, biggest.away)}–${Math.min(biggest.home, biggest.away)} on our era-relative scale.`
-    : `The largest headline category is level: both sides rate ${biggest.home} for ${biggest.label}.`
-
-  const paceTeam = home.tempo === away.tempo ? undefined : home.tempo > away.tempo ? home : away
-  const controlTeam = home.possession === away.possession ? undefined : home.possession > away.possession ? home : away
-  const gameState = `${paceTeam ? `${paceTeam.clubName} carry the higher tempo rating (${paceTeam.tempo})` : `Both sides share a tempo rating of ${home.tempo}`}; ${controlTeam ? `${controlTeam.clubName} are more strongly tilted toward possession (${controlTeam.possession})` : `their possession ratings are level at ${home.possession}`}. Those numbers describe intentions, not a guaranteed share of the ball.`
-
-  const homeNames = stars(home, 3).map((player) => player.name)
-  const awayNames = stars(away, 3).map((player) => player.name)
-  const selection = `${home.manager}'s likely core is ${homeNames.join(", ")}; ${away.manager}'s is ${awayNames.join(", ")}. The lineups use a representative XI for the named season rather than claiming that the same eleven started every match.`
-
-  return { edge, gameState, selection }
 }

@@ -1,27 +1,25 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { CONSENT_KEY, consentSignals, readConsent, type ConsentChoice } from "@/lib/consent"
 import { ensureGtag, track } from "@/lib/analytics"
 
-const CONSENT_KEY = "legendarymatch_analytics_consent"
-type Consent = "granted" | "denied"
-
-function updateConsent(value: Consent) {
-  ensureGtag()("consent", "update", { analytics_storage: value, ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" })
+function updateConsent(value: ConsentChoice) {
+  ensureGtag()("consent", "update", consentSignals(value))
 }
 
 export function AnalyticsConsent() {
   const [visible, setVisible] = useState(false)
   useEffect(() => {
-    const saved = window.localStorage.getItem(CONSENT_KEY) as Consent | null
-    if (saved === "granted" || saved === "denied") updateConsent(saved)
+    const saved = readConsent()
+    if (saved) updateConsent(saved)
     else {
       const timer = window.setTimeout(() => setVisible(true), 0)
       return () => window.clearTimeout(timer)
     }
   }, [])
 
-  function choose(value: Consent) {
+  function choose(value: ConsentChoice) {
     window.localStorage.setItem(CONSENT_KEY, value)
     updateConsent(value)
     setVisible(false)
@@ -29,8 +27,25 @@ export function AnalyticsConsent() {
   }
 
   if (!visible) return null
-  return <aside className="consent-banner" aria-label="Analytics preferences">
-    <div><p>Help improve LegendaryMatch</p><span>We use Google Analytics to understand which teams and simulator features people use. No advertising cookies, accounts or personal profiles.</span></div>
-    <div className="consent-actions"><button type="button" onClick={() => choose("denied")}>Essential only</button><button type="button" className="is-primary" onClick={() => choose("granted")}>Allow analytics</button><a href="/privacy">Privacy</a></div>
-  </aside>
+  return (
+    <aside className="consent-banner" aria-label="Privacy preferences">
+      <div>
+        <p>Help keep LegendaryMatch free</p>
+        <span>
+          We use Google Analytics to see which teams and simulator features people use, and Google AdSense to show ads.
+          Essential cookies are not used for advertising. Choose whether analytics and advertising cookies can be stored.
+          Details are on the privacy page.
+        </span>
+      </div>
+      <div className="consent-actions">
+        <button type="button" onClick={() => choose("denied")}>
+          Essential only
+        </button>
+        <button type="button" className="is-primary" onClick={() => choose("granted")}>
+          Accept analytics & ads
+        </button>
+        <a href="/privacy">Privacy</a>
+      </div>
+    </aside>
+  )
 }

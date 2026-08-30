@@ -10,6 +10,7 @@ import { getTeam } from "@/data/teams"
 import { isPublishedMatchup, vsPath } from "@/data/matchups"
 import { teamPath } from "@/lib/paths"
 import { SITE, absoluteUrl } from "@/lib/site"
+import { EditorialByline, personSchema } from "@/components/ui/EditorialByline"
 
 export const dynamicParams = false
 
@@ -69,7 +70,10 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
         description: page.seoDescription,
         url: pageUrl,
         mainEntityOfPage: pageUrl,
-        author: { "@type": "Organization", name: SITE.name },
+        author: personSchema(),
+        publisher: { "@type": "Organization", name: SITE.name, url: absoluteUrl("/") },
+        datePublished: SITE.legalUpdatedIso,
+        dateModified: SITE.legalUpdatedIso,
         about: { "@type": page.kind === "player" ? "Person" : "SportsTeam", name: page.name },
       }) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -86,6 +90,7 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
         lead={page.description}
         crumbs={[{ href: "/prime", label: "Prime" }]}
       />
+      <EditorialByline />
 
       <section className="result-panel overflow-hidden border-2 border-gold/40 shadow-[6px_6px_0_#000]">
         <div className="border-b border-white/10 bg-gold/[0.05] px-4 py-3 sm:px-5">
