@@ -1,0 +1,13 @@
+---
+description: Ship finished work to production by default
+alwaysApply: true
+---
+
+# Ship live by default
+
+When a task is done, **commit and push to `origin/main`** without waiting to be asked. That is how this site goes live.
+
+- Commit after the work is complete and checks you ran are green.
+- Push `main` to `origin` immediately after the commit. Do not wait for a separate "push" or "deploy" message.
+- Do not force-push `main`.
+- Skip commit/push only if the user says not to, or if the change is local-only (secrets, `.env`, scratch files).
