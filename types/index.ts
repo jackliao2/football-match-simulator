@@ -49,6 +49,7 @@ export interface HistoricalTeam {
   aerialThreat: number
   players: Player[]
   startingXI: string[]
+  penaltyTakerId?: string
   trophies: Trophy[]
   achievements: string[]
   styleTags: string[]

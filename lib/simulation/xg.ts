@@ -19,6 +19,7 @@ export function calculateExpectedGoals(
   defending: HistoricalTeam,
   isHome: boolean,
   rng: Rng,
+  options?: { neutral?: boolean },
 ): number {
   const atk = effectiveRatings(attacking)
   const def = effectiveRatings(defending)
@@ -26,7 +27,7 @@ export function calculateExpectedGoals(
   const attack = offensiveStrength(atk, tactical * 100)
   const resist = defensiveStrength(def)
   const noise = 0.93 + rng() * 0.14
-  const home = isHome ? HOME_ADVANTAGE : 1
+  const home = options?.neutral ? 1 : isHome ? HOME_ADVANTAGE : 1
   // Attack/defence ratings describe the matchup, while overall quality makes a
   // sustained class gap matter across 90 minutes. An exponential curve keeps
   // close elite matchups close but stops a ten-point underdog being near 50/50.

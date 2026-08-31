@@ -1,15 +1,17 @@
-import type { HistoricalTeam, MatchEvent, SimulatedMatch } from "@/types"
+import type { HistoricalTeam, MatchEvent, MonteCarloResult, SimulatedMatch } from "@/types"
 import { round1, round2 } from "@/lib/format"
 import { buildMatchId } from "@/lib/match-id"
 import { poisson, rngFromSeed } from "@/lib/simulation/random"
-import { effectiveRatings, starters } from "@/lib/simulation/ratings"
+import { attackingFinishing, effectiveRatings } from "@/lib/simulation/ratings"
 import { calculateExpectedGoals, derivePossession } from "@/lib/simulation/xg"
 import {
   assignCards,
   assignChancesAndSaves,
   assignGoals,
   assignSubstitutions,
+  buildPitchWindows,
   cornersFromShots,
+  dropSubsAfterReds,
   foulsFromPressing,
   maybeRed,
   passesFromPossession,
@@ -46,32 +48,15 @@ export function simulateMatch(
   seed: string,
 ): SimulatedMatch {
   const rng = rngFromSeed(`${home.id}|${away.id}|${seed}`)
-  const homeXG = calculateExpectedGoals(home, away, true, rng)
-  const awayXG = calculateExpectedGoals(away, home, false, rng)
+  const neutral = home.kind === "nation" && away.kind === "nation"
+  const homeXG = calculateExpectedGoals(home, away, true, rng, { neutral })
+  const awayXG = calculateExpectedGoals(away, home, false, rng, { neutral })
   const homeGoals = poisson(homeXG, rng)
   const awayGoals = poisson(awayXG, rng)
 
-  const usedMinutes = new Set<number>()
-  const events: MatchEvent[] = [
-    ...assignGoals(home, homeGoals, "home", rng, usedMinutes),
-    ...assignGoals(away, awayGoals, "away", rng, usedMinutes),
-  ]
-
   const possession = derivePossession(home, away, rng)
-  const homeShots = shotProfile(
-    homeXG,
-    homeGoals,
-    starters(home).reduce((sum, player) => sum + (player.finishing ?? player.overall), 0) /
-      Math.max(1, starters(home).length),
-    rng,
-  )
-  const awayShots = shotProfile(
-    awayXG,
-    awayGoals,
-    starters(away).reduce((sum, player) => sum + (player.finishing ?? player.overall), 0) /
-      Math.max(1, starters(away).length),
-    rng,
-  )
+  const homeShots = shotProfile(homeXG, homeGoals, attackingFinishing(home), rng)
+  const awayShots = shotProfile(awayXG, awayGoals, attackingFinishing(away), rng)
 
   const homeFouls = foulsFromPressing(away.pressing * 0.35 + home.pressing * 0.65, rng)
   const awayFouls = foulsFromPressing(home.pressing * 0.35 + away.pressing * 0.65, rng)
@@ -80,14 +65,29 @@ export function simulateMatch(
   const homeReds = maybeRed(rng)
   const awayReds = maybeRed(rng)
 
-  events.push(
-    ...assignCards(home, "home", homeYellows, homeReds, rng, usedMinutes),
-    ...assignCards(away, "away", awayYellows, awayReds, rng, usedMinutes),
-    ...assignSubstitutions(home, "home", rng, usedMinutes),
-    ...assignSubstitutions(away, "away", rng, usedMinutes),
-    ...assignChancesAndSaves(home, away, "home", rng, usedMinutes),
-    ...assignChancesAndSaves(away, home, "away", rng, usedMinutes),
-  )
+  const homeSubs = assignSubstitutions(home, "home", rng, new Set())
+  const awaySubs = assignSubstitutions(away, "away", rng, new Set())
+  const homeWindowsAfterSubs = buildPitchWindows(home, [], homeSubs)
+  const awayWindowsAfterSubs = buildPitchWindows(away, [], awaySubs)
+  const homeCards = assignCards(home, "home", homeYellows, homeReds, rng, new Set(), homeWindowsAfterSubs)
+  const awayCards = assignCards(away, "away", awayYellows, awayReds, rng, new Set(), awayWindowsAfterSubs)
+  const homeRedsEvents = homeCards.filter((item) => item.type === "red")
+  const awayRedsEvents = awayCards.filter((item) => item.type === "red")
+  const homeSubsLive = dropSubsAfterReds(homeSubs, homeRedsEvents)
+  const awaySubsLive = dropSubsAfterReds(awaySubs, awayRedsEvents)
+  const homeWindows = buildPitchWindows(home, homeRedsEvents, homeSubsLive)
+  const awayWindows = buildPitchWindows(away, awayRedsEvents, awaySubsLive)
+
+  const events: MatchEvent[] = [
+    ...assignGoals(home, homeGoals, "home", rng, new Set(), homeWindows),
+    ...assignGoals(away, awayGoals, "away", rng, new Set(), awayWindows),
+    ...homeCards,
+    ...awayCards,
+    ...homeSubsLive,
+    ...awaySubsLive,
+    ...assignChancesAndSaves(home, away, "home", rng, new Set(), homeWindows),
+    ...assignChancesAndSaves(away, home, "away", rng, new Set(), awayWindows),
+  ]
 
   events.sort((a, b) => a.minute - b.minute || a.type.localeCompare(b.type))
 
@@ -151,7 +151,22 @@ export function simulateMany(
   away: HistoricalTeam,
   runs: number,
   baseSeed: string,
-) {
+  options: { retainMatches: true },
+): MonteCarloResult & { matches: SimulatedMatch[] }
+export function simulateMany(
+  home: HistoricalTeam,
+  away: HistoricalTeam,
+  runs: number,
+  baseSeed: string,
+  options?: { retainMatches?: boolean },
+): MonteCarloResult
+export function simulateMany(
+  home: HistoricalTeam,
+  away: HistoricalTeam,
+  runs: number,
+  baseSeed: string,
+  options?: { retainMatches?: boolean },
+): MonteCarloResult & { matches?: SimulatedMatch[] } {
   let homeWins = 0
   let draws = 0
   let awayWins = 0
@@ -173,9 +188,11 @@ export function simulateMany(
   const homeAssists = new Map<string, number>()
   const awayAssists = new Map<string, number>()
   const samples: Array<{ home: number; away: number }> = []
+  const matches: SimulatedMatch[] = []
 
   for (let i = 0; i < runs; i++) {
     const match = simulateMatch(home, away, `${baseSeed}:${i}`)
+    if (options?.retainMatches) matches.push(match)
     homeGoals += match.score.home
     awayGoals += match.score.away
     homeXg += match.stats.xg[0]
@@ -213,7 +230,7 @@ export function simulateMany(
       pct: round1((count / runs) * 100),
     }))
 
-  return {
+  const result: MonteCarloResult = {
     runs,
     homeTeam: `${home.clubName} ${home.displaySeason}`,
     awayTeam: `${away.clubName} ${away.displaySeason}`,
@@ -249,6 +266,9 @@ export function simulateMany(
     homeCleanPct: round1((homeClean / runs) * 100),
     awayCleanPct: round1((awayClean / runs) * 100),
   }
+
+  if (options?.retainMatches) return { ...result, matches }
+  return result
 }
 
 export function toCommentaryPayload(match: SimulatedMatch, home: HistoricalTeam, away: HistoricalTeam) {

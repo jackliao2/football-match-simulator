@@ -17,6 +17,11 @@ export interface EffectiveRatings {
   eraFactor: number
 }
 
+const QUALITY_FLOOR = 48
+const QUALITY_SPAN = 46
+const QUALITY_EXPONENT = 2.4
+const ATTACKING_FINISH = new Set(["ST", "CF", "SS", "LW", "RW", "CAM", "LAM", "RAM", "LM", "RM"])
+
 /**
  * Era normalization.
  *
@@ -89,25 +94,51 @@ export function bench(team: HistoricalTeam): Player[] {
   return team.players.filter((player) => !starting.has(player.id) && player.position !== "GK")
 }
 
-export function scoringWeight(player: Player): number {
+export function attackingFinishing(team: HistoricalTeam): number {
+  const xi = starters(team)
+  const attackers = xi.filter((player) => ATTACKING_FINISH.has(player.position))
+  const pool = attackers.length > 0 ? attackers : xi.filter((player) => player.position !== "GK")
+  if (pool.length === 0) return 70
+  return pool.reduce((sum, player) => sum + (player.finishing ?? player.attack ?? player.overall), 0) / pool.length
+}
+
+/**
+ * Superlinear so a 94 finisher is clearly more likely to score than an 82,
+ * instead of the old linear scale where position multipliers dominated.
+ */
+export function qualityCurve(rating: number): number {
+  return Math.pow(Math.max(0, rating - QUALITY_FLOOR) / QUALITY_SPAN, QUALITY_EXPONENT)
+}
+
+export function scoringWeight(player: Player, aerialThreat = 70): number {
   const finishing = player.finishing ?? player.attack ?? player.overall
-  const multiplier = positionMultiplier(player.position, "score")
-  return Math.max(0.5, finishing * multiplier)
+  const openPlay = qualityCurve(finishing) * positionMultiplier(player.position, "score")
+  const setPiece =
+    setPieceMultiplier(player.position) * (aerialThreat / 100) * ((player.physical ?? player.overall) / 100)
+  return Math.max(0.002, openPlay + setPiece)
 }
 
 export function assistWeight(player: Player): number {
   const creation = player.chanceCreation ?? player.creativity ?? player.passing ?? player.overall
   const multiplier = positionMultiplier(player.position, "assist")
-  return Math.max(0.2, creation * multiplier)
+  return Math.max(0.002, qualityCurve(creation) * multiplier)
+}
+
+function setPieceMultiplier(position: string): number {
+  if (["CB", "LCB", "RCB"].includes(position)) return 0.09
+  if (["ST", "CF"].includes(position)) return 0.03
+  if (["CDM", "LDM", "RDM"].includes(position)) return 0.02
+  if (["LB", "RB", "LWB", "RWB"].includes(position)) return 0.008
+  return 0
 }
 
 function positionMultiplier(position: string, kind: "score" | "assist"): number {
   const score: Record<string, number> = {
-    ST: 1.45,
-    CF: 1.4,
-    SS: 1.28,
-    LW: 1.18,
-    RW: 1.18,
+    ST: 1.3,
+    CF: 1.28,
+    SS: 1.22,
+    LW: 1.15,
+    RW: 1.15,
     CAM: 0.86,
     LAM: 0.9,
     RAM: 0.9,
@@ -146,10 +177,10 @@ function positionMultiplier(position: string, kind: "score" | "assist"): number 
     CDM: 0.7,
     LDM: 0.65,
     RDM: 0.65,
-    LB: 0.85,
-    RB: 0.9,
-    LWB: 1.0,
-    RWB: 1.0,
+    LB: 0.62,
+    RB: 0.65,
+    LWB: 0.72,
+    RWB: 0.72,
     CB: 0.25,
     LCB: 0.22,
     RCB: 0.22,
@@ -160,6 +191,17 @@ function positionMultiplier(position: string, kind: "score" | "assist"): number 
   return table[position] ?? (kind === "score" ? 0.5 : 0.7)
 }
 
-export function penaltyTaker(players: Player[]): Player {
-  return [...players].sort((a, b) => scoringWeight(b) - scoringWeight(a))[0] ?? players[0]!
+function penaltyTakerScore(player: Player): number {
+  const finishing = player.finishing ?? player.attack ?? player.overall
+  return player.overall * 0.6 + finishing * 0.4
+}
+
+export function penaltyTaker(team: HistoricalTeam, players: Player[]): Player {
+  const outfield = players.filter((player) => player.position !== "GK")
+  const pool = outfield.length > 0 ? outfield : players
+  const designated = team.penaltyTakerId
+    ? pool.find((player) => player.id === team.penaltyTakerId)
+    : undefined
+  if (designated) return designated
+  return [...pool].sort((a, b) => penaltyTakerScore(b) - penaltyTakerScore(a))[0] ?? pool[0]!
 }

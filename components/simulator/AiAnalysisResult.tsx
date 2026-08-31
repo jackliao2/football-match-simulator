@@ -54,7 +54,7 @@ export function AiAnalysisResult({ analysis, home, away }: { analysis: PreMatchA
           <div className="text-center">
             <p className="font-display text-[7px] uppercase tracking-[0.18em] text-muted">Representative night</p>
             <p className="result-score mt-1 text-4xl leading-none sm:text-5xl">{score}</p>
-            <p className="mt-1 font-mono text-[9px] text-muted">aligned with the 100-match lean</p>
+            <p className="mt-1 font-mono text-[9px] text-muted">most common scoreline for this 100-world lean</p>
           </div>
           <TeamMark team={away} away />
         </div>

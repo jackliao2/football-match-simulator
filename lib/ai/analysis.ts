@@ -1,12 +1,14 @@
 import type { HistoricalTeam, Player, SimulatedMatch } from "@/types"
 import { createCommentaryProvider } from "@/lib/ai/provider"
-import { simulateMany, simulateMatch } from "@/lib/simulation"
+import { simulateMany } from "@/lib/simulation"
 import { starters } from "@/lib/simulation/ratings"
 import type { MonteCarloResult } from "@/types"
 
 const ATTACK_POS = new Set(["ST", "CF", "LW", "RW", "SS", "CAM"])
-const MID_POS = new Set(["CM", "CDM", "CAM", "LCM", "RCM", "LDM", "RDM", "LM", "RM"])
+const MID_POS = new Set(["CM", "CDM", "LCM", "RCM", "LDM", "RDM", "LM", "RM"])
 const DEF_POS = new Set(["CB", "LB", "RB", "LCB", "RCB", "LWB", "RWB"])
+const LEFT_POS = ["LW", "LM", "LAM", "LWB", "LB"]
+const RIGHT_POS = ["RW", "RM", "RAM", "RWB", "RB"]
 
 export const ANALYSIS_SYSTEM_PROMPT = `You write premium, fan-first matchup copy for a historical football team simulator.
 
@@ -32,6 +34,9 @@ Hard rules:
 - Match the force of the language to narrativeGuide.tier. For "overwhelming", write a commanding forecast: the favourite can overwhelm, suffocate, swarm, tear open, turn the match into a siege, or make it a survival test. Do not soften a major mismatch into "could control large spells", "may have an edge", or "could create chances". For "strong", make the favourite and repeatable route unmistakable. For "competitive", stay balanced without writing "too close to call".
 - A commanding forecast is not a guarantee. Preserve one credible underdog escape route in chaosFactor or finalWord, but do not let that counter-pattern dilute callTitle or callBody.
 - Follow narrativeGuide.primaryThreats and engineRead.topScorers/topAssists. In a mismatch, the dominant side's elite forwards and main creators must be the story. At least two of callBody, decidingSequence, openingPhase and keyDuel must name a primaryThreat. If a famous front two or front three lead the scoring model, foreground that combination.
+- Flank duels MUST be taken from matchupGeometry. A left-sided attacker faces the opponent's right-sided defender. Never pair two left-sided or two right-sided players from opposite teams as a duel.
+- decidingSequence is a plausible pattern, not a dated event. Do not invent a specific clock time, scorer or save that is not in representativeNight.
+- representativeNight is the displayed scoreline (the most common score across 100 worlds). callTitle and callBody must not contradict it: if the score is a draw, do not write as if one side already won the night.
 - Full-backs and supporting defenders may explain width, but must not take over the report. Do not name the same non-primary player in more than one of decidingSequence, openingPhase, keyDuel and coachingMove unless engineRead lists that player among the top two creators.
 - Avoid categorical player-ranking claims and insults. Never use: unstoppable, cannot cope, no answer, destroy, outclass, superior, easy win, definitely, will punish. "Overwhelm" describes a projected team pattern and is allowed only for an overwhelming tier.
 - Sound like the opening of a great Champions League broadcast: vivid, specific, decisive and respectful. No markdown and no headings.
@@ -58,26 +63,74 @@ export interface PreMatchAnalysis {
   simulation: MonteCarloResult
 }
 
-function representativeNight(
-  home: HistoricalTeam,
-  away: HistoricalTeam,
-  simulation: MonteCarloResult,
-  seed: string,
-): SimulatedMatch {
+function representativeNight(matches: SimulatedMatch[], simulation: MonteCarloResult): SimulatedMatch {
   const lean = simulation.homeWins - simulation.awayWins
   const desired = lean >= 5 ? "home" : lean <= -5 ? "away" : "any"
-  const candidates = Array.from({ length: 24 }, (_, index) =>
-    simulateMatch(home, away, `${seed}:forecast:${index}`),
-  )
-  const outcome = (match: SimulatedMatch) =>
+  const outcomeOf = (match: SimulatedMatch) =>
     match.score.home === match.score.away ? "draw" : match.score.home > match.score.away ? "home" : "away"
-  const matching = desired === "any" ? candidates : candidates.filter((match) => outcome(match) === desired)
-  const usable = matching.length > 0 ? matching : candidates
-  return [...usable].sort((a, b) => {
-    const aDistance = Math.abs(a.score.home - simulation.avgHomeGoals) + Math.abs(a.score.away - simulation.avgAwayGoals)
-    const bDistance = Math.abs(b.score.home - simulation.avgHomeGoals) + Math.abs(b.score.away - simulation.avgAwayGoals)
-    return aDistance - bDistance
-  })[0]!
+  const leanMatches = desired === "any" ? matches : matches.filter((match) => outcomeOf(match) === desired)
+  const pool = leanMatches.length > 0 ? leanMatches : matches
+  const counts = new Map<string, number>()
+  for (const match of pool) {
+    const key = `${match.score.home}-${match.score.away}`
+    counts.set(key, (counts.get(key) ?? 0) + 1)
+  }
+  const modal = [...counts.entries()].sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))[0]?.[0]
+  const [homeGoals, awayGoals] = (modal ?? simulation.mostCommonScore).split("-").map((value) => Number(value))
+  return (
+    pool.find((match) => match.score.home === homeGoals && match.score.away === awayGoals) ??
+    pool[0] ??
+    matches[0]!
+  )
+}
+
+function flankSide(position: string): "left" | "right" | "central" {
+  if (LEFT_POS.includes(position) || position === "LCB" || position === "LCM" || position === "LDM") return "left"
+  if (RIGHT_POS.includes(position) || position === "RCB" || position === "RCM" || position === "RDM") return "right"
+  return "central"
+}
+
+function flankAttacker(team: HistoricalTeam, side: "left" | "right"): Player | undefined {
+  const xi = starters(team)
+  const order = side === "left" ? ["LW", "LM", "LAM"] : ["RW", "RM", "RAM"]
+  for (const position of order) {
+    const player = xi.find((item) => item.position === position)
+    if (player) return player
+  }
+  return xi.find((item) => flankSide(item.position) === side && ATTACK_POS.has(item.position))
+}
+
+function flankDefender(team: HistoricalTeam, side: "left" | "right"): Player | undefined {
+  const xi = starters(team)
+  const order = side === "left" ? ["LB", "LWB"] : ["RB", "RWB"]
+  for (const position of order) {
+    const player = xi.find((item) => item.position === position)
+    if (player) return player
+  }
+  return xi.find((item) => flankSide(item.position) === side && DEF_POS.has(item.position))
+}
+
+function describeDuel(attacker: Player | undefined, defender: Player | undefined): string {
+  if (!attacker || !defender) return "no clear wide pairing"
+  return `${attacker.name} (${attacker.position}) attacks ${defender.name} (${defender.position})`
+}
+
+function centralNames(team: HistoricalTeam): string {
+  const mids = starters(team).filter((player) =>
+    ["CM", "CDM", "CAM", "LCM", "RCM", "LDM", "RDM"].includes(player.position),
+  )
+  return mids.map((player) => player.name).join(", ") || "central midfield"
+}
+
+function matchupGeometry(home: HistoricalTeam, away: HistoricalTeam) {
+  return {
+    note: "Positions mirror across the halfway line. A left-sided attacker faces the opponent's right-sided defender.",
+    homeLeftVsAwayRight: describeDuel(flankAttacker(home, "left"), flankDefender(away, "right")),
+    homeRightVsAwayLeft: describeDuel(flankAttacker(home, "right"), flankDefender(away, "left")),
+    awayLeftVsHomeRight: describeDuel(flankAttacker(away, "left"), flankDefender(home, "right")),
+    awayRightVsHomeLeft: describeDuel(flankAttacker(away, "right"), flankDefender(home, "left")),
+    centralZone: `${centralNames(home)} against ${centralNames(away)}`,
+  }
 }
 
 function byOverall(a: Player, b: Player) {
@@ -101,7 +154,12 @@ function styleLine(team: HistoricalTeam): string {
   return `${team.clubName} ${team.displaySeason} line up in a ${team.formation} under ${team.manager}. Tagged ${team.styleTags.join(", ") || "balanced"}. Possession ${team.possession}, press ${team.pressing}, tempo ${team.tempo}, counter ${team.counterAttack}, width ${team.width}. Unit ratings: ATK ${team.attackRating} / MID ${team.midfieldRating} / DEF ${team.defenseRating} / GK ${team.goalkeeperRating} / CHE ${team.chemistryRating} / OVR ${team.overallRating}.`
 }
 
-export function analysisPayload(home: HistoricalTeam, away: HistoricalTeam, simulation?: MonteCarloResult) {
+export function analysisPayload(
+  home: HistoricalTeam,
+  away: HistoricalTeam,
+  simulation?: MonteCarloResult,
+  featuredMatch?: SimulatedMatch,
+) {
   const leaderIsHome = simulation ? simulation.homeWins >= simulation.awayWins : home.overallRating >= away.overallRating
   const leader = leaderIsHome ? home : away
   const trailer = leaderIsHome ? away : home
@@ -111,9 +169,37 @@ export function analysisPayload(home: HistoricalTeam, away: HistoricalTeam, simu
   const tier = leaderWins >= 65 && winGap >= 35 ? "overwhelming" : leaderWins >= 55 && winGap >= 20 ? "strong" : "competitive"
   const leaderScorers = simulation ? (leaderIsHome ? simulation.topScorers.home : simulation.topScorers.away) : []
   const leaderAssists = simulation ? (leaderIsHome ? simulation.topAssists.home : simulation.topAssists.away) : []
-  const primaryThreats = [...new Set([...leaderScorers.slice(0, 3).map((row) => row.player), ...leaderAssists.slice(0, 2).map((row) => row.player)])]
+  const topAttackers = pick(leader, ATTACK_POS, 3).map((player) => player.name)
+  const primaryThreats = [
+    ...new Set([
+      ...topAttackers.slice(0, 2),
+      ...leaderScorers.slice(0, 3).map((row) => row.player),
+      ...leaderAssists.slice(0, 2).map((row) => row.player),
+    ]),
+  ]
+  const featuredOutcome =
+    !featuredMatch
+      ? undefined
+      : featuredMatch.score.home === featuredMatch.score.away
+        ? "draw"
+        : featuredMatch.score.home > featuredMatch.score.away
+          ? "home"
+          : "away"
   return {
     disclaimer: "Pre-match analysis of two historical squads. Not a simulated result.",
+    matchupGeometry: matchupGeometry(home, away),
+    representativeNight: featuredMatch
+      ? {
+          score: featuredMatch.score,
+          outcome: featuredOutcome,
+          scorers: featuredMatch.scorers.map((goal) => ({
+            minute: goal.minute,
+            player: goal.player,
+            team: goal.team,
+            assist: goal.assist,
+          })),
+        }
+      : undefined,
     engineRead: simulation
       ? {
           runs: simulation.runs,
@@ -354,7 +440,7 @@ function shortFallback(home: HistoricalTeam, away: HistoricalTeam, simulation: M
 }
 
 function cleanCopy(value: string, maxLength: number): string {
-  return value
+  const text = value
     .replace(/^[\s#>*_`-]+/, "")
     .replace(/[*_`#]/g, "")
     .replace(/\bwill punish\b/gi, "could test")
@@ -372,7 +458,12 @@ function cleanCopy(value: string, maxLength: number): string {
     .replace(/\bdefinitely\b/gi, "")
     .replace(/\s+/g, " ")
     .trim()
-    .slice(0, maxLength)
+  if (text.length <= maxLength) return text
+  const sliced = text.slice(0, maxLength)
+  const sentence = sliced.lastIndexOf(".")
+  if (sentence >= maxLength * 0.5) return sliced.slice(0, sentence + 1).trim()
+  const space = sliced.lastIndexOf(" ")
+  return (space > 0 ? sliced.slice(0, space) : sliced).trim()
 }
 
 function parseAnalysisCopy(raw: string): AnalysisCopy | null {
@@ -409,14 +500,16 @@ function respectsNarrativeHierarchy(
   simulation: MonteCarloResult,
 ): boolean {
   const leaderIsHome = simulation.homeWins >= simulation.awayWins
-  const leaderWins = leaderIsHome ? simulation.homeWins : simulation.awayWins
-  const trailerWins = leaderIsHome ? simulation.awayWins : simulation.homeWins
-  if (leaderWins < 55 || leaderWins - trailerWins < 20) return true
-
   const scorers = leaderIsHome ? simulation.topScorers.home : simulation.topScorers.away
   const assists = leaderIsHome ? simulation.topAssists.home : simulation.topAssists.away
+  const leader = leaderIsHome ? home : away
+  const topAttackers = pick(leader, ATTACK_POS, 3).map((player) => player.name.toLocaleLowerCase())
   const primary = new Set(
-    [...scorers.slice(0, 3), ...assists.slice(0, 2)].map((row) => row.player.toLocaleLowerCase()),
+    [
+      ...topAttackers.slice(0, 2),
+      ...scorers.slice(0, 3).map((row) => row.player),
+      ...assists.slice(0, 2).map((row) => row.player),
+    ].map((name) => name.toLocaleLowerCase()),
   )
   const focusFields = [copy.callBody, copy.decidingSequence, copy.openingPhase, copy.keyDuel]
     .map((text) => text.toLocaleLowerCase())
@@ -429,6 +522,44 @@ function respectsNarrativeHierarchy(
     const name = player.name.toLocaleLowerCase()
     return focusFields.filter((text) => text.includes(name)).length <= 1
   })
+}
+
+function namedStarters(
+  text: string,
+  home: HistoricalTeam,
+  away: HistoricalTeam,
+): Array<{ team: "home" | "away"; player: Player }> {
+  const found: Array<{ team: "home" | "away"; player: Player }> = []
+  const lower = text.toLocaleLowerCase()
+  for (const player of starters(home)) {
+    if (lower.includes(player.name.toLocaleLowerCase())) found.push({ team: "home", player })
+  }
+  for (const player of starters(away)) {
+    if (lower.includes(player.name.toLocaleLowerCase())) found.push({ team: "away", player })
+  }
+  return found
+}
+
+function respectsGeometry(copy: AnalysisCopy, home: HistoricalTeam, away: HistoricalTeam): boolean {
+  const fields = [copy.keyDuel, copy.decidingSequence, copy.coachingMove, copy.pressurePoint]
+  for (const field of fields) {
+    const named = namedStarters(field, home, away)
+    const homeWide = named.filter((item) => item.team === "home" && flankSide(item.player.position) !== "central")
+    const awayWide = named.filter((item) => item.team === "away" && flankSide(item.player.position) !== "central")
+    for (const homePlayer of homeWide) {
+      for (const awayPlayer of awayWide) {
+        if (flankSide(homePlayer.player.position) === flankSide(awayPlayer.player.position)) return false
+      }
+    }
+  }
+  return true
+}
+
+function contradictsRepresentativeScore(copy: AnalysisCopy, match: SimulatedMatch): boolean {
+  if (match.score.home !== match.score.away) return false
+  const claim =
+    /\b(?:win the day|wins the night|prove[sd]? decisive|turn this into (?:an attacking )?siege|own the (?:clearer|night))\b/i
+  return claim.test(copy.callTitle) || claim.test(copy.callBody)
 }
 
 function strengthenDominantCall(
@@ -453,31 +584,46 @@ export async function generatePreMatchAnalysis(
   away: HistoricalTeam,
 ): Promise<{ analysis: PreMatchAnalysis; source: "ai" | "template" }> {
   const requestSeed = `ai-analysis:${home.id}:${away.id}:${crypto.randomUUID()}`
-  const simulation = simulateMany(home, away, 100, `${requestSeed}:alternates`)
-  const featuredMatch = representativeNight(home, away, simulation, requestSeed)
+  const { matches, ...simulation } = simulateMany(home, away, 100, `${requestSeed}:alternates`, {
+    retainMatches: true,
+  })
+  const featuredMatch = representativeNight(matches, simulation)
   const fallback = shortFallback(home, away, simulation)
   const provider = createCommentaryProvider()
   if (!provider) return { analysis: { copy: fallback, featuredMatch, simulation }, source: "template" }
 
-  try {
-    const raw = await provider.generate(ANALYSIS_SYSTEM_PROMPT, analysisPayload(home, away, simulation), {
-      maxTokens: 760,
-      temperature: 0.5,
-    })
-    const parsedCopy = parseAnalysisCopy(raw)
-    if (!parsedCopy || !respectsNarrativeHierarchy(parsedCopy, home, away, simulation)) {
-      throw new Error("AI provider returned invalid or unfocused analysis JSON")
+  const payload = analysisPayload(home, away, simulation, featuredMatch)
+  let lastError: unknown
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const raw = await provider.generate(ANALYSIS_SYSTEM_PROMPT, payload, {
+        maxTokens: 760,
+        temperature: 0.5,
+      })
+      const parsedCopy = parseAnalysisCopy(raw)
+      if (!parsedCopy) throw new Error("AI provider returned invalid analysis JSON")
+      if (!respectsNarrativeHierarchy(parsedCopy, home, away, simulation)) {
+        throw new Error("AI provider returned unfocused analysis JSON")
+      }
+      if (!respectsGeometry(parsedCopy, home, away)) {
+        throw new Error("AI provider returned geometrically inconsistent analysis JSON")
+      }
+      if (contradictsRepresentativeScore(parsedCopy, featuredMatch)) {
+        throw new Error("AI provider contradicted the representative scoreline")
+      }
+      const copy = strengthenDominantCall(parsedCopy, home, away, simulation)
+      return { analysis: { copy, featuredMatch, simulation }, source: "ai" }
+    } catch (error) {
+      lastError = error
     }
-    const copy = strengthenDominantCall(parsedCopy, home, away, simulation)
-    return { analysis: { copy, featuredMatch, simulation }, source: "ai" }
-  } catch (error) {
-    console.error(
-      "[ai-provider]",
-      JSON.stringify({
-        error: error instanceof Error ? error.message : "Unknown provider error",
-        feature: "analysis",
-      }),
-    )
-    return { analysis: { copy: fallback, featuredMatch, simulation }, source: "template" }
   }
+
+  console.error(
+    "[ai-provider]",
+    JSON.stringify({
+      error: lastError instanceof Error ? lastError.message : "Unknown provider error",
+      feature: "analysis",
+    }),
+  )
+  return { analysis: { copy: fallback, featuredMatch, simulation }, source: "template" }
 }

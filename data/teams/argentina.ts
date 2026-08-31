@@ -91,6 +91,7 @@ export const argentina2022: HistoricalTeam = makeTeam({
   counterAttack: 80,
   width: 82,
   aerialThreat: 68,
+  penaltyTakerId: "lionel-messi",
   startingXI: [
     "angel-di-maria",
     "julian-alvarez",

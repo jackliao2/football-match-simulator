@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest"
 import { getTeam, teams } from "@/data/teams"
 import { simulateMany, simulateMatch } from "@/lib/simulation"
+import { penaltyTaker, scoringWeight, starters } from "@/lib/simulation/ratings"
 
 const home = getTeam("barcelona-2008-09")!
 const away = getTeam("real-madrid-2016-17")!
@@ -64,5 +65,81 @@ describe("simulation engine", () => {
     expect(result.awayWinPct).toBeGreaterThanOrEqual(60)
     expect(result.homeWinPct).toBeLessThanOrEqual(20)
     expect(result.homeWinPct).toBeGreaterThan(0)
+  })
+
+  it("lets finishing quality beat a lower-rated centre-forward role", () => {
+    const france = getTeam("france-1998")!
+    const argentina = getTeam("argentina-2022")!
+    const named = (team: typeof france, name: string) => team.players.find((player) => player.name === name)!
+
+    expect(scoringWeight(named(france, "Thierry Henry"), france.aerialThreat)).toBeGreaterThan(
+      scoringWeight(named(france, "Stéphane Guivarc'h"), france.aerialThreat),
+    )
+    expect(scoringWeight(named(argentina, "Lionel Messi"), argentina.aerialThreat)).toBeGreaterThan(
+      scoringWeight(named(argentina, "Julián Álvarez"), argentina.aerialThreat),
+    )
+    expect(penaltyTaker(france, starters(france)).name).toBe("Zinedine Zidane")
+    expect(penaltyTaker(argentina, starters(argentina)).name).toBe("Lionel Messi")
+
+    const franceTotal = starters(france).reduce((sum, player) => sum + scoringWeight(player, france.aerialThreat), 0)
+    const franceCbShare =
+      starters(france)
+        .filter((player) => ["CB", "LCB", "RCB"].includes(player.position))
+        .reduce((sum, player) => sum + scoringWeight(player, france.aerialThreat), 0) / franceTotal
+    expect(franceCbShare).toBeGreaterThanOrEqual(0.03)
+    expect(franceCbShare).toBeLessThanOrEqual(0.08)
+  })
+
+  it("does not make Guivarc'h France's leading scorer against Argentina 2022", () => {
+    const france = getTeam("france-1998")!
+    const argentina = getTeam("argentina-2022")!
+    const result = simulateMany(france, argentina, 2_000, "golden-boot-calibration")
+
+    expect(result.topScorers.away[0]?.player).toBe("Lionel Messi")
+    expect(result.topScorers.home[0]?.player).not.toBe("Stéphane Guivarc'h")
+  })
+
+  it("never credits a goal to a player who is already off the pitch", () => {
+    const home = getTeam("france-1998")!
+    const away = getTeam("argentina-2022")!
+
+    for (let index = 0; index < 80; index += 1) {
+      const match = simulateMatch(home, away, `window:${index}`)
+      const offAt = new Map<string, number>()
+      const onFrom = new Map<string, number>()
+
+      for (const event of match.events) {
+        if (event.type === "red") offAt.set(`${event.team}:${event.player}`, event.minute)
+        if (event.type === "sub" && event.playerOut) {
+          offAt.set(`${event.team}:${event.playerOut}`, event.minute + 1)
+        }
+        if (event.type === "sub" && event.playerIn) {
+          onFrom.set(`${event.team}:${event.playerIn}`, event.minute)
+        }
+      }
+
+      for (const goal of match.scorers) {
+        const key = `${goal.team}:${goal.player}`
+        expect(goal.minute).toBeLessThan(offAt.get(key) ?? 200)
+        expect(goal.minute).toBeGreaterThanOrEqual(onFrom.get(key) ?? 0)
+      }
+    }
+  })
+
+  it("places more goals in the second half than the first", () => {
+    const home = getTeam("france-1998")!
+    const away = getTeam("argentina-2022")!
+    let first = 0
+    let second = 0
+
+    for (let index = 0; index < 200; index += 1) {
+      const match = simulateMatch(home, away, `minutes:${index}`)
+      for (const goal of match.scorers) {
+        if (goal.minute <= 45) first += 1
+        else second += 1
+      }
+    }
+
+    expect(second).toBeGreaterThan(first)
   })
 })

@@ -22,6 +22,7 @@ export const france1998: HistoricalTeam = makeTeam({
   counterAttack: 72,
   width: 78,
   aerialThreat: 80,
+  penaltyTakerId: "zinedine-zidane",
   startingXI: [
     "youri-djorkaeff",
     "stephane-guivarch",

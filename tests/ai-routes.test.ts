@@ -24,6 +24,9 @@ describe("AI route handlers", () => {
     const lean = analysis.simulation.homeWins - analysis.simulation.awayWins
     expect(lean).toBeGreaterThanOrEqual(5)
     expect(analysis.featuredMatch.score.home).toBeGreaterThan(analysis.featuredMatch.score.away)
+    expect(analysis.featuredMatch.seed).toMatch(/:alternates:\d+$/)
+    const featuredKey = `${analysis.featuredMatch.score.home}-${analysis.featuredMatch.score.away}`
+    expect(analysis.simulation.scorelines.some((line) => line.score === featuredKey)).toBe(true)
   })
 
   it("tells the writer when a mismatch needs a forceful star-led forecast", () => {
@@ -43,6 +46,26 @@ describe("AI route handlers", () => {
     expect(payload.engineRead.topScorers.home.map((row) => row.player)).toEqual(
       expect.arrayContaining(["Lionel Messi", "Luis Suárez", "Neymar"]),
     )
+  })
+
+  it("tells the writer which wide attackers actually face which full-backs", () => {
+    const france = getTeam("france-1998")!
+    const argentina = getTeam("argentina-2022")!
+    const payload = analysisPayload(france, argentina) as {
+      matchupGeometry: {
+        awayLeftVsHomeRight: string
+        awayRightVsHomeLeft: string
+        homeLeftVsAwayRight: string
+        homeRightVsAwayLeft: string
+      }
+    }
+
+    expect(payload.matchupGeometry.awayLeftVsHomeRight).toContain("Di María")
+    expect(payload.matchupGeometry.awayLeftVsHomeRight).toContain("Thuram")
+    expect(payload.matchupGeometry.awayRightVsHomeLeft).toContain("Messi")
+    expect(payload.matchupGeometry.awayRightVsHomeLeft).toContain("Lizarazu")
+    expect(payload.matchupGeometry.homeRightVsAwayLeft).toContain("Henry")
+    expect(payload.matchupGeometry.homeRightVsAwayLeft).toContain("Tagliafico")
   })
 
   it("returns a fresh protected pre-match analysis without an API key", async () => {
