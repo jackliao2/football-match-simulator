@@ -12,7 +12,7 @@ import { SimulationPlay } from "@/components/simulator/SimulationPlay"
 import { FaceOffSquad } from "@/components/teams/SquadPanel"
 import { PixelCrest } from "@/components/teams/PixelCrest"
 import { eraGlow } from "@/data/trophies"
-import { FEATURED_MATCHUPS } from "@/data/matchups"
+import { FEATURED_MATCHUPS, pickRandomDreamPair } from "@/data/matchups"
 import { teams as historicalTeams, toTeamOption } from "@/data/teams"
 import { isCurrentSquad } from "@/lib/seo"
 import { OvrStamp } from "@/components/ui/OvrStamp"
@@ -67,11 +67,11 @@ export function MatchSetup({
 }) {
   const teams = useMemo(() => historicalTeams.map(toTeamOption), [])
   const ui = locale === "es" ? {
-    home: "Local", away: "Visitante", legendary: "Leyendas", now: "Recientes", swap: "Cambiar", different: "Elige dos equipos distintos.", simulate: "Simular", playing: "Jugando…", expert: "Análisis experto IA", analysing: "Analizando…", daily: "Hoy", change: "Cambiar equipo ▾", simulateAgain: "Simular de nuevo", back: "Cambiar duelo", copy: "Copiar enlace", copied: "Copiado", shared: "Compartido", expertAgain: "Repetir análisis IA", next: "Siguiente duelo soñado", season: "Temporada", latest: "Plantilla reciente", bench: "Suplentes", playerHint: "Toca o pasa sobre un jugador para ver PAC SHO PAS DRI DEF PHY", separateAi: "Pronóstico independiente de 100 partidos. Tu partido anterior sigue disponible en la pestaña Match result.", matchTab: "Resultado", aiTab: "IA experta", batchTab: "100 partidos", hundred: "100 partidos", hundredPlaying: "Calculando 100…", quotaUsed: "Cupo diario agotado", quotaBody: "Has usado los 10 análisis IA gratis de hoy. El cupo se reinicia a medianoche. Sigue pudiendo simular y correr 100 partidos gratis.", lastMatches: "Tus últimos partidos",
+    home: "Local", away: "Visitante", legendary: "Leyendas", now: "Recientes", swap: "Cambiar", different: "Elige dos equipos distintos.", simulate: "Simular", playing: "Jugando…", expert: "Análisis experto IA", analysing: "Analizando…", daily: "Hoy", change: "Cambiar equipo ▾", simulateAgain: "Simular de nuevo", back: "Cambiar duelo", copy: "Copiar enlace", copied: "Copiado", shared: "Compartido", expertAgain: "Repetir análisis IA", next: "Siguiente duelo soñado", season: "Temporada", latest: "Plantilla reciente", bench: "Suplentes", dream: "¿Dream?", separateAi: "Pronóstico independiente de 100 partidos. Tu partido anterior sigue disponible en la pestaña Match result.", matchTab: "Resultado", aiTab: "IA experta", batchTab: "100 partidos", hundred: "100 partidos", hundredPlaying: "Calculando 100…", quotaUsed: "Cupo diario agotado", quotaBody: "Has usado los 10 análisis IA gratis de hoy. El cupo se reinicia a medianoche. Sigue pudiendo simular y correr 100 partidos gratis.", lastMatches: "Tus últimos partidos",
   } : locale === "pt-br" ? {
-    home: "Casa", away: "Visitante", legendary: "Lendas", now: "Recentes", swap: "Trocar", different: "Escolha dois times diferentes.", simulate: "Simular", playing: "Jogando…", expert: "Análise especializada IA", analysing: "Analisando…", daily: "Hoje", change: "Trocar time ▾", simulateAgain: "Simular novamente", back: "Trocar confronto", copy: "Copiar link", copied: "Copiado", shared: "Compartilhado", expertAgain: "Repetir análise IA", next: "Próximo jogo dos sonhos", season: "Temporada", latest: "Elenco recente", bench: "Banco", playerHint: "Toque ou passe sobre um jogador para ver PAC SHO PAS DRI DEF PHY", separateAi: "Previsão independente de 100 partidas. Seu jogo anterior continua disponível na aba Match result.", matchTab: "Resultado", aiTab: "IA expert", batchTab: "100 jogos", hundred: "100 jogos", hundredPlaying: "Calculando 100…", quotaUsed: "Cota diária esgotada", quotaBody: "Você usou as 10 análises de IA grátis de hoje. A cota zera à meia-noite. Ainda pode simular e rodar 100 jogos de graça.", lastMatches: "Suas últimas partidas",
+    home: "Casa", away: "Visitante", legendary: "Lendas", now: "Recentes", swap: "Trocar", different: "Escolha dois times diferentes.", simulate: "Simular", playing: "Jogando…", expert: "Análise especializada IA", analysing: "Analisando…", daily: "Hoje", change: "Trocar time ▾", simulateAgain: "Simular novamente", back: "Trocar confronto", copy: "Copiar link", copied: "Copiado", shared: "Compartilhado", expertAgain: "Repetir análise IA", next: "Próximo jogo dos sonhos", season: "Temporada", latest: "Elenco recente", bench: "Banco", dream: "Dream?", separateAi: "Previsão independente de 100 partidas. Seu jogo anterior continua disponível na aba Match result.", matchTab: "Resultado", aiTab: "IA expert", batchTab: "100 jogos", hundred: "100 jogos", hundredPlaying: "Calculando 100…", quotaUsed: "Cota diária esgotada", quotaBody: "Você usou as 10 análises de IA grátis de hoje. A cota zera à meia-noite. Ainda pode simular e rodar 100 jogos de graça.", lastMatches: "Suas últimas partidas",
   } : {
-    home: "Home", away: "Away", legendary: "Legendary", now: "Recent", swap: "Swap", different: "Pick two different teams.", simulate: "Simulate", playing: "Playing…", expert: "Expert AI Analysis", analysing: "Analysing…", daily: "Daily", change: "Change team ▾", simulateAgain: "Simulate again", back: "Change matchup", copy: "Copy link", copied: "Copied", shared: "Shared", expertAgain: "Expert AI again", next: "Next dream match", season: "Season", latest: "Latest squad", bench: "Bench", playerHint: "Tap or hover a player for PAC SHO PAS DRI DEF PHY", separateAi: "A separate 100-match forecast. Your previous match remains available under Match result.", matchTab: "Match result", aiTab: "Expert AI", batchTab: "100 matches", hundred: "100 matches", hundredPlaying: "Running 100…", quotaUsed: "Daily free quota used", quotaBody: "You have used today’s 10 free AI analyses. Your quota resets at midnight. You can still simulate matches and run 100-match probabilities for free.", lastMatches: "Your last matches",
+    home: "Home", away: "Away", legendary: "Legendary", now: "Recent", swap: "Swap", different: "Pick two different teams.", simulate: "Simulate", playing: "Playing…", expert: "Expert AI Analysis", analysing: "Analysing…", daily: "Daily", change: "Change team ▾", simulateAgain: "Simulate again", back: "Change matchup", copy: "Copy link", copied: "Copied", shared: "Shared", expertAgain: "Expert AI again", next: "Next dream match", season: "Season", latest: "Latest squad", bench: "Bench", dream: "Dream?", separateAi: "A separate 100-match forecast. Your previous match remains available under Match result.", matchTab: "Match result", aiTab: "Expert AI", batchTab: "100 matches", hundred: "100 matches", hundredPlaying: "Running 100…", quotaUsed: "Daily free quota used", quotaBody: "You have used today’s 10 free AI analyses. Your quota resets at midnight. You can still simulate matches and run 100-match probabilities for free.", lastMatches: "Your last matches",
   }
   const homeDefault = teams.find((team) => team.id === defaultHome) ?? teams[0]!
   const awayDefault =
@@ -103,8 +103,11 @@ export function MatchSetup({
   const [history, setHistory] = useState<StoredMatch[]>([])
   const resultRef = useRef<HTMLDivElement>(null)
   const analysisRequest = useRef<AbortController | null>(null)
+  const reelTimer = useRef<number | null>(null)
   const scrollTarget = useRef<"match" | "analysis" | "batch">("match")
   const [scrollKey, setScrollKey] = useState(0)
+  const [reel, setReel] = useState<{ home: TeamOption; away: TeamOption } | null>(null)
+  const [rolling, setRolling] = useState(false)
 
   useEffect(() => {
     const hydration = window.setTimeout(() => {
@@ -132,6 +135,12 @@ export function MatchSetup({
     }, 0)
     return () => window.clearTimeout(hydration)
   }, [restoreLast, teams])
+
+  useEffect(() => {
+    return () => {
+      if (reelTimer.current) window.clearTimeout(reelTimer.current)
+    }
+  }, [])
 
   useEffect(() => {
     const now = new Date()
@@ -201,8 +210,10 @@ export function MatchSetup({
   [awaySeasons, awayId])
   const sameTeam = home.id === away.id
   const aiRemaining = Math.max(0, AI_DAILY_LIMIT - aiUsesToday)
-  const homeSquad = useMemo(() => teamSquad(home.team), [home.team])
-  const awaySquad = useMemo(() => teamSquad(away.team), [away.team])
+  const shownHome = reel?.home ?? home
+  const shownAway = reel?.away ?? away
+  const homeSquad = useMemo(() => teamSquad(shownHome.team), [shownHome.team])
+  const awaySquad = useMemo(() => teamSquad(shownAway.team), [shownAway.team])
 
   function changeClub(side: "home" | "away", clubId: string) {
     if (clubId === (side === "home" ? homeClub : awayClub)) {
@@ -385,6 +396,45 @@ export function MatchSetup({
     }
   }
 
+  function rollDreamMatchup() {
+    if (play || analysisLoading || rolling) return
+    const legendary = teams.filter((team) => !isCurrentSquad(team.team))
+    const pool = (legendary.length >= 8 ? legendary : teams).map((team) => team.id)
+    const reduced = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    const [finalHomeId, finalAwayId] = pickRandomDreamPair(pool, { homeId: home.id, awayId: away.id })
+    const settle = () => {
+      if (reelTimer.current) {
+        window.clearTimeout(reelTimer.current)
+        reelTimer.current = null
+      }
+      setReel(null)
+      setRolling(false)
+      applyPair(finalHomeId, finalAwayId)
+      rememberPair(finalHomeId, finalAwayId)
+      track("random_dream_matchup", { home: finalHomeId, away: finalAwayId })
+    }
+    if (reduced) {
+      settle()
+      return
+    }
+    setRolling(true)
+    const started = performance.now()
+    const tick = () => {
+      const elapsed = performance.now() - started
+      const [nextHomeId, nextAwayId] = pickRandomDreamPair(pool)
+      const nextHome = teams.find((team) => team.id === nextHomeId)
+      const nextAway = teams.find((team) => team.id === nextAwayId)
+      if (nextHome && nextAway) setReel({ home: nextHome, away: nextAway })
+      if (elapsed >= 1500) {
+        settle()
+        return
+      }
+      const delay = elapsed < 850 ? 50 : 50 + (elapsed - 850) * 0.2
+      reelTimer.current = window.setTimeout(tick, delay)
+    }
+    tick()
+  }
+
   function playNextDreamMatch() {
     if (play || analysisLoading) return
     const currentIndex = FEATURED_MATCHUPS.findIndex(([left, right]) =>
@@ -419,8 +469,9 @@ export function MatchSetup({
             label={ui.home}
             side="home"
             seasons={homeSeasons}
-            team={home}
+            team={shownHome}
             squad={homeSquad}
+            spinning={Boolean(reel)}
             onOpenPicker={() => setPicker("home")}
             onSeason={(value) => changeSeason("home", value)}
             name="home"
@@ -432,7 +483,7 @@ export function MatchSetup({
           <div className="faceoff-rail">
             <div className="faceoff-rail-inner">
               <div className="faceoff-vs">VS</div>
-              <button type="button" onClick={swapSides} className="rail-swap">
+              <button type="button" onClick={swapSides} className="rail-swap" disabled={rolling}>
                 {ui.swap}
               </button>
               {sameTeam ? (
@@ -440,7 +491,7 @@ export function MatchSetup({
               ) : null}
               <button
                 type="button"
-                disabled={sameTeam || Boolean(play) || analysisLoading}
+                disabled={sameTeam || Boolean(play) || analysisLoading || rolling}
                 className="rail-btn rail-btn-primary"
                 onClick={simulateOnce}
               >
@@ -448,7 +499,7 @@ export function MatchSetup({
               </button>
               <button
                 type="button"
-                disabled={sameTeam || Boolean(play) || analysisLoading}
+                disabled={sameTeam || Boolean(play) || analysisLoading || rolling}
                 className="rail-btn"
                 onClick={runHundred}
               >
@@ -456,7 +507,7 @@ export function MatchSetup({
               </button>
               <button
                 type="button"
-                disabled={sameTeam || analysisLoading || Boolean(play)}
+                disabled={sameTeam || analysisLoading || Boolean(play) || rolling}
                 className="rail-btn rail-btn-ai"
                 onClick={runAnalysis}
               >
@@ -465,9 +516,18 @@ export function MatchSetup({
                   <span className="font-mono text-[8px] normal-case tracking-normal opacity-70">{ui.daily} {aiRemaining}/{AI_DAILY_LIMIT}</span>
                 </span>
               </button>
-              <p className="rail-hint">
-                <span>{ui.playerHint}</span>
-              </p>
+              <button
+                type="button"
+                className="dream-dice"
+                disabled={Boolean(play) || analysisLoading || rolling}
+                onClick={rollDreamMatchup}
+                aria-label="Roll a random dream matchup"
+              >
+                <span className={`dream-die${rolling ? " is-rolling" : ""}`} aria-hidden="true">
+                  <i /><i /><i /><i /><i />
+                </span>
+                <span>{ui.dream}</span>
+              </button>
             </div>
           </div>
 
@@ -475,8 +535,9 @@ export function MatchSetup({
             label={ui.away}
             side="away"
             seasons={awaySeasons}
-            team={away}
+            team={shownAway}
             squad={awaySquad}
+            spinning={Boolean(reel)}
             onOpenPicker={() => setPicker("away")}
             onSeason={(value) => changeSeason("away", value)}
             name="away"
@@ -650,6 +711,7 @@ function TeamColumn({
   seasons,
   team,
   squad,
+  spinning = false,
   onOpenPicker,
   onSeason,
   name,
@@ -662,6 +724,7 @@ function TeamColumn({
   seasons: TeamOption[]
   team: TeamOption
   squad: SquadMember[]
+  spinning?: boolean
   onOpenPicker: () => void
   onSeason: (teamId: string) => void
   name: "home" | "away"
@@ -675,7 +738,7 @@ function TeamColumn({
 
   return (
     <article
-      className={`faceoff-card ${away ? "away faceoff-away" : "home faceoff-home"} ${glow ? "era-shine" : ""}`}
+      className={`faceoff-card ${away ? "away faceoff-away" : "home faceoff-home"} ${glow ? "era-shine" : ""} ${spinning ? "is-spinning" : ""}`}
     >
       <div className={`faceoff-identity-wrap ${away ? "text-right" : ""} ${glow ? "era-sheen" : ""}`}>
         <button

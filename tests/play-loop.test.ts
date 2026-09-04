@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 import { parseCatalogTrophy } from "@/lib/catalog-filters"
-import { FEATURED_MATCHUPS, HOMEPAGE_MATCHUPS, isFeaturedMatchup, todaysDebate } from "@/data/matchups"
+import { FEATURED_MATCHUPS, HOMEPAGE_MATCHUPS, isFeaturedMatchup, pickRandomDreamPair, todaysDebate } from "@/data/matchups"
 import { canonicalVsSlug } from "@/lib/match-id"
 import { getTeam } from "@/data/teams"
 import { matchShareCopy } from "@/lib/share"
@@ -21,6 +21,18 @@ describe("todays debate and featured matchups", () => {
       "barcelona-2008-09-vs-real-madrid-2016-17",
     )
     expect(FEATURED_MATCHUPS.length).toBeGreaterThan(HOMEPAGE_MATCHUPS.length)
+  })
+})
+
+describe("random dream pair", () => {
+  it("returns two different catalogue sides and can avoid the current pair", () => {
+    const ids = FEATURED_MATCHUPS.flat()
+    const [home, away] = pickRandomDreamPair(ids, {}, () => 0.9)
+    expect(home).not.toBe(away)
+    expect(getTeam(home)).toBeDefined()
+    expect(getTeam(away)).toBeDefined()
+    const [nextHome, nextAway] = pickRandomDreamPair(ids, { homeId: home, awayId: away }, () => 0.91)
+    expect(`${nextHome}|${nextAway}`).not.toBe(`${home}|${away}`)
   })
 })
 

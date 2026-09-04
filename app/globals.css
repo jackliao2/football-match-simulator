@@ -1795,12 +1795,94 @@ a.result-panel:hover {
   color: var(--color-gold);
 }
 
-.rail-hint {
-  margin-top: 0.2rem;
+.dream-dice {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.38rem;
+  margin-top: 0.15rem;
+  padding: 0.15rem 0.1rem;
+  border: 0;
+  background: none;
   color: var(--color-muted);
-  font-size: 10px;
-  line-height: 1.45;
-  text-align: center;
+  font-family: var(--font-display), ui-monospace, monospace;
+  font-size: 7px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.dream-dice:hover:not(:disabled) {
+  color: var(--color-gold);
+}
+
+.dream-dice:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.dream-die {
+  display: grid;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  padding: 2px;
+  border: 1px solid var(--color-gold);
+  background: #10140e;
+  box-shadow: 1px 1px 0 #000;
+}
+
+.dream-die i {
+  width: 2px;
+  height: 2px;
+  justify-self: center;
+  align-self: center;
+  background: var(--color-gold);
+}
+
+.dream-die i:nth-child(1) { grid-area: 1 / 1; }
+.dream-die i:nth-child(2) { grid-area: 1 / 3; }
+.dream-die i:nth-child(3) { grid-area: 2 / 2; }
+.dream-die i:nth-child(4) { grid-area: 3 / 1; }
+.dream-die i:nth-child(5) { grid-area: 3 / 3; }
+
+.dream-die.is-rolling {
+  animation: die-roll 0.55s linear infinite;
+}
+
+.faceoff-card.is-spinning .faceoff-identity span:nth-child(2),
+.faceoff-card.is-spinning .faceoff-squad {
+  animation: reel-blur 0.11s linear infinite;
+}
+
+.faceoff-card.is-spinning {
+  pointer-events: none;
+}
+
+.faceoff-card.is-spinning .faceoff-seasons,
+.faceoff-card.is-spinning .faceoff-change {
+  opacity: 0.35;
+}
+
+@keyframes die-roll {
+  0% { transform: rotate(0deg) scale(1); }
+  40% { transform: rotate(240deg) scale(1.12); }
+  100% { transform: rotate(720deg) scale(1); }
+}
+
+@keyframes reel-blur {
+  0% { filter: blur(0); transform: translateY(-3px); opacity: 0.7; }
+  50% { filter: blur(1.4px); transform: translateY(3px); opacity: 1; }
+  100% { filter: blur(0); transform: translateY(-3px); opacity: 0.7; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dream-die.is-rolling,
+  .faceoff-card.is-spinning .faceoff-identity span:nth-child(2),
+  .faceoff-card.is-spinning .faceoff-squad {
+    animation: none;
+  }
 }
 
 .faceoff-player {
@@ -1931,8 +2013,9 @@ a.result-panel:hover {
     margin-top: 0;
   }
 
-  .rail-hint {
+  .dream-dice {
     width: 100%;
+    margin-top: 0.05rem;
   }
 
   .rail-btn-inline {

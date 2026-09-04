@@ -255,9 +255,6 @@ export const DEFAULT_RIVALS: Record<string, string> = {
   "south-korea-2002": "germany-2006",
   "usa-2002": "germany-2006",
   "czechia-1996": "france-1984",
-  "everton-1984-85": "liverpool-2004-05",
-  "chelsea-2011-12": "bayern-munich-2012-13",
-  "croatia-2018": "france-2018",
 }
 
 export function todaysDebate(date = new Date()): [string, string] {
@@ -320,6 +317,25 @@ export function isPublishedMatchup(a: string, b: string): boolean {
 
 export function vsSimulationRuns(a: string, b: string) {
   return isFeaturedMatchup(a, b) ? 400 : 100
+}
+
+export function pickRandomDreamPair(
+  ids: string[],
+  avoid: { homeId?: string; awayId?: string } = {},
+  random = Math.random,
+): [string, string] {
+  const featured = FEATURED_MATCHUPS.filter(
+    ([home, away]) => home !== avoid.homeId || away !== avoid.awayId,
+  )
+  if (featured.length > 0 && random() < 0.42) {
+    const pair = featured[Math.floor(random() * featured.length)]!
+    return random() < 0.5 ? [pair[0], pair[1]] : [pair[1], pair[0]]
+  }
+  const pool = ids.filter((id) => id !== avoid.homeId)
+  const homeId = pool[Math.floor(random() * pool.length)] ?? ids[0] ?? ""
+  const awayPool = ids.filter((id) => id !== homeId && id !== avoid.awayId)
+  const awayId = awayPool[Math.floor(random() * awayPool.length)] ?? ids.find((id) => id !== homeId) ?? homeId
+  return [homeId, awayId]
 }
 
 export function peakTeamOf(clubId: string): HistoricalTeam | undefined {

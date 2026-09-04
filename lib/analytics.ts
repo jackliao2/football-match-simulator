@@ -13,6 +13,7 @@ export type AnalyticsEvent =
   | "season_selected"
   | "simulation_completed"
   | "next_dream_match_started"
+  | "random_dream_matchup"
   | "ai_analysis_completed"
   | "ai_analysis_failed"
   | "language_changed"
