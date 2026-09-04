@@ -13,18 +13,24 @@ export const HOMEPAGE_TEAMS = [
   "bayern-munich-2012-13",
   "ajax-1994-95",
   "chelsea-2004-05",
+  "everton-1984-85",
 ]
 
 export const HOMEPAGE_MATCHUPS = [
   ["barcelona-2010-11", "real-madrid-2016-17"],
   ["manchester-united-1998-99", "barcelona-2010-11"],
   ["ac-milan-1988-89", "real-madrid-2016-17"],
+  ["brazil-1970", "argentina-1986"],
   ["brazil-1970", "spain-2010"],
   ["argentina-1986", "argentina-2022"],
+  ["england-1966", "germany-1990"],
   ["arsenal-2003-04", "manchester-city-2022-23"],
   ["bayern-munich-2012-13", "real-madrid-2016-17"],
   ["brazil-2002", "france-2018"],
-  ["barcelona-2010-11", "ajax-1994-95"],
+  ["croatia-2018", "france-2018"],
+  ["senegal-2002", "france-1998"],
+  ["everton-1984-85", "liverpool-2004-05"],
+  ["chelsea-2011-12", "bayern-munich-2012-13"],
 ] as const
 
 export const HOMEPAGE_CURRENT_CLUBS = [
@@ -46,6 +52,8 @@ export const HOMEPAGE_NATIONS = [
   "england-1966",
   "netherlands-1974",
   "brazil-2002",
+  "croatia-2018",
+  "senegal-2002",
 ]
 
 export const HOMEPAGE_CURRENT_NATIONS = [
@@ -84,6 +92,10 @@ export const FEATURED_MATCHUPS = [
   ["france-1984", "netherlands-1988"],
   ["italy-2006", "france-2018"],
   ["england-1966", "germany-1990"],
+  ["senegal-2002", "france-1998"],
+  ["croatia-2018", "france-2018"],
+  ["everton-1984-85", "liverpool-2004-05"],
+  ["chelsea-2011-12", "bayern-munich-2012-13"],
 ] as const
 
 export const DEFAULT_RIVALS: Record<string, string> = {
@@ -243,6 +255,9 @@ export const DEFAULT_RIVALS: Record<string, string> = {
   "south-korea-2002": "germany-2006",
   "usa-2002": "germany-2006",
   "czechia-1996": "france-1984",
+  "everton-1984-85": "liverpool-2004-05",
+  "chelsea-2011-12": "bayern-munich-2012-13",
+  "croatia-2018": "france-2018",
 }
 
 export function todaysDebate(date = new Date()): [string, string] {

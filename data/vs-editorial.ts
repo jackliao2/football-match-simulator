@@ -27,6 +27,10 @@ const EDITORIAL: Record<string, string> = {
   "france-1984|netherlands-1988": "Platini's European champions meet the only Dutch side to turn their talent into a major trophy. France own the denser creative midfield, while Gullit and Van Basten give the Netherlands more power close to goal.",
   "france-2018|italy-2006": "Italy's veteran defensive craft faces France's younger transition power. Cannavaro and Buffon can keep the box quiet, but Mbappé makes every Italian advance a decision about how much space to risk.",
   "england-1966|germany-1990": "Two world champions built on defensive authority and midfield leadership. England have home-era attacking combinations around Charlton; Germany bring a more modern sweeper system and Matthäus driving through the centre.",
+  "france-1998|senegal-2002": "The World Cup holders against the side that beat them on the opening night in Seoul. France still have Thuram, Desailly and Zidane; Senegal have Diouf, Fadiga and the goal that made Papa Bouba Diop a national name. It is a rematch of a result that already happened, not a hypothetical between strangers.",
+  "croatia-2018|france-2018": "The Moscow final, replayed as a squad-versus-squad rather than a recap. France have Mbappé in open field and a midfield that can protect a lead; Croatia have Modrić, Rakitić and a path of extra-time matches already in their legs before the first whistle of this version.",
+  "everton-1984-85|liverpool-2004-05": "Two Merseyside European nights that do not belong in the same sentence. Kendall's Everton won a league and a Cup Winners' Cup in daylight; Benítez's Liverpool won a Champions League from 3–0 down after dark. Direct play and Sheedy's left foot against Gerrard dragging a cup run.",
+  "bayern-munich-2012-13|chelsea-2011-12": "The Munich final's two clubs, a year apart in the catalogue and a universe apart as teams. Chelsea parked, headed and won a shootout in Bayern's stadium; Heynckes' treble side spent the next season proving they were much more than that night's losers.",
 }
 
 export type MatchupFeature = {
@@ -192,6 +196,30 @@ const FEATURES: Record<string, MatchupFeature> = {
     context: "England's champions balanced Charlton's carrying and shooting with two forwards and a narrow working midfield. Germany's 1990 winners brought a later tactical vocabulary: Matthäus driving from midfield, wing-backs supplying width and Augenthaler managing space as the spare defender.",
     hinge: "Charlton must find room beyond Germany's midfield without running directly into the sweeper. Germany, in turn, need Matthäus to advance without allowing Ball and Peters to attack the space he leaves. The wing-backs can stretch England's narrow shape, but their high positions may also give England a clearer route toward the two strikers.",
     reading: "Germany should have the structural advantage in width and the cleaner method for carrying possession forward. England retain a strong box presence and several routes from midfield into shooting positions. Historical home advantage is not added to the ratings here; this is the teams on a neutral imagined pitch.",
+  },
+  "france-1998|senegal-2002": {
+    title: "The opening-night result, without pretending it was a fluke or a law",
+    context: "France arrived in 2002 as holders with a midfield still built around Zidane and a defence that had been among the hardest in the world four years earlier. Senegal arrived as first-time World Cup players under Bruno Metsu, with Diouf and Fadiga forcing the game toward Barthez before Papa Bouba Diop scored the only goal in Seoul. This page is that fixture as a football match, not a morality play about complacent champions.",
+    hinge: "France need Zidane to receive in front of Cissé rather than with his back to Fadiga. If Thuram and Desailly can step into the first ball, Diouf's runs become isolated. Senegal need the second ball after a long throw or a broken clearance — that is how the 2002 goal arrived — and they need Coly and Daf to survive Henry if France start playing through the left.",
+    reading: "A Senegal win should look like 2002: one set-piece or a scramble, then a block that holds. A France win should look like the holders remembering they can pass through a press. Do not model this as a 3–0 either way. The historical night was 1–0 and tight; the simulator should be allowed to find that score again without treating it as destiny.",
+  },
+  "croatia-2018|france-2018": {
+    title: "The final they actually played, with the extra-time tax left in",
+    context: "Croatia reached Luzhniki through Denmark and Russia on penalties and England in extra time. France reached the same pitch with a younger transition game: Kanté screening, Pogba arriving, Mbappé running beyond a defence that had already spent 120 minutes elsewhere. The 4–2 scoreline in Moscow can hide how long the match stayed 1–1 after Perišić's equaliser.",
+    hinge: "Modrić has to find the ball in front of Kanté, not beside him. If Brozović cannot screen the first French transition, Mbappé attacks Vida and Lovren before the back four is set. France's risk is the far post: Perišić and Mandžukić both scored in that tournament by arriving onto balls Griezmann's line does not always track.",
+    reading: "France should create the cleaner transitions. Croatia should create the longer spells of midfield control, especially if the match stays 11 v 11. A simulator that only repeats 4–2 has watched the highlights. A simulator that keeps Croatia in the game until the last half-hour is closer to the night that happened.",
+  },
+  "everton-1984-85|liverpool-2004-05": {
+    title: "A league champion against a European myth from the other half of the city",
+    context: "Kendall's Everton took the First Division by 13 points and won the Cup Winners' Cup in Rotterdam with Southall, Reid, Sheedy and Sharp. They never played a European Cup tie because Heysel closed the door. Liverpool 2004/05 were fifth in the Premier League and still came home from Istanbul with the Champions League. Putting them in the same match is a Merseyside argument about what 'winning Europe' is allowed to mean.",
+    hinge: "Sheedy's left foot against a Liverpool defence that can be forced into set pieces. If Carragher and Hyypiä deal with Gray and Sharp in the air, Gerrard and Alonso can play through Reid and Bracewell rather than around them. Everton need the game to stay on their terms: crosses, second balls, Southall claiming the box. Liverpool need the first transition after a broken Everton attack.",
+    reading: "Everton should look like the better league team. Liverpool should look more dangerous once the match becomes stretched. A 1–0 to Kendall's side is historically literate; a late Gerrard equaliser is the other Merseyside cliché. Neither is a documentary. Both are why the fixture is on the site.",
+  },
+  "bayern-munich-2012-13|chelsea-2011-12": {
+    title: "The team that lost in their own stadium, then spent a year answering it",
+    context: "Chelsea won the 2012 Champions League final on penalties in Munich after Drogba's header and Čech's saves. Bayern's response was the 2012/13 treble: Robben and Ribéry stretching the pitch, Müller arriving in the box, a side that no longer needed a shootout to beat Europe. This is not a replay of 19 May 2012 with the same XIs. It is last year's cup side against the team that refused to stay that team.",
+    hinge: "Chelsea will try to recreate Munich: a low block, Drogba as the aerial target, Lampard and Ramires breaking. Bayern 2012/13 have more than Robben on the right — they have Alaba and Lahm arriving, and a press that starts higher than the 2012 final side. If Chelsea cannot get the first clearance to Drogba, they spend the night heading Müller crosses.",
+    reading: "A Chelsea win should feel like 2012: few shots, a set piece, a goalkeeper. A Bayern win should feel like 2013: territorial, wide, and decided before the last ten minutes. The model should not give Di Matteo's sixth-placed league side the same control as Heynckes' treble winners just because they share a final.",
   },
 }
 

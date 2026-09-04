@@ -66,7 +66,11 @@ const FAQ = [
   ],
   [
     "When was Barcelona's prime?",
-    "Prime pages compare candidate seasons — Barcelona 2008/09, 2010/11 and 2014/15, plus the latest dataset — then send you into the simulator. Same idea for Real Madrid, Manchester United, Messi, Brazil and Argentina.",
+    "Prime pages compare candidate seasons — Barcelona 2008/09, 2010/11 and 2014/15, plus the latest dataset — then send you into the simulator. Same idea for Real Madrid, Manchester United, Liverpool, Messi, Brazil and Argentina.",
+  ],
+  [
+    "Who is better, Brazil or Argentina?",
+    "Brazil have the heavier World Cup record; Argentina have 1986 and 2022 as individual peaks. The compare page separates those questions, then opens Brazil 1970 against Argentina 1986 in the simulator.",
   ],
 ] as const
 
@@ -266,6 +270,16 @@ export default function HomePage() {
             <span>Club comparison</span><h3>Barcelona or Real Madrid: which is better?</h3>
             <p>Separate the all-time club argument from the prime-team matchup, then test the best versions.</p>
             <b>Compare the giants →</b>
+          </Link>
+          <Link href="/compare/brazil-vs-argentina" className="home-prime-card">
+            <span>Nation comparison</span><h3>Who is better: Brazil or Argentina?</h3>
+            <p>Five stars against three, 1970 against 1986. The cabinets are not a tie; the prime teams are still a match.</p>
+            <b>Open the argument →</b>
+          </Link>
+          <Link href="/compare/england-vs-germany" className="home-prime-card">
+            <span>Nation comparison</span><h3>Who is better: England or Germany?</h3>
+            <p>Germany keep answering the tournament question. England have one undisputed answer, and it is 1966.</p>
+            <b>Open the argument →</b>
           </Link>
         </div>
       </section>
