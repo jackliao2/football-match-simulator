@@ -25,8 +25,12 @@ export async function generateMetadata({
   const { slug } = await params
   const pair = resolveClubCompare(slug)
   if (!pair) return { title: "Club comparison" }
+  const leftClub = getClub(pair.leftClubId)
+  const rightClub = getClub(pair.rightClubId)
+  const title =
+    leftClub && rightClub ? `Who Is Better, ${leftClub.name} or ${rightClub.name}?` : pair.title
   return pageMetadata({
-    title: pair.title,
+    title,
     description: pair.description,
     path: `/compare/${pair.slug}`,
     keywords: pair.keywords,
@@ -69,7 +73,7 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
       />
       <PageHeader
         kicker="Club comparison"
-        title={`${leftClub.name} or ${rightClub.name}: which is better?`}
+        title={`Who is better: ${leftClub.name} or ${rightClub.name}?`}
         lead={pair.lead}
         crumbs={[{ href: "/compare", label: "Compare" }]}
       />

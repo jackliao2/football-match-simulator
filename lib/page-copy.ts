@@ -43,10 +43,15 @@ function trophyBits(team: HistoricalTeam): string {
 export type TeamPageCopy = {
   title: string
   description: string
+  h1: string
   kicker: string
   deck: string
   paragraphs: string[]
   matchupHeading: string
+}
+
+export function teamH1(team: HistoricalTeam): string {
+  return `${team.clubName} ${team.displaySeason} squad`
 }
 
 export function teamPageCopy(team: HistoricalTeam, opponentArg?: HistoricalTeam): TeamPageCopy {
@@ -149,6 +154,7 @@ export function teamPageCopy(team: HistoricalTeam, opponentArg?: HistoricalTeam)
   return {
     title,
     description,
+    h1: teamH1(team),
     kicker,
     deck,
     paragraphs,

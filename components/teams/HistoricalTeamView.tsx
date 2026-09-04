@@ -20,6 +20,7 @@ import { getTeam, getTeamsByClub } from "@/data/teams"
 import { cachedMatchupModel } from "@/lib/matchup-model"
 import { orgIndexPath, orgPath, teamPath } from "@/lib/paths"
 import { relatedMatchups, teamPageCopy } from "@/lib/page-copy"
+import { informalSeason } from "@/lib/seo"
 import { SITE, absoluteUrl } from "@/lib/site"
 import type { HistoricalTeam } from "@/types"
 
@@ -43,7 +44,8 @@ const SEARCH_YEAR_NOTES: Record<string, string> = {
   "bayern-munich-2019-20": "Bayern 2020 sextuple searches point to Flick's 2019/20 side after he replaced Kovac mid-season.",
   "manchester-city-2022-23": "City 2023 treble searches mean Guardiola's 2022/23 squad with Haaland, Rodri and Stones stepping into midfield.",
   "manchester-city-2017-18": "City 2018 squad searches usually mean the 100-point 2017/18 Premier League winners.",
-  "chelsea-2004-05": "Chelsea 2005 squad searches point to Mourinho's first title side, not the 2012 Champions League winners.",
+  "chelsea-2004-05":
+    "Chelsea 04/05, Chelsea 04 05, Chelsea 2004 squad and Chelsea 2004/05 lineup searches all mean Mourinho's first title side — not the 2012 Champions League winners.",
   "chelsea-2011-12": "Chelsea 2012 Champions League searches mean Di Matteo's 2011/12 knockout team rather than the earlier Mourinho sides.",
   "juventus-2016-17": "Juve 2017 squad searches usually mean Allegri's Champions League finalists with Buffon, Chiellini and Dybala.",
   "ajax-1994-95": "Ajax 1995 squad searches mean Van Gaal's young European Cup winners, not a later Ajax generation.",
@@ -66,6 +68,10 @@ const SEARCH_YEAR_NOTES: Record<string, string> = {
   "germany-1990": "Germany 1990 World Cup squad searches mean Beckenbauer's West Germany winners.",
   "italy-2006": "Italy 2006 World Cup squad searches mean Lippi's Berlin winners, not a later Azzurri cycle.",
   "netherlands-1974": "Netherlands 1974 World Cup squad searches mean Michels' Total Football side, not the 1988 Euros winners.",
+  "netherlands-1988":
+    "1988 Netherlands squad, 1988 Holland team and 1988 Hollanda kadrosu searches mean Van Basten's Euros winners, not the 1974 World Cup side.",
+  "england-2026":
+    "England squad 2026, England 2026 national team and England World Cup 2026 players searches land here: a modelled starting XI and formation for the 2026 cycle, not an official FIFA list.",
   "england-1966": "England 1966 World Cup squad searches mean Ramsey's home winners rather than a later tournament XI.",
   "portugal-2016": "Portugal 2016 Euros squad searches mean Santos' tournament winners, not a World Cup cycle.",
   "croatia-2018": "Croatia 2018 World Cup squad searches mean Dalić's finalists with Modrić, Rakitic and Mandzukic.",
@@ -87,7 +93,20 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
   const orgIndexHref = orgIndexPath(team.kind)
   const TEAM_RUNS = 100
   const model = opponent ? cachedMatchupModel(team, opponent, TEAM_RUNS, `team:${team.id}`) : null
+  const shortSeason = informalSeason(team)
   const faqs = [
+    {
+      q: `What was the ${team.clubName} ${team.displaySeason} squad?`,
+      a: `This page is the ${team.clubName} ${team.displaySeason} squad used in the simulator: starting XI, bench, ${team.formation} under ${team.manager}, and era-relative ratings.`,
+    },
+    ...(shortSeason
+      ? [
+          {
+            q: `Is this the ${team.clubName} ${shortSeason} squad?`,
+            a: `Yes. ${team.clubName} ${shortSeason}, ${team.clubName} ${team.displaySeason} squad and ${team.clubName} ${team.eraYear} lineup searches all refer to this ${team.manager} side.`,
+          },
+        ]
+      : []),
     opponent && model
       ? {
           q: `Who would win between ${team.clubName} ${team.displaySeason} and ${opponent.clubName} ${opponent.displaySeason}?`,
@@ -159,7 +178,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Article",
-              headline: `${team.clubName} ${team.displaySeason}`,
+              headline: copy.h1,
               description: copy.description,
               url: absoluteUrl(teamPath(team)),
               datePublished: SITE.legalUpdatedIso,
@@ -202,9 +221,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
         <div className={`flex items-start gap-4 ${eraGlow(team.trophies) ? "era-sheen" : ""}`}>
           <PixelCrest clubId={team.clubId} size={64} />
           <div className="min-w-0 flex-1">
-            <h1 className="page-title leading-snug">
-              {team.clubName} {team.displaySeason}
-            </h1>
+            <h1 className="page-title leading-snug">{copy.h1}</h1>
             <p className="mt-1 font-mono text-sm text-muted">{copy.deck}</p>
             <p className="mt-0.5 font-mono text-xs text-muted">
               {team.manager}

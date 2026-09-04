@@ -500,9 +500,9 @@ export const england2026: HistoricalTeam = makeTeam({
   styleTags: ["Star Midfield", "Wide Forwards", "Control Possession", "Vertical Attack", "Set Pieces"],
   summary:
     "Tuchel's 2026 England. Kane as the finish, Bellingham as the runner, Saka as the edge, and a generation that still has a tournament to win.",
-  seoTitle: "England 2026 Squad, Lineup, Formation & Ratings",
+  seoTitle: "England 2026 Squad — World Cup Players, Lineup & Formation",
   seoDescription:
-    "England 2026 World Cup squad, starting XI and ratings. Simulate Kane, Bellingham and Saka against historical football teams from any era.",
+    "England 2026 squad: Kane, Bellingham, Saka and a modelled World Cup starting XI, formation and ratings. A playable national-team dataset, not an official FIFA list.",
 })
 
 export const portugal2026: HistoricalTeam = makeTeam({

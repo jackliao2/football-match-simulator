@@ -63,9 +63,9 @@ export const chelsea200405: HistoricalTeam = makeTeam({
   styleTags: ["Low Block", "Set Pieces", "Counter Attack", "Defensive Steel", "Late Goals"],
   summary:
     "Mourinho's first Chelsea. Čech, Terry and Carvalho as the wall, Makelele as the screen, Lampard arriving late, Drogba and Robben as the threat.",
-  seoTitle: "Chelsea 2004/05 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Chelsea 04/05 Squad — 2004/05 Lineup, Players & Formation",
   seoDescription:
-    "Explore the Chelsea 2004/05 squad, starting XI, formation and ratings, then simulate Mourinho's 95-point Premier League winners against teams from any era.",
+    "Chelsea 2004/05 squad, also searched as Chelsea 04/05: Mourinho's title-winning starting XI, players, 4-3-3 formation and ratings. Simulate the 04/05 Blues against any era.",
 })
 
 export const chelsea201112: HistoricalTeam = makeTeam({

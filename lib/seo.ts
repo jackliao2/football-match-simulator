@@ -13,7 +13,7 @@ const CLUB_ALIASES: Record<string, string[]> = {
   liverpool: ["liverpool"],
   "ac-milan": ["ac milan"],
   "manchester-city": ["manchester city", "man city"],
-  chelsea: ["chelsea"],
+  chelsea: ["chelsea", "chelsea fc"],
   "bayern-munich": ["bayern", "bayern munich"],
   "inter-milan": ["inter", "inter milan"],
   juventus: ["juventus"],
@@ -27,6 +27,7 @@ const CLUB_ALIASES: Record<string, string[]> = {
   spain: ["spain"],
   germany: ["germany"],
   italy: ["italy"],
+  netherlands: ["netherlands", "holland"],
 }
 
 export const PLANNER_KEYWORDS = [
@@ -132,9 +133,31 @@ export function seasonYears(team: HistoricalTeam): string[] {
   return [...new Set([String(start), String(end)])]
 }
 
+export function seasonSearchTokens(team: HistoricalTeam): string[] {
+  const tokens = new Set<string>([team.displaySeason, team.season, ...seasonYears(team)])
+  if (team.kind === "nation" || !team.season.includes("-")) return [...tokens]
+  const [startStr, endPart] = team.season.split("-")
+  if (!startStr || !endPart) return [...tokens]
+  const start2 = startStr.slice(-2)
+  const end2 = endPart.slice(-2)
+  tokens.add(`${startStr}/${end2}`)
+  tokens.add(`${startStr} ${end2}`)
+  tokens.add(`${start2}/${end2}`)
+  tokens.add(`${start2} ${end2}`)
+  tokens.add(`${start2}${end2}`)
+  return [...tokens]
+}
+
+export function informalSeason(team: HistoricalTeam): string | undefined {
+  if (team.kind === "nation" || !team.season.includes("-")) return undefined
+  const [startStr, endPart] = team.season.split("-")
+  if (!startStr || !endPart) return undefined
+  return `${startStr.slice(-2)}/${endPart.slice(-2)}`
+}
+
 export function squadKeywords(team: HistoricalTeam): string[] {
   const names = CLUB_ALIASES[team.clubId] ?? [team.clubName.toLowerCase()]
-  const years = seasonYears(team)
+  const years = seasonSearchTokens(team)
   const phrases: string[] = [
     `${team.clubName} ${team.displaySeason} squad`,
     `${team.clubName} ${team.displaySeason} lineup`,
@@ -145,11 +168,28 @@ export function squadKeywords(team: HistoricalTeam): string[] {
   for (const name of names) {
     for (const year of years) {
       phrases.push(
+        `${name} ${year}`,
         `${name} ${year} squad`,
         `${year} ${name} squad`,
         `${name} squad ${year}`,
         `${name} ${year} team`,
         `${name} ${year} lineup`,
+        `${name} ${year} players`,
+      )
+    }
+  }
+  if (team.kind === "nation") {
+    for (const name of names) {
+      phrases.push(
+        `${name} squad ${team.displaySeason}`,
+        `${name} ${team.displaySeason} national team`,
+        `${name} national football team ${team.displaySeason}`,
+        `${name} national football team players ${team.displaySeason}`,
+        `${name} ${team.displaySeason} world cup squad`,
+        `${name} football squad ${team.displaySeason}`,
+        `${name} ${team.displaySeason} players`,
+        `${name} team ${team.displaySeason} football`,
+        `${name} formation world cup ${team.displaySeason}`,
       )
     }
   }

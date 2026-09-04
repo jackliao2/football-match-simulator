@@ -49,6 +49,10 @@ const FAQ = [
     "Yes. Open the simulator, choose any two teams in the database, and simulate a football match online. Run it again for another plausible night, or use Expert AI Analysis for a 100-match probability read.",
   ],
   [
+    "Is this a football match simulator with AI?",
+    "The score comes from the match engine — ratings, tactics and a seed — not from a chatbot picking a winner. Optional Expert AI Analysis then explains the 100-match probabilities. A football match simulator AI query still lands on a simulated game, not a language-model scoreline.",
+  ],
+  [
     "Why does the result change when I simulate again?",
     "A great team does not win every night. Each new seed creates another plausible game, so the score and scorers can change. Expert AI Analysis adds a fresh 100-match distribution behind its tactical verdict.",
   ],

@@ -294,6 +294,25 @@ export const NATION_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
       },
     ],
   ),
+  "england-2026": d(
+    "England 2026 is the current-cycle national side in this catalogue: Tuchel as manager, Kane as the finish, Bellingham as the runner, Saka as the edge. It is a playable World Cup-year dataset, not the official 26-man FIFA list. Use it to argue England against Brazil 2002 or France 2018 with a named XI rather than a vibes rating.",
+    [
+      {
+        heading: "Who is actually in the modelled XI",
+        paragraphs: [
+          "The starting shape is a 4-3-3. Pickford; James, Stones, Guéhi, Lewis; Palmer, Rice, Bellingham; Saka, Kane, Foden. That is a control midfield with two wide creators and a centre-forward who still occupies both centre-backs. The bench carries Watkins, Gordon, Mainoo, Trent and Colwill so the page is a squad, not eleven names and a shrug.",
+          "People searching England squad 2026, England 2026 national team or England World Cup 2026 players usually want this list: who starts, who is on the bench, what the formation is. They are not looking for a live injury bulletin. If the official tournament squad later differs, this page stays a 2026-cycle snapshot the simulator can actually run.",
+        ],
+      },
+      {
+        heading: "How it should play in the model",
+        paragraphs: [
+          "Rice screens, Bellingham arrives, Saka isolates a full-back, Kane finishes cut-backs. Against Brazil 2026 the interesting clash is England’s half-space combinations versus Brazil’s wide overloads. Against France 2018 it is a later English generation testing Kanté-era compactness.",
+          "Do not treat this as 1966 with better boots. 1966 is a World Cup winner; 2026 is an unplayed tournament. The ratings are era-relative on purpose: Bellingham at 92 is greatness in 2026, not a claim that he outranks Bobby Charlton on a time machine.",
+        ],
+      },
+    ],
+  ),
   "hungary-1954": d(
     "The Mighty Magyars. Hungary 1954 arrived at the World Cup in Switzerland as the best team in the world, beat West Germany 8–3 in the group, and then lost the final 3–2 to the same opponent. Puskás, Hidegkuti, Kocsis and a 3-2-3-2 that confused man-marking are the reason they are still in every serious all-time conversation.",
     [
