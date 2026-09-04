@@ -72,7 +72,7 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
         }}
       />
       <PageHeader
-        kicker="Club comparison"
+        kicker={pair.kind === "nation" ? "National-team comparison" : "Club comparison"}
         title={`Who is better: ${leftClub.name} or ${rightClub.name}?`}
         lead={pair.lead}
         crumbs={[{ href: "/compare", label: "Compare" }]}
@@ -89,7 +89,9 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
       </section>
       <section>
         <p className="page-kicker">Argument by category</p>
-        <h2 className="section-title mt-2 mb-3">Where each club has the edge</h2>
+        <h2 className="section-title mt-2 mb-3">
+          {pair.kind === "nation" ? "Where each country has the edge" : "Where each club has the edge"}
+        </h2>
         <div className="comparison-table">
           <div className="comparison-row">
             <span>{leftClub.name}</span>

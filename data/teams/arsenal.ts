@@ -64,9 +64,9 @@ export const arsenal200304: HistoricalTeam = makeTeam({
   styleTags: ["Fluid Attack", "One-Touch Passing", "Wide Overloads", "Technical Midfield", "Counter Attack"],
   summary:
     "Wenger's Invincibles. Henry in his prime, Bergkamp dropping off, Vieira dominating midfield, and a side that did not lose a Premier League match all season.",
-  seoTitle: "Arsenal 2003/04 Squad — Invincibles Lineup & Ratings",
+  seoTitle: "Arsenal 03/04 Squad — Invincibles Lineup, Players & Formation",
   seoDescription:
-    "Explore the Arsenal 2003/04 Invincibles squad, starting XI, formation and team ratings, then simulate Wenger's unbeaten side against football teams from any era.",
+    "Arsenal 2003/04 squad, also searched as Arsenal 03/04: Wenger's Invincibles starting XI, players, 4-4-2 and ratings. Simulate the unbeaten league side against any era.",
 })
 
 export const arsenal199798: HistoricalTeam = makeTeam({

@@ -313,6 +313,44 @@ export const NATION_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
       },
     ],
   ),
+  "senegal-2002": d(
+    "Senegal’s first World Cup began with the defending champions. Papa Bouba Diop scored the only goal against France in Seoul, and a country that had never been at the tournament suddenly had a night everyone else had to explain. They reached the quarter-finals. They did not win it. The page is for that run, not for a later Senegal with Mané.",
+    [
+      {
+        heading: "France, Sweden, Turkey",
+        paragraphs: [
+          "Group A was France, Denmark, Uruguay. The 1–0 on the opening night was not a smash-and-grab in the folklore sense — Diouf and Fadiga kept forcing France backwards, and Barthez’s night never settled. They drew 1–1 with Denmark and 3–3 with Uruguay, then beat Sweden 2–1 in extra time in the round of 16. Henri Camara scored twice. Turkey ended it in the quarter-final with İlhan Mansız’s golden goal.",
+          "Bruno Metsu’s side played on the front foot more than later African tournament teams who sat in a block and countered. Aliou Cissé, still a player then, sat in front of the defence. Coly and Daf were full-backs asked to run. This is not Morocco 2022. It is a first World Cup that attacked the hosts of 1998 and got away with it.",
+        ],
+      },
+      {
+        heading: "What the model should and should not do",
+        paragraphs: [
+          "In the simulator they should look fast in transition and a little open if the first press fails. Sylva is not a wall the way Bono was twenty years later. Against France 1998 — the side they beat a version of — the historically literate expectation is a match that can turn on a set piece and a mistake, not a 3–0 procession either way.",
+          "People landing here from a Senegal 2002 search usually want Diouf, Fadiga, Diop and the France result. They are on the page. The later Lions of Teranga, with Mané and a deeper squad, are a different national team and are not this XI with better boots.",
+        ],
+      },
+    ],
+  ),
+  "croatia-2018": d(
+    "Croatia played 90 minutes of a World Cup final and three extra times to get there. That is the 2018 side: Modrić as the organiser, Rakitić as the second brain, Mandžukić as the battering ram, and a goalkeeper in Subašić who kept winning penalty shootouts until France did not need one. They lost 4–2 in Moscow. They still belong in any serious ‘who nearly won a World Cup’ argument.",
+    [
+      {
+        heading: "The long way to Luzhniki",
+        paragraphs: [
+          "They beat Argentina 3–0 in the group and still had to go through Denmark and Russia on penalties, then England in extra time in the semi-final. Perišić equalised; Mandžukić won it. By the final the legs were going. An own goal, Perišić’s strike, then Pogba and Mbappé pulled France clear before Mandžukić’s late reply. Modrić still left Russia with the Golden Ball and, months later, the Ballon d’Or.",
+          "A squad of four million people does not get a pass for losing a final. It does get credit for surviving a knockout path that would have ended most tournament sides a round earlier. Brozović screened; Rebić ran channels; Vida and Lovren headed everything. The midfield was the team.",
+        ],
+      },
+      {
+        heading: "Finalists, not 2018 France",
+        paragraphs: [
+          "On this site the pairing is often France 2018 because that is the match that actually happened. Croatia should look like a side that wants the ball in Modrić’s feet and becomes dangerous when Perišić attacks the far post. They should not look like a 4–2 smash. If the model keeps giving France the first transition, that is historically fair.",
+          "Croatia 1998, with Šuker and Boban, is a different generation and a third-place finish. 2018 is the final. Searches for Croatia World Cup squad 2018, Modrić 2018 and the England semi-final should land here rather than on a 2026 cycle page.",
+        ],
+      },
+    ],
+  ),
   "hungary-1954": d(
     "The Mighty Magyars. Hungary 1954 arrived at the World Cup in Switzerland as the best team in the world, beat West Germany 8–3 in the group, and then lost the final 3–2 to the same opponent. Puskás, Hidegkuti, Kocsis and a 3-2-3-2 that confused man-marking are the reason they are still in every serious all-time conversation.",
     [

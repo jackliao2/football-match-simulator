@@ -382,4 +382,42 @@ export const CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
       },
     ],
   ),
+  "everton-1984-85": d(
+    "For one English season Everton were the better Merseyside team, and it was not close. Kendall’s 1984/85 side took the First Division by 13 points, won the Cup Winners’ Cup in Rotterdam, and then had the European door closed on them by Heysel. The page exists because that year is a peak, not a footnote to Liverpool.",
+    [
+      {
+        heading: "The league they actually ran",
+        paragraphs: [
+          "42 games, 90 points, a title won in April. Southall was the reason close matches stayed close; Reid was the reason midfield fights did not drift. Sheedy’s left foot supplied the set-piece threat that later Everton sides kept trying to rebuild. Sharp scored the league goals; Gray, signed mid-project, added the aerial presence for Europe.",
+          "They were not invincible. Eight league defeats sit on the record, which is why this is not an Arsenal 03/04 story with blue shirts. It is a side that won its league by being harder and more repeatable than Liverpool that year, then proved the same idea against Bayern in the Cup Winners’ Cup semi-final at Goodison.",
+        ],
+      },
+      {
+        heading: "Rotterdam, then the ban",
+        paragraphs: [
+          "The final against Rapid Vienna was 3–1: Gray, Steven, Sheedy. Three days later they lost an FA Cup final to Manchester United. Heysel, eleven days after that final, was a match Everton were not in; English clubs were thrown out of Europe anyway. Kendall’s champions never played a European Cup tie. That is why the 1984/85 peak has no sequel on this site.",
+          "In the simulator they should look direct, set-piece dangerous and stubborn rather than pretty. Against Liverpool 2004/05 the interesting clash is two Merseyside sides that won Europe in different ways — one a Cup Winners’ Cup in daylight, the other a Champions League at 3–0 down. Do not flatten both into ‘scouse grit’.",
+        ],
+      },
+    ],
+  ),
+  "chelsea-2011-12": d(
+    "Chelsea 2011/12 finished sixth in the league and still won the Champions League. That is the whole argument. Di Matteo inherited a stalled Villas-Boas project, parked in the biggest away nights, and left Munich with the trophy Abramovich had bought the club to get. It is a cup side, and a great one. It is not Mourinho’s 95-point machine in a later kit.",
+    [
+      {
+        heading: "The nights that actually happened",
+        paragraphs: [
+          "Napoli were beaten after a 3–1 first-leg hole. Barcelona were held 2–2 at the Camp Nou with ten men after Terry’s red card: Ramires on the break, Iniesta’s away goal, Messi’s penalty off the bar, Torres in stoppage time. The final in Bayern’s stadium went to extra time after Müller scored and Drogba answered in the 88th minute. Čech saved Robben from the spot before the shootout.",
+          "Drogba’s header is the clip. The season around it was messy: a managerial sacking, a defence that leaked in the league, Torres as a £50m question mark. Treating Munich as proof that this was Chelsea’s strongest squad is how you lose the 2004/05 argument on purpose.",
+        ],
+      },
+      {
+        heading: "Cup steel against a league champion",
+        paragraphs: [
+          "On this site the pairing is with Arsenal 2003/04 because both English stories get flattened into ‘dominant 2000s Chelsea/Arsenal’. They were not the same species. The Invincibles went unbeaten in the league; this Chelsea side survived knockout chaos. In a simulation Chelsea 11/12 should look dangerous on the first ball into Drogba and stubborn in their own box. They should not look like a 4-3-3 that controls territory for 90 minutes.",
+          "If you want the Chelsea that won England, open 2004/05. If you want the Chelsea that finally won Europe, this is the page. Prime Chelsea, on our reading, is still the earlier one. Munich is the ending the club had been trying to write.",
+        ],
+      },
+    ],
+  ),
 }

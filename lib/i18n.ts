@@ -34,8 +34,11 @@ export const LOCALIZED_COPY = {
       metaDescription: "Simulador de fútbol online con equipos de distintas épocas. Enfrenta al Barcelona 2009, Brasil 1970, Real Madrid 2017 y más; descubre marcadores y probabilidades.",
     },
     simulate: {
-      title: "Simula cualquier partido de fútbol",
-      lead: "Elige dos plantillas de las temporadas disponibles. El motor calcula el resultado; el análisis experto con IA explica el duelo sin decidir al ganador.",
+      title: "Simular partidos de fútbol entre épocas",
+      lead: "Elige dos plantillas con año, entrenador y once. El motor escribe el marcador; la IA solo explica el duelo después, y no vota.",
+      metaTitle: "Simular partidos de fútbol online | LegendaryMatch",
+      metaDescription:
+        "Simular partidos de fútbol online entre épocas: Brasil 1970, Barcelona 2009, Francia 2018. Marcador, goleadores, xG y cien repeticiones. El motor decide el resultado.",
     },
     teams: { title: "Clubes legendarios destacados", lead: "Seis plantillas de cabecera. El archivo completo — más de 80 temporadas, filtros y páginas de cada club — está en inglés." },
     nations: { title: "Selecciones que marcaron una época", lead: "Seis selecciones de cabecera. El archivo completo de Mundiales y Euros está en inglés." },
@@ -58,6 +61,7 @@ export const LOCALIZED_COPY = {
       ["¿Predice partidos reales?", "No. Es una experiencia contrafactual para comparar equipos históricos, no un pronóstico ni una herramienta de apuestas."],
       ["¿Por qué cambia el resultado al repetir?", "Cada nueva semilla representa otra noche posible. Un gran equipo no gana siempre; el análisis experto muestra la distribución de cien partidos."],
       ["¿Qué hace el análisis experto con IA?", "Lee las plantillas, los entrenadores, las formaciones y la evidencia de cien simulaciones para explicar el duelo. El motor decide los números primero."],
+      ["¿Puedo simular partidos de distintas épocas?", "Sí. Brasil 1970 contra España 2010, o Barcelona 2008/09 contra Real Madrid 2016/17. Cada lado es una temporada concreta, no un escudo con un deslizador."],
     ],
   },
   "pt-br": {

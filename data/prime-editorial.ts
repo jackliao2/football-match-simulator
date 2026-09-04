@@ -117,6 +117,40 @@ const PRIME_EDITORIAL: Record<string, PrimeEditorial> = {
     caseFor: "England 1966 combine the only winning achievement with a functioning tournament structure. Ramsey's narrow midfield allowed Charlton to advance, Moore organised possession from defence and Hurst and Hunt gave the team a real box presence. The home setting helped, but it does not erase the tactical coherence.",
     counterCase: "The 2004 squad win the names-on-paper argument: Rooney, Beckham, Gerrard, Lampard, Scholes, Terry, Ferdinand and Cole. Their failure to balance those midfielders is precisely why talent alone cannot decide a prime. Italia 90 and Euro 96 also carry emotional claims without the final proof of 1966.",
   },
+  liverpool: {
+    caseFor: "Liverpool 2018/19 could win more than one kind of match. The press started from Salah, Mané and Firmino rather than from a slogan; Trent and Robertson supplied the width that let the midfield stay compact; van Dijk and Alisson turned a previously fragile defence into the platform for 97 league points. Madrid against Tottenham was a final they controlled, not a final they escaped.",
+    counterCase: "2004/05 have the night that still travels. A fifth-placed league side beat Milan from 3–0 down because Gerrard, Alonso and a goalkeeper who guessed right refused to accept the score. If prime means the season that most completely expresses Liverpool as a European myth, Istanbul leads — and it should, as a story. It should not automatically lead as a starting XI.",
+    sections: [
+      {
+        heading: "Two European Cups, two jobs",
+        paragraphs: [
+          "Liverpool’s modern prime is a fork, not a ranking of trophies. Both of these sides won the Champions League. Only one of them spent a league season looking like the best team in England. 2004/05 were 37 points behind Chelsea and still came home from Istanbul with the cup. 2018/19 lost the league by a point to a 98-point City side and still won Europe without needing a miracle at 3–0 down.",
+          "Paisley’s 1970s teams are not in this simulator, which is a limit worth stating. This page compares the two Liverpools we can actually play. It is not a claim that 1984 never happened.",
+        ],
+      },
+      {
+        heading: "Why Istanbul is the cultural answer",
+        paragraphs: [
+          "The 2005 final is the reason people who do not follow the Premier League still know Gerrard’s name. Dudek’s save from Shevchenko, the three goals in six minutes, the shootout: it is a complete folk tale. Hamann coming on to sit in front of the defence is the tactical detail the film often skips. Alonso’s penalty rebound is the other.",
+          "The league table is the limit. Fifth is fifth. Baroš and Kewell were not Salah and Mané. A simulator that keeps giving 2004/05 the same territorial control as 2018/19 is flattening a cup run into a false dynasty.",
+        ],
+      },
+      {
+        heading: "Why 2018/19 is the stronger team",
+        paragraphs: [
+          "Klopp’s side could press a back line into a mistake and still defend a lead. Firmino’s work without the ball let Salah finish rather than drop. van Dijk’s recovery runs made a high line survivable. The Barcelona night — 4–0 at Anfield after 3–0 down from the first leg — looks like Istanbul until you watch the rest of the season: this team did that sort of thing while also taking 97 points.",
+          "The Madrid final against Tottenham was 2–0 and never a shootout. That is the point. Prime, for a football team rather than a story, is the version that does not need chaos to be itself.",
+        ],
+      },
+      {
+        heading: "The verdict, with the argument left open",
+        paragraphs: [
+          "If one match had to be played against another elite historical side, pick 2018/19. The defence is better, the press is coordinated, and the attack has three finishers instead of one captain dragging a cup run.",
+          "If the question is which season most completely represents Liverpool in Europe, pick 2004/05. The club’s idea of itself is still that night in orange. Playing peak: 2018/19. Defining night: Istanbul.",
+        ],
+      },
+    ],
+  },
 }
 
 export function getPrimeEditorial(slug: string): PrimeEditorial | undefined {

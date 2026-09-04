@@ -46,7 +46,10 @@ const SEARCH_YEAR_NOTES: Record<string, string> = {
   "manchester-city-2017-18": "City 2018 squad searches usually mean the 100-point 2017/18 Premier League winners.",
   "chelsea-2004-05":
     "Chelsea 04/05, Chelsea 04 05, Chelsea 2004 squad and Chelsea 2004/05 lineup searches all mean Mourinho's first title side — not the 2012 Champions League winners.",
-  "chelsea-2011-12": "Chelsea 2012 Champions League searches mean Di Matteo's 2011/12 knockout team rather than the earlier Mourinho sides.",
+  "chelsea-2011-12":
+    "Chelsea 11/12, Chelsea 2012 Champions League and Munich 2012 searches mean Di Matteo's knockout side — not Mourinho's 2004/05 title winners.",
+  "everton-1984-85":
+    "Everton 84/85, Everton 1985 and Kendall's champions searches mean the First Division and Cup Winners' Cup side, not a later Goodison team.",
   "juventus-2016-17": "Juve 2017 squad searches usually mean Allegri's Champions League finalists with Buffon, Chiellini and Dybala.",
   "ajax-1994-95": "Ajax 1995 squad searches mean Van Gaal's young European Cup winners, not a later Ajax generation.",
   "borussia-dortmund-2012-13": "Dortmund 2013 squad searches point to Klopp's Champions League finalists, one year after the 2011/12 title.",
@@ -74,7 +77,10 @@ const SEARCH_YEAR_NOTES: Record<string, string> = {
     "England squad 2026, England 2026 national team and England World Cup 2026 players searches land here: a modelled starting XI and formation for the 2026 cycle, not an official FIFA list.",
   "england-1966": "England 1966 World Cup squad searches mean Ramsey's home winners rather than a later tournament XI.",
   "portugal-2016": "Portugal 2016 Euros squad searches mean Santos' tournament winners, not a World Cup cycle.",
-  "croatia-2018": "Croatia 2018 World Cup squad searches mean Dalić's finalists with Modrić, Rakitic and Mandzukic.",
+  "croatia-2018":
+    "Croatia 2018 World Cup squad, Modrić 2018 and England semi-final searches mean Dalić's Moscow finalists — not the 1998 third-place side or a 2026 cycle.",
+  "senegal-2002":
+    "Senegal 2002 World Cup squad searches mean the side that beat France 1–0 in the opening game and reached the quarter-finals, not a later Teranga XI.",
   "hungary-1954": "Hungary 1954 World Cup squad searches mean the Mighty Magyars, not a later Hungary team.",
   "celtic-1966-67": "Celtic 1967 Lisbon Lions searches mean Stein's European Cup winners.",
   "nottingham-forest-1979-80": "Forest 1980 European Cup searches mean Clough's second successive winners.",

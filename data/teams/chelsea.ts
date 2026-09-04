@@ -130,7 +130,7 @@ export const chelsea201112: HistoricalTeam = makeTeam({
   styleTags: ["Low Block", "Set Pieces", "Cup Steel", "Counter Attack", "Experience"],
   summary:
     "Di Matteo's Chelsea in Munich. A battered, stubborn side that parked, headed, and won Europe the hard way, with Drogba writing the last line.",
-  seoTitle: "Chelsea 2011/12 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Chelsea 11/12 Squad — 2012 Champions League Lineup & Players",
   seoDescription:
-    "Explore the Chelsea 2011/12 squad, starting XI, formation and ratings, then simulate the Munich Champions League winners against teams from any era.",
+    "Chelsea 2011/12 squad, also searched as Chelsea 2012 Champions League: Di Matteo's Munich starting XI, Drogba, Čech and the knockout run. Simulate them against any era.",
 })

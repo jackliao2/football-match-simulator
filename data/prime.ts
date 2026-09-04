@@ -263,6 +263,29 @@ export const primeEntities: PrimeEntity[] = [
       },
     ],
   },
+  {
+    slug: "liverpool",
+    name: "Liverpool",
+    kind: "club",
+    title: "When Was Liverpool's Prime?",
+    description:
+      "Istanbul 2005, or the 2018/19 side that pressed as a team and won the Champions League in Madrid. Two European Cups, two different Liverpools.",
+    seoTitle: "Prime Liverpool — When Was Liverpool's Prime?",
+    seoDescription:
+      "When was Liverpool's prime? Compare Benítez's 2004/05 Istanbul winners with Klopp's 2018/19 Champions League side, then simulate each squad.",
+    verdict:
+      "Our pick is 2018/19. Istanbul is the greater story and the more famous night; Klopp's side is the stronger football team — 97 league points, a front three that pressed as a unit, and a Champions League won without needing a 3–0 deficit to become folklore.",
+    candidates: [
+      {
+        teamId: "liverpool-2004-05",
+        argument: "Gerrard in Istanbul. 3–0 down at half-time, 3–3, penalties. The night that still defines the club for people who were not at Anfield in the 1970s.",
+      },
+      {
+        teamId: "liverpool-2018-19",
+        argument: "Salah, Mané, Firmino, van Dijk, Alisson. A Champions League in Madrid, and a league campaign that only City's 98 points could beat.",
+      },
+    ],
+  },
 ]
 
 export function getPrimeEntity(slug: string): PrimeEntity | undefined {

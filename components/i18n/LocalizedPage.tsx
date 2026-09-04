@@ -15,7 +15,11 @@ function selected(ids: readonly string[]) {
 
 const SECTION_EDITORIAL: Record<Locale, Record<LocalizedSection, [string, string, string]>> = {
   es: {
-    simulate: ["Qué compara el simulador", "Cada opción representa una temporada concreta, con entrenador, formación, once y valoraciones propias. El resultado combina esa identidad con una semilla aleatoria: es una noche posible, no la predicción de un partido real.", "Expert AI Analysis interpreta los datos después de la simulación; no elige al ganador. Las valoraciones comparan el dominio de cada jugador en su época y no pretenden convertir décadas distintas en una prueba física moderna."],
+    simulate: [
+      "Simular partidos que el calendario hizo imposibles",
+      "Esta página no adivina el próximo clásico. Sirve para sentar a dos plantillas con nombre y año — Brasil 1970 contra España 2010, Chelsea 2004/05 contra el Arsenal invencible — y dejar que el motor escriba un marcador. La semilla cambia; el once no.",
+      "Si buscabas cómo simular partidos de fútbol online, el flujo es ese: eliges temporadas, no abstracciones. Expert AI Analysis lee las dos listas y las cien repeticiones después. No elige al ganador. Las notas son relativas a cada época: un 95 en 1970 describe dominio en 1970.",
+    ],
     teams: ["Cómo está construido el archivo", "No publicamos una página vacía por cada club. La selección reúne campeones, equipos que cambiaron una idea táctica y temporadas que los aficionados siguen comparando. Cada tarjeta conduce al once, banquillo, entrenador, logros y estilo de ese año.", "Las plantillas 2025/26 son fotografías fechadas, no bases de datos en directo. Para discutir el mejor momento de un club, abre sus temporadas históricas; para enfrentar el presente con una leyenda, usa el simulador."],
     "national-teams": ["Selecciones por torneo y generación", "Una selección cambia mucho entre dos Mundiales. Por eso Brasil 1970, Brasil 2002 y Brasil 2026 son equipos distintos dentro del modelo. Los años históricos usan un once representativo del torneo; los recientes son una fotografía de la preparación actual.", "La colección prioriza campeones y selecciones que dejaron una pregunta futbolística duradera, no todos los participantes de cada competición. Puedes mezclar países, clubes y épocas, pero el resultado siempre es hipotético."],
     vs: ["Por qué estos partidos sí son soñados", "Cada duelo tiene una razón editorial: dos candidatos al mejor equipo de la historia, filosofías tácticas opuestas o generaciones que nunca pudieron enfrentarse. No llenamos la lista con partidos actuales solo porque sean recientes.", "La página de cada duelo incluye análisis escrito para esas dos selecciones, 400 simulaciones, marcadores frecuentes, goleadores, asistentes y los onces completos. Los porcentajes describen incertidumbre; no son cuotas ni consejos de apuestas."],
@@ -45,7 +49,29 @@ export function LocalizedPage({ locale, section }: { locale: Locale; section?: L
   })
 
   if (section === "simulate") {
-    return <div lang={locale === "pt-br" ? "pt-BR" : "es"} className="grid gap-5"><PageHeader kicker={copy.nav.simulate} title={copy.simulate.title} lead={copy.simulate.lead} /><MatchSetup restoreLast defaultHome={todayHome} defaultAway={todayAway} locale={locale} /><LocalizedEditorial locale={locale} section="simulate" /></div>
+    return (
+      <div lang={locale === "pt-br" ? "pt-BR" : "es"} className="grid gap-5">
+        <PageHeader kicker={copy.nav.simulate} title={copy.simulate.title} lead={copy.simulate.lead} />
+        <MatchSetup restoreLast defaultHome={todayHome} defaultAway={todayAway} locale={locale} />
+        <LocalizedEditorial locale={locale} section="simulate" />
+        {locale === "es" ? (
+          <section className="grid gap-3">
+            <h2 className="section-title">{copy.faqTitle}</h2>
+            <div className="home-faq-list">
+              {copy.faq.map(([question, answer]) => (
+                <details key={question} className="home-faq-item group">
+                  <summary>
+                    {question}
+                    <span className="home-faq-plus">+</span>
+                  </summary>
+                  <p>{answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        ) : null}
+      </div>
+    )
   }
   if (section === "teams" || section === "national-teams") {
     const isNations = section === "national-teams"

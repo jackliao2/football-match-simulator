@@ -1,5 +1,6 @@
 export type ClubCompare = {
   slug: string
+  kind?: "club" | "nation"
   leftClubId: string
   rightClubId: string
   leftPeakId: string
@@ -661,6 +662,64 @@ export const CLUB_COMPARES: ClubCompare[] = [
       ["2018/19 press", "Prime squad", "Mourinho 2004/05"],
       ["Front three", "Attack", "Drogba and Duff"],
       ["Anfield nights", "Identity", "Abramovich first peak"],
+    ],
+  },
+  {
+    slug: "brazil-vs-argentina",
+    kind: "nation",
+    leftClubId: "brazil",
+    rightClubId: "argentina",
+    leftPeakId: "brazil-1970",
+    rightPeakId: "argentina-1986",
+    title: "Who Is Better, Brazil or Argentina?",
+    description:
+      "Brazil or Argentina: five World Cups against three, Pelé’s 1970 side against Maradona’s 1986 winners. Separate the all-time nations from the prime teams, then simulate Mexico 1970 vs Mexico 1986.",
+    keywords: keywords("Brazil", "Argentina", [
+      "brazil or argentina who is better",
+      "who is better brazil or argentina",
+      "brazil vs argentina all time",
+      "selecao or albiceleste",
+    ]),
+    lead: "Brazil have the heavier World Cup cabinet. Argentina have the two most famous individual World Cups of the last half-century. Those are different tests, and collapsing them into one shirt colour is how the argument goes in circles.",
+    verdictHeading: "Brazil as a footballing nation; Argentina when one player carried a tournament",
+    verdict: [
+      "If “better” means the greater national team across World Cups, the answer is Brazil. Five titles, 1970 as a complete attacking idea, 2002 as a modern knockout machine. The record is not close, and treating 2022 as a reset button does not make it close.",
+      "If it means the highest peak by a single playmaker inside a winning side, Argentina 1986 still leads — and Argentina 2022 is the collective sequel. Maradona in Mexico did more of the carrying; Scaloni’s side shared the load and still finished the job. Simulate 1970 against 1986 if you want the cleanest prime-vs-prime night. Do not ask that match to settle which country is “better at football”.",
+    ],
+    rows: [
+      ["Five World Cups", "All-time", "Three World Cups"],
+      ["1970 fluency", "Prime squad", "1986 Maradona"],
+      ["Jairzinho through a tournament", "Decider", "Goal of the Century"],
+      ["Repeated winning cycles", "Legacy", "1986 and 2022 as bookends"],
+    ],
+  },
+  {
+    slug: "england-vs-germany",
+    kind: "nation",
+    leftClubId: "england",
+    rightClubId: "germany",
+    leftPeakId: "england-1966",
+    rightPeakId: "germany-1990",
+    title: "Who Is Better, England or Germany?",
+    description:
+      "England or Germany: 1966 against four World Cups, Wembley against Turin. Compare the nations, then simulate Ramsey’s winners versus Beckenbauer’s 1990 side.",
+    keywords: keywords("England", "Germany", [
+      "england or germany who is better",
+      "who is better england or germany",
+      "england vs germany world cup",
+      "1966 vs 1990",
+    ]),
+    lead: "Germany keep answering the tournament question. England have one undisputed answer, and it is 1966. The rivalry is real; the trophy counts are not a tie.",
+    verdictHeading: "Germany as a tournament nation; England in 1966",
+    verdict: [
+      "Germany are the better national team if the test is repeating a World Cup. 1954, 1974, 1990 and 2014 are four different squads that still finished the job. England have not done that once away from Wembley. 1990 in Turin — penalties after extra time, then Germany lifting the trophy — is the night that still sits under every later meeting.",
+      "England 1966 remains the one English side that can be put against a German peak without apology: Moore, Charlton, Hurst, a functioning 4-4-2, a final they actually won. Italia 90 and Euro 96 are the emotional near-misses, not replacements. Simulate 1966 against 1990 if you want the argument as a match. Do not use a simulator to pretend the cabinets are even.",
+    ],
+    rows: [
+      ["One World Cup, at home", "All-time", "Four World Cups"],
+      ["1966 structure", "Prime squad", "1990 Matthäus"],
+      ["Hurst’s hat-trick", "Defining night", "Turin penalties"],
+      ["Ramsey’s one answer", "Cycles", "1954 through 2014"],
     ],
   },
 ]

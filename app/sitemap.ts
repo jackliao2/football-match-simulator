@@ -32,13 +32,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     if (multilingualPaths.has(path)) route.alternates = { languages: languageAlternates(path) }
   }
 
-  const localizedRoutes: MetadataRoute.Sitemap = LOCALES.map((locale) => ({
-    url: absoluteUrl(localizedPath(locale, "/")),
-    changeFrequency: "weekly" as const,
-    priority: 0.85,
-    lastModified: SITE.legalUpdatedIso,
-    alternates: { languages: languageAlternates("/") },
-  }))
+  const localizedRoutes: MetadataRoute.Sitemap = [
+    ...LOCALES.map((locale) => ({
+      url: absoluteUrl(localizedPath(locale, "/")),
+      changeFrequency: "weekly" as const,
+      priority: 0.85,
+      lastModified: SITE.legalUpdatedIso,
+      alternates: { languages: languageAlternates("/") },
+    })),
+    {
+      url: absoluteUrl("/es/simulate"),
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    },
+  ]
 
   const clubRoutes = clubs.map((club) => ({
     url: absoluteUrl(`/teams/${club.id}`),

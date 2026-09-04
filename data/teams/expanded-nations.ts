@@ -213,15 +213,16 @@ export const senegal2002 = pack({
   formation: "4-4-2", manager: "Bruno Metsu",
   attackRating: 84, midfieldRating: 82, defenseRating: 80, goalkeeperRating: 80, chemistryRating: 90,
   tempo: 78, pressing: 80, possession: 48, counterAttack: 86, width: 80, aerialThreat: 78,
-  startingXI: ["el-hadji-diouf","henri-camara","khalilou-fadiga","pape-sarr","aliou-cisse","salif-diao","omar-daf","pape-malick-diop","lamine-diatta","ferdinand-coly","tony-sylva"],
+  startingXI: ["el-hadji-diouf","henri-camara","khalilou-fadiga","papa-bouba-diop","aliou-cisse","salif-diao","omar-daf","pape-malick-diop","lamine-diatta","ferdinand-coly","tony-sylva"],
   players: [
     pl("Tony Sylva", "SYLVA", "GK", 80),
     pl("Ferdinand Coly", "COLY", "RB", 76),
     pl("Lamine Diatta", "DIATTA", "CB", 80),
-    pl("Pape Malick Diop", "DIOP", "CB", 78),
+    pl("Pape Malick Diop", "M.DIOP", "CB", 78),
     pl("Omar Daf", "DAF", "LB", 76),
     pl("Salif Diao", "DIAO", "CM", 80, { defending: 82 }),
     pl("Aliou Cissé", "CISSE", "CDM", 78),
+    pl("Papa Bouba Diop", "BOUBA DIOP", "CM", 82, { physical: 86, defending: 82 }),
     pl("Pape Sarr", "SARR", "CM", 76),
     pl("Khalilou Fadiga", "FADIGA", "LM", 82, { chanceCreation: 84 }),
     pl("Henri Camara", "CAMARA", "ST", 82, { attack: 84 }),
@@ -233,6 +234,9 @@ export const senegal2002 = pack({
   achievements: ["World Cup quarter-finalists"],
   styleTags: ["Counter Attack", "Pace", "Tournament Steel", "Direct Attack", "High Tempo"],
   summary: "Metsu's Senegal. Diouf as the spark, Fadiga as the left foot, and a first World Cup that reached the last eight.",
+  seoTitle: "Senegal 2002 Squad — World Cup Quarter-Finalists, Lineup & Players",
+  seoDescription:
+    "Senegal 2002 World Cup squad: the side that beat France 1–0, then reached the quarter-finals. Diouf, Fadiga, Diop and a playable starting XI.",
 })
 
 export const nigeria1994 = pack({

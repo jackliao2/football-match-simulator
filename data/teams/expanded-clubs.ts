@@ -42,6 +42,9 @@ export const everton198485 = pack({
   achievements: ["First Division champions", "European Cup Winners' Cup winners"],
   styleTags: ["Direct Attack", "Set Pieces", "Work Rate", "Crossing", "Cup Steel"],
   summary: "Kendall's Everton. Southall in goal, Reid as the bite, Sheedy as the left foot, and a Merseyside side that briefly owned England.",
+  seoTitle: "Everton 84/85 Squad — 1984/85 Lineup, Players & Formation",
+  seoDescription:
+    "Everton 1984/85 squad, also searched as Everton 84/85: Kendall's title and Cup Winners' Cup side. Southall, Sheedy, Sharp and the starting XI you can simulate.",
 })
 
 export const leedsUnited197374 = pack({

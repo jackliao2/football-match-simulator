@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest"
 import nextConfig from "../next.config"
 import { CLUB_COMPARES } from "@/data/compare"
+import { getPrimeEntity } from "@/data/prime"
+import { getPrimeEditorial } from "@/data/prime-editorial"
 import { isIndexableTeamPage } from "@/data/team-editorial"
 import { getTeam } from "@/data/teams"
 import { teamH1, teamPageCopy } from "@/lib/page-copy"
@@ -53,5 +55,36 @@ describe("GSC landing pages", () => {
     const milan = CLUB_COMPARES.find((pair) => pair.slug === "ac-milan-vs-inter-milan")!
     expect(milan.keywords.join(" ")).toMatch(/who is better/)
     expect(milan.title.toLowerCase()).toMatch(/who is better/)
+  })
+
+  it("indexes the GSC-follow-up season pages with their own dossiers", () => {
+    for (const id of ["everton-1984-85", "chelsea-2011-12", "senegal-2002", "croatia-2018"]) {
+      expect(getTeam(id), id).toBeDefined()
+      expect(isIndexableTeamPage(id), id).toBe(true)
+      expect(teamPageCopy(getTeam(id)!).h1.toLowerCase()).toContain("squad")
+    }
+  })
+
+  it("publishes Brazil vs Argentina and England vs Germany as nation compares", () => {
+    const brazil = CLUB_COMPARES.find((pair) => pair.slug === "brazil-vs-argentina")!
+    const england = CLUB_COMPARES.find((pair) => pair.slug === "england-vs-germany")!
+    expect(brazil.kind).toBe("nation")
+    expect(england.kind).toBe("nation")
+    expect(brazil.verdict[0].length).toBeGreaterThan(120)
+    expect(england.verdict[1]).toMatch(/1966/)
+  })
+
+  it("uses short-season titles on Arsenal 03/04 and Liverpool 04/05", () => {
+    expect(teamPageCopy(getTeam("arsenal-2003-04")!).title).toMatch(/03\/04/)
+    expect(teamPageCopy(getTeam("liverpool-2004-05")!).title).toMatch(/04\/05/)
+  })
+
+  it("publishes a Liverpool prime page with a real case and counter-case", () => {
+    const page = getPrimeEntity("liverpool")
+    const editorial = getPrimeEditorial("liverpool")
+    expect(page?.seoTitle.toLowerCase()).toContain("liverpool")
+    expect(editorial?.sections?.length).toBeGreaterThanOrEqual(3)
+    expect(editorial!.caseFor).toMatch(/2018\/19/)
+    expect(editorial!.counterCase).toMatch(/2004\/05|Istanbul/)
   })
 })
