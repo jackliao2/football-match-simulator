@@ -5,7 +5,7 @@ import { teamPath } from "@/lib/paths"
 import { SITE, absoluteUrl } from "@/lib/site"
 import type { HistoricalTeam } from "@/types"
 
-const CLUB_ALIASES: Record<string, string[]> = {
+export const CLUB_ALIASES: Record<string, string[]> = {
   barcelona: ["barcelona", "barca", "fc barcelona"],
   "real-madrid": ["real madrid"],
   "manchester-united": ["manchester united", "man united"],
@@ -251,5 +251,38 @@ export function teamMetadata(team: HistoricalTeam): Metadata {
       title: copy.title,
       description: copy.description,
     },
+  }
+}
+
+export function websiteJsonLd() {
+  const origin = absoluteUrl("/")
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${origin}/#website`,
+        name: SITE.name,
+        url: origin,
+        description: SITE.description,
+        inLanguage: ["en", "es", "pt-BR"],
+        publisher: { "@id": `${origin}/#organization` },
+        potentialAction: {
+          "@type": "SearchAction",
+          target: {
+            "@type": "EntryPoint",
+            urlTemplate: `${origin}/search?q={search_term_string}`,
+          },
+          "query-input": "required name=search_term_string",
+        },
+      },
+      {
+        "@type": "Organization",
+        "@id": `${origin}/#organization`,
+        name: SITE.name,
+        url: origin,
+        email: SITE.email,
+      },
+    ],
   }
 }

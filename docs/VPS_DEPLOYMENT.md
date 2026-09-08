@@ -83,7 +83,8 @@ Secrets and runtime configuration live in `/etc/legendarymatch.env`, owned by
 - `AI_BASE_URL=https://ark.cn-beijing.volces.com/api/v3`
 - `AI_MODEL=ep-20260223214004-c89q2`
 - `AI_DISABLE_THINKING=true`
-- the AI rate-limit and cache settings documented in `.env.example`
+- the AI rate-limit, daily quota, and cache settings documented in `.env.example`
+- `AI_QUOTA_STORE_PATH=/var/lib/legendarymatch/ai-quota.json`
 - the canonical `NEXT_PUBLIC_*` site metadata
 
 The API key itself is intentionally not recorded here. After changing public
@@ -123,6 +124,16 @@ systemctl reload nginx
 ```
 
 Never overwrite `/etc/legendarymatch.env` during a code deployment.
+
+Create `/var/lib/legendarymatch` owned by `legendarymatch` if the daily AI
+quota file is missing:
+
+```bash
+install -d -o legendarymatch -g legendarymatch -m 0750 /var/lib/legendarymatch
+```
+
+The Node process must be able to write `ai-quota.json` there. Do not put that
+file in Git.
 
 ## Verification
 

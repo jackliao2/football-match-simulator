@@ -3,6 +3,7 @@ import { generateMatchReport } from "@/lib/ai/commentary"
 import {
   AiRequestBodyError,
   aiCacheTtlMs,
+  applyDailyAiQuota,
   guardAiRequest,
   readAiJson,
   withAiCache,
@@ -17,7 +18,8 @@ export const maxDuration = 30
 
 export async function POST(request: Request) {
   const startedAt = Date.now()
-  const guard = guardAiRequest(request, "commentary")
+  const burst = guardAiRequest(request, "commentary")
+  const guard = await applyDailyAiQuota(request, burst)
   if (!guard.allowed) {
     console.warn(
       "[ai-request]",

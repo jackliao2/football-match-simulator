@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
-import { MatchSetup } from "@/components/simulator/MatchSetup"
+import { MatchSetupGate } from "@/components/simulator/MatchSetupGate"
 import { MonteCarloResults } from "@/components/simulator/MonteCarloResults"
 import { FaceOffSquad } from "@/components/teams/SquadPanel"
 import { TeamRatings } from "@/components/teams/TeamRatings"
@@ -70,7 +70,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
           lead="Both squads are in the database, but this pairing is not one of the curated dream-match dossiers. Simulate it here, or open the written matchups."
           crumbs={[{ href: "/vs", label: "Dream matches" }]}
         />
-        <MatchSetup defaultHome={home.id} defaultAway={away.id} />
+        <MatchSetupGate defaultHome={home.id} defaultAway={away.id} />
         <Link href="/vs" className="font-mono text-sm text-gold hover:text-gold-2">
           Browse curated dream matches →
         </Link>
@@ -254,7 +254,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
             Expert AI for a tactical verdict backed by 100 alternate matches.
           </p>
         </div>
-        <MatchSetup defaultHome={home.id} defaultAway={away.id} />
+        <MatchSetupGate defaultHome={home.id} defaultAway={away.id} />
       </section>
 
       <Link href="/simulate" className="font-mono text-sm text-gold hover:text-gold-2">

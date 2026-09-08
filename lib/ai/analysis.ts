@@ -603,6 +603,7 @@ function strengthenDominantCall(
 export async function generatePreMatchAnalysis(
   home: HistoricalTeam,
   away: HistoricalTeam,
+  options: { skipProvider?: boolean } = {},
 ): Promise<{ analysis: PreMatchAnalysis; source: "ai" | "template" }> {
   const requestSeed = `ai-analysis:${home.id}:${away.id}:${crypto.randomUUID()}`
   const { matches, ...simulation } = simulateMany(home, away, 100, `${requestSeed}:alternates`, {
@@ -610,7 +611,7 @@ export async function generatePreMatchAnalysis(
   })
   const featuredMatch = representativeNight(matches, simulation)
   const fallback = shortFallback(home, away, simulation)
-  const provider = createCommentaryProvider()
+  const provider = options.skipProvider ? null : createCommentaryProvider()
   if (!provider) return { analysis: { copy: fallback, featuredMatch, simulation }, source: "template" }
 
   const payload = analysisPayload(home, away, simulation, featuredMatch)

@@ -12,9 +12,9 @@ import { SimulationPlay, SimulationStage } from "@/components/simulator/Simulati
 import { FaceOffSquad } from "@/components/teams/SquadPanel"
 import { PixelCrest } from "@/components/teams/PixelCrest"
 import { eraGlow } from "@/data/trophies"
-import { FEATURED_MATCHUPS, pickRandomDreamPair } from "@/data/matchups"
-import { teams as historicalTeams, toTeamOption } from "@/data/teams"
-import { isCurrentSquad } from "@/lib/seo"
+import { FEATURED_MATCHUPS, pickRandomDreamPair } from "@/data/featured-pairs"
+import { catalogStub, isCurrentEntry, type TeamCatalogEntry } from "@/data/team-catalog-types"
+import { loadSimulatorTeam } from "@/app/actions"
 import { OvrStamp } from "@/components/ui/OvrStamp"
 import { track } from "@/lib/analytics"
 import { absoluteUrl } from "@/lib/site"
@@ -55,17 +55,20 @@ export interface TeamOption {
 }
 
 export function MatchSetup({
+  catalog,
+  initialSquads,
   defaultHome,
   defaultAway,
   locale,
   restoreLast = false,
 }: {
+  catalog: TeamCatalogEntry[]
+  initialSquads: HistoricalTeam[]
   defaultHome?: string
   defaultAway?: string
   locale?: Locale
   restoreLast?: boolean
 }) {
-  const teams = useMemo(() => historicalTeams.map(toTeamOption), [])
   const ui = locale === "es" ? {
     home: "Local", away: "Visitante", legendary: "Leyendas", now: "Recientes", swap: "Cambiar", different: "Elige dos equipos distintos.", simulate: "Simular", playing: "Jugando…", expert: "Análisis experto IA", analysing: "Analizando…", daily: "Hoy", change: "Cambiar equipo ▾", simulateAgain: "Simular de nuevo", back: "Cambiar duelo", copy: "Copiar enlace", copied: "Copiado", shared: "Compartido", expertAgain: "Repetir análisis IA", next: "Siguiente duelo soñado", season: "Temporada", latest: "Plantilla reciente", bench: "Suplentes", dream: "¿Dream?", separateAi: "Pronóstico independiente de 100 partidos. Tu partido anterior sigue disponible en la pestaña Match result.", matchTab: "Resultado", aiTab: "IA experta", batchTab: `${BATCH_RUNS} partidos`, hundred: `${BATCH_RUNS} partidos`, hundredPlaying: `Calculando ${BATCH_RUNS}…`, quotaUsed: "Cupo diario agotado", quotaBody: `Has usado los 10 análisis IA gratis de hoy. El cupo se reinicia a medianoche. Sigue pudiendo simular y correr ${BATCH_RUNS} partidos gratis.`, lastMatches: "Tus últimos partidos",
   } : locale === "pt-br" ? {
@@ -73,14 +76,20 @@ export function MatchSetup({
   } : {
     home: "Home", away: "Away", legendary: "Legendary", now: "Recent", swap: "Swap", different: "Pick two different teams.", simulate: "Simulate", playing: "Playing…", expert: "Expert AI Analysis", analysing: "Analysing…", daily: "Daily", change: "Change team ▾", simulateAgain: "Simulate again", back: "Change matchup", copy: "Copy link", copied: "Copied", shared: "Shared", expertAgain: "Expert AI again", next: "Next dream match", season: "Season", latest: "Latest squad", bench: "Bench", dream: "Dream?", separateAi: "A separate 100-match forecast. Your previous match remains available under Match result.", matchTab: "Match result", aiTab: "Expert AI", batchTab: `${BATCH_RUNS} matches`, hundred: `${BATCH_RUNS} matches`, hundredPlaying: `Running ${BATCH_RUNS}…`, quotaUsed: "Daily free quota used", quotaBody: `You have used today’s 10 free AI analyses. Your quota resets at midnight. You can still simulate matches and run ${BATCH_RUNS}-match probabilities for free.`, lastMatches: "Your last matches",
   }
-  const homeDefault = teams.find((team) => team.id === defaultHome) ?? teams[0]!
+  const byId = useMemo(() => new Map(catalog.map((entry) => [entry.id, entry])), [catalog])
+  const homeDefault = (defaultHome ? byId.get(defaultHome) : undefined) ?? catalog[0]!
   const awayDefault =
-    teams.find((team) => team.id === defaultAway) ??
-    teams.find((team) => team.id !== homeDefault.id) ??
-    teams[1] ??
-    teams[0]!
-  const clubs = useMemo(() => uniqueOrgs(teams, "club"), [teams])
-  const nations = useMemo(() => uniqueOrgs(teams, "nation"), [teams])
+    (defaultAway ? byId.get(defaultAway) : undefined) ??
+    catalog.find((entry) => entry.id !== homeDefault.id) ??
+    catalog[1] ??
+    catalog[0]!
+  const clubs = useMemo(() => uniqueOrgs(catalog, "club"), [catalog])
+  const nations = useMemo(() => uniqueOrgs(catalog, "nation"), [catalog])
+  const [squads, setSquads] = useState<Record<string, HistoricalTeam>>(() =>
+    Object.fromEntries(initialSquads.map((team) => [team.id, team])),
+  )
+  const squadsRef = useRef(squads)
+  squadsRef.current = squads
 
   const [homeClub, setHomeClub] = useState(homeDefault.clubId)
   const [awayClub, setAwayClub] = useState(awayDefault.clubId)
@@ -127,16 +136,22 @@ export function MatchSetup({
       if (!restoreLast) return
       const last = loadLastMatchup()
       if (!last) return
-      const nextHome = teams.find((team) => team.id === last.homeId)
-      const nextAway = teams.find((team) => team.id === last.awayId)
+      const nextHome = byId.get(last.homeId)
+      const nextAway = byId.get(last.awayId)
       if (!nextHome || !nextAway || nextHome.id === nextAway.id) return
-      setHomeClub(nextHome.clubId)
-      setHomeId(nextHome.id)
-      setAwayClub(nextAway.clubId)
-      setAwayId(nextAway.id)
+      void ensureSquads([nextHome.id, nextAway.id]).then(() => {
+        setHomeClub(nextHome.clubId)
+        setHomeId(nextHome.id)
+        setAwayClub(nextAway.clubId)
+        setAwayId(nextAway.id)
+      })
     }, 0)
     return () => window.clearTimeout(hydration)
-  }, [restoreLast, teams])
+  }, [restoreLast, byId])
+
+  useEffect(() => {
+    void ensureSquads([homeId, awayId])
+  }, [homeId, awayId])
 
   useEffect(() => {
     return () => {
@@ -191,10 +206,25 @@ export function MatchSetup({
     saveLastMatchup(nextHomeId, nextAwayId)
   }
 
+  async function ensureSquads(ids: string[]) {
+    const current = squadsRef.current
+    const missing = [...new Set(ids)].filter((id) => id && !current[id])
+    if (missing.length === 0) return current
+    const loaded = await Promise.all(missing.map((id) => loadSimulatorTeam(id)))
+    const next = { ...squadsRef.current }
+    for (const team of loaded) {
+      if (team) next[team.id] = team
+    }
+    squadsRef.current = next
+    setSquads(next)
+    return next
+  }
+
   function applyPair(nextHomeId: string, nextAwayId: string) {
-    const nextHome = teams.find((team) => team.id === nextHomeId)
-    const nextAway = teams.find((team) => team.id === nextAwayId)
+    const nextHome = byId.get(nextHomeId)
+    const nextAway = byId.get(nextAwayId)
     if (!nextHome || !nextAway || nextHome.id === nextAway.id) return
+    void ensureSquads([nextHome.id, nextAway.id])
     setHomeClub(nextHome.clubId)
     setHomeId(nextHome.id)
     setAwayClub(nextAway.clubId)
@@ -202,15 +232,24 @@ export function MatchSetup({
     resetOutputs()
   }
 
-  const homeSeasons = useMemo(() => seasonsForClub(teams, homeClub), [teams, homeClub])
-  const awaySeasons = useMemo(() => seasonsForClub(teams, awayClub), [teams, awayClub])
-  const home = useMemo(() =>
-    homeSeasons.find((team) => team.id === homeId) ?? preferredSeason(homeSeasons) ?? homeSeasons[0]!,
-  [homeSeasons, homeId])
-  const away = useMemo(() =>
-    awaySeasons.find((team) => team.id === awayId) ?? preferredSeason(awaySeasons) ?? awaySeasons[0]!,
-  [awaySeasons, awayId])
+  const homeSeasons = useMemo(
+    () => seasonsForClub(catalog, homeClub).map((entry) => optionFor(entry, squads)),
+    [catalog, homeClub, squads],
+  )
+  const awaySeasons = useMemo(
+    () => seasonsForClub(catalog, awayClub).map((entry) => optionFor(entry, squads)),
+    [catalog, awayClub, squads],
+  )
+  const home = useMemo(
+    () => homeSeasons.find((team) => team.id === homeId) ?? homeSeasons[0]!,
+    [homeSeasons, homeId],
+  )
+  const away = useMemo(
+    () => awaySeasons.find((team) => team.id === awayId) ?? awaySeasons[0]!,
+    [awaySeasons, awayId],
+  )
   const sameTeam = home.id === away.id
+  const squadsReady = Boolean(squads[home.id]?.players.length && squads[away.id]?.players.length)
   const aiRemaining = Math.max(0, AI_DAILY_LIMIT - aiUsesToday)
   const shownHome = reel?.home ?? home
   const shownAway = reel?.away ?? away
@@ -222,10 +261,11 @@ export function MatchSetup({
       setPicker(null)
       return
     }
-    const seasons = seasonsForClub(teams, clubId)
+    const seasons = seasonsForClub(catalog, clubId)
     const preferred = preferredSeason(seasons)
     if (!preferred) return
     track("team_selected", { clubId, side })
+    void ensureSquads([preferred.id])
     if (side === "home") {
       setHomeClub(clubId)
       setHomeId(preferred.id)
@@ -243,6 +283,7 @@ export function MatchSetup({
 
   function changeSeason(side: "home" | "away", teamId: string) {
     track("season_selected", { teamId, side })
+    void ensureSquads([teamId])
     if (side === "home") {
       setHomeId(teamId)
     } else {
@@ -264,7 +305,7 @@ export function MatchSetup({
   }
 
   function simulateOnce() {
-    if (sameTeam || play || analysisLoading) return
+    if (sameTeam || play || analysisLoading || !squadsReady) return
     track("simulator_started", { home: home.id, away: away.id })
     const next = simulateMatch(home.team, away.team, createSeed())
     setMatch(null)
@@ -277,7 +318,7 @@ export function MatchSetup({
   }
 
   async function runHundred() {
-    if (sameTeam || play || analysisLoading) return
+    if (sameTeam || play || analysisLoading || !squadsReady) return
     track("simulate_100", { home: home.id, away: away.id, runs: BATCH_RUNS })
     setAnalysis(null)
     setAnalysisError(null)
@@ -351,7 +392,7 @@ export function MatchSetup({
   }
 
   async function runAnalysis() {
-    if (sameTeam || play || analysisLoading) return
+    if (sameTeam || play || analysisLoading || !squadsReady) return
     setPlay(null)
     if (aiRemaining <= 0) {
       setAnalysis(null)
@@ -414,8 +455,8 @@ export function MatchSetup({
 
   function rollDreamMatchup() {
     if (play || analysisLoading || rolling) return
-    const legendary = teams.filter((team) => !isCurrentSquad(team.team))
-    const pool = (legendary.length >= 8 ? legendary : teams).map((team) => team.id)
+    const legendary = catalog.filter((entry) => !isCurrentEntry(entry))
+    const pool = (legendary.length >= 8 ? legendary : catalog).map((entry) => entry.id)
     const reduced = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
     const [finalHomeId, finalAwayId] = pickRandomDreamPair(pool, { homeId: home.id, awayId: away.id })
     const settle = () => {
@@ -438,9 +479,9 @@ export function MatchSetup({
     const tick = () => {
       const elapsed = performance.now() - started
       const [nextHomeId, nextAwayId] = pickRandomDreamPair(pool)
-      const nextHome = teams.find((team) => team.id === nextHomeId)
-      const nextAway = teams.find((team) => team.id === nextAwayId)
-      if (nextHome && nextAway) setReel({ home: nextHome, away: nextAway })
+      const nextHome = byId.get(nextHomeId)
+      const nextAway = byId.get(nextAwayId)
+      if (nextHome && nextAway) setReel({ home: optionFor(nextHome, squadsRef.current), away: optionFor(nextAway, squadsRef.current) })
       if (elapsed >= 1500) {
         settle()
         return
@@ -457,8 +498,8 @@ export function MatchSetup({
       (left === home.id && right === away.id) || (left === away.id && right === home.id),
     )
     const [nextHomeId, nextAwayId] = FEATURED_MATCHUPS[(currentIndex + 1) % FEATURED_MATCHUPS.length]!
-    const nextHome = teams.find((team) => team.id === nextHomeId)
-    const nextAway = teams.find((team) => team.id === nextAwayId)
+    const nextHome = byId.get(nextHomeId)
+    const nextAway = byId.get(nextAwayId)
     if (!nextHome || !nextAway) return
     analysisRequest.current?.abort()
     analysisRequest.current = null
@@ -471,10 +512,15 @@ export function MatchSetup({
     setAnalysis(null)
     setAnalysisError(null)
     setAnalysisLoading(false)
-    const next = simulateMatch(nextHome.team, nextAway.team, createSeed())
-    setPlay({ kind: "match", match: next })
-    track("next_dream_match_started", { home: nextHome.id, away: nextAway.id })
-    showResults("match")
+    void ensureSquads([nextHome.id, nextAway.id]).then((loaded) => {
+      const homeTeam = loaded[nextHome.id]
+      const awayTeam = loaded[nextAway.id]
+      if (!homeTeam?.players.length || !awayTeam?.players.length) return
+      const next = simulateMatch(homeTeam, awayTeam, createSeed())
+      setPlay({ kind: "match", match: next })
+      track("next_dream_match_started", { home: nextHome.id, away: nextAway.id })
+      showResults("match")
+    })
   }
 
   return (
@@ -507,7 +553,7 @@ export function MatchSetup({
               ) : null}
               <button
                 type="button"
-                disabled={sameTeam || Boolean(play) || analysisLoading || rolling}
+                disabled={sameTeam || Boolean(play) || analysisLoading || rolling || !squadsReady}
                 className="rail-btn rail-btn-primary"
                 onClick={simulateOnce}
               >
@@ -515,7 +561,7 @@ export function MatchSetup({
               </button>
               <button
                 type="button"
-                disabled={sameTeam || Boolean(play) || analysisLoading || rolling}
+                disabled={sameTeam || Boolean(play) || analysisLoading || rolling || !squadsReady}
                 className="rail-btn"
                 onClick={runHundred}
               >
@@ -523,7 +569,7 @@ export function MatchSetup({
               </button>
               <button
                 type="button"
-                disabled={sameTeam || analysisLoading || Boolean(play) || rolling}
+                disabled={sameTeam || analysisLoading || Boolean(play) || rolling || !squadsReady}
                 className="rail-btn rail-btn-ai"
                 onClick={runAnalysis}
               >
@@ -700,36 +746,57 @@ export function MatchSetup({
   )
 }
 
-function seasonsForClub(teams: TeamOption[], clubId: string) {
-  return teams
-    .filter((team) => team.clubId === clubId)
-    .sort((a, b) => b.team.eraYear - a.team.eraYear)
+function optionFor(entry: TeamCatalogEntry, squads: Record<string, HistoricalTeam>): TeamOption {
+  return {
+    id: entry.id,
+    clubId: entry.clubId,
+    clubName: entry.clubName,
+    clubCode: entry.clubCode,
+    season: entry.season,
+    displaySeason: entry.displaySeason,
+    kind: entry.kind,
+    overallRating: entry.overallRating,
+    manager: entry.manager,
+    formation: entry.formation,
+    styleTags: entry.styleTags,
+    team: squads[entry.id] ?? catalogStub(entry),
+  }
 }
 
-function preferredSeason(seasons: TeamOption[]) {
+function seasonsForClub(catalog: TeamCatalogEntry[], clubId: string) {
+  return catalog
+    .filter((team) => team.clubId === clubId)
+    .sort((a, b) => b.eraYear - a.eraYear)
+}
+
+function preferredSeason(seasons: TeamCatalogEntry[]) {
   if (seasons.length === 0) return undefined
-  const legendary = seasons.filter((season) => !isCurrentSquad(season.team))
+  const legendary = seasons.filter((season) => !isCurrentEntry(season))
   return [...(legendary.length > 0 ? legendary : seasons)].sort(
-    (a, b) => b.overallRating - a.overallRating || b.team.eraYear - a.team.eraYear,
+    (a, b) => b.overallRating - a.overallRating || b.eraYear - a.eraYear,
   )[0]
 }
 
-function uniqueOrgs(teams: TeamOption[], kind: TeamKind) {
-  const map = new Map<string, TeamOption>()
-  for (const team of teams) {
+function uniqueOrgs(catalog: TeamCatalogEntry[], kind: TeamKind) {
+  const map = new Map<string, TeamCatalogEntry>()
+  for (const team of catalog) {
     if (team.kind !== kind) continue
     const prev = map.get(team.clubId)
     if (!prev) {
       map.set(team.clubId, team)
       continue
     }
-    const teamLegend = !isCurrentSquad(team.team)
-    const prevLegend = !isCurrentSquad(prev.team)
+    const teamLegend = !isCurrentEntry(team)
+    const prevLegend = !isCurrentEntry(prev)
     const better = (teamLegend && !prevLegend) || (teamLegend === prevLegend && (team.overallRating > prev.overallRating ||
-      (team.overallRating === prev.overallRating && team.team.eraYear > prev.team.eraYear)))
+      (team.overallRating === prev.overallRating && team.eraYear > prev.eraYear)))
     if (better) map.set(team.clubId, team)
   }
-  return [...map.values()]
+  return [...map.values()].map((entry) => ({
+    clubId: entry.clubId,
+    clubName: entry.clubName,
+    overallRating: entry.overallRating,
+  }))
 }
 
 function TeamColumn({

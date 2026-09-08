@@ -2,9 +2,13 @@ import { NextResponse } from "next/server"
 import { generatePreMatchAnalysis } from "@/lib/ai/analysis"
 import {
   AiRequestBodyError,
+  applyDailyAiQuota,
   guardAiRequest,
   readAiJson,
+  rememberAnalysisFallback,
+  shouldSkipAnalysisProvider,
 } from "@/lib/ai/guard"
+import { isAiConfigured } from "@/lib/ai/provider"
 import { getTeam } from "@/data/teams"
 
 export const runtime = "nodejs"
@@ -12,7 +16,8 @@ export const maxDuration = 30
 
 export async function POST(request: Request) {
   const startedAt = Date.now()
-  const guard = guardAiRequest(request, "analysis")
+  const burst = guardAiRequest(request, "analysis")
+  const guard = await applyDailyAiQuota(request, burst)
   if (!guard.allowed) {
     console.warn(
       "[ai-request]",
@@ -35,21 +40,22 @@ export async function POST(request: Request) {
       )
     }
 
-    // Every Expert AI request represents a fresh simulated night. Caching the
-    // complete response would also cache its seed, score, scorers and 100-run
-    // distribution, making repeated analyses appear fixed.
-    const result = await generatePreMatchAnalysis(home, away)
+    const skipProvider = shouldSkipAnalysisProvider(home.id, away.id)
+    const result = await generatePreMatchAnalysis(home, away, { skipProvider })
+    if (result.source === "template" && isAiConfigured() && !skipProvider) {
+      rememberAnalysisFallback(home.id, away.id)
+    }
     console.info(
       "[ai-request]",
       JSON.stringify({
-        cache: "disabled",
+        cache: skipProvider ? "fallback-skip" : "disabled",
         durationMs: Date.now() - startedAt,
         feature: "analysis",
         source: result.source,
       }),
     )
     return NextResponse.json(result, {
-      headers: { ...guard.headers, "X-AI-Cache": "disabled" },
+      headers: { ...guard.headers, "X-AI-Cache": skipProvider ? "fallback-skip" : "disabled" },
     })
   } catch (error) {
     if (error instanceof AiRequestBodyError) {

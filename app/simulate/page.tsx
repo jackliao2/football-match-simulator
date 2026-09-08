@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { MatchSetup } from "@/components/simulator/MatchSetup"
+import { MatchSetupGate } from "@/components/simulator/MatchSetupGate"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { defaultOpponent, todaysDebate } from "@/data/matchups"
 import { getTeam } from "@/data/teams"
@@ -98,7 +98,7 @@ export default async function SimulatePage({
         title="Simulate any two squads"
         lead="Pick named seasons, not abstract ratings. The match engine writes the score; Expert AI Analysis explains the matchup afterwards and never gets a vote."
       />
-      <MatchSetup
+      <MatchSetupGate
         restoreLast={!requestedHome && !requestedAway}
         defaultHome={home}
         defaultAway={away}

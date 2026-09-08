@@ -30,6 +30,7 @@ const HTML_CACHE_SOURCES = [
   "/terms",
   "/methodology",
   "/best-football-team-ever",
+  "/search",
   "/teams",
   "/teams/:path*",
   "/national-teams",

@@ -4,7 +4,7 @@ import { SiteFooter } from "@/components/ui/SiteFooter"
 import { SiteHeader } from "@/components/ui/SiteHeader"
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics"
 import { AdSense } from "@/components/ads/AdSense"
-import { defaultMetadata } from "@/lib/seo"
+import { defaultMetadata, websiteJsonLd } from "@/lib/seo"
 import "./globals.css"
 
 const display = Press_Start_2P({
@@ -41,6 +41,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={`${display.variable} ${brand.variable} ${mono.variable} h-full`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',wait_for_update:500});` }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()) }} />
       </head>
       <body className="flex min-h-full flex-col font-mono antialiased">
         <GoogleAnalytics />

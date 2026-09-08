@@ -4,6 +4,7 @@ import { FilteredCatalog } from "@/components/teams/FilteredCatalog"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { LEAGUES, clubs } from "@/data/clubs"
 import { getTeamsByClub } from "@/data/teams"
+import { toCatalogCard } from "@/data/team-catalog"
 import { parseCatalogTrophy } from "@/lib/catalog-filters"
 import { LEAGUE_NOTES, catalogCounts } from "@/lib/page-copy"
 import { pageMetadata } from "@/lib/seo"
@@ -35,8 +36,14 @@ export default async function TeamsPage({ searchParams }: PageProps<"/teams">) {
     note: LEAGUE_NOTES[league.id],
     orgs: clubs
       .filter((club) => club.league === league.id)
-      .map((club) => ({ id: club.id, name: club.name, detail: club.city, href: `/teams/${club.id}`, teamIds: getTeamsByClub(club.id).map((team) => team.id) }))
-      .filter((section) => section.teamIds.length > 0),
+      .map((club) => ({
+        id: club.id,
+        name: club.name,
+        detail: club.city,
+        href: `/teams/${club.id}`,
+        teams: getTeamsByClub(club.id).map(toCatalogCard),
+      }))
+      .filter((section) => section.teams.length > 0),
   })).filter((section) => section.orgs.length > 0)
 
   return (

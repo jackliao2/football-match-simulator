@@ -1,3 +1,5 @@
+import { consumeDailyQuota } from "@/lib/ai/quota-store"
+
 export type AiEndpoint = "analysis" | "commentary"
 
 export interface RateLimitResult {
@@ -182,6 +184,41 @@ export function guardAiRequest(request: Request, endpoint: AiEndpoint): AiReques
     headers,
     status: result.allowed ? 200 : 429,
   }
+}
+
+export async function applyDailyAiQuota(request: Request, guard: AiRequestGuard): Promise<AiRequestGuard> {
+  if (!guard.allowed) return guard
+  const daily = await consumeDailyQuota(clientKey(request))
+  const headers: Record<string, string> = {
+    ...guard.headers,
+    "X-DailyQuota-Limit": String(daily.limit),
+    "X-DailyQuota-Remaining": String(daily.remaining),
+  }
+  if (daily.allowed) return { ...guard, headers }
+  const retryAfter = Math.max(1, Math.ceil((daily.resetAt - Date.now()) / 1_000))
+  headers["Retry-After"] = String(retryAfter)
+  return {
+    allowed: false,
+    error: "Daily AI quota used. Try again tomorrow.",
+    headers,
+    status: 429,
+  }
+}
+
+const ANALYSIS_SKIP_PREFIX = "analysis-skip:"
+
+export function analysisPairKey(homeId: string, awayId: string) {
+  return [homeId, awayId].sort().join("|")
+}
+
+export function shouldSkipAnalysisProvider(homeId: string, awayId: string) {
+  return runtimeState().cache.get(`${ANALYSIS_SKIP_PREFIX}${analysisPairKey(homeId, awayId)}`) === true
+}
+
+export function rememberAnalysisFallback(homeId: string, awayId: string) {
+  if (process.env.AI_CACHE_ENABLED === "false") return
+  const ttl = Math.max(aiCacheTtlMs("analysis"), 3_600_000)
+  runtimeState().cache.set(`${ANALYSIS_SKIP_PREFIX}${analysisPairKey(homeId, awayId)}`, true, ttl)
 }
 
 export class AiRequestBodyError extends Error {

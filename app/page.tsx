@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { MatchSetup } from "@/components/simulator/MatchSetup"
+import { MatchSetupGate } from "@/components/simulator/MatchSetupGate"
 import {
   HOMEPAGE_MATCHUPS,
   HOMEPAGE_NATIONS,
@@ -139,7 +139,7 @@ export default function HomePage() {
         </p>
       ) : null}
 
-      <MatchSetup
+      <MatchSetupGate
         defaultHome={todayHomeId}
         defaultAway={todayAwayId}
       />

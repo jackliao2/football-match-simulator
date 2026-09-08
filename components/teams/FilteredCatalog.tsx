@@ -3,11 +3,15 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { TeamCard } from "@/components/teams/TeamCard"
-import { getTeam } from "@/data/teams"
 import { catalogFilterQuery, parseCatalogTrophy } from "@/lib/catalog-filters"
 import type { HistoricalTeam } from "@/types"
 
-type Section = { id: string; label: string; note: string; orgs: Array<{ id: string; name: string; detail: string; href: string; teamIds: string[] }> }
+type Section = {
+  id: string
+  label: string
+  note: string
+  orgs: Array<{ id: string; name: string; detail: string; href: string; teams: HistoricalTeam[] }>
+}
 type Filter = { id: string; label: string }
 
 export function FilteredCatalog({
@@ -39,7 +43,7 @@ export function FilteredCatalog({
     window.history.replaceState(null, "", path)
   }
 
-  const expanded = sections.map((section) => ({ ...section, orgs: section.orgs.map((org) => ({ ...org, teams: org.teamIds.map(getTeam).filter((team): team is HistoricalTeam => Boolean(team)) })) }))
+  const expanded = sections
   const visible = (team: HistoricalTeam) => filter === "all" || honours(team, mode).includes(filter)
   const count = expanded.flatMap((section) => section.orgs.flatMap((org) => org.teams)).filter(visible).length
 

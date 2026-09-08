@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { MatchSetup } from "@/components/simulator/MatchSetup"
+import { MatchSetupGate } from "@/components/simulator/MatchSetupGate"
 import { TeamCard } from "@/components/teams/TeamCard"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { MatchupRow } from "@/components/ui/MatchupRow"
@@ -52,7 +52,7 @@ export function LocalizedPage({ locale, section }: { locale: Locale; section?: L
     return (
       <div lang={locale === "pt-br" ? "pt-BR" : "es"} className="grid gap-5">
         <PageHeader kicker={copy.nav.simulate} title={copy.simulate.title} lead={copy.simulate.lead} />
-        <MatchSetup restoreLast defaultHome={todayHome} defaultAway={todayAway} locale={locale} />
+        <MatchSetupGate restoreLast defaultHome={todayHome} defaultAway={todayAway} locale={locale} />
         <LocalizedEditorial locale={locale} section="simulate" />
         {locale === "es" ? (
           <section className="grid gap-3">
@@ -102,7 +102,7 @@ export function LocalizedPage({ locale, section }: { locale: Locale; section?: L
           ))}
         </p>
       </section>
-      <MatchSetup restoreLast defaultHome={todayHome} defaultAway={todayAway} locale={locale} />
+      <MatchSetupGate restoreLast defaultHome={todayHome} defaultAway={todayAway} locale={locale} />
       <LocalizedSection title={copy.sections.dream} href="/vs" link={copy.links.englishCatalog}><div className="grid gap-2">{matches.slice(0, 3).map((match) => <MatchupRow key={match.href} {...match} />)}</div></LocalizedSection>
       <section className="home-editorial-section">
         <LocalizedHeading title={copy.howTitle} />

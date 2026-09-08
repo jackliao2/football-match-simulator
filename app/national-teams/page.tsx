@@ -4,6 +4,7 @@ import { FilteredCatalog } from "@/components/teams/FilteredCatalog"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { NATION_REGIONS, nations } from "@/data/clubs"
 import { getTeamsByClub } from "@/data/teams"
+import { toCatalogCard } from "@/data/team-catalog"
 import { parseCatalogTrophy } from "@/lib/catalog-filters"
 import { REGION_NOTES, catalogCounts } from "@/lib/page-copy"
 import { pageMetadata } from "@/lib/seo"
@@ -35,8 +36,14 @@ export default async function NationalTeamsPage({ searchParams }: PageProps<"/na
     note: REGION_NOTES[region.id],
     orgs: nations
       .filter((nation) => nation.region === region.id)
-      .map((nation) => ({ id: nation.id, name: nation.name, detail: "National team", href: `/national-teams/${nation.id}`, teamIds: getTeamsByClub(nation.id).map((team) => team.id) }))
-      .filter((section) => section.teamIds.length > 0),
+      .map((nation) => ({
+        id: nation.id,
+        name: nation.name,
+        detail: "National team",
+        href: `/national-teams/${nation.id}`,
+        teams: getTeamsByClub(nation.id).map(toCatalogCard),
+      }))
+      .filter((section) => section.teams.length > 0),
   })).filter((section) => section.orgs.length > 0)
 
   return (

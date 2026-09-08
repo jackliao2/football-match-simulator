@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest"
+import { readFileSync } from "node:fs"
 import { crestRects } from "@/components/teams/PixelCrest"
 import { CLUB_COMPARES } from "@/data/compare"
 import {
@@ -8,7 +9,8 @@ import {
   isPublishedMatchup,
 } from "@/data/matchups"
 import { getClub } from "@/data/clubs"
-import { getTeam } from "@/data/teams"
+import { getTeam, teams } from "@/data/teams"
+import { searchCatalog, TEAM_CATALOG } from "@/data/team-catalog"
 
 describe("published dream matches", () => {
   it("indexes the handwritten featured card and does not dump filler who-would-win pages", () => {
@@ -78,5 +80,26 @@ describe("pixel flags and brand mark", () => {
     expect(rects.length).toBeGreaterThan(8)
     expect(rects.length).toBeLessThan(BRAND_MARK_SIZE * BRAND_MARK_SIZE)
     expect(rects.every((rect) => rect.color.startsWith("#"))).toBe(true)
+  })
+})
+
+describe("slim team catalog", () => {
+  it("covers every playable squad without embedding players", () => {
+    expect(TEAM_CATALOG).toHaveLength(teams.length)
+    expect(TEAM_CATALOG.every((entry) => !("players" in entry) || !Array.isArray((entry as { players?: unknown }).players))).toBe(true)
+    const chelsea = searchCatalog("chelsea 04/05")
+    expect(chelsea.some((entry) => entry.id === "chelsea-2004-05")).toBe(true)
+    const brazil = searchCatalog("brazil 1970")
+    expect(brazil[0]?.id).toBe("brazil-1970")
+  })
+
+  it("keeps full squads out of the simulator and catalog client modules", () => {
+    const setup = readFileSync("components/simulator/MatchSetup.tsx", "utf8")
+    const picker = readFileSync("components/simulator/ClubPicker.tsx", "utf8")
+    const catalog = readFileSync("components/teams/FilteredCatalog.tsx", "utf8")
+    expect(setup).not.toMatch(/from ["']@\/data\/teams["']/)
+    expect(setup).not.toMatch(/from ["']@\/data\/team-catalog["']/)
+    expect(picker).not.toMatch(/from ["']@\/data\/teams["']/)
+    expect(catalog).not.toMatch(/from ["']@\/data\/teams["']/)
   })
 })

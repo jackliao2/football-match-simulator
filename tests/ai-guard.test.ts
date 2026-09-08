@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest"
+import { join } from "node:path"
+import { tmpdir } from "node:os"
 import { FixedWindowRateLimiter, TtlCache, withAiCache } from "@/lib/ai/guard"
+import { consumeDailyQuota } from "@/lib/ai/quota-store"
 
 describe("AI rate limiting", () => {
   it("blocks requests after the fixed-window allowance and resets later", () => {
@@ -70,5 +73,23 @@ describe("AI response caching", () => {
     expect(a.value).toBe("report")
     expect(b.value).toBe("report")
     expect([a.status, b.status].sort()).toEqual(["miss", "shared"])
+  })
+})
+
+describe("AI daily quota file", () => {
+  it("blocks a visitor after the daily cap and allows a different IP", async () => {
+    process.env.AI_DAILY_QUOTA_ENABLED = "true"
+    process.env.AI_DAILY_QUOTA_MAX = "2"
+    process.env.AI_QUOTA_STORE_PATH = join(tmpdir(), `lm-quota-${crypto.randomUUID()}.json`)
+    const ip = `203.0.113.${Math.floor(Math.random() * 200)}`
+    const first = await consumeDailyQuota(ip)
+    const second = await consumeDailyQuota(ip)
+    const third = await consumeDailyQuota(ip)
+    const other = await consumeDailyQuota("198.51.100.9")
+    expect(first.allowed).toBe(true)
+    expect(second.allowed).toBe(true)
+    expect(third.allowed).toBe(false)
+    expect(third.remaining).toBe(0)
+    expect(other.allowed).toBe(true)
   })
 })

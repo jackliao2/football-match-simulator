@@ -131,9 +131,33 @@ describe("GSC landing pages", () => {
     expect(all?.headers.some((item) => item.key === "Strict-Transport-Security")).toBe(true)
     const homepage = headers.find((rule) => rule.source === "/")
     expect(homepage?.headers.some((item) => item.key === "CDN-Cache-Control")).toBe(true)
+    const search = headers.find((rule) => rule.source === "/search")
+    expect(search?.headers.some((item) => item.key === "CDN-Cache-Control")).toBe(true)
     const simulate = headers.find((rule) => rule.source === "/simulate")
     expect(simulate?.headers).toEqual([{ key: "Cache-Control", value: "private, no-store" }])
     const api = headers.find((rule) => rule.source === "/api/:path*")
     expect(api?.headers).toEqual([{ key: "Cache-Control", value: "private, no-store" }])
+  })
+
+  it("declares a WebSite SearchAction pointing at /search", async () => {
+    const { websiteJsonLd } = await import("@/lib/seo")
+    const graph = websiteJsonLd()["@graph"] as Array<Record<string, unknown>>
+    const site = graph.find((node) => node["@type"] === "WebSite") as {
+      potentialAction?: { target?: { urlTemplate?: string } }
+    }
+    expect(site.potentialAction?.target?.urlTemplate).toBe("https://legendarymatch.com/search?q={search_term_string}")
+  })
+
+  it("lists /search in the sitemap and stamps content pages with a later date than legal pages", async () => {
+    const { default: sitemap } = await import("@/app/sitemap")
+    const { SITE } = await import("@/lib/site")
+    const routes = sitemap()
+    const search = routes.find((route) => route.url.endsWith("/search"))
+    const privacy = routes.find((route) => route.url.endsWith("/privacy"))
+    const compare = routes.find((route) => route.url.endsWith("/compare/barcelona-vs-real-madrid"))
+    expect(search?.lastModified).toBe(SITE.contentUpdatedIso)
+    expect(privacy?.lastModified).toBe(SITE.legalUpdatedIso)
+    expect(compare?.lastModified).toBe(SITE.contentUpdatedIso)
+    expect(SITE.contentUpdatedIso > SITE.legalUpdatedIso).toBe(true)
   })
 })
