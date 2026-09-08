@@ -84,6 +84,14 @@ const SEARCH_YEAR_NOTES: Record<string, string> = {
   "hungary-1954": "Hungary 1954 World Cup squad searches mean the Mighty Magyars, not a later Hungary team.",
   "celtic-1966-67": "Celtic 1967 Lisbon Lions searches mean Stein's European Cup winners.",
   "nottingham-forest-1979-80": "Forest 1980 European Cup searches mean Clough's second successive winners.",
+  "ajax-2018-19": "Ajax 2019 Champions League searches mean Ten Hag's Bernabéu side, not Van Gaal's 1995 winners.",
+  "tottenham-2018-19": "Spurs 2019 Champions League final searches mean Pochettino's run, not the 2016/17 86-point league side.",
+  "marseille-1992-93": "Marseille 1993 European Cup searches mean the Munich final against Milan, not a later Ligue 1 side.",
+  "spain-2012": "Spain 2012 Euros squad searches mean Del Bosque's 4–0 finalists, not only the 2010 World Cup XI.",
+  "belgium-2018": "Belgium 2018 World Cup squad searches mean Martínez's bronze-medal side that beat Brazil in Kazan.",
+  "brazil-1994": "Brazil 1994 World Cup squad searches mean Parreira's Pasadena winners, not the 1970 or 2002 sides.",
+  "italy-2021": "Italy 2021 Euros squad searches mean Mancini's Wembley winners, not the 2006 World Cup side.",
+  "uruguay-1950": "Uruguay 1950 World Cup and Maracanazo searches mean López's side that beat Brazil in Rio.",
 }
 
 export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {

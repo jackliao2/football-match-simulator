@@ -93,6 +93,21 @@ describe("GSC landing pages", () => {
     }
   })
 
+  it("indexes the 2026-09-08 historic-season batch", () => {
+    for (const id of [
+      "bayern-munich-2019-20",
+      "juventus-2016-17",
+      "porto-2003-04",
+      "spain-2012",
+      "portugal-2016",
+      "uruguay-1950",
+    ]) {
+      expect(getTeam(id), id).toBeDefined()
+      expect(isIndexableTeamPage(id), id).toBe(true)
+      expect(teamPageCopy(getTeam(id)!).h1.toLowerCase()).toContain("squad")
+    }
+  })
+
   it("publishes Brazil vs Argentina and England vs Germany as nation compares", () => {
     const brazil = CLUB_COMPARES.find((pair) => pair.slug === "brazil-vs-argentina")!
     const england = CLUB_COMPARES.find((pair) => pair.slug === "england-vs-germany")!

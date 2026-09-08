@@ -107,8 +107,46 @@ npm run check
 The project uses `output: "standalone"` in `next.config.ts`. Build on the Linux
 VPS rather than copying a Windows `.next` directory.
 
-Upload the source while excluding `.git`, `.next`, `node_modules`, `.vercel`,
-local environment files, reports, and temporary archives. On the VPS:
+### GitHub checkout (preferred)
+
+After the one-time bootstrap below, `/srv/apps/legendarymatch` is a checkout of
+`git@github.com:jackliao2/football-match-simulator.git`. The VPS authenticates
+with a **read-only** GitHub deploy key at `/root/.ssh/legendarymatch-github`.
+That private key must never be committed. Until bootstrap succeeds, use the
+tarball fallback.
+
+One-time bootstrap (prints the public key the first time; add it on GitHub,
+then re-run):
+
+```bash
+bash /srv/apps/legendarymatch/scripts/vps-bootstrap-git.sh
+# from the operator machine, after copying the printed .pub line:
+# gh repo deploy-key add legendarymatch-github.pub --title legendarymatch-vps --repo jackliao2/football-match-simulator
+```
+
+Normal release after `git push origin main`:
+
+```bash
+ssh -i $HOME/.ssh/id_ed25519 root@198.44.31.27 bash /srv/apps/legendarymatch/scripts/vps-release.sh
+```
+
+The release script fetches `origin/main`, `git reset --hard`, runs `npm ci` and
+`npm run build`, copies `public` and `.next/static` into the standalone tree,
+and restarts `legendarymatch`. It never writes `/etc/legendarymatch.env`.
+
+Rollback to a previous SHA, then rebuild:
+
+```bash
+cd /srv/apps/legendarymatch
+git reset --hard <sha>
+# then the npm ci / build / copy / chown / restart steps below
+```
+
+### Tarball fallback
+
+If GitHub is unreachable, upload the source while excluding `.git`, `.next`,
+`node_modules`, `.vercel`, local environment files, reports, and temporary
+archives. On the VPS:
 
 ```bash
 cd /srv/apps/legendarymatch
@@ -215,8 +253,8 @@ a maintenance window and verify every hosted site afterward.
 ## Recovery
 
 If a new deployment fails before the service restart, the currently running
-process continues serving the previous in-memory build. Fix the build and rerun
-the deployment steps.
+process continues serving the previous in-memory build. Note the previous SHA
+from the release script output, `git reset --hard` to it, rebuild, and restart.
 
 If the service fails after restart:
 

@@ -19,6 +19,20 @@ describe("season dossiers", () => {
   it("only marks dossier teams as indexable", () => {
     expect(isIndexableTeamPage("barcelona-2010-11")).toBe(true)
     expect(isIndexableTeamPage("barcelona-2014-15")).toBe(true)
-    expect(editorialTeamIds().length).toBeGreaterThanOrEqual(30)
+    expect(isIndexableTeamPage("bayern-munich-2019-20")).toBe(true)
+    expect(isIndexableTeamPage("spain-2012")).toBe(true)
+    expect(isIndexableTeamPage("belgium-2018")).toBe(true)
+    expect(editorialTeamIds().length).toBeGreaterThanOrEqual(50)
+  })
+
+  it("keeps every dossier above the indexability bar", () => {
+    for (const id of editorialTeamIds()) {
+      expect(getTeam(id), id).toBeDefined()
+      const editorial = getTeamEditorial(id)
+      expect(editorial, id).toBeDefined()
+      const text = [editorial!.intro, ...editorial!.sections.flatMap((section) => section.paragraphs)].join(" ")
+      expect(text.length, id).toBeGreaterThan(650)
+      expect(editorial!.sections.length, id).toBeGreaterThanOrEqual(2)
+    }
   })
 })
