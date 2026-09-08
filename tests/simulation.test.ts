@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest"
 import { getTeam, teams } from "@/data/teams"
 import { simulateMany, simulateManyAsync, simulateMatch } from "@/lib/simulation"
+import { formationMatchup, parseFormation } from "@/lib/simulation/formation"
+import { GOAL_CAP, mulberry32, poisson } from "@/lib/simulation/random"
 import { penaltyTaker, scoringWeight, starters } from "@/lib/simulation/ratings"
 
 const home = getTeam("barcelona-2008-09")!
@@ -176,5 +178,44 @@ describe("simulation engine", () => {
     expect(avgGoals).toBeLessThan(3.2)
     expect(result.drawPct).toBeGreaterThan(16)
     expect(result.drawPct).toBeLessThan(32)
+  })
+
+  it("parses every catalogue formation into ten outfield players", () => {
+    for (const team of teams) {
+      const shape = parseFormation(team.formation)
+      expect(shape.defenders + shape.midfielders + shape.forwards, team.id).toBe(10)
+    }
+  })
+
+  it("lets a 4-3-3 score more than a 5-4-1 against the same packed defence", () => {
+    const arsenal = getTeam("arsenal-2003-04")!
+    const chelsea = getTeam("chelsea-2004-05")!
+    const front = { ...arsenal, formation: "4-3-3" }
+    const parked = { ...arsenal, formation: "5-4-1" }
+    const wall = { ...chelsea, formation: "5-4-1" }
+    expect(formationMatchup(front, wall)).toBeGreaterThan(formationMatchup(parked, wall))
+    const a = simulateMany(front, wall, 1_600, "formation-shape")
+    const b = simulateMany(parked, wall, 1_600, "formation-shape")
+    expect(a.avgHomeXg).toBeGreaterThan(b.avgHomeXg)
+    expect(a.avgHomeGoals).toBeGreaterThan(b.avgHomeGoals)
+  })
+
+  it("names the formation clash in the match notes", () => {
+    const juve = getTeam("juventus-2016-17")!
+    const match = simulateMatch(home, juve, "formation-note")
+    expect(home.formation).not.toBe(juve.formation)
+    expect(match.tacticalNotes.join(" ")).toMatch(/4-3-3/)
+    expect(match.tacticalNotes.join(" ")).toMatch(/3-5-2/)
+  })
+
+  it("can print eight goals on a high-lambda night", () => {
+    const rng = mulberry32(7)
+    let max = 0
+    for (let index = 0; index < 8_000; index += 1) {
+      max = Math.max(max, poisson(5.2, rng))
+    }
+    expect(GOAL_CAP).toBe(9)
+    expect(max).toBeGreaterThanOrEqual(8)
+    expect(max).toBeLessThanOrEqual(GOAL_CAP)
   })
 })

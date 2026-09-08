@@ -6,6 +6,7 @@ import {
   offensiveStrength,
   tacticalModifier,
 } from "@/lib/simulation/ratings"
+import { formationMatchup } from "@/lib/simulation/formation"
 import type { Rng } from "@/lib/simulation/random"
 
 const MIN_XG = 0.25
@@ -24,6 +25,7 @@ export function calculateExpectedGoals(
   const atk = effectiveRatings(attacking)
   const def = effectiveRatings(defending)
   const tactical = tacticalModifier(atk, def)
+  const shape = formationMatchup(attacking, defending)
   const attack = offensiveStrength(atk, tactical * 100)
   const resist = defensiveStrength(def)
   const noise = 0.93 + rng() * 0.14
@@ -35,7 +37,7 @@ export function calculateExpectedGoals(
   // exp(+d)+exp(-d) > 2, so a raw quality gap inflates total goals. Normalize
   // the two sides so they still sum to 2 while keeping the same odds ratio.
   const qualityGap = clamp((2 * rawGap * rawGap) / (rawGap * rawGap + 1), 0.62, 1.62)
-  const xg = BASE_RATE * (attack / resist) * home * tactical * qualityGap * noise
+  const xg = BASE_RATE * (attack / resist) * home * tactical * shape * qualityGap * noise
   return round2(clamp(xg, MIN_XG, MAX_XG))
 }
 

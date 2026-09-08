@@ -44,7 +44,9 @@ export function pickWeighted<T>(rng: Rng, items: T[], weight: (item: T) => numbe
   return items[items.length - 1]!
 }
 
-export function poisson(lambda: number, rng: Rng, cap = 7): number {
+export const GOAL_CAP = 9
+
+export function poisson(lambda: number, rng: Rng, cap = GOAL_CAP): number {
   const L = Math.exp(-Math.max(0, lambda))
   let k = 0
   let p = 1

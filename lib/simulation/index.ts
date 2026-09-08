@@ -28,6 +28,9 @@ function tacticalNotes(home: HistoricalTeam, away: HistoricalTeam): string[] {
   } else {
     notes.push("Both sides capable of controlling the tempo")
   }
+  if (home.formation !== away.formation) {
+    notes.push(`${home.clubName}'s ${home.formation} is matched against ${away.clubName}'s ${away.formation}`)
+  }
 
   if (home.counterAttack >= 80) notes.push(`${home.clubName} dangerous in transition`)
   if (away.counterAttack >= 80) notes.push(`${away.clubName} dangerous in transition`)
@@ -39,7 +42,7 @@ function tacticalNotes(home: HistoricalTeam, away: HistoricalTeam): string[] {
   if (Math.abs(home.overallRating - away.overallRating) <= 2) {
     notes.push("These sides are closely matched — the result should stay uncertain")
   }
-  return notes.slice(0, 4)
+  return notes.slice(0, 6)
 }
 
 export function simulateMatch(

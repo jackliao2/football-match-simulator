@@ -29,7 +29,7 @@ export default function MethodologyPage() {
       <section>
         <h2>1. A team means a named season</h2>
         <p>“Barcelona” is too vague for a historical simulation. The 2008/09 treble side, the 2010/11 Wembley side and the 2014/15 MSN side had different personnel and different ways of controlling a match. Every entry therefore belongs to a specific season or tournament cycle, with a manager, representative formation, starting XI and bench.</p>
-        <p>The XI is a best-fit representation of that campaign, not a claim that the same players started every fixture. Injuries, rotation and tactical changes are compressed into one playable version. Current squads are snapshots, not live feeds.</p>
+        <p>The XI is a best-fit representation of that campaign, not a claim that the same players started every fixture. Injuries, rotation and tactical changes are compressed into one playable version. Current squads are snapshots, not live feeds. The formation on the page is the one the engine uses for the shape matchup, not a caption.</p>
       </section>
       <section>
         <h2>2. Ratings are era-relative</h2>
@@ -58,8 +58,8 @@ export default function MethodologyPage() {
       </section>
       <section>
         <h2>7. How a chance is priced</h2>
-        <p>Expected goals for a side start from a base rate of 1.36, then move with offensive strength versus defensive strength, a home bump of 5.5%, a tactical modifier, and an overall-quality gap. The quality gap is exponential: close elite teams stay close, but a ten-point underdog is not treated as a coin flip. Each match still draws noise, then the result is clamped between 0.25 and 3.8 xG so a simulation cannot invent a 7–6 as the typical night.</p>
-        <p>Possession is a separate draw from possession ratings, midfield ratings and chemistry — not a restatement of xG. That is why a side can “win the ball” in the model and still lose the match. The two numbers are related, not identical.</p>
+        <p>Expected goals for a side start from a base rate of 1.36, then move with offensive strength versus defensive strength, a 10% home bump, a tactical modifier, a small formation-shape term, and an overall-quality gap. The quality gap is exponential: close elite teams stay close, but a ten-point underdog is not treated as a coin flip. Each match still draws noise, then the result is clamped between 0.25 and 3.8 xG so a simulation cannot invent a 7–6 as the typical night. The printed formation is part of that shape term — a 4-3-3 is not scored as if it were a 5-4-1 — but ratings still dominate.</p>
+        <p>Goals are drawn from a Poisson around that xG, capped at nine so an 8–0 remains possible on a blowout night without letting the RNG print a cricket score. Possession is a separate draw from possession ratings, midfield ratings and chemistry — not a restatement of xG. That is why a side can “win the ball” in the model and still lose the match. The two numbers are related, not identical.</p>
       </section>
       <section>
         <h2>8. A worked example: Barcelona 2010/11 vs Madrid 2016/17</h2>

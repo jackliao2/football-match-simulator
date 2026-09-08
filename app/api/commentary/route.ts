@@ -8,7 +8,7 @@ import {
   readAiJson,
   withAiCache,
 } from "@/lib/ai/guard"
-import { getAiCacheNamespace, isAiConfigured } from "@/lib/ai/provider"
+import { getAiCacheNamespace } from "@/lib/ai/provider"
 import { parseMatchId } from "@/lib/match-id"
 import { simulateMatch } from "@/lib/simulation"
 import { getTeam } from "@/data/teams"
@@ -48,7 +48,6 @@ export async function POST(request: Request) {
       cacheKey,
       aiCacheTtlMs("commentary"),
       () => generateMatchReport(match, home, away),
-      (result) => result.source === "ai" || !isAiConfigured(),
     )
     console.info(
       "[ai-request]",
