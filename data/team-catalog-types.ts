@@ -14,8 +14,8 @@ export type TeamCatalogEntry = {
   styleTags: string[]
   eraYear: number
   trophies: Trophy[]
-  tokens: string
-  path: string
+  tokens?: string
+  path?: string
 }
 
 export function isCurrentEntry(entry: Pick<TeamCatalogEntry, "kind" | "eraYear">) {

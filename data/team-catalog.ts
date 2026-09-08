@@ -62,6 +62,24 @@ export function toCatalogEntry(team: HistoricalTeam): TeamCatalogEntry {
 
 export const TEAM_CATALOG: TeamCatalogEntry[] = teams.map(toCatalogEntry)
 
+export function toPlayableCatalog(entry: TeamCatalogEntry): Omit<TeamCatalogEntry, "tokens" | "path"> {
+  return {
+    id: entry.id,
+    clubId: entry.clubId,
+    clubName: entry.clubName,
+    clubCode: entry.clubCode,
+    season: entry.season,
+    displaySeason: entry.displaySeason,
+    kind: entry.kind,
+    overallRating: entry.overallRating,
+    manager: entry.manager,
+    formation: entry.formation,
+    styleTags: entry.styleTags,
+    eraYear: entry.eraYear,
+    trophies: entry.trophies,
+  }
+}
+
 export function searchCatalog(query: string, limit = 24): TeamCatalogEntry[] {
   const q = query.trim().toLowerCase().replace(/\s+/g, " ")
   if (q.length < 2) return []
@@ -75,9 +93,10 @@ export function searchCatalog(query: string, limit = 24): TeamCatalogEntry[] {
     else if (name.includes(q)) score += 30
     if (entry.clubId.replaceAll("-", " ") === q) score += 40
     if (entry.displaySeason.toLowerCase() === q || entry.season === q) score += 25
-    const allTerms = terms.every((term) => entry.tokens.includes(term))
+    const hay = entry.tokens ?? ""
+    const allTerms = terms.every((term) => hay.includes(term))
     if (allTerms) score += 20
-    else if (entry.tokens.includes(q)) score += 12
+    else if (hay.includes(q)) score += 12
     if (score === 0) continue
     score += entry.overallRating / 100
     scored.push({ entry, score })

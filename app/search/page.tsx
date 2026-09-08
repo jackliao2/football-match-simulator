@@ -7,6 +7,7 @@ import { OvrStamp } from "@/components/ui/OvrStamp"
 import { HOMEPAGE_TEAMS, HOMEPAGE_NATIONS } from "@/data/matchups"
 import { searchCatalog, TEAM_CATALOG } from "@/data/team-catalog"
 import { pageMetadata } from "@/lib/seo"
+import { teamPath } from "@/lib/paths"
 
 const TITLE = "Search historical football squads"
 const DESCRIPTION =
@@ -87,7 +88,7 @@ function SearchHit({
 }) {
   return (
     <li className="search-hit">
-      <Link href={entry.path} className="search-hit-main">
+      <Link href={entry.path ?? teamPath(entry)} className="search-hit-main">
         <PixelCrest clubId={entry.clubId} size={36} />
         <span className="min-w-0 flex-1">
           <span className="block truncate font-brand text-base font-semibold text-text">
