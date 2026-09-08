@@ -28,7 +28,8 @@ export async function generateMetadata({
   const leftClub = getClub(pair.leftClubId)
   const rightClub = getClub(pair.rightClubId)
   const title =
-    leftClub && rightClub ? `Who Is Better, ${leftClub.name} or ${rightClub.name}?` : pair.title
+    pair.seoTitle ??
+    (leftClub && rightClub ? `Who Is Better, ${leftClub.name} or ${rightClub.name}?` : pair.title)
   return pageMetadata({
     title,
     description: pair.description,

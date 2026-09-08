@@ -55,6 +55,14 @@ describe("GSC landing pages", () => {
     const milan = CLUB_COMPARES.find((pair) => pair.slug === "ac-milan-vs-inter-milan")!
     expect(milan.keywords.join(" ")).toMatch(/who is better/)
     expect(milan.title.toLowerCase()).toMatch(/who is better/)
+    expect(milan.seoTitle).toBe("AC Milan vs Inter Milan: Who Is Better?")
+    expect(milan.description).toMatch(/^AC Milan lead the all-time European case/)
+  })
+
+  it("gives the Clasico comparison a result-oriented search snippet", () => {
+    const clasico = CLUB_COMPARES.find((pair) => pair.slug === "barcelona-vs-real-madrid")!
+    expect(clasico.seoTitle).toBe("Barcelona vs Real Madrid: Who Is Better?")
+    expect(clasico.description).toMatch(/^Real Madrid lead the all-time European case/)
   })
 
   it("indexes the GSC-follow-up season pages with their own dossiers", () => {

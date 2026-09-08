@@ -6,6 +6,7 @@ export type ClubCompare = {
   leftPeakId: string
   rightPeakId: string
   title: string
+  seoTitle?: string
   description: string
   keywords: string[]
   lead: string
@@ -41,8 +42,9 @@ export const CLUB_COMPARES: ClubCompare[] = [
     leftPeakId: "barcelona-2010-11",
     rightPeakId: "real-madrid-2016-17",
     title: "Barcelona or Real Madrid — Which Is Better?",
+    seoTitle: "Barcelona vs Real Madrid: Who Is Better?",
     description:
-      "Barcelona or Real Madrid: compare their all-time case, greatest eras and prime teams, then simulate Barcelona 2010/11 vs Real Madrid 2016/17.",
+      "Real Madrid lead the all-time European case; Barcelona 2010/11 reached the higher modern peak. Compare their history, greatest teams and prime matchup.",
     keywords: keywords("Barcelona", "Real Madrid", [
       "prime el clasico",
       "barcelona or real madrid which is better",
@@ -251,8 +253,9 @@ export const CLUB_COMPARES: ClubCompare[] = [
     leftPeakId: "ac-milan-1988-89",
     rightPeakId: "inter-milan-2009-10",
     title: "Who Is Better, AC Milan or Inter Milan?",
+    seoTitle: "AC Milan vs Inter Milan: Who Is Better?",
     description:
-      "Who is better, AC Milan or Inter Milan? Compare Sacchi’s European Cup side with Mourinho’s treble winners, then simulate the Derby della Madonnina at their peaks.",
+      "AC Milan lead the all-time European case; Inter’s 2009/10 treble is the stronger modern peak. Compare their history, trophies and greatest teams.",
     keywords: keywords("AC Milan", "Inter Milan", [
       "who is better inter milan or ac milan",
       "is inter milan better than ac milan",
