@@ -70,11 +70,11 @@ export function MatchSetup({
   restoreLast?: boolean
 }) {
   const ui = locale === "es" ? {
-    home: "Local", away: "Visitante", legendary: "Leyendas", now: "Recientes", swap: "Cambiar", different: "Elige dos equipos distintos.", simulate: "Simular", playing: "Jugando…", expert: "Análisis experto IA", analysing: "Analizando…", daily: "Hoy", change: "Cambiar equipo ▾", simulateAgain: "Simular de nuevo", back: "Cambiar duelo", copy: "Copiar enlace", copied: "Copiado", shared: "Compartido", expertAgain: "Repetir análisis IA", next: "Siguiente duelo soñado", season: "Temporada", latest: "Plantilla reciente", bench: "Suplentes", dream: "¿Dream?", separateAi: "Pronóstico independiente de 100 partidos. Tu partido anterior sigue disponible en la pestaña Match result.", matchTab: "Resultado", aiTab: "IA experta", batchTab: `${BATCH_RUNS} partidos`, hundred: `${BATCH_RUNS} partidos`, hundredPlaying: `Calculando ${BATCH_RUNS}…`, quotaUsed: "Cupo diario agotado", quotaBody: `Has usado los 10 análisis IA gratis de hoy. El cupo se reinicia a medianoche. Sigue pudiendo simular y correr ${BATCH_RUNS} partidos gratis.`, lastMatches: "Tus últimos partidos",
+    home: "Local", away: "Visitante", legendary: "Leyendas", now: "Recientes", swap: "Cambiar", different: "Elige dos equipos distintos.", simulate: "Simular", playing: "Jugando…", expert: "Análisis experto IA", analysing: "Analizando…", daily: "Hoy", change: "Cambiar equipo ▾", simulateAgain: "Simular de nuevo", back: "Cambiar duelo", copy: "Copiar enlace", copied: "Copiado", shared: "Compartido", expertAgain: "Repetir análisis IA", next: "Siguiente duelo soñado", season: "Temporada", latest: "Plantilla reciente", bench: "Suplentes", dream: "Duelo al azar", dreaming: "Eligiendo…", separateAi: "Pronóstico independiente de 100 partidos. Tu partido anterior sigue disponible en la pestaña Match result.", matchTab: "Resultado", aiTab: "IA experta", batchTab: `${BATCH_RUNS} partidos`, hundred: `${BATCH_RUNS} partidos`, hundredPlaying: `Calculando ${BATCH_RUNS}…`, quotaUsed: "Cupo diario agotado", quotaBody: `Has usado los 10 análisis IA gratis de hoy. El cupo se reinicia a medianoche. Sigue pudiendo simular y correr ${BATCH_RUNS} partidos gratis.`, lastMatches: "Tus últimos partidos",
   } : locale === "pt-br" ? {
-    home: "Casa", away: "Visitante", legendary: "Lendas", now: "Recentes", swap: "Trocar", different: "Escolha dois times diferentes.", simulate: "Simular", playing: "Jogando…", expert: "Análise especializada IA", analysing: "Analisando…", daily: "Hoje", change: "Trocar time ▾", simulateAgain: "Simular novamente", back: "Trocar confronto", copy: "Copiar link", copied: "Copiado", shared: "Compartilhado", expertAgain: "Repetir análise IA", next: "Próximo jogo dos sonhos", season: "Temporada", latest: "Elenco recente", bench: "Banco", dream: "Dream?", separateAi: "Previsão independente de 100 partidas. Seu jogo anterior continua disponível na aba Match result.", matchTab: "Resultado", aiTab: "IA expert", batchTab: `${BATCH_RUNS} jogos`, hundred: `${BATCH_RUNS} jogos`, hundredPlaying: `Calculando ${BATCH_RUNS}…`, quotaUsed: "Cota diária esgotada", quotaBody: `Você usou as 10 análises de IA grátis de hoje. A cota zera à meia-noite. Ainda pode simular e rodar ${BATCH_RUNS} jogos de graça.`, lastMatches: "Suas últimas partidas",
+    home: "Casa", away: "Visitante", legendary: "Lendas", now: "Recentes", swap: "Trocar", different: "Escolha dois times diferentes.", simulate: "Simular", playing: "Jogando…", expert: "Análise especializada IA", analysing: "Analisando…", daily: "Hoje", change: "Trocar time ▾", simulateAgain: "Simular novamente", back: "Trocar confronto", copy: "Copiar link", copied: "Copiado", shared: "Compartilhado", expertAgain: "Repetir análise IA", next: "Próximo jogo dos sonhos", season: "Temporada", latest: "Elenco recente", bench: "Banco", dream: "Sortear duelo", dreaming: "Sorteando…", separateAi: "Previsão independente de 100 partidas. Seu jogo anterior continua disponível na aba Match result.", matchTab: "Resultado", aiTab: "IA expert", batchTab: `${BATCH_RUNS} jogos`, hundred: `${BATCH_RUNS} jogos`, hundredPlaying: `Calculando ${BATCH_RUNS}…`, quotaUsed: "Cota diária esgotada", quotaBody: `Você usou as 10 análises de IA grátis de hoje. A cota zera à meia-noite. Ainda pode simular e rodar ${BATCH_RUNS} jogos de graça.`, lastMatches: "Suas últimas partidas",
   } : {
-    home: "Home", away: "Away", legendary: "Legendary", now: "Recent", swap: "Swap", different: "Pick two different teams.", simulate: "Simulate", playing: "Playing…", expert: "Expert AI Analysis", analysing: "Analysing…", daily: "Daily", change: "Change team ▾", simulateAgain: "Simulate again", back: "Change matchup", copy: "Copy link", copied: "Copied", shared: "Shared", expertAgain: "Expert AI again", next: "Next dream match", season: "Season", latest: "Latest squad", bench: "Bench", dream: "Dream?", separateAi: "A separate 100-match forecast. Your previous match remains available under Match result.", matchTab: "Match result", aiTab: "Expert AI", batchTab: `${BATCH_RUNS} matches`, hundred: `${BATCH_RUNS} matches`, hundredPlaying: `Running ${BATCH_RUNS}…`, quotaUsed: "Daily free quota used", quotaBody: `You have used today’s 10 free AI analyses. Your quota resets at midnight. You can still simulate matches and run ${BATCH_RUNS}-match probabilities for free.`, lastMatches: "Your last matches",
+    home: "Home", away: "Away", legendary: "Legendary", now: "Recent", swap: "Swap", different: "Pick two different teams.", simulate: "Simulate", playing: "Playing…", expert: "Expert AI Analysis", analysing: "Analysing…", daily: "Daily", change: "Change team ▾", simulateAgain: "Simulate again", back: "Change matchup", copy: "Copy link", copied: "Copied", shared: "Shared", expertAgain: "Expert AI again", next: "Next dream match", season: "Season", latest: "Latest squad", bench: "Bench", dream: "Random matchup", dreaming: "Picking…", separateAi: "A separate 100-match forecast. Your previous match remains available under Match result.", matchTab: "Match result", aiTab: "Expert AI", batchTab: `${BATCH_RUNS} matches`, hundred: `${BATCH_RUNS} matches`, hundredPlaying: `Running ${BATCH_RUNS}…`, quotaUsed: "Daily free quota used", quotaBody: `You have used today’s 10 free AI analyses. Your quota resets at midnight. You can still simulate matches and run ${BATCH_RUNS}-match probabilities for free.`, lastMatches: "Your last matches",
   }
   const byId = useMemo(() => new Map(catalog.map((entry) => [entry.id, entry])), [catalog])
   const homeDefault = (defaultHome ? byId.get(defaultHome) : undefined) ?? catalog[0]!
@@ -580,15 +580,30 @@ export function MatchSetup({
               </button>
               <button
                 type="button"
-                className="dream-dice"
+                className="rail-btn dream-dice"
                 disabled={Boolean(play) || analysisLoading || rolling}
                 onClick={rollDreamMatchup}
-                aria-label="Roll a random dream matchup"
               >
-                <span className={`dream-die${rolling ? " is-rolling" : ""}`} aria-hidden="true">
-                  <i /><i /><i /><i /><i />
-                </span>
-                <span>{ui.dream}</span>
+                <svg
+                  className={`dream-die${rolling ? " is-rolling" : ""}`}
+                  viewBox="0 0 16 16"
+                  width="16"
+                  height="16"
+                  aria-hidden="true"
+                  style={{ imageRendering: "pixelated", shapeRendering: "crispEdges" }}
+                >
+                  <rect x="1" y="1" width="14" height="14" fill="#10140e" />
+                  <rect x="1" y="1" width="14" height="1" fill="currentColor" />
+                  <rect x="1" y="14" width="14" height="1" fill="currentColor" />
+                  <rect x="1" y="1" width="1" height="14" fill="currentColor" />
+                  <rect x="14" y="1" width="1" height="14" fill="currentColor" />
+                  <rect x="4" y="4" width="2" height="2" fill="currentColor" />
+                  <rect x="10" y="4" width="2" height="2" fill="currentColor" />
+                  <rect x="7" y="7" width="2" height="2" fill="currentColor" />
+                  <rect x="4" y="10" width="2" height="2" fill="currentColor" />
+                  <rect x="10" y="10" width="2" height="2" fill="currentColor" />
+                </svg>
+                <span>{rolling ? ui.dreaming : ui.dream}</span>
               </button>
             </div>
           </div>
