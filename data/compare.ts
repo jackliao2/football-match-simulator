@@ -753,3 +753,37 @@ export function compareParamSlugs(): string[] {
   }
   return [...slugs]
 }
+
+export function compareSearchDescription(pair: ClubCompare): string {
+  const first = pair.verdict[0].trim()
+  const sentence = first.match(/^[^.!?]+[.!?]/)?.[0] ?? first
+  return `${pair.verdictHeading}. ${sentence}`.slice(0, 280)
+}
+
+export function compareFaqs(
+  pair: ClubCompare,
+  leftName: string,
+  rightName: string,
+  leftPeak: string,
+  rightPeak: string,
+): Array<{ q: string; a: string }> {
+  const noun = pair.kind === "nation" ? "national team" : "club"
+  return [
+    {
+      q: `Who is better, ${leftName} or ${rightName}?`,
+      a: `${pair.verdictHeading}. ${pair.verdict[0]}`,
+    },
+    {
+      q: `Which ${noun} has the stronger all-time case?`,
+      a: pair.verdict[0],
+    },
+    {
+      q: `Which prime is stronger, ${leftPeak} or ${rightPeak}?`,
+      a: pair.verdict[1],
+    },
+    {
+      q: `Can I simulate ${leftName} vs ${rightName}?`,
+      a: `Yes. This page already loads ${leftPeak} against ${rightPeak}. Run one match or a 1,000-match distribution from the simulator on the page.`,
+    },
+  ]
+}

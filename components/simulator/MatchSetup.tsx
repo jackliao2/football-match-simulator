@@ -8,7 +8,7 @@ import { MatchResult } from "@/components/simulator/MatchResult"
 import { MatchStats } from "@/components/simulator/MatchStats"
 import { MatchTimeline } from "@/components/simulator/MatchTimeline"
 import { MonteCarloResults } from "@/components/simulator/MonteCarloResults"
-import { SimulationPlay } from "@/components/simulator/SimulationPlay"
+import { SimulationPlay, SimulationStage } from "@/components/simulator/SimulationPlay"
 import { FaceOffSquad } from "@/components/teams/SquadPanel"
 import { PixelCrest } from "@/components/teams/PixelCrest"
 import { eraGlow } from "@/data/trophies"
@@ -21,7 +21,7 @@ import { absoluteUrl } from "@/lib/site"
 import { copyOrShare, matchShareCopy } from "@/lib/share"
 import { createSeed } from "@/lib/match-id"
 import { loadLastMatchup, loadMatchHistory, pushMatchHistory, saveLastMatchup, type StoredMatch } from "@/lib/play-memory"
-import { simulateMany, simulateMatch } from "@/lib/simulation"
+import { BATCH_RUNS, simulateManyAsync, simulateMatch } from "@/lib/simulation"
 import type { PreMatchAnalysis } from "@/lib/ai/analysis"
 import { teamSquad, type SquadMember } from "@/lib/stars"
 import type { HistoricalTeam, MonteCarloResult, SimulatedMatch, TeamKind } from "@/types"
@@ -67,11 +67,11 @@ export function MatchSetup({
 }) {
   const teams = useMemo(() => historicalTeams.map(toTeamOption), [])
   const ui = locale === "es" ? {
-    home: "Local", away: "Visitante", legendary: "Leyendas", now: "Recientes", swap: "Cambiar", different: "Elige dos equipos distintos.", simulate: "Simular", playing: "Jugando…", expert: "Análisis experto IA", analysing: "Analizando…", daily: "Hoy", change: "Cambiar equipo ▾", simulateAgain: "Simular de nuevo", back: "Cambiar duelo", copy: "Copiar enlace", copied: "Copiado", shared: "Compartido", expertAgain: "Repetir análisis IA", next: "Siguiente duelo soñado", season: "Temporada", latest: "Plantilla reciente", bench: "Suplentes", dream: "¿Dream?", separateAi: "Pronóstico independiente de 100 partidos. Tu partido anterior sigue disponible en la pestaña Match result.", matchTab: "Resultado", aiTab: "IA experta", batchTab: "100 partidos", hundred: "100 partidos", hundredPlaying: "Calculando 100…", quotaUsed: "Cupo diario agotado", quotaBody: "Has usado los 10 análisis IA gratis de hoy. El cupo se reinicia a medianoche. Sigue pudiendo simular y correr 100 partidos gratis.", lastMatches: "Tus últimos partidos",
+    home: "Local", away: "Visitante", legendary: "Leyendas", now: "Recientes", swap: "Cambiar", different: "Elige dos equipos distintos.", simulate: "Simular", playing: "Jugando…", expert: "Análisis experto IA", analysing: "Analizando…", daily: "Hoy", change: "Cambiar equipo ▾", simulateAgain: "Simular de nuevo", back: "Cambiar duelo", copy: "Copiar enlace", copied: "Copiado", shared: "Compartido", expertAgain: "Repetir análisis IA", next: "Siguiente duelo soñado", season: "Temporada", latest: "Plantilla reciente", bench: "Suplentes", dream: "¿Dream?", separateAi: "Pronóstico independiente de 100 partidos. Tu partido anterior sigue disponible en la pestaña Match result.", matchTab: "Resultado", aiTab: "IA experta", batchTab: `${BATCH_RUNS} partidos`, hundred: `${BATCH_RUNS} partidos`, hundredPlaying: `Calculando ${BATCH_RUNS}…`, quotaUsed: "Cupo diario agotado", quotaBody: `Has usado los 10 análisis IA gratis de hoy. El cupo se reinicia a medianoche. Sigue pudiendo simular y correr ${BATCH_RUNS} partidos gratis.`, lastMatches: "Tus últimos partidos",
   } : locale === "pt-br" ? {
-    home: "Casa", away: "Visitante", legendary: "Lendas", now: "Recentes", swap: "Trocar", different: "Escolha dois times diferentes.", simulate: "Simular", playing: "Jogando…", expert: "Análise especializada IA", analysing: "Analisando…", daily: "Hoje", change: "Trocar time ▾", simulateAgain: "Simular novamente", back: "Trocar confronto", copy: "Copiar link", copied: "Copiado", shared: "Compartilhado", expertAgain: "Repetir análise IA", next: "Próximo jogo dos sonhos", season: "Temporada", latest: "Elenco recente", bench: "Banco", dream: "Dream?", separateAi: "Previsão independente de 100 partidas. Seu jogo anterior continua disponível na aba Match result.", matchTab: "Resultado", aiTab: "IA expert", batchTab: "100 jogos", hundred: "100 jogos", hundredPlaying: "Calculando 100…", quotaUsed: "Cota diária esgotada", quotaBody: "Você usou as 10 análises de IA grátis de hoje. A cota zera à meia-noite. Ainda pode simular e rodar 100 jogos de graça.", lastMatches: "Suas últimas partidas",
+    home: "Casa", away: "Visitante", legendary: "Lendas", now: "Recentes", swap: "Trocar", different: "Escolha dois times diferentes.", simulate: "Simular", playing: "Jogando…", expert: "Análise especializada IA", analysing: "Analisando…", daily: "Hoje", change: "Trocar time ▾", simulateAgain: "Simular novamente", back: "Trocar confronto", copy: "Copiar link", copied: "Copiado", shared: "Compartilhado", expertAgain: "Repetir análise IA", next: "Próximo jogo dos sonhos", season: "Temporada", latest: "Elenco recente", bench: "Banco", dream: "Dream?", separateAi: "Previsão independente de 100 partidas. Seu jogo anterior continua disponível na aba Match result.", matchTab: "Resultado", aiTab: "IA expert", batchTab: `${BATCH_RUNS} jogos`, hundred: `${BATCH_RUNS} jogos`, hundredPlaying: `Calculando ${BATCH_RUNS}…`, quotaUsed: "Cota diária esgotada", quotaBody: `Você usou as 10 análises de IA grátis de hoje. A cota zera à meia-noite. Ainda pode simular e rodar ${BATCH_RUNS} jogos de graça.`, lastMatches: "Suas últimas partidas",
   } : {
-    home: "Home", away: "Away", legendary: "Legendary", now: "Recent", swap: "Swap", different: "Pick two different teams.", simulate: "Simulate", playing: "Playing…", expert: "Expert AI Analysis", analysing: "Analysing…", daily: "Daily", change: "Change team ▾", simulateAgain: "Simulate again", back: "Change matchup", copy: "Copy link", copied: "Copied", shared: "Shared", expertAgain: "Expert AI again", next: "Next dream match", season: "Season", latest: "Latest squad", bench: "Bench", dream: "Dream?", separateAi: "A separate 100-match forecast. Your previous match remains available under Match result.", matchTab: "Match result", aiTab: "Expert AI", batchTab: "100 matches", hundred: "100 matches", hundredPlaying: "Running 100…", quotaUsed: "Daily free quota used", quotaBody: "You have used today’s 10 free AI analyses. Your quota resets at midnight. You can still simulate matches and run 100-match probabilities for free.", lastMatches: "Your last matches",
+    home: "Home", away: "Away", legendary: "Legendary", now: "Recent", swap: "Swap", different: "Pick two different teams.", simulate: "Simulate", playing: "Playing…", expert: "Expert AI Analysis", analysing: "Analysing…", daily: "Daily", change: "Change team ▾", simulateAgain: "Simulate again", back: "Change matchup", copy: "Copy link", copied: "Copied", shared: "Shared", expertAgain: "Expert AI again", next: "Next dream match", season: "Season", latest: "Latest squad", bench: "Bench", dream: "Dream?", separateAi: "A separate 100-match forecast. Your previous match remains available under Match result.", matchTab: "Match result", aiTab: "Expert AI", batchTab: `${BATCH_RUNS} matches`, hundred: `${BATCH_RUNS} matches`, hundredPlaying: `Running ${BATCH_RUNS}…`, quotaUsed: "Daily free quota used", quotaBody: `You have used today’s 10 free AI analyses. Your quota resets at midnight. You can still simulate matches and run ${BATCH_RUNS}-match probabilities for free.`, lastMatches: "Your last matches",
   }
   const homeDefault = teams.find((team) => team.id === defaultHome) ?? teams[0]!
   const awayDefault =
@@ -91,6 +91,7 @@ export function MatchSetup({
   const [play, setPlay] = useState<
     | { kind: "match"; match: SimulatedMatch }
     | { kind: "batch"; batch: MonteCarloResult }
+    | { kind: "batch-running"; done: number; total: number }
     | null
   >(null)
   const [batch, setBatch] = useState<MonteCarloResult | null>(null)
@@ -275,15 +276,25 @@ export function MatchSetup({
     showResults("match")
   }
 
-  function runHundred() {
+  async function runHundred() {
     if (sameTeam || play || analysisLoading) return
-    track("simulate_100", { home: home.id, away: away.id, runs: 100 })
-    const next = simulateMany(home.team, away.team, 100, `batch:${home.id}|${away.id}|${Date.now()}`)
+    track("simulate_100", { home: home.id, away: away.id, runs: BATCH_RUNS })
     setAnalysis(null)
     setAnalysisError(null)
     setAnalysisLoading(false)
-    setPlay({ kind: "batch", batch: next })
+    setPlay({ kind: "batch-running", done: 0, total: BATCH_RUNS })
     rememberPair(home.id, away.id)
+    showResults("batch")
+    const next = await simulateManyAsync(
+      home.team,
+      away.team,
+      BATCH_RUNS,
+      `batch:${home.id}|${away.id}|${Date.now()}`,
+      (done, total) => setPlay({ kind: "batch-running", done, total }),
+    )
+    setPlay(null)
+    setBatch(next)
+    track("simulation_completed", { mode: "batch", home: home.id, away: away.id, runs: BATCH_RUNS })
     showResults("batch")
   }
 
@@ -508,7 +519,7 @@ export function MatchSetup({
                 className="rail-btn"
                 onClick={runHundred}
               >
-                {play?.kind === "batch" ? ui.hundredPlaying : ui.hundred}
+                {play?.kind === "batch" || play?.kind === "batch-running" ? ui.hundredPlaying : ui.hundred}
               </button>
               <button
                 type="button"
@@ -586,6 +597,17 @@ export function MatchSetup({
               away={away.team}
               match={play.match}
               onDone={finishPlay}
+            />
+          </div>
+        ) : play?.kind === "batch-running" ? (
+          <div id="result-batch">
+            <SimulationStage
+              mode="batch"
+              home={home.team}
+              away={away.team}
+              progress={(play.done / Math.max(1, play.total)) * 100}
+              primary={`${play.done}/${play.total}`}
+              secondary="Testing alternate nights, tactics and scoring patterns…"
             />
           </div>
         ) : play?.kind === "batch" ? (

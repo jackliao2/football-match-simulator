@@ -35,15 +35,38 @@ export function ClubPicker({
   )
   const [query, setQuery] = useState("")
   const searchRef = useRef<HTMLInputElement>(null)
+  const dialogRef = useRef<HTMLDivElement>(null)
+  const previousFocus = useRef<HTMLElement | null>(null)
   const q = query.trim().toLowerCase()
 
   useEffect(() => {
+    previousFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
     searchRef.current?.focus()
     function onKey(event: KeyboardEvent) {
-      if (event.key === "Escape") onClose()
+      if (event.key === "Escape") {
+        onClose()
+        return
+      }
+      if (event.key !== "Tab" || !dialogRef.current) return
+      const nodes = [...dialogRef.current.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      )].filter((node) => !node.hasAttribute("disabled") && node.tabIndex !== -1)
+      if (nodes.length === 0) return
+      const first = nodes[0]!
+      const last = nodes[nodes.length - 1]!
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
     }
     window.addEventListener("keydown", onKey)
-    return () => window.removeEventListener("keydown", onKey)
+    return () => {
+      window.removeEventListener("keydown", onKey)
+      previousFocus.current?.focus()
+    }
   }, [onClose])
 
   const byId = useMemo(() => {
@@ -92,7 +115,14 @@ export function ClubPicker({
       className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 p-2 sm:items-center sm:p-3"
       onClick={onClose}
     >
-      <div className="picker-shell" onClick={(event) => event.stopPropagation()}>
+      <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Choose a club or nation"
+        className="picker-shell"
+        onClick={(event) => event.stopPropagation()}
+      >
         <div className="picker-head">
           <div className="picker-tabs" role="tablist">
             <button

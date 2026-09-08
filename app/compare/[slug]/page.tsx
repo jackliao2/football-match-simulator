@@ -4,7 +4,7 @@ import { notFound, redirect } from "next/navigation"
 import { MatchupRow } from "@/components/ui/MatchupRow"
 import { QuickMatch } from "@/components/simulator/QuickMatch"
 import { PageHeader } from "@/components/ui/PageHeader"
-import { compareParamSlugs, resolveClubCompare } from "@/data/compare"
+import { compareFaqs, compareParamSlugs, compareSearchDescription, resolveClubCompare } from "@/data/compare"
 import { getClub } from "@/data/clubs"
 import { getPrimeEntity } from "@/data/prime"
 import { vsPath } from "@/data/matchups"
@@ -32,7 +32,7 @@ export async function generateMetadata({
     (leftClub && rightClub ? `Who Is Better, ${leftClub.name} or ${rightClub.name}?` : pair.title)
   return pageMetadata({
     title,
-    description: pair.description,
+    description: compareSearchDescription(pair),
     path: `/compare/${pair.slug}`,
     keywords: pair.keywords,
   })
@@ -52,6 +52,9 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
 
   const leftPrime = getPrimeEntity(pair.leftClubId)
   const rightPrime = getPrimeEntity(pair.rightClubId)
+  const leftPeak = `${left.clubName} ${left.displaySeason}`
+  const rightPeak = `${right.clubName} ${right.displaySeason}`
+  const faqs = compareFaqs(pair, leftClub.name, rightClub.name, leftPeak, rightPeak)
 
   return (
     <div className="grid gap-6">
@@ -62,7 +65,7 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
             "@context": "https://schema.org",
             "@type": "Article",
             headline: pair.title,
-            description: pair.description,
+            description: compareSearchDescription(pair),
             mainEntityOfPage: absoluteUrl(`/compare/${pair.slug}`),
             author: personSchema(),
             publisher: { "@type": "Organization", name: SITE.name, url: absoluteUrl("/") },
@@ -72,13 +75,46 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
           }),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Compare", item: absoluteUrl("/compare") },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: `${leftClub.name} vs ${rightClub.name}`,
+                item: absoluteUrl(`/compare/${pair.slug}`),
+              },
+            ],
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqs.map((item) => ({
+              "@type": "Question",
+              name: item.q,
+              acceptedAnswer: { "@type": "Answer", text: item.a },
+            })),
+          }),
+        }}
+      />
       <PageHeader
         kicker={pair.kind === "nation" ? "National-team comparison" : "Club comparison"}
         title={`Who is better: ${leftClub.name} or ${rightClub.name}?`}
         lead={pair.lead}
         crumbs={[{ href: "/compare", label: "Compare" }]}
-      />
-      <EditorialByline />
+      >
+        <p className="compare-answer">{pair.verdictHeading}</p>
+      </PageHeader>
       <section className="editorial-verdict p-4 sm:p-5">
         <p className="page-kicker">The call</p>
         <h2 className="section-title mt-2">{pair.verdictHeading}</h2>
@@ -88,6 +124,7 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
           ))}
         </div>
       </section>
+      <EditorialByline />
       <section>
         <p className="page-kicker">Argument by category</p>
         <h2 className="section-title mt-2 mb-3">
@@ -138,6 +175,22 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
           ) : null}
         </section>
       ) : null}
+      <section className="grid gap-3" aria-labelledby="compare-faq">
+        <h2 id="compare-faq" className="section-title">
+          {leftClub.name} or {rightClub.name} — FAQ
+        </h2>
+        <div className="home-faq-list">
+          {faqs.map((item) => (
+            <details key={item.q} className="home-faq-item group">
+              <summary>
+                {item.q}
+                <span className="home-faq-plus">+</span>
+              </summary>
+              <p>{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
     </div>
   )
 }

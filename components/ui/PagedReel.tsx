@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, type ReactNode } from "react"
+import { useEffect, useRef, useState, type ReactNode, type TouchEvent } from "react"
 
 const INTERVAL_MS = 7000
 
@@ -21,6 +21,7 @@ export function PagedReel({
 }) {
   const [page, setPage] = useState(0)
   const [paused, setPaused] = useState(false)
+  const touchStartX = useRef<number | null>(null)
 
   useEffect(() => {
     if (pageCount < 2 || paused) return
@@ -39,6 +40,19 @@ export function PagedReel({
     setPage((value) => (value + delta + pageCount) % pageCount)
   }
 
+  function onTouchStart(event: TouchEvent<HTMLDivElement>) {
+    touchStartX.current = event.changedTouches[0]?.clientX ?? null
+  }
+
+  function onTouchEnd(event: TouchEvent<HTMLDivElement>) {
+    const start = touchStartX.current
+    touchStartX.current = null
+    if (start == null) return
+    const dx = (event.changedTouches[0]?.clientX ?? start) - start
+    if (dx > 40) go(-1)
+    else if (dx < -40) go(1)
+  }
+
   return (
     <div
       className="dream-reel"
@@ -48,6 +62,8 @@ export function PagedReel({
       onBlurCapture={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget as Node)) setPaused(false)
       }}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
     >
       <div className={stageClassName} aria-live="polite">
         {children(current)}

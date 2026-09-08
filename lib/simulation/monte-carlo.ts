@@ -1,1 +1,1 @@
-export { simulateMany } from "@/lib/simulation"
+export { simulateMany, simulateManyAsync, BATCH_RUNS } from "@/lib/simulation"

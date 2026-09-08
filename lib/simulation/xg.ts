@@ -11,7 +11,7 @@ import type { Rng } from "@/lib/simulation/random"
 const MIN_XG = 0.25
 const MAX_XG = 3.8
 const BASE_RATE = 1.36
-const HOME_ADVANTAGE = 1.055
+const HOME_ADVANTAGE = 1.1
 const OVERALL_GAP_WEIGHT = 0.032
 
 export function calculateExpectedGoals(
@@ -31,11 +31,10 @@ export function calculateExpectedGoals(
   // Attack/defence ratings describe the matchup, while overall quality makes a
   // sustained class gap matter across 90 minutes. An exponential curve keeps
   // close elite matchups close but stops a ten-point underdog being near 50/50.
-  const qualityGap = clamp(
-    Math.exp((atk.overall - def.overall) * OVERALL_GAP_WEIGHT),
-    0.62,
-    1.62,
-  )
+  const rawGap = Math.exp((atk.overall - def.overall) * OVERALL_GAP_WEIGHT)
+  // exp(+d)+exp(-d) > 2, so a raw quality gap inflates total goals. Normalize
+  // the two sides so they still sum to 2 while keeping the same odds ratio.
+  const qualityGap = clamp((2 * rawGap * rawGap) / (rawGap * rawGap + 1), 0.62, 1.62)
   const xg = BASE_RATE * (attack / resist) * home * tactical * qualityGap * noise
   return round2(clamp(xg, MIN_XG, MAX_XG))
 }

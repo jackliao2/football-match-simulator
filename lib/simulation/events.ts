@@ -33,6 +33,21 @@ function uniqueMinute(
       return minute
     }
   }
+  const hi = Math.min(90, max)
+  for (let minute = min; minute <= hi; minute += 1) {
+    if (!used.has(minute)) {
+      used.add(minute)
+      return minute
+    }
+  }
+  if (skew === "goal" || max >= 90) {
+    for (let minute = 91; minute <= 95; minute += 1) {
+      if (!used.has(minute)) {
+        used.add(minute)
+        return minute
+      }
+    }
+  }
   const fallback = randInt(rng, min, Math.min(90, max))
   used.add(fallback)
   return fallback

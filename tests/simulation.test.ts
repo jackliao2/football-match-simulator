@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 import { getTeam, teams } from "@/data/teams"
-import { simulateMany, simulateMatch } from "@/lib/simulation"
+import { simulateMany, simulateManyAsync, simulateMatch } from "@/lib/simulation"
 import { penaltyTaker, scoringWeight, starters } from "@/lib/simulation/ratings"
 
 const home = getTeam("barcelona-2008-09")!
@@ -54,6 +54,12 @@ describe("simulation engine", () => {
     expect(result.avgHomeGoals).toBeGreaterThanOrEqual(0)
     expect(result.avgAwayGoals).toBeGreaterThanOrEqual(0)
     expect(result.scorelines.length).toBeGreaterThan(0)
+  })
+
+  it("matches sync and async batches for the same seed", async () => {
+    const sync = simulateMany(home, away, 80, "async-parity")
+    const asyncResult = await simulateManyAsync(home, away, 80, "async-parity")
+    expect(asyncResult).toEqual(sync)
   })
 
   it("makes a ten-point overall gap meaningful without removing upsets", () => {
@@ -141,5 +147,34 @@ describe("simulation engine", () => {
     }
 
     expect(second).toBeGreaterThan(first)
+  })
+
+  it("rarely stacks two events on the same minute", () => {
+    let collisions = 0
+    const n = 120
+    for (let index = 0; index < n; index += 1) {
+      const match = simulateMatch(home, away, `dup:${index}`)
+      const minutes = match.events.map((event) => event.minute)
+      if (minutes.length !== new Set(minutes).size) collisions += 1
+    }
+    expect(collisions / n).toBeLessThan(0.08)
+  })
+
+  it("gives the home side a measurable edge in an even club matchup", () => {
+    const arsenal = getTeam("arsenal-2003-04")!
+    const chelsea = getTeam("chelsea-2004-05")!
+    const result = simulateMany(arsenal, chelsea, 1_200, "home-advantage-calibration")
+    expect(Math.abs(arsenal.overallRating - chelsea.overallRating)).toBeLessThanOrEqual(4)
+    expect(result.homeWinPct).toBeGreaterThan(result.awayWinPct)
+    expect(result.homeWinPct - result.awayWinPct).toBeGreaterThanOrEqual(4)
+  })
+
+  it("keeps scoring and draws in a football-shaped range", () => {
+    const result = simulateMany(home, away, 1_200, "score-shape-calibration")
+    const avgGoals = result.avgHomeGoals + result.avgAwayGoals
+    expect(avgGoals).toBeGreaterThan(2.3)
+    expect(avgGoals).toBeLessThan(3.2)
+    expect(result.drawPct).toBeGreaterThan(16)
+    expect(result.drawPct).toBeLessThan(32)
   })
 })

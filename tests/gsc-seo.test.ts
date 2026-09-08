@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest"
 import nextConfig from "../next.config"
 import robots from "@/app/robots"
-import { CLUB_COMPARES } from "@/data/compare"
+import { CLUB_COMPARES, compareFaqs, compareSearchDescription } from "@/data/compare"
 import { getPrimeEntity } from "@/data/prime"
 import { getPrimeEditorial } from "@/data/prime-editorial"
 import { isIndexableTeamPage } from "@/data/team-editorial"
@@ -63,13 +63,26 @@ describe("GSC landing pages", () => {
     expect(milan.keywords.join(" ")).toMatch(/who is better/)
     expect(milan.title.toLowerCase()).toMatch(/who is better/)
     expect(milan.seoTitle).toBe("AC Milan vs Inter Milan: Who Is Better?")
-    expect(milan.description).toMatch(/^AC Milan lead the all-time European case/)
+    expect(compareSearchDescription(milan)).toMatch(/^Milan across European history/)
+    expect(compareSearchDescription(milan)).toMatch(/AC Milan 1988\/89/)
   })
 
   it("gives the Clasico comparison a result-oriented search snippet", () => {
     const clasico = CLUB_COMPARES.find((pair) => pair.slug === "barcelona-vs-real-madrid")!
     expect(clasico.seoTitle).toBe("Barcelona vs Real Madrid: Who Is Better?")
-    expect(clasico.description).toMatch(/^Real Madrid lead the all-time European case/)
+    expect(compareSearchDescription(clasico)).toMatch(/^Real Madrid all-time/)
+    expect(compareSearchDescription(clasico)).toMatch(/our answer is Real Madrid/)
+  })
+
+  it("answers who-is-better in every compare snippet and FAQ", () => {
+    for (const pair of CLUB_COMPARES) {
+      const snippet = compareSearchDescription(pair)
+      expect(snippet.startsWith(pair.verdictHeading), pair.slug).toBe(true)
+      const faqs = compareFaqs(pair, "Left", "Right", "Left peak", "Right peak")
+      expect(faqs[0]?.q).toMatch(/Who is better/)
+      expect(faqs[0]?.a).toContain(pair.verdictHeading)
+      expect(faqs.some((item) => item.q.startsWith("Can I simulate"))).toBe(true)
+    }
   })
 
   it("indexes the GSC-follow-up season pages with their own dossiers", () => {

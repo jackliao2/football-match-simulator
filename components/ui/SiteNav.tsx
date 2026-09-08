@@ -34,7 +34,7 @@ export function SiteNav() {
           <Link
             key={link.href}
             href={localizedHref}
-            className={`border-2 px-2 py-1.5 font-display text-[8px] uppercase tracking-[0.08em] no-underline sm:px-3 sm:py-2 ${
+            className={`inline-flex min-h-11 items-center border-2 px-2 py-2 font-display text-[8px] uppercase tracking-[0.08em] no-underline sm:px-3 sm:py-2.5 ${
               active
                 ? "border-gold text-gold"
                 : "border-transparent text-muted hover:border-line hover:text-gold"

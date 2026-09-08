@@ -34,7 +34,7 @@ const FAQ = [
   ],
   [
     "Can I simulate a custom football match online?",
-    "Yes. Choose any two sides in the catalogue — a 1970 World Cup winner against a 2011 club side, or two current squads — and run one match or 100. The score is not typed by a chatbot.",
+    "Yes. Choose any two sides in the catalogue — a 1970 World Cup winner against a 2011 club side, or two current squads — and run one match or 1,000. The score is not typed by a chatbot.",
   ],
   [
     "Does AI decide the winner?",

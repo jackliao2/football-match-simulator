@@ -44,7 +44,7 @@ export function SimulationStage({
   secondary: string
 }) {
   const ai = mode === "ai"
-  const label = ai ? "Expert AI match lab" : mode === "batch" ? "100-match model" : "Live match simulation"
+  const label = ai ? "Expert AI match lab" : mode === "batch" ? "Distribution model" : "Live match simulation"
   return (
     <section
       className={`simulation-stage ${ai ? "simulation-stage-ai" : ""}`}
@@ -153,9 +153,10 @@ function BatchPlay({
     const samples = batch.samples.length > 0 ? batch.samples : [{ home: 1, away: 1 }]
     let n = 0
     const id = window.setInterval(() => {
-      n = Math.min(batch.runs, n + 4)
+      const step = Math.max(1, Math.ceil(batch.runs / 20))
+      n = Math.min(batch.runs, n + step)
       setDone(n)
-      const sample = samples[(n / 4 - 1) % samples.length] ?? samples[0]!
+      const sample = samples[Math.max(0, Math.floor(n / step) - 1) % samples.length] ?? samples[0]!
       setLine(`${sample.home}–${sample.away}`)
       if (n >= batch.runs) {
         window.clearInterval(id)
