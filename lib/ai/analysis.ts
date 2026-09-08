@@ -33,11 +33,10 @@ Hard rules:
 - Judge this team-vs-team matchup without ranking players' careers or settling GOAT debates.
 - Match the force of the language to narrativeGuide.tier. For "overwhelming", write a commanding forecast: the favourite can overwhelm, suffocate, swarm, tear open, turn the match into a siege, or make it a survival test. Do not soften a major mismatch into "could control large spells", "may have an edge", or "could create chances". For "strong", make the favourite and repeatable route unmistakable. For "competitive", stay balanced without writing "too close to call".
 - A commanding forecast is not a guarantee. Preserve one credible underdog escape route in chaosFactor or finalWord, but do not let that counter-pattern dilute callTitle or callBody.
-- Follow narrativeGuide.primaryThreats and engineRead.topScorers/topAssists. In a mismatch, the dominant side's elite forwards and main creators must be the story. At least two of callBody, decidingSequence, openingPhase and keyDuel must name a primaryThreat. If a famous front two or front three lead the scoring model, foreground that combination.
+- Follow narrativeGuide.primaryThreats and engineRead.topScorers/topAssists. In a mismatch, the dominant side's elite forwards and main creators must be the story. At least one of callBody, decidingSequence, openingPhase and keyDuel must name a primaryThreat. If a famous front two or front three lead the scoring model, foreground that combination.
 - Flank duels MUST be taken from matchupGeometry. A left-sided attacker faces the opponent's right-sided defender. Never pair two left-sided or two right-sided players from opposite teams as a duel.
 - decidingSequence is a plausible pattern, not a dated event. Do not invent a specific clock time, scorer or save that is not in representativeNight.
 - representativeNight is the displayed scoreline (the most common score across 100 worlds). callTitle and callBody must not contradict it: if the score is a draw, do not write as if one side already won the night.
-- Full-backs and supporting defenders may explain width, but must not take over the report. Do not name the same non-primary player in more than one of decidingSequence, openingPhase, keyDuel and coachingMove unless engineRead lists that player among the top two creators.
 - Avoid categorical player-ranking claims and insults. Never use: unstoppable, cannot cope, no answer, destroy, outclass, superior, easy win, definitely, will punish. "Overwhelm" describes a projected team pattern and is allowed only for an overwhelming tier.
 - Sound like the opening of a great Champions League broadcast: vivid, specific, decisive and respectful. No markdown and no headings.
 
@@ -493,7 +492,42 @@ function parseAnalysisCopy(raw: string): AnalysisCopy | null {
   }
 }
 
-function respectsNarrativeHierarchy(
+const GENERIC_NAME_TOKENS = new Set([
+  "junior",
+  "jr",
+  "de",
+  "da",
+  "do",
+  "dos",
+  "das",
+  "van",
+  "von",
+  "der",
+  "den",
+  "bin",
+  "al",
+  "el",
+  "la",
+  "le",
+  "ii",
+  "iii",
+])
+
+export function foldPlayerName(name: string): string {
+  return name.normalize("NFD").replace(/\p{M}/gu, "").toLocaleLowerCase()
+}
+
+export function playerNameInText(text: string, name: string): boolean {
+  const foldedText = foldPlayerName(text)
+  const foldedName = foldPlayerName(name)
+  if (foldedText.includes(foldedName)) return true
+  const tokens = foldedName
+    .split(/[^a-z0-9]+/)
+    .filter((token) => token.length >= 4 && !GENERIC_NAME_TOKENS.has(token))
+  return tokens.some((token) => foldedText.includes(token))
+}
+
+export function respectsNarrativeHierarchy(
   copy: AnalysisCopy,
   home: HistoricalTeam,
   away: HistoricalTeam,
@@ -503,25 +537,13 @@ function respectsNarrativeHierarchy(
   const scorers = leaderIsHome ? simulation.topScorers.home : simulation.topScorers.away
   const assists = leaderIsHome ? simulation.topAssists.home : simulation.topAssists.away
   const leader = leaderIsHome ? home : away
-  const topAttackers = pick(leader, ATTACK_POS, 3).map((player) => player.name.toLocaleLowerCase())
-  const primary = new Set(
-    [
-      ...topAttackers.slice(0, 2),
-      ...scorers.slice(0, 3).map((row) => row.player),
-      ...assists.slice(0, 2).map((row) => row.player),
-    ].map((name) => name.toLocaleLowerCase()),
-  )
+  const primary = [
+    ...pick(leader, ATTACK_POS, 3).slice(0, 2).map((player) => player.name),
+    ...scorers.slice(0, 3).map((row) => row.player),
+    ...assists.slice(0, 2).map((row) => row.player),
+  ]
   const focusFields = [copy.callBody, copy.decidingSequence, copy.openingPhase, copy.keyDuel]
-    .map((text) => text.toLocaleLowerCase())
-  const focused = focusFields.filter((text) => [...primary].some((name) => text.includes(name))).length
-  if (focused < 2) return false
-
-  const supportingPlayers = [...starters(home), ...starters(away)]
-    .filter((player) => !primary.has(player.name.toLocaleLowerCase()))
-  return supportingPlayers.every((player) => {
-    const name = player.name.toLocaleLowerCase()
-    return focusFields.filter((text) => text.includes(name)).length <= 1
-  })
+  return focusFields.some((text) => primary.some((name) => playerNameInText(text, name)))
 }
 
 function namedStarters(
@@ -530,12 +552,11 @@ function namedStarters(
   away: HistoricalTeam,
 ): Array<{ team: "home" | "away"; player: Player }> {
   const found: Array<{ team: "home" | "away"; player: Player }> = []
-  const lower = text.toLocaleLowerCase()
   for (const player of starters(home)) {
-    if (lower.includes(player.name.toLocaleLowerCase())) found.push({ team: "home", player })
+    if (playerNameInText(text, player.name)) found.push({ team: "home", player })
   }
   for (const player of starters(away)) {
-    if (lower.includes(player.name.toLocaleLowerCase())) found.push({ team: "away", player })
+    if (playerNameInText(text, player.name)) found.push({ team: "away", player })
   }
   return found
 }

@@ -10,22 +10,78 @@ const NATION_IDS = [
   "netherlands",
 ]
 
+const SECURITY_HEADERS = [
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "X-Frame-Options", value: "SAMEORIGIN" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+  { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains; preload" },
+]
+
+const EDGE_CACHE_HEADERS = [
+  { key: "CDN-Cache-Control", value: "public, max-age=300, stale-while-revalidate=86400" },
+]
+
+const HTML_CACHE_SOURCES = [
+  "/",
+  "/about",
+  "/contact",
+  "/privacy",
+  "/terms",
+  "/methodology",
+  "/best-football-team-ever",
+  "/teams",
+  "/teams/:path*",
+  "/national-teams",
+  "/national-teams/:path*",
+  "/compare",
+  "/compare/:path*",
+  "/vs",
+  "/vs/:path*",
+  "/prime",
+  "/prime/:path*",
+  "/es",
+  "/es/:path*",
+  "/pt-br",
+  "/pt-br/:path*",
+]
+
 const nextConfig: NextConfig = {
+  output: "standalone",
   reactStrictMode: true,
   async headers() {
     return [
       {
         source: "/(.*)",
-        headers: [
-          { key: "X-Content-Type-Options", value: "nosniff" },
-          { key: "X-Frame-Options", value: "SAMEORIGIN" },
-          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
-        ],
+        headers: SECURITY_HEADERS,
+      },
+      {
+        source: "/api/:path*",
+        headers: [{ key: "Cache-Control", value: "private, no-store" }],
+      },
+      {
+        source: "/match/:path*",
+        headers: [{ key: "Cache-Control", value: "private, no-store" }],
+      },
+      {
+        source: "/simulate",
+        headers: [{ key: "Cache-Control", value: "private, no-store" }],
+      },
+      ...HTML_CACHE_SOURCES.map((source) => ({
+        source,
+        headers: EDGE_CACHE_HEADERS,
+      })),
+      {
+        source: "/es",
+        headers: [{ key: "Content-Language", value: "es" }],
       },
       {
         source: "/es/:path*",
         headers: [{ key: "Content-Language", value: "es" }],
+      },
+      {
+        source: "/pt-br",
+        headers: [{ key: "Content-Language", value: "pt-BR" }],
       },
       {
         source: "/pt-br/:path*",

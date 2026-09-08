@@ -36,17 +36,33 @@ export function AiAnalysisLoading({ home, away }: { home: HistoricalTeam; away: 
   )
 }
 
-export function AiAnalysisResult({ analysis, home, away }: { analysis: PreMatchAnalysis; home: HistoricalTeam; away: HistoricalTeam }) {
+export function AiAnalysisResult({
+  analysis,
+  home,
+  away,
+  source,
+}: {
+  analysis: PreMatchAnalysis
+  home: HistoricalTeam
+  away: HistoricalTeam
+  source?: "ai" | "template"
+}) {
   const { copy, featuredMatch, simulation: sim } = analysis
   const score = `${featuredMatch.score.home}–${featuredMatch.score.away}`
+  const localBrief = source === "template"
 
   return (
     <section id="result-analysis" className="result-panel isolate overflow-hidden border-2 border-gold/50 shadow-[8px_8px_0_#000,0_0_0_1px_rgba(212,180,90,0.18)]">
       <header className="relative overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_50%_0%,rgba(212,180,90,0.15),transparent_50%)] px-4 py-4 sm:px-6">
         <div className="flex items-center justify-between gap-3">
-          <p className="font-display text-[8px] uppercase tracking-[0.28em] text-gold">Expert AI Analysis</p>
-          <p className="font-display text-[8px] uppercase tracking-[0.2em] text-muted">Era collision</p>
+          <p className="font-display text-[8px] uppercase tracking-[0.28em] text-gold">{localBrief ? "Local brief" : "Expert AI Analysis"}</p>
+          <p className="font-display text-[8px] uppercase tracking-[0.2em] text-muted">{localBrief ? "Template fallback" : "Era collision"}</p>
         </div>
+        {localBrief ? (
+          <p className="mt-2 text-center font-mono text-[10px] leading-4 text-muted">
+            The 100-match numbers below still come from the engine. This write-up is the local template, not the live model.
+          </p>
+        ) : null}
         <h2 className="mx-auto mt-2 max-w-3xl text-center font-brand text-lg leading-snug font-semibold tracking-wide text-text sm:text-2xl">{copy.headline}</h2>
 
         <div className="mx-auto mt-3 grid max-w-3xl grid-cols-[minmax(0,1fr)_5rem_minmax(0,1fr)] items-center gap-2 sm:grid-cols-[minmax(0,1fr)_7rem_minmax(0,1fr)] sm:gap-4">

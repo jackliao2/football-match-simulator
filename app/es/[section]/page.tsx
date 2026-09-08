@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { LocalizedPage } from "@/components/i18n/LocalizedPage"
-import { LOCALIZED_COPY, localizedPath, type LocalizedSection } from "@/lib/i18n"
+import { LOCALIZED_COPY, languageAlternates, localizedPath, type LocalizedSection } from "@/lib/i18n"
 import { absoluteUrl } from "@/lib/site"
 
 const sections: LocalizedSection[] = ["simulate", "teams", "national-teams", "vs"]
@@ -25,7 +25,10 @@ export async function generateMetadata({ params }: PageProps<"/es/[section]">): 
     title: { absolute: title },
     description,
     robots: { index: section === "simulate", follow: true },
-    alternates: { canonical: path },
+    alternates: {
+      canonical: path,
+      languages: section === "simulate" ? languageAlternates("/simulate", ["es"]) : undefined,
+    },
     openGraph: {
       title,
       description,

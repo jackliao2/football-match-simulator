@@ -4,6 +4,10 @@ Football match simulator. Brand: **LegendaryMatch**. Pick a legendary team, pick
 
 Production: https://legendarymatch.com
 
+Production is self-hosted on the RackNerd VPS behind Cloudflare. Vercel is no
+longer a deployment target. See [docs/VPS_DEPLOYMENT.md](docs/VPS_DEPLOYMENT.md)
+for the production runbook, deployment steps, and service layout.
+
 This is **not** a management game, card game, or generic football chatbot. Historical teams are reusable entities with squad pages that also rank for club + year + squad searches.
 
 Live intent:

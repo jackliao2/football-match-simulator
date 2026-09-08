@@ -96,17 +96,19 @@ export function pageMetadata({
   description,
   path,
   keywords,
+  languages,
 }: {
   title: string
   description: string
   path: string
   keywords?: string[]
+  languages?: Record<string, string>
 }): Metadata {
   return {
     title,
     description,
     keywords,
-    alternates: { canonical: path },
+    alternates: { canonical: path, languages },
     openGraph: {
       title,
       description,

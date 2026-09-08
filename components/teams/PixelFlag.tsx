@@ -464,6 +464,14 @@ export const NATION_NAMES: Record<string, string> = {
 }
 
 const cache = new Map<string, string[]>()
+const rectCache = new Map<string, FlagRect[]>()
+
+export type FlagRect = { x: number; y: number; w: number; color: string }
+
+function flagIso(code?: string): string {
+  const raw = code === "SCT" ? "SC" : code === "WAL" ? "WA" : code === "ENG" ? "EN" : code
+  return raw && PAINT[raw] ? raw : "XX"
+}
 
 function pixelsFor(code: string): string[] {
   const key = code.length === 2 ? code : "XX"
@@ -480,6 +488,26 @@ function pixelsFor(code: string): string[] {
   return pixels
 }
 
+export function flagRects(code?: string): FlagRect[] {
+  const iso = flagIso(code)
+  const hit = rectCache.get(iso)
+  if (hit) return hit
+  const pixels = pixelsFor(iso)
+  const rects: FlagRect[] = []
+  for (let y = 0; y < H; y += 1) {
+    let x = 0
+    while (x < W) {
+      const color = pixels[y * W + x]!
+      let w = 1
+      while (x + w < W && pixels[y * W + x + w] === color) w += 1
+      rects.push({ x, y, w, color })
+      x += w
+    }
+  }
+  rectCache.set(iso, rects)
+  return rects
+}
+
 export function PixelFlag({
   code,
   size = 16,
@@ -489,29 +517,24 @@ export function PixelFlag({
   size?: number
   className?: string
 }) {
-  const raw = code === "SCT" ? "SC" : code === "WAL" ? "WA" : code === "ENG" ? "EN" : code
-  const iso = raw && PAINT[raw] ? raw : "XX"
-  const pixels = pixelsFor(iso)
+  const iso = flagIso(code)
+  const rects = flagRects(iso)
   const height = Math.round((size * H) / W)
   const label = NATION_NAMES[iso] ?? iso
   return (
-    <span
-      title={label}
+    <svg
+      role="img"
       aria-label={label}
-      className={`inline-grid shrink-0 overflow-hidden ${className}`}
-      style={{
-        width: size,
-        height,
-        aspectRatio: `${W} / ${H}`,
-        gridTemplateColumns: `repeat(${W}, 1fr)`,
-        gridTemplateRows: `repeat(${H}, 1fr)`,
-        imageRendering: "pixelated",
-        boxShadow: "1px 1px 0 #000",
-      }}
+      className={`inline-block shrink-0 overflow-hidden ${className}`}
+      width={size}
+      height={height}
+      viewBox={`0 0 ${W} ${H}`}
+      style={{ imageRendering: "pixelated", filter: "drop-shadow(1px 1px 0 #000)", shapeRendering: "crispEdges" }}
     >
-      {pixels.map((color, index) => (
-        <span key={index} style={{ backgroundColor: color }} />
+      <title>{label}</title>
+      {rects.map((rect) => (
+        <rect key={`${rect.x}-${rect.y}`} x={rect.x} y={rect.y} width={rect.w} height={1} fill={rect.color} />
       ))}
-    </span>
+    </svg>
   )
 }

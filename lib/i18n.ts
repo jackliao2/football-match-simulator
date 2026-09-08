@@ -12,13 +12,15 @@ export function localizedPath(locale: Locale, path = "/") {
   return `/${locale}${path === "/" ? "" : path}`
 }
 
-export function languageAlternates(path = "/") {
-  return {
+export function languageAlternates(path = "/", locales: readonly Locale[] = LOCALES) {
+  const languages: Record<string, string> = {
     en: absoluteUrl(path),
-    es: absoluteUrl(localizedPath("es", path)),
-    "pt-BR": absoluteUrl(localizedPath("pt-br", path)),
     "x-default": absoluteUrl(path),
   }
+  for (const locale of locales) {
+    languages[locale === "pt-br" ? "pt-BR" : locale] = absoluteUrl(localizedPath(locale, path))
+  }
+  return languages
 }
 
 export const LOCALIZED_COPY = {

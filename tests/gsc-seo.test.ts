@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest"
 import nextConfig from "../next.config"
+import robots from "@/app/robots"
 import { CLUB_COMPARES } from "@/data/compare"
 import { getPrimeEntity } from "@/data/prime"
 import { getPrimeEditorial } from "@/data/prime-editorial"
@@ -10,6 +11,12 @@ import { informalSeason, squadKeywords } from "@/lib/seo"
 import { getSiteUrl } from "@/lib/site"
 
 describe("GSC landing pages", () => {
+  it("keeps match permalinks out of robots crawl budget", () => {
+    const policy = robots()
+    const rules = Array.isArray(policy.rules) ? policy.rules[0] : policy.rules
+    expect(rules?.disallow).toEqual(expect.arrayContaining(["/api/", "/match/"]))
+  })
+
   it("sends www homepage to the apex host", async () => {
     const redirects = await nextConfig.redirects!()
     const wwwHome = redirects.find(
@@ -94,5 +101,26 @@ describe("GSC landing pages", () => {
     expect(editorial?.sections?.length).toBeGreaterThanOrEqual(3)
     expect(editorial!.caseFor).toMatch(/2018\/19/)
     expect(editorial!.counterCase).toMatch(/2004\/05|Istanbul/)
+  })
+
+  it("keeps reciprocal hreflang on English and Spanish simulate pages", async () => {
+    const { languageAlternates } = await import("@/lib/i18n")
+    const langs = languageAlternates("/simulate", ["es"])
+    expect(langs.en).toMatch(/\/simulate$/)
+    expect(langs.es).toMatch(/\/es\/simulate$/)
+    expect(langs["pt-BR"]).toBeUndefined()
+    expect(langs["x-default"]).toBe(langs.en)
+  })
+
+  it("sends HSTS and HTML edge-cache headers, and keeps simulate/API uncached", async () => {
+    const headers = await nextConfig.headers!()
+    const all = headers.find((rule) => rule.source === "/(.*)")
+    expect(all?.headers.some((item) => item.key === "Strict-Transport-Security")).toBe(true)
+    const homepage = headers.find((rule) => rule.source === "/")
+    expect(homepage?.headers.some((item) => item.key === "CDN-Cache-Control")).toBe(true)
+    const simulate = headers.find((rule) => rule.source === "/simulate")
+    expect(simulate?.headers).toEqual([{ key: "Cache-Control", value: "private, no-store" }])
+    const api = headers.find((rule) => rule.source === "/api/:path*")
+    expect(api?.headers).toEqual([{ key: "Cache-Control", value: "private, no-store" }])
   })
 })

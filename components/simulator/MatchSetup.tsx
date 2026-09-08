@@ -95,6 +95,7 @@ export function MatchSetup({
   >(null)
   const [batch, setBatch] = useState<MonteCarloResult | null>(null)
   const [analysis, setAnalysis] = useState<PreMatchAnalysis | null>(null)
+  const [analysisSource, setAnalysisSource] = useState<"ai" | "template" | null>(null)
   const [analysisLoading, setAnalysisLoading] = useState(false)
   const [analysisError, setAnalysisError] = useState<string | null>(null)
   const [aiUsesToday, setAiUsesToday] = useState(0)
@@ -349,6 +350,7 @@ export function MatchSetup({
     }
     setAnalysisLoading(true)
     setAnalysis(null)
+    setAnalysisSource(null)
     setAnalysisError(null)
     showResults("analysis")
     track("ai_analysis", { home: home.id, away: away.id })
@@ -376,13 +378,16 @@ export function MatchSetup({
       }
       if (controller.signal.aborted) return
       setAnalysis(data.analysis)
+      setAnalysisSource(data.source ?? "template")
       track("ai_analysis_completed", { home: home.id, away: away.id, source: data.source ?? "unknown" })
-      const nextCount = Math.min(AI_DAILY_LIMIT, aiUsesToday + 1)
-      setAiUsesToday(nextCount)
-      try {
-        window.localStorage.setItem(AI_USAGE_KEY, JSON.stringify({ date: localDayKey(), count: nextCount }))
-      } catch {
-        /* ignore */
+      if (data.source === "ai") {
+        const nextCount = Math.min(AI_DAILY_LIMIT, aiUsesToday + 1)
+        setAiUsesToday(nextCount)
+        try {
+          window.localStorage.setItem(AI_USAGE_KEY, JSON.stringify({ date: localDayKey(), count: nextCount }))
+        } catch {
+          /* ignore */
+        }
       }
     } catch (err) {
       if (controller.signal.aborted) return
@@ -647,7 +652,7 @@ export function MatchSetup({
         ) : resultMode === "analysis" && analysis ? (
           <div className="grid gap-3">
             {match ? <p className="border-l-2 border-gold/60 px-3 font-mono text-[10px] leading-5 text-muted">{ui.separateAi}</p> : null}
-            <AiAnalysisResult analysis={analysis} home={home.team} away={away.team} />
+            <AiAnalysisResult analysis={analysis} home={home.team} away={away.team} source={analysisSource ?? undefined} />
             <div className="flex flex-wrap gap-2">
               <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={simulateOnce}>{ui.simulate}</button>
               <button type="button" className="rail-btn rail-btn-inline" onClick={runHundred}>{ui.hundred}</button>

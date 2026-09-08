@@ -124,4 +124,12 @@ describe("AI route handlers", () => {
     expect(response.status).toBe(400)
     await expect(response.json()).resolves.toEqual({ error: "Request body must be valid JSON" })
   })
+
+  it("treats accent-folded surnames as primary-threat mentions", async () => {
+    const { playerNameInText, foldPlayerName } = await import("@/lib/ai/analysis")
+    expect(foldPlayerName("Vinícius Júnior")).toBe("vinicius junior")
+    expect(playerNameInText("Vinicius cuts inside onto his right foot", "Vinícius Júnior")).toBe(true)
+    expect(playerNameInText("Messi drops between the lines", "Lionel Messi")).toBe(true)
+    expect(playerNameInText("the full-back holds the width", "Vinícius Júnior")).toBe(false)
+  })
 })

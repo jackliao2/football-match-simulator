@@ -7,10 +7,13 @@ import { clubs, nations } from "@/data/clubs"
 import { teams } from "@/data/teams"
 import { teamPath } from "@/lib/paths"
 import { SITE, absoluteUrl } from "@/lib/site"
-import { LOCALES, languageAlternates, localizedPath } from "@/lib/i18n"
+import { LOCALES, languageAlternates, localizedPath, type Locale } from "@/lib/i18n"
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const multilingualPaths = new Set(["/"])
+  const multilingualPaths = new Map<string, readonly Locale[]>([
+    ["/", LOCALES],
+    ["/simulate", ["es"]],
+  ])
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl("/"), changeFrequency: "weekly", priority: 1 },
     { url: absoluteUrl("/simulate"), changeFrequency: "weekly", priority: 0.9 },
@@ -29,7 +32,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   for (const route of staticRoutes) {
     const path = new URL(route.url).pathname || "/"
-    if (multilingualPaths.has(path)) route.alternates = { languages: languageAlternates(path) }
+    const locales = multilingualPaths.get(path)
+    if (locales) route.alternates = { languages: languageAlternates(path, locales) }
   }
 
   const localizedRoutes: MetadataRoute.Sitemap = [
@@ -44,6 +48,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: absoluteUrl("/es/simulate"),
       changeFrequency: "weekly" as const,
       priority: 0.8,
+      alternates: { languages: languageAlternates("/simulate", ["es"]) },
     },
   ]
 

@@ -62,3 +62,21 @@ describe("pixel crests", () => {
     expect(rects.every((rect) => rect.w >= 1 && rect.color !== "transparent")).toBe(true)
   })
 })
+
+describe("pixel flags and brand mark", () => {
+  it("merges flag pixels into run-length SVG rects", async () => {
+    const { flagRects } = await import("@/components/teams/PixelFlag")
+    const rects = flagRects("BR")
+    expect(rects.length).toBeGreaterThan(3)
+    expect(rects.length).toBeLessThan(96)
+    expect(rects.every((rect) => rect.w >= 1)).toBe(true)
+  })
+
+  it("skips transparent brand-mark cells when building SVG rects", async () => {
+    const { brandRects, BRAND_MARK_SIZE } = await import("@/lib/brand-mark")
+    const rects = brandRects()
+    expect(rects.length).toBeGreaterThan(8)
+    expect(rects.length).toBeLessThan(BRAND_MARK_SIZE * BRAND_MARK_SIZE)
+    expect(rects.every((rect) => rect.color.startsWith("#"))).toBe(true)
+  })
+})

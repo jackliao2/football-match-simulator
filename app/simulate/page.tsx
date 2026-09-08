@@ -3,6 +3,7 @@ import { MatchSetup } from "@/components/simulator/MatchSetup"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { defaultOpponent, todaysDebate } from "@/data/matchups"
 import { getTeam } from "@/data/teams"
+import { languageAlternates } from "@/lib/i18n"
 import { pageMetadata } from "@/lib/seo"
 import { SITE, absoluteUrl } from "@/lib/site"
 
@@ -14,6 +15,7 @@ export const metadata: Metadata = pageMetadata({
   title: TITLE,
   description: DESCRIPTION,
   path: "/simulate",
+  languages: languageAlternates("/simulate", ["es"]),
   keywords: [
     "football match simulator",
     "football simulator online",
