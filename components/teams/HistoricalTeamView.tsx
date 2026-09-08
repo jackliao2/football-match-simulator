@@ -20,7 +20,7 @@ import { getTeam, getTeamsByClub } from "@/data/teams"
 import { cachedMatchupModel } from "@/lib/matchup-model"
 import { orgIndexPath, orgPath, teamPath } from "@/lib/paths"
 import { relatedMatchups, teamPageCopy } from "@/lib/page-copy"
-import { informalSeason } from "@/lib/seo"
+import { informalSeason, isCurrentSquad, modelledCurrentSquadNote } from "@/lib/seo"
 import { SITE, absoluteUrl } from "@/lib/site"
 import type { HistoricalTeam } from "@/types"
 
@@ -50,14 +50,19 @@ const SEARCH_YEAR_NOTES: Record<string, string> = {
     "Chelsea 11/12, Chelsea 2012 Champions League and Munich 2012 searches mean Di Matteo's knockout side — not Mourinho's 2004/05 title winners.",
   "everton-1984-85":
     "Everton 84/85, Everton 1985 and Kendall's champions searches mean the First Division and Cup Winners' Cup side, not a later Goodison team.",
+  "juventus-2002-03":
+    "Juve 2003 squad and Nedvěd Ballon d'Or searches usually mean Lippi's 2002/03 side — not the later 3-5-2 that reached Cardiff.",
   "juventus-2016-17": "Juve 2017 squad searches usually mean Allegri's Champions League finalists with Buffon, Chiellini and Dybala.",
   "ajax-1994-95": "Ajax 1995 squad searches mean Van Gaal's young European Cup winners, not a later Ajax generation.",
   "borussia-dortmund-2012-13": "Dortmund 2013 squad searches point to Klopp's Champions League finalists, one year after the 2011/12 title.",
   "atletico-madrid-2013-14": "Atlético 2014 league title searches mean Simeone's 2013/14 side that beat Barcelona and Madrid over a season.",
   "porto-2003-04": "Porto 2004 Champions League searches mean Mourinho's 2003/04 squad, not a later Dragões team.",
+  "paris-saint-germain-2017-18":
+    "PSG 2018 squad searches usually mean Emery's Neymar–Mbappé–Cavani league machine, not the later Messi trio.",
   "paris-saint-germain-2022-23": "PSG 2023 squad searches usually mean the Messi–Mbappé–Neymar season rather than a later rebuild.",
   "napoli-1986-87": "Napoli 1987 scudetto searches mean Maradona's first Serie A winning side.",
   "santos-1962": "Santos 1962 squad searches point to Pelé's Intercontinental Cup side, not a modern Santos roster.",
+  "brazil-1962": "Brazil 1962 World Cup squad searches mean the Chile retention after Pelé was injured — Garrincha's tournament, not 1970.",
   "brazil-1970": "Brazil 1970 World Cup squad searches mean Zagallo's Mexico winners — the complete tournament group, not a later Seleção.",
   "brazil-2002": "Brazil 2002 World Cup squad searches mean Scolari's Ronaldo–Rivaldo–Ronaldinho winners.",
   "brazil-1958": "Brazil 1958 World Cup squad searches mean the Sweden tournament side, with a 17-year-old Pelé.",
@@ -76,6 +81,8 @@ const SEARCH_YEAR_NOTES: Record<string, string> = {
   "england-2026":
     "England squad 2026, England 2026 national team and England World Cup 2026 players searches land here: a modelled starting XI and formation for the 2026 cycle, not an official FIFA list.",
   "england-1966": "England 1966 World Cup squad searches mean Ramsey's home winners rather than a later tournament XI.",
+  "denmark-1992": "Denmark 1992 Euros squad searches mean Møller Nielsen's late-invite winners, not a later Danish cycle.",
+  "greece-2004": "Greece 2004 Euros squad searches mean Rehhagel's Lisbon winners, not a later Greek tournament side.",
   "portugal-2016": "Portugal 2016 Euros squad searches mean Santos' tournament winners, not a World Cup cycle.",
   "croatia-2018":
     "Croatia 2018 World Cup squad, Modrić 2018 and England semi-final searches mean Dalić's Moscow finalists — not the 1998 third-place side or a 2026 cycle.",
@@ -83,8 +90,14 @@ const SEARCH_YEAR_NOTES: Record<string, string> = {
     "Senegal 2002 World Cup squad searches mean the side that beat France 1–0 in the opening game and reached the quarter-finals, not a later Teranga XI.",
   "hungary-1954": "Hungary 1954 World Cup squad searches mean the Mighty Magyars, not a later Hungary team.",
   "celtic-1966-67": "Celtic 1967 Lisbon Lions searches mean Stein's European Cup winners.",
+  "aston-villa-1981-82": "Villa 1982 European Cup searches mean Barton's Rotterdam winners, not a later Premier League Villa side.",
+  "benfica-1961-62": "Benfica 1962 European Cup searches mean Guttmann's retained winners against Real Madrid in Amsterdam.",
+  "red-star-1990-91": "Red Star 1991 European Cup and Bari 1991 searches mean Petrović's penalty-shootout winners against Marseille.",
+  "valencia-2003-04": "Valencia 2004 Liga and UEFA Cup searches mean Benítez's double, not a later Mestalla side.",
   "nottingham-forest-1979-80": "Forest 1980 European Cup searches mean Clough's second successive winners.",
   "ajax-2018-19": "Ajax 2019 Champions League searches mean Ten Hag's Bernabéu side, not Van Gaal's 1995 winners.",
+  "tottenham-2016-17":
+    "Spurs 2017 squad and 86-point Tottenham searches mean Pochettino's league peak, not the 2018/19 Champions League finalists.",
   "tottenham-2018-19": "Spurs 2019 Champions League final searches mean Pochettino's run, not the 2016/17 86-point league side.",
   "marseille-1992-93": "Marseille 1993 European Cup searches mean the Munich final against Milan, not a later Ligue 1 side.",
   "spain-2012": "Spain 2012 Euros squad searches mean Del Bosque's 4–0 finalists, not only the 2010 World Cup XI.",
@@ -108,6 +121,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
   const TEAM_RUNS = 100
   const model = opponent ? cachedMatchupModel(team, opponent, TEAM_RUNS, `team:${team.id}`) : null
   const shortSeason = informalSeason(team)
+  const yearNote = SEARCH_YEAR_NOTES[team.id] ?? (isCurrentSquad(team) ? modelledCurrentSquadNote(team) : undefined)
   const faqs = [
     {
       q: `What was the ${team.clubName} ${team.displaySeason} squad?`,
@@ -250,7 +264,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
           <OvrStamp value={team.overallRating} size="xl" />
         </div>
         <div className="team-essay">
-          {SEARCH_YEAR_NOTES[team.id] ? <p className="search-year-note">{SEARCH_YEAR_NOTES[team.id]}</p> : null}
+          {yearNote ? <p className="search-year-note">{yearNote}</p> : null}
           <p>{team.summary}</p>
           {editorial ? <p>{editorial.intro}</p> : copy.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
         </div>

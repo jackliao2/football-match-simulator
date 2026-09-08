@@ -1,0 +1,5 @@
+[Definition]
+failregex = ^<HOST> - .* "(GET|HEAD|POST|PUT) /(?:wp-admin|wp-login\.php|xmlrpc\.php|phpmyadmin|cgi-bin|\.env|\.git)[^"]*"
+            ^<HOST> - .* "(GET|HEAD|POST|PUT) /[^" ]*\.(?:php|asp|aspx|cgi|jsp)(?:\?[^"]*)?"
+            ^<HOST> - .* "(GET|HEAD|POST|PUT) /(?:vendor/phpunit|actuator|manager/html)[^"]*"
+ignoreregex =

@@ -1,0 +1,6 @@
+[Definition]
+actionstart = touch /etc/nginx/snippets/fail2ban-deny.conf
+actionstop =
+actioncheck =
+actionban = /srv/apps/legendarymatch/scripts/vps-f2b-deny.sh ban <ip>
+actionunban = /srv/apps/legendarymatch/scripts/vps-f2b-deny.sh unban <ip>

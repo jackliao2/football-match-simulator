@@ -71,6 +71,7 @@ export default async function NationalTeamsPage({ searchParams }: PageProps<"/na
         kicker="World Cup sides"
         title="National teams, the years that stuck"
         lead={`${counts.nationSides} XIs from ${counts.nations} countries. Tournament years, not a roster of every friendly. A 2026 side can play 1970 Brazil; that is the point. Club pages live next door.`}
+        crumbs={[{ href: "/", label: "Home" }, { href: "/national-teams", label: "National teams" }]}
       >
         <Link href="/teams" className="font-mono text-sm text-gold hover:text-gold-2">
           Club teams instead →

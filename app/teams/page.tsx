@@ -71,6 +71,7 @@ export default async function TeamsPage({ searchParams }: PageProps<"/teams">) {
         kicker="Club database"
         title="Club squads, by the year that mattered"
         lead={`${counts.clubSides} sides, ${counts.clubs} clubs. Grouped by country so you can find Forest next to United, Athletic next to Madrid. The 2025/26 dataset sits next to the vintage pages as a named season, not a claim that it is live.`}
+        crumbs={[{ href: "/", label: "Home" }, { href: "/teams", label: "Teams" }]}
       >
         <Link href="/national-teams" className="font-mono text-sm text-gold hover:text-gold-2">
           National teams instead →

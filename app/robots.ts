@@ -9,6 +9,12 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
         disallow: ["/api/", "/match/"],
       },
+      {
+        userAgent: ["SemrushBot", "AhrefsBot", "MJ12bot", "DotBot"],
+        allow: "/",
+        disallow: ["/api/", "/match/"],
+        crawlDelay: 10,
+      },
     ],
     sitemap: absoluteUrl("/sitemap.xml"),
   }

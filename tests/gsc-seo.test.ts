@@ -7,7 +7,7 @@ import { getPrimeEditorial } from "@/data/prime-editorial"
 import { isIndexableTeamPage } from "@/data/team-editorial"
 import { getTeam } from "@/data/teams"
 import { teamH1, teamPageCopy } from "@/lib/page-copy"
-import { informalSeason, squadKeywords } from "@/lib/seo"
+import { informalSeason, isCurrentSquad, modelledCurrentSquadNote, squadKeywords } from "@/lib/seo"
 import { getSiteUrl } from "@/lib/site"
 
 describe("GSC landing pages", () => {
@@ -15,6 +15,19 @@ describe("GSC landing pages", () => {
     const policy = robots()
     const rules = Array.isArray(policy.rules) ? policy.rules[0] : policy.rules
     expect(rules?.disallow).toEqual(expect.arrayContaining(["/api/", "/match/"]))
+  })
+
+  it("slows SEO crawlers without changing the default robots rule", () => {
+    const policy = robots()
+    const rules = Array.isArray(policy.rules) ? policy.rules : [policy.rules]
+    expect(rules[0]?.userAgent).toBe("*")
+    const seo = rules.find(
+      (rule) => Array.isArray(rule?.userAgent) && rule.userAgent.includes("SemrushBot"),
+    )
+    expect(seo?.userAgent).toEqual(expect.arrayContaining(["SemrushBot", "AhrefsBot", "MJ12bot", "DotBot"]))
+    expect(seo?.crawlDelay).toBe(10)
+    expect(seo?.disallow).toEqual(expect.arrayContaining(["/api/", "/match/"]))
+    expect(seo?.disallow).not.toEqual(expect.arrayContaining(["/simulate"]))
   })
 
   it("sends www homepage to the apex host", async () => {
@@ -106,6 +119,37 @@ describe("GSC landing pages", () => {
       expect(isIndexableTeamPage(id), id).toBe(true)
       expect(teamPageCopy(getTeam(id)!).h1.toLowerCase()).toContain("squad")
     }
+  })
+
+  it("indexes the follow-up historic-season dossier batch", () => {
+    for (const id of [
+      "arsenal-1997-98",
+      "juventus-2002-03",
+      "inter-milan-1988-89",
+      "paris-saint-germain-2017-18",
+      "tottenham-2016-17",
+      "aston-villa-1981-82",
+      "benfica-1961-62",
+      "red-star-1990-91",
+      "valencia-2003-04",
+      "denmark-1992",
+      "greece-2004",
+      "brazil-1962",
+    ]) {
+      expect(getTeam(id), id).toBeDefined()
+      expect(isIndexableTeamPage(id), id).toBe(true)
+      expect(teamPageCopy(getTeam(id)!).h1.toLowerCase()).toContain("squad")
+    }
+  })
+
+  it("labels modelled current squads as modelled", () => {
+    const club = getTeam("arsenal-2025-26")!
+    const nation = getTeam("brazil-2026")!
+    expect(isCurrentSquad(club)).toBe(true)
+    expect(isCurrentSquad(nation)).toBe(true)
+    expect(modelledCurrentSquadNote(club)).toMatch(/modelled current-season/)
+    expect(modelledCurrentSquadNote(nation)).toMatch(/modelled tournament-cycle/)
+    expect(modelledCurrentSquadNote(getTeam("england-2026")!)).toMatch(/modelled/)
   })
 
   it("publishes Brazil vs Argentina and England vs Germany as nation compares", () => {

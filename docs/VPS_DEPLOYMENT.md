@@ -134,6 +134,20 @@ The release script fetches `origin/main`, `git reset --hard`, runs `npm ci` and
 `npm run build`, copies `public` and `.next/static` into the standalone tree,
 and restarts `legendarymatch`. It never writes `/etc/legendarymatch.env`.
 
+After the first release that includes `scripts/vps-ops-apply.sh`, run it once
+(it is idempotent) so hashed `/_next/static/` assets are served from disk,
+`/etc/legendarymatch.env` plus Nginx/systemd unit files are backed up daily to
+`/var/backups/legendarymatch` (14-day retention, mode `0700`; env copies are
+`0600`), Cloudflare visitor IPs are restored from `CF-Connecting-IP`, and
+Fail2ban jails Nginx scanner paths with an Nginx `deny` list (iptables would
+either ban Cloudflare edge addresses or do nothing):
+
+```bash
+ssh -i $HOME/.ssh/id_ed25519 -o IdentitiesOnly=yes root@198.44.31.27 bash /srv/apps/legendarymatch/scripts/vps-ops-apply.sh
+```
+
+Do not copy `/var/backups/legendarymatch` into Git.
+
 Rollback to a previous SHA, then rebuild:
 
 ```bash
@@ -225,18 +239,29 @@ systemctl status certbot.timer --no-pager
 # Firewall and SSH protection
 ufw status verbose
 fail2ban-client status sshd
+fail2ban-client status nginx-scanner
+
+# Config backups (env, Nginx site, systemd unit)
+ls -l /var/backups/legendarymatch
+tail /var/log/legendarymatch-backup.log
 ```
 
 The firewall permits SSH, HTTP, and HTTPS from anywhere. Port 80 must stay
 reachable for Let’s Encrypt HTTP-01 renewals; locking 80/443 to Cloudflare IPs
 would break Certbot on this host. Cloudflare’s orange-cloud proxy still hides
-the origin from ordinary visitors. Fail2ban jails `sshd`. Automatic Ubuntu
+the origin from ordinary visitors. Fail2ban jails `sshd` and `nginx-scanner`
+(probe paths such as `/wp-admin` and `*.php`). Scanner bans are Nginx `deny`
+lines for restored visitor IPs, not iptables drops, because the TCP peer is
+still Cloudflare. Automatic Ubuntu
 security updates, Fail2ban, Nginx, the application service, and the Certbot
 renewal timer are enabled at boot.
 
 Nginx sets `Strict-Transport-Security` on the HTTPS vhost and rewrites
 `<html lang="en"` to `es` / `pt-BR` on `/es` and `/pt-br` so crawlers see the
 correct language on first HTML without dynamizing the Next.js root layout.
+Hashed `/_next/static/` files are aliased from the standalone build on disk
+with a one-year expiry so Node does not proxy every chunk. The static location
+uses `expires` rather than `add_header` so the vhost HSTS header is inherited.
 
 The application tree at `/srv/apps/legendarymatch` is `755` and not world-writable.
 SSH to this host uses the `jackl-vps` ed25519 key on the operator machine;

@@ -1,5 +1,6 @@
 import { CLUB_TEAM_EDITORIAL } from "@/data/team-editorial-clubs"
 import { EXPANDED_CLUB_TEAM_EDITORIAL, EXPANDED_NATION_TEAM_EDITORIAL } from "@/data/team-editorial-expand"
+import { MORE_CLUB_TEAM_EDITORIAL, MORE_NATION_TEAM_EDITORIAL } from "@/data/team-editorial-more"
 import { NATION_TEAM_EDITORIAL } from "@/data/team-editorial-nations"
 
 export type TeamEditorial = {
@@ -10,8 +11,10 @@ export type TeamEditorial = {
 const TEAM_EDITORIAL: Record<string, TeamEditorial> = {
   ...CLUB_TEAM_EDITORIAL,
   ...EXPANDED_CLUB_TEAM_EDITORIAL,
+  ...MORE_CLUB_TEAM_EDITORIAL,
   ...NATION_TEAM_EDITORIAL,
   ...EXPANDED_NATION_TEAM_EDITORIAL,
+  ...MORE_NATION_TEAM_EDITORIAL,
 }
 
 export function getTeamEditorial(teamId: string): TeamEditorial | undefined {

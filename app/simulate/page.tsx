@@ -97,6 +97,7 @@ export default async function SimulatePage({
         kicker="Football match simulator"
         title="Simulate any two squads"
         lead="Pick named seasons, not abstract ratings. The match engine writes the score; Expert AI Analysis explains the matchup afterwards and never gets a vote."
+        crumbs={[{ href: "/", label: "Home" }, { href: "/simulate", label: "Simulate" }]}
       />
       <MatchSetupGate
         restoreLast={!requestedHome && !requestedAway}

@@ -216,6 +216,13 @@ export function isCurrentSquad(team: HistoricalTeam): boolean {
   return team.kind === "nation" ? team.eraYear >= 2026 : team.eraYear >= 2025
 }
 
+export function modelledCurrentSquadNote(team: HistoricalTeam): string {
+  if (team.kind === "nation") {
+    return `${team.clubName} ${team.displaySeason} is a modelled tournament-cycle starting XI and formation, not an official FIFA or UEFA list.`
+  }
+  return `${team.clubName} ${team.displaySeason} is a modelled current-season squad for the simulator, not tonight's official lineup.`
+}
+
 export function teamMetadata(team: HistoricalTeam): Metadata {
   const path = teamPath(team)
   const copy = teamPageCopy(team)

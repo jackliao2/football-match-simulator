@@ -22,7 +22,7 @@ describe("season dossiers", () => {
     expect(isIndexableTeamPage("bayern-munich-2019-20")).toBe(true)
     expect(isIndexableTeamPage("spain-2012")).toBe(true)
     expect(isIndexableTeamPage("belgium-2018")).toBe(true)
-    expect(editorialTeamIds().length).toBeGreaterThanOrEqual(50)
+    expect(editorialTeamIds().length).toBeGreaterThanOrEqual(60)
   })
 
   it("keeps every dossier above the indexability bar", () => {
