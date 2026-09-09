@@ -8,7 +8,7 @@ export const alt = "Simulated football match"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
-function frame(body: ReactNode) {
+function frame(kicker: string, body: ReactNode) {
   return new ImageResponse(
     (
       <div
@@ -24,7 +24,7 @@ function frame(body: ReactNode) {
           border: "18px solid #d4b45a",
         }}
       >
-        <div style={{ fontSize: 20, letterSpacing: 6, color: "#d4b45a" }}>SIMULATED MATCH</div>
+        <div style={{ fontSize: 20, letterSpacing: 3, color: "#d4b45a" }}>{kicker}</div>
         {body}
       </div>
     ),
@@ -44,14 +44,16 @@ export default async function MatchOpenGraphImage({
   const match = home && away && parsed ? simulateMatch(home, away, parsed.seed) : null
 
   if (!match || !home || !away) {
-    return frame(<div style={{ fontSize: 48, marginTop: 24 }}>LegendaryMatch</div>)
+    return frame("LegendaryMatch", <div style={{ fontSize: 48, marginTop: 24 }}>One simulated night</div>)
   }
 
+  const kicker = `${home.clubName} vs ${away.clubName}`
   const homeLabel = `${home.clubName} ${home.displaySeason}`
   const awayLabel = `${away.clubName} ${away.displaySeason}`
   const scoreLabel = `${match.score.home} - ${match.score.away}`
 
   return frame(
+    kicker,
     <div style={{ display: "flex", flexDirection: "column", marginTop: 28 }}>
       <div style={{ fontSize: 36, lineHeight: 1.3 }}>{homeLabel}</div>
       <div style={{ fontSize: 72, color: "#d4b45a", margin: "18px 0" }}>{scoreLabel}</div>

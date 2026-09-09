@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { FilteredCatalog } from "@/components/teams/FilteredCatalog"
 import { PageHeader } from "@/components/ui/PageHeader"
+import { NATIONS_HUB } from "@/data/collection-copy"
 import { NATION_REGIONS, nations } from "@/data/clubs"
 import { getTeamsByClub } from "@/data/teams"
 import { toCatalogCard } from "@/data/team-catalog"
@@ -18,8 +19,8 @@ export async function generateMetadata({
   const params = await searchParams
   const trophy = parseCatalogTrophy("nations", params.trophy)
   const meta = pageMetadata({
-    title: "National teams by tournament year",
-    description: `${counts.nationSides} national sides — Brazil 1970, Argentina 1986, Spain 2010, France 2026 — World Cup and Euros XIs you can play against club sides from any era.`,
+    title: NATIONS_HUB.title,
+    description: `${counts.nationSides} national sides — ${NATIONS_HUB.description}`,
     path: "/national-teams",
     keywords: ["historical soccer national teams", "World Cup teams simulator", "international football simulator", "soccer match simulator"],
   })
@@ -54,7 +55,7 @@ export default async function NationalTeamsPage({ searchParams }: PageProps<"/na
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "CollectionPage",
-            name: "National teams by tournament year",
+            name: NATIONS_HUB.title,
             url: absoluteUrl("/national-teams"),
             description: `${counts.nationSides} World Cup and Euros squads, plus 2026 national sides.`,
             hasPart: sections.flatMap((section) =>
@@ -68,8 +69,8 @@ export default async function NationalTeamsPage({ searchParams }: PageProps<"/na
         }}
       />
       <PageHeader
-        kicker="World Cup sides"
-        title="National teams, the years that stuck"
+        kicker={NATIONS_HUB.kicker}
+        title={NATIONS_HUB.h1}
         lead={`${counts.nationSides} XIs from ${counts.nations} countries. Tournament years, not a roster of every friendly. A 2026 side can play 1970 Brazil; that is the point. Club pages live next door.`}
         crumbs={[{ href: "/", label: "Home" }, { href: "/national-teams", label: "National teams" }]}
       >

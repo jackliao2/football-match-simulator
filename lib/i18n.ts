@@ -30,7 +30,7 @@ export const LOCALIZED_COPY = {
     home: {
       kicker: "Simulador de partidos de fútbol",
       title: "Leyendas. Épocas. Un partido imposible.",
-      tagline: ["Elige un equipo", "Elige una época", "Resuelve el debate"],
+      tagline: ["Barcelona 2010/11", "Madrid 2016/17", "Una noche simulada"],
       lead: "Elige dos equipos de temporadas distintas. Simula el marcador, los goleadores, el xG y cien versiones del mismo duelo.",
       metaTitle: "Simulador de fútbol: Barcelona 2010/11 contra Madrid 2016/17",
       metaDescription: "Enfrenta al Barcelona 2010/11, Brasil 1970 y Madrid 2016/17. Marcador, goleadores, xG y cien noches del mismo duelo. El motor escribe el resultado; la IA solo lo explica.",
@@ -72,7 +72,7 @@ export const LOCALIZED_COPY = {
     home: {
       kicker: "Simulador de partidas de futebol",
       title: "Lendas. Eras. Um jogo impossível.",
-      tagline: ["Escolha um time", "Escolha uma era", "Resolva o debate"],
+      tagline: ["Barcelona 2010/11", "Madrid 2016/17", "Uma noite simulada"],
       lead: "Escolha dois times de temporadas diferentes. Simule o placar, os gols, o xG e cem versões do mesmo confronto.",
       metaTitle: "Simulador de futebol: Barcelona 2010/11 contra Madrid 2016/17",
       metaDescription: "Coloque Barcelona 2010/11, Brasil 1970 e Madrid 2016/17 frente a frente. Placar, gols, xG e cem noites do mesmo duelo. O motor escreve o resultado; a IA só explica.",

@@ -1,7 +1,8 @@
 import { ImageResponse } from "next/og"
+import { HOME_PAGE } from "@/data/collection-copy"
 import { BRAND_INK, brandColor, brandRows } from "@/lib/brand-mark"
 
-export const alt = "LegendaryMatch — Football and soccer match simulator"
+export const alt = HOME_PAGE.ogLine
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
@@ -88,10 +89,10 @@ export default function OpenGraphImage() {
             letterSpacing: 1,
           }}
         >
-          Pick a team. Pick an era. Settle the debate.
+          {HOME_PAGE.ogLine}
         </div>
         <div style={{ marginTop: 20, fontSize: 20, color: "#7e9876", letterSpacing: 2 }}>
-          Football match simulator · Historical squads
+          {HOME_PAGE.ogSub}
         </div>
       </div>
     ),

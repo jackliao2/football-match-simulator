@@ -8,14 +8,42 @@ export const PRIME_HUB = {
   homeHeading: "Barcelona 2010/11. Liverpool 2018/19. United 07/08.",
 } as const
 
+export const HOME_PAGE = {
+  title: "LegendaryMatch — Play Barcelona 2010/11 vs Madrid 2016/17",
+  description:
+    "Online football and soccer match simulator. Play Barcelona 2010/11 against Madrid 2016/17, or Brazil 1970 against Spain 2010 — score, scorers, xG and 100-match win probabilities. The engine writes the result.",
+  kicker: "Football match simulator",
+  tagline: ["Barcelona 2010/11", "Madrid 2016/17", "One simulated night"],
+  ogLine: "Barcelona 2010/11 vs Madrid 2016/17. Brazil 1970 vs Spain 2010.",
+  ogSub: "Football match simulator · Named historical squads",
+  faqHeading: "Barça 2010/11, Brazil 1970, and the questions people type",
+} as const
+
 export const HOME_SECTIONS = {
   matchupsKicker: "Dream matches",
   matchupsTitle: "Barcelona 2010/11 vs Madrid 2016/17",
+  matchupsLead: "The Clásico of primes first. Brazil 1970 vs Spain 2010 lives on the matchups page with the rest of the card.",
   clubsKicker: "Clubs",
   clubsTitle: "Guardiola’s Barça, Madrid 2016/17, United’s treble",
   nationsKicker: "Nations",
   nationsTitle: "Brazil 1970, Maradona’s 86, Spain 2010",
   howTitle: "Pick two seasons. Play one night. Test the argument.",
+} as const
+
+export const TEAMS_HUB = {
+  title: "Club Squads: Guardiola’s Barça, Madrid 2016/17, United 1999",
+  description:
+    "Guardiola’s Barça, Istanbul, the Invincibles and the 2025/26 season. Open a year and run the match.",
+  kicker: "Club database",
+  h1: "Guardiola’s Barça, Madrid 2016/17, United’s treble",
+} as const
+
+export const NATIONS_HUB = {
+  title: "National Teams: Brazil 1970, Maradona’s 86, Spain 2010",
+  description:
+    "Brazil 1970, Argentina 1986, Spain 2010, France 2026 — World Cup and Euros XIs you can play against club sides from any era.",
+  kicker: "World Cup sides",
+  h1: "Brazil 1970, Maradona’s 86, Spain 2010",
 } as const
 
 export const VS_HUB = {

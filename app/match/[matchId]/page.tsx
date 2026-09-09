@@ -99,7 +99,7 @@ export default async function MatchPage({ params }: PageProps<"/match/[matchId]"
           {away.clubName} {away.displaySeason}
         </Link>
         {isPublishedMatchup(home.id, away.id) ? (
-          <Link href={vsPath(home.id, away.id)} className="text-muted hover:text-gold">Dream match dossier</Link>
+          <Link href={vsPath(home.id, away.id)} className="text-muted hover:text-gold">Open the matchup card</Link>
         ) : (
           <Link href={`/simulate?home=${home.id}&away=${away.id}`} className="text-muted hover:text-gold">Change matchup</Link>
         )}

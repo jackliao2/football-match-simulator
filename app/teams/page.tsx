@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { FilteredCatalog } from "@/components/teams/FilteredCatalog"
 import { PageHeader } from "@/components/ui/PageHeader"
+import { TEAMS_HUB } from "@/data/collection-copy"
 import { LEAGUES, clubs } from "@/data/clubs"
 import { getTeamsByClub } from "@/data/teams"
 import { toCatalogCard } from "@/data/team-catalog"
@@ -18,8 +19,8 @@ export async function generateMetadata({
   const params = await searchParams
   const trophy = parseCatalogTrophy("clubs", params.trophy)
   const meta = pageMetadata({
-    title: "Club squads by season",
-    description: `${counts.clubSides} playable club sides across ${counts.clubs} clubs — Guardiola’s Barça, Istanbul, the Invincibles and the 2025/26 season. Open a year and run the match.`,
+    title: TEAMS_HUB.title,
+    description: `${counts.clubSides} playable club sides across ${counts.clubs} clubs — ${TEAMS_HUB.description}`,
     path: "/teams",
     keywords: ["historical soccer teams", "legendary football squads", "soccer teams by season", "football match simulator"],
   })
@@ -54,7 +55,7 @@ export default async function TeamsPage({ searchParams }: PageProps<"/teams">) {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "CollectionPage",
-            name: "Club squads by season",
+            name: TEAMS_HUB.title,
             description: `${counts.clubSides} historical and current club squads for the football and soccer match simulator.`,
             url: absoluteUrl("/teams"),
             hasPart: sections.flatMap((section) =>
@@ -68,8 +69,8 @@ export default async function TeamsPage({ searchParams }: PageProps<"/teams">) {
         }}
       />
       <PageHeader
-        kicker="Club database"
-        title="Club squads, by the year that mattered"
+        kicker={TEAMS_HUB.kicker}
+        title={TEAMS_HUB.h1}
         lead={`${counts.clubSides} sides, ${counts.clubs} clubs. Grouped by country so you can find Forest next to United, Athletic next to Madrid. The 2025/26 dataset sits next to the vintage pages as a named season, not a claim that it is live.`}
         crumbs={[{ href: "/", label: "Home" }, { href: "/teams", label: "Teams" }]}
       >

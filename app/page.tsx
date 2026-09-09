@@ -7,7 +7,7 @@ import {
   todaysDebate,
   vsPath,
 } from "@/data/matchups"
-import { BEST_TEAM, HOME_SECTIONS, PRIME_HUB } from "@/data/collection-copy"
+import { BEST_TEAM, HOME_PAGE, HOME_SECTIONS, PRIME_HUB } from "@/data/collection-copy"
 import { primeEntities } from "@/data/prime"
 import { getTeam } from "@/data/teams"
 import { DreamMatchCarousel } from "@/components/ui/DreamMatchCarousel"
@@ -17,21 +17,20 @@ import type { HistoricalTeam } from "@/types"
 import type { Metadata } from "next"
 import { languageAlternates } from "@/lib/i18n"
 
-const HOME_DESCRIPTION =
-  "Online football and soccer match simulator. Pick squads from different eras — Brazil 1970, Barcelona 2008/09, France 2026 — then simulate the score, scorers, xG and 100-match win probabilities."
+const HOME_DESCRIPTION = HOME_PAGE.description
 
 export const metadata: Metadata = {
-  title: { absolute: `${SITE.name} — Football & Soccer Match Simulator` },
+  title: { absolute: HOME_PAGE.title },
   description: HOME_DESCRIPTION,
   alternates: { canonical: "/", languages: languageAlternates("/") },
   openGraph: {
-    title: `${SITE.name} — Football & Soccer Match Simulator`,
+    title: HOME_PAGE.title,
     description: HOME_DESCRIPTION,
     url: absoluteUrl("/"),
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE.name} — Football & Soccer Match Simulator`,
+    title: HOME_PAGE.title,
     description: HOME_DESCRIPTION,
   },
 }
@@ -47,7 +46,7 @@ const FAQ = [
   ],
   [
     "Can I simulate a custom football match online?",
-    "Yes. Open the simulator, choose any two teams in the database, and simulate a football match online. Run it again for another plausible night, or use Expert AI Analysis for a 100-match probability read.",
+    "Yes. Open the simulator and pick any two named seasons — Barcelona 2010/11 against Madrid 2016/17, Brazil 1970 against a club peak, or two current squads. Run it again for another plausible night, or use Expert AI Analysis for a 100-match probability read.",
   ],
   [
     "Is this a football match simulator with AI?",
@@ -115,22 +114,23 @@ export default function HomePage() {
             }),
           }}
         />
-        <p className="home-hero-kicker">Football match simulator</p>
+        <p className="home-hero-kicker">{HOME_PAGE.kicker}</p>
         <h1 className="home-hero-title">
           <span className="home-hero-legendary">Legendary</span>
           <span className="home-hero-rule" aria-hidden="true" />
           <span className="home-hero-match">Match</span>
         </h1>
         <p className="home-hero-tagline">
-          <span>Pick a team</span>
-          <span className="home-hero-dot" aria-hidden="true">
-            ·
-          </span>
-          <span>Pick an era</span>
-          <span className="home-hero-dot" aria-hidden="true">
-            ·
-          </span>
-          <span>Settle the debate</span>
+          {HOME_PAGE.tagline.map((line, index) => (
+            <span key={line} className="contents">
+              {index > 0 ? (
+                <span className="home-hero-dot" aria-hidden="true">
+                  ·
+                </span>
+              ) : null}
+              <span>{line}</span>
+            </span>
+          ))}
         </p>
       </section>
 
@@ -155,9 +155,7 @@ export default function HomePage() {
             All matchups →
           </Link>
         </div>
-        <p className="home-section-lead">
-          The matchups football fans keep debating. Three at a time; the rest live on the matchups page.
-        </p>
+        <p className="home-section-lead">{HOME_SECTIONS.matchupsLead}</p>
         <DreamMatchCarousel items={dreamMatches} />
       </section>
 
@@ -209,7 +207,7 @@ export default function HomePage() {
       </section>
 
       <section className="home-editorial-section">
-        <EditorialHeading kicker="The rules" title="Football match simulator FAQ" />
+        <EditorialHeading kicker="The rules" title={HOME_PAGE.faqHeading} />
         <div className="home-faq-list">
           {FAQ.map(([question, answer]) => (
             <details key={question} className="home-faq-item group">

@@ -10,12 +10,12 @@ import { isIndexableTeamPage } from "@/data/team-editorial"
 import { getTeam, getTeamsByClub, teams } from "@/data/teams"
 import { FEATURED_MATCHUPS } from "@/data/matchups"
 import { matchupFeature } from "@/data/vs-editorial"
-import { BEST_TEAM, COMPARE_HUB, HOME_SECTIONS, PRIME_HUB, SEARCH_PAGE, SIMULATE_PAGE, VS_HUB } from "@/data/collection-copy"
+import { BEST_TEAM, COMPARE_HUB, HOME_PAGE, HOME_SECTIONS, NATIONS_HUB, PRIME_HUB, SEARCH_PAGE, SIMULATE_PAGE, TEAMS_HUB, VS_HUB } from "@/data/collection-copy"
 import { orgHubCopy, firstSentence, teamH1, teamPageCopy, vsPageCopy } from "@/lib/page-copy"
 import { compareOgCopy, teamOgCopy } from "@/lib/og-copy"
 import { informalSeason, isCurrentSquad, modelledCurrentSquadNote, squadKeywords } from "@/lib/seo"
 import { teamFaqs } from "@/lib/team-faqs"
-import { getSiteUrl } from "@/lib/site"
+import { getSiteUrl, SITE } from "@/lib/site"
 
 describe("GSC landing pages", () => {
   it("keeps match permalinks out of robots crawl budget", () => {
@@ -296,11 +296,33 @@ describe("GSC landing pages", () => {
     expect(SEARCH_PAGE.h1).not.toBe("Find a squad, then play it")
     expect(SEARCH_PAGE.popularKicker).not.toBe("Popular sides")
     expect(SEARCH_PAGE.popularKicker).toMatch(/1970|08\/09/)
+
+    expect(HOME_PAGE.title).not.toMatch(/Football & Soccer Match Simulator/)
+    expect(HOME_PAGE.title).toMatch(/2010\/11/)
+    expect(HOME_PAGE.tagline).not.toContain("Pick a team")
+    expect(HOME_PAGE.tagline.join(" ")).toMatch(/2010\/11/)
+    expect(HOME_PAGE.faqHeading).not.toBe("Football match simulator FAQ")
+    expect(HOME_PAGE.kicker).toBe("Football match simulator")
+    expect(SITE.tagline).not.toMatch(/Pick a team/)
+    expect(SITE.tagline).toMatch(/2010\/11/)
+
+    expect(TEAMS_HUB.h1).not.toBe("Club squads, by the year that mattered")
+    expect(TEAMS_HUB.title).not.toBe("Club squads by season")
+    expect(TEAMS_HUB.h1).toMatch(/Barça|2016\/17/)
+    expect(TEAMS_HUB.kicker).toBe("Club database")
+    expect(NATIONS_HUB.h1).not.toBe("National teams, the years that stuck")
+    expect(NATIONS_HUB.title).not.toBe("National teams by tournament year")
+    expect(NATIONS_HUB.h1).toMatch(/1970/)
+    expect(NATIONS_HUB.kicker).toBe("World Cup sides")
   })
 
   it("names flagship sides on Spanish and Portuguese hubs instead of factory catalog labels", async () => {
     const { LOCALIZED_COPY } = await import("@/lib/i18n")
     expect(LOCALIZED_COPY.es.home.metaTitle).toMatch(/2010\/11/)
+    expect(LOCALIZED_COPY.es.home.tagline).not.toContain("Elige un equipo")
+    expect(LOCALIZED_COPY.es.home.tagline.join(" ")).toMatch(/2010\/11/)
+    expect(LOCALIZED_COPY["pt-br"].home.tagline).not.toContain("Escolha um time")
+    expect(LOCALIZED_COPY["pt-br"].home.tagline.join(" ")).toMatch(/2010\/11/)
     expect(LOCALIZED_COPY.es.home.metaTitle).not.toMatch(/\| LegendaryMatch$/)
     expect(LOCALIZED_COPY.es.simulate.title).toMatch(/2010\/11/)
     expect(LOCALIZED_COPY.es.simulate.metaTitle).toMatch(/2010\/11/)

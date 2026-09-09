@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { HOME_PAGE } from "@/data/collection-copy"
 import { getTeamEditorial } from "@/data/team-editorial"
 import { teamPageCopy } from "@/lib/page-copy"
 import { teamPath } from "@/lib/paths"
@@ -61,7 +62,7 @@ export const PLANNER_KEYWORDS = [
   "barcelona vs real madrid",
 ]
 
-const HOME_TITLE = `${SITE.name} — Football Match Simulator`
+const HOME_TITLE = HOME_PAGE.title
 
 export const defaultMetadata: Metadata = {
   metadataBase: new URL(absoluteUrl("/")),

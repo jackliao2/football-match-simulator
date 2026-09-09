@@ -13,9 +13,9 @@ export const SITE = {
   legalUpdatedIso: "2026-08-30",
   contentUpdated: "9 September 2026",
   contentUpdatedIso: "2026-09-09",
-  tagline: "Pick a team. Pick an era. Settle the debate.",
+  tagline: "Barcelona 2010/11 vs Madrid 2016/17. One simulated night.",
   description:
-    "LegendaryMatch is an online football and soccer match simulator: pick famous squads from different seasons and simulate a custom match. Barcelona 2009 vs Real Madrid 2017, Brazil 1970, Arsenal 2004 and more — score, scorers, xG and who-would-win probabilities.",
+    "LegendaryMatch is an online football and soccer match simulator. Play Barcelona 2010/11 against Madrid 2016/17, Brazil 1970 against Spain 2010, or any two named seasons — score, scorers, xG and who-would-win probabilities.",
   disclaimer:
     "Independent football simulation project. Not affiliated with or endorsed by any club, league, federation or player.",
 }
