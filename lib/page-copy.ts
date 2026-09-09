@@ -318,11 +318,20 @@ export function vsPageCopy(home: HistoricalTeam, away: HistoricalTeam, runs: num
   const matchup = `${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}`
   const editorial = matchupEditorial(home, away)
   const feature = matchupFeature(home, away)
+  const homeTag = home.styleTags[0] ?? home.formation
+  const awayTag = away.styleTags[0] ?? away.formation
   return {
     title: `${matchup}: Who Would Win?`,
     description: clip(`${editorial} Compare the squads and ${runs} simulated matches.`),
     lead: editorial,
     editorial,
     kicker: feature?.title ?? `${home.displaySeason} vs ${away.displaySeason}`,
+    sectionHeading: `${home.manager}'s ${home.displaySeason} ${home.formation} against ${away.manager}'s ${away.displaySeason}`,
+    snapshotHeading: `${matchup} on the model`,
+    contextHeading: `${home.clubName} ${home.displaySeason} as a football idea`,
+    hingeHeading: `${homeTag} against ${awayTag}`,
+    readingHeading: `A ${home.clubName} win versus a ${away.clubName} win`,
+    faqHeading: `${home.clubName} vs ${away.clubName} — FAQ`,
+    playHeading: `Simulate ${home.clubName} ${home.displaySeason} vs ${away.clubName}`,
   }
 }

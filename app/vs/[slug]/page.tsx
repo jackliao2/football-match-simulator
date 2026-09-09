@@ -141,7 +141,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
       {feature ? <EditorialByline /> : null}
 
       <section className="matchup-editorial">
-        <div><p className="page-kicker">Why this matchup matters</p><h2 className="section-title mt-1">Two football ideas, one impossible night</h2></div>
+        <div><p className="page-kicker">{home.displaySeason} vs {away.displaySeason}</p><h2 className="section-title mt-1">{copy.sectionHeading}</h2></div>
         <div className="matchup-editorial-facts">
           <span><b>{home.clubName}</b>{home.manager} · {home.formation} · {home.styleTags.slice(0, 2).join(" · ")}</span>
           <i aria-hidden="true">VS</i>
@@ -158,17 +158,17 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
           <div className="grid gap-3 lg:grid-cols-3">
             <section className="result-panel p-4 sm:p-5">
               <p className="page-kicker">Why this game</p>
-              <h3 className="mt-2 font-brand text-lg font-semibold text-text">The argument behind the teams</h3>
+              <h3 className="mt-2 font-brand text-lg font-semibold text-text">{copy.contextHeading}</h3>
               <p className="mt-3 text-sm leading-7 text-muted">{feature.context}</p>
             </section>
             <section className="result-panel p-4 sm:p-5">
               <p className="page-kicker">Tactical hinge</p>
-              <h3 className="mt-2 font-brand text-lg font-semibold text-text">Where the match turns</h3>
+              <h3 className="mt-2 font-brand text-lg font-semibold text-text">{copy.hingeHeading}</h3>
               <p className="mt-3 text-sm leading-7 text-muted">{feature.hinge}</p>
             </section>
             <section className="result-panel p-4 sm:p-5">
               <p className="page-kicker">Reading the game</p>
-              <h3 className="mt-2 font-brand text-lg font-semibold text-text">What a convincing result looks like</h3>
+              <h3 className="mt-2 font-brand text-lg font-semibold text-text">{copy.readingHeading}</h3>
               <p className="mt-3 text-sm leading-7 text-muted">{feature.reading}</p>
             </section>
           </div>
@@ -177,7 +177,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
 
       <section className="result-panel p-4 sm:p-5" aria-labelledby="matchup-snapshot">
         <p className="page-kicker">Rating snapshot</p>
-        <h2 id="matchup-snapshot" className="section-title mt-2">How the two sides compare on the model</h2>
+        <h2 id="matchup-snapshot" className="section-title mt-2">{copy.snapshotHeading}</h2>
         <div className="comparison-table mt-3">
           <div className="comparison-row">
             <span>{home.clubName} {home.displaySeason}</span>
@@ -209,7 +209,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
       {feature ? (
         <section className="result-panel p-4 sm:p-5">
           <p className="page-kicker">FAQ</p>
-          <h2 className="section-title mt-1">Questions about this matchup</h2>
+          <h2 className="section-title mt-1">{copy.faqHeading}</h2>
           <dl className="mt-3 grid gap-3">
             {faqs.map((item) => (
               <div key={item.q}>
@@ -235,11 +235,12 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
         <div>
           <p className="page-kicker">Your turn</p>
           <h2 id="replay-this-matchup" className="section-title mt-1">
-            Simulate this matchup
+            {copy.playHeading}
           </h2>
           <p className="mt-1 max-w-2xl text-sm leading-6 text-muted">
-            The teams are already selected. Run the match yourself for a fresh seeded result, or ask
-            Expert AI for a tactical verdict backed by 100 alternate matches.
+            {home.clubName} {home.displaySeason} and {away.clubName} {away.displaySeason} are already
+            selected. Run one seeded match, or ask Expert AI for a tactical verdict backed by 100
+            alternate nights.
           </p>
         </div>
         <MatchSetupGate defaultHome={home.id} defaultAway={away.id} />

@@ -4,11 +4,12 @@ import { notFound, redirect } from "next/navigation"
 import { MatchupRow } from "@/components/ui/MatchupRow"
 import { QuickMatch } from "@/components/simulator/QuickMatch"
 import { PageHeader } from "@/components/ui/PageHeader"
-import { compareFaqs, compareParamSlugs, compareSearchDescription, resolveClubCompare } from "@/data/compare"
+import { compareFaqs, compareParamSlugs, compareSearchDescription, compareSeoTitle, resolveClubCompare } from "@/data/compare"
 import { getClub } from "@/data/clubs"
 import { getPrimeEntity } from "@/data/prime"
 import { vsPath } from "@/data/matchups"
 import { getTeam } from "@/data/teams"
+import { firstSentence } from "@/lib/page-copy"
 import { pageMetadata } from "@/lib/seo"
 import { SITE, absoluteUrl } from "@/lib/site"
 import { EditorialByline, personSchema } from "@/components/ui/EditorialByline"
@@ -28,8 +29,7 @@ export async function generateMetadata({
   const leftClub = getClub(pair.leftClubId)
   const rightClub = getClub(pair.rightClubId)
   const title =
-    pair.seoTitle ??
-    (leftClub && rightClub ? `Who Is Better, ${leftClub.name} or ${rightClub.name}?` : pair.title)
+    leftClub && rightClub ? compareSeoTitle(pair, leftClub.name, rightClub.name) : pair.title
   return pageMetadata({
     title,
     description: compareSearchDescription(pair),
@@ -64,13 +64,13 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Article",
-            headline: pair.title,
+            headline: compareSeoTitle(pair, leftClub.name, rightClub.name),
             description: compareSearchDescription(pair),
             mainEntityOfPage: absoluteUrl(`/compare/${pair.slug}`),
             author: personSchema(),
             publisher: { "@type": "Organization", name: SITE.name, url: absoluteUrl("/") },
             datePublished: SITE.legalUpdatedIso,
-            dateModified: SITE.legalUpdatedIso,
+            dateModified: SITE.contentUpdatedIso,
             about: [leftClub.name, rightClub.name],
           }),
         }}
@@ -108,8 +108,8 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
         }}
       />
       <PageHeader
-        kicker={pair.kind === "nation" ? "National-team comparison" : "Club comparison"}
-        title={`Who is better: ${leftClub.name} or ${rightClub.name}?`}
+        kicker={`Who is better, ${leftClub.name} or ${rightClub.name}?`}
+        title={pair.verdictHeading}
         lead={pair.lead}
         crumbs={[{ href: "/compare", label: "Compare" }]}
       >
@@ -160,16 +160,16 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
           {leftPrime ? (
             <Link href={`/prime/${leftPrime.slug}`} className="home-prime-card">
               <span>Prime dossier</span>
-              <h2>When was {leftClub.name}&apos;s prime?</h2>
-              <p>Compare candidate seasons, then send the argument into the simulator.</p>
+              <h2>{leftPrime.title}</h2>
+              <p>{firstSentence(leftPrime.description)}</p>
               <b>Open {leftClub.name} →</b>
             </Link>
           ) : null}
           {rightPrime ? (
             <Link href={`/prime/${rightPrime.slug}`} className="home-prime-card">
               <span>Prime dossier</span>
-              <h2>When was {rightClub.name}&apos;s prime?</h2>
-              <p>Compare candidate seasons, then send the argument into the simulator.</p>
+              <h2>{rightPrime.title}</h2>
+              <p>{firstSentence(rightPrime.description)}</p>
               <b>Open {rightClub.name} →</b>
             </Link>
           ) : null}

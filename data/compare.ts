@@ -42,7 +42,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     leftPeakId: "barcelona-2010-11",
     rightPeakId: "real-madrid-2016-17",
     title: "Barcelona or Real Madrid — Which Is Better?",
-    seoTitle: "Barcelona vs Real Madrid: Who Is Better?",
+    seoTitle: "Barcelona vs Real Madrid: All-Time vs 2010/11 Peak",
     description:
       "Real Madrid lead the all-time European case; Barcelona 2010/11 reached the higher modern peak. Compare their history, greatest teams and prime matchup.",
     keywords: keywords("Barcelona", "Real Madrid", [
@@ -253,7 +253,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     leftPeakId: "ac-milan-1988-89",
     rightPeakId: "inter-milan-2009-10",
     title: "Who Is Better, AC Milan or Inter Milan?",
-    seoTitle: "AC Milan vs Inter Milan: Who Is Better?",
+    seoTitle: "AC Milan vs Inter: Sacchi History vs 2010 Treble",
     description:
       "AC Milan lead the all-time European case; Inter’s 2009/10 treble is the stronger modern peak. Compare their history, trophies and greatest teams.",
     keywords: keywords("AC Milan", "Inter Milan", [
@@ -283,7 +283,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     leftPeakId: "juventus-2016-17",
     rightPeakId: "ac-milan-1988-89",
     title: "Juventus or AC Milan — Which Is Better?",
-    seoTitle: "Juventus vs AC Milan: Who Is Better?",
+    seoTitle: "Juventus vs AC Milan: League Dynasty vs Europe",
     description:
       "Juventus or AC Milan: Italian giants compared, then Juventus 2016/17 against Sacchi’s Milan in the simulator.",
     keywords: keywords("Juventus", "AC Milan"),
@@ -514,7 +514,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     leftPeakId: "real-madrid-2016-17",
     rightPeakId: "bayern-munich-2012-13",
     title: "Real Madrid or Bayern Munich — Which Is Better?",
-    seoTitle: "Real Madrid vs Bayern: Who Is Better All Time?",
+    seoTitle: "Real Madrid vs Bayern: Knockout Nights vs 2013 Treble",
     description:
       "Real Madrid or Bayern: Europe’s serial winners compared, then Zidane’s 2016/17 Madrid against Heynckes’ 2012/13 treble side.",
     keywords: keywords("Real Madrid", "Bayern Munich"),
@@ -677,7 +677,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     leftPeakId: "brazil-1970",
     rightPeakId: "argentina-1986",
     title: "Who Is Better, Brazil or Argentina?",
-    seoTitle: "Brazil vs Argentina: Who Is Better?",
+    seoTitle: "Brazil vs Argentina: Five World Cups vs Maradona",
     description:
       "Brazil or Argentina: five World Cups against three, Pelé’s 1970 side against Maradona’s 1986 winners. Separate the all-time nations from the prime teams, then simulate Mexico 1970 vs Mexico 1986.",
     keywords: keywords("Brazil", "Argentina", [
@@ -707,7 +707,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     leftPeakId: "england-1966",
     rightPeakId: "germany-1990",
     title: "Who Is Better, England or Germany?",
-    seoTitle: "England vs Germany: Who Is Better?",
+    seoTitle: "England vs Germany: 1966 vs Four World Cups",
     description:
       "England or Germany: 1966 against four World Cups, Wembley against Turin. Compare the nations, then simulate Ramsey’s winners versus Beckenbauer’s 1990 side.",
     keywords: keywords("England", "Germany", [
@@ -764,6 +764,11 @@ export function compareSearchDescription(pair: ClubCompare): string {
   return `${pair.verdictHeading}. ${sentence}`.slice(0, 280)
 }
 
+export function compareSeoTitle(pair: ClubCompare, leftName: string, rightName: string): string {
+  if (pair.seoTitle?.trim()) return pair.seoTitle.trim()
+  return `${leftName} vs ${rightName}: ${pair.verdictHeading}`
+}
+
 export function compareFaqs(
   pair: ClubCompare,
   leftName: string,
@@ -786,8 +791,8 @@ export function compareFaqs(
       a: pair.verdict[1],
     },
     {
-      q: `Can I simulate ${leftName} vs ${rightName}?`,
-      a: `Yes. This page already loads ${leftPeak} against ${rightPeak}. Run one match or a 1,000-match distribution from the simulator on the page.`,
+      q: `What is the prime matchup for ${leftName} vs ${rightName}?`,
+      a: `${leftPeak} against ${rightPeak}. ${pair.verdict[1]}`,
     },
   ]
 }

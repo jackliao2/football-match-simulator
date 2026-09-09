@@ -34,9 +34,11 @@ function CompareList({
           <Link href={`/compare/${pair.slug}`} className="result-panel block p-4 no-underline hover:border-gold">
             <span className="font-display text-[8px] uppercase tracking-[0.18em] text-gold">{kicker}</span>
             <span className="mt-2 block font-brand text-lg font-semibold text-text">
-              Who is better: {left.name} or {right.name}?
+              {pair.verdictHeading}
             </span>
-            <span className="mt-1 block font-mono text-xs text-muted">{pair.verdictHeading}</span>
+            <span className="mt-1 block font-mono text-xs text-muted">
+              Who is better, {left.name} or {right.name}?
+            </span>
           </Link>
         </li>
       ))}

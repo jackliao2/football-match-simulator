@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest"
 import nextConfig from "../next.config"
 import robots from "@/app/robots"
-import { CLUB_COMPARES, compareFaqs, compareSearchDescription } from "@/data/compare"
+import { CLUB_COMPARES, compareFaqs, compareSearchDescription, compareSeoTitle } from "@/data/compare"
 import { clubs, nations } from "@/data/clubs"
 import { HUB_COPY } from "@/data/hub-copy"
 import { getPrimeEntity } from "@/data/prime"
@@ -80,26 +80,32 @@ describe("GSC landing pages", () => {
     const milan = CLUB_COMPARES.find((pair) => pair.slug === "ac-milan-vs-inter-milan")!
     expect(milan.keywords.join(" ")).toMatch(/who is better/)
     expect(milan.title.toLowerCase()).toMatch(/who is better/)
-    expect(milan.seoTitle).toBe("AC Milan vs Inter Milan: Who Is Better?")
+    expect(milan.seoTitle).toMatch(/Sacchi|2010/)
     expect(compareSearchDescription(milan)).toMatch(/^Milan across European history/)
     expect(compareSearchDescription(milan)).toMatch(/AC Milan 1988\/89/)
   })
 
   it("gives the Clasico comparison a result-oriented search snippet", () => {
     const clasico = CLUB_COMPARES.find((pair) => pair.slug === "barcelona-vs-real-madrid")!
-    expect(clasico.seoTitle).toBe("Barcelona vs Real Madrid: Who Is Better?")
+    expect(clasico.seoTitle).toMatch(/2010\/11|All-Time/)
     expect(compareSearchDescription(clasico)).toMatch(/^Real Madrid all-time/)
     expect(compareSearchDescription(clasico)).toMatch(/our answer is Real Madrid/)
   })
 
   it("answers who-is-better in every compare snippet and FAQ", () => {
+    const titles = new Set<string>()
     for (const pair of CLUB_COMPARES) {
       const snippet = compareSearchDescription(pair)
       expect(snippet.startsWith(pair.verdictHeading), pair.slug).toBe(true)
       const faqs = compareFaqs(pair, "Left", "Right", "Left peak", "Right peak")
       expect(faqs[0]?.q).toMatch(/Who is better/)
       expect(faqs[0]?.a).toContain(pair.verdictHeading)
-      expect(faqs.some((item) => item.q.startsWith("Can I simulate"))).toBe(true)
+      expect(faqs.some((item) => item.q.startsWith("What is the prime matchup"))).toBe(true)
+      expect(faqs.some((item) => item.q.startsWith("Can I simulate"))).toBe(false)
+      const seo = compareSeoTitle(pair, pair.leftClubId, pair.rightClubId)
+      expect(seo, pair.slug).not.toMatch(/^Who Is Better, /)
+      expect(titles.has(seo), seo).toBe(false)
+      titles.add(seo)
     }
   })
 
@@ -203,11 +209,15 @@ describe("GSC landing pages", () => {
   })
 
   it("gives featured vs pages a written kicker instead of Dream match", () => {
+    const headings = new Set<string>()
     for (const [a, b] of FEATURED_MATCHUPS) {
       const home = getTeam(a)!
       const away = getTeam(b)!
       const copy = vsPageCopy(home, away, 100)
       expect(copy.kicker, `${a}-vs-${b}`).not.toBe("Dream match")
+      expect(copy.sectionHeading).not.toMatch(/Two football ideas/)
+      expect(headings.has(copy.sectionHeading), copy.sectionHeading).toBe(false)
+      headings.add(copy.sectionHeading)
       const feature = matchupFeature(home, away)
       if (feature) expect(copy.kicker).toBe(feature.title)
     }
