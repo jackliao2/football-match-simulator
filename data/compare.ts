@@ -252,7 +252,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "inter-milan",
     leftPeakId: "ac-milan-1988-89",
     rightPeakId: "inter-milan-2009-10",
-    title: "Who Is Better, AC Milan or Inter Milan?",
+    title: "AC Milan or Inter Milan — Which Is Better?",
     seoTitle: "AC Milan vs Inter: Sacchi History vs 2010 Treble",
     description:
       "AC Milan lead the all-time European case; Inter’s 2009/10 treble is the stronger modern peak. Compare their history, trophies and greatest teams.",
@@ -676,7 +676,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "argentina",
     leftPeakId: "brazil-1970",
     rightPeakId: "argentina-1986",
-    title: "Who Is Better, Brazil or Argentina?",
+    title: "Brazil or Argentina — Which Is Better?",
     seoTitle: "Brazil vs Argentina: Five World Cups vs Maradona",
     description:
       "Brazil or Argentina: five World Cups against three, Pelé’s 1970 side against Maradona’s 1986 winners. Separate the all-time nations from the prime teams, then simulate Mexico 1970 vs Mexico 1986.",
@@ -706,7 +706,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "germany",
     leftPeakId: "england-1966",
     rightPeakId: "germany-1990",
-    title: "Who Is Better, England or Germany?",
+    title: "England or Germany — Which Is Better?",
     seoTitle: "England vs Germany: 1966 vs Four World Cups",
     description:
       "England or Germany: 1966 against four World Cups, Wembley against Turin. Compare the nations, then simulate Ramsey’s winners versus Beckenbauer’s 1990 side.",

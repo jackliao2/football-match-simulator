@@ -37,6 +37,27 @@ export const COMPARE_HUB = {
   lead: "An all-time nation is not the same as a prime squad. Each page separates those questions, then opens the two sides in the simulator.",
 } as const
 
+export const SIMULATE_PAGE = {
+  title: "Football Match Simulator: Barcelona 2010/11 vs Madrid 2016/17",
+  description:
+    "Play Barcelona 2010/11 against Madrid 2016/17, or Brazil 1970 against Spain 2010. Named seasons, a simulated score, scorers, xG and 100-match probabilities. The engine writes the result; AI only explains it.",
+  kicker: "Football match simulator",
+  h1: "Play Barcelona 2010/11 against Madrid 2016/17",
+  lead: "Or Brazil 1970 against Spain 2010. Every side is a named season, not a slider. The match engine writes the score; Expert AI Analysis explains the matchup afterwards and never gets a vote.",
+  guideKicker: "How a match is actually decided",
+  guideHeading: "The engine writes Barça vs Madrid. A chatbot does not.",
+  faqHeading: "Football match simulator FAQ",
+} as const
+
+export const SEARCH_PAGE = {
+  title: "Search historical football squads",
+  description:
+    "Search 156 named club and national-team seasons on LegendaryMatch. Open a squad page or send two sides straight into the football match simulator.",
+  kicker: "Catalogue search",
+  h1: "Find Barcelona 08/09, Brazil 1970, or any named season",
+  popularKicker: "Barcelona 08/09, Madrid 16/17, Brazil 1970",
+} as const
+
 export const BEST_TEAM = {
   title: "Best Football Team Ever: Barcelona 2010/11, Not the 2009 Treble",
   description:

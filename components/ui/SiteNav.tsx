@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { VS_HUB } from "@/data/collection-copy"
 
 const links = [
   { href: "/simulate", label: "Simulate", localize: true },
@@ -9,7 +10,7 @@ const links = [
   { href: "/national-teams", label: "Nations", localize: true },
   { href: "/search", label: "Search", localize: true },
   { href: "/compare", label: "Compare", localize: false },
-  { href: "/vs", label: "Dreams", localize: true },
+  { href: "/vs", label: VS_HUB.crumb, localize: true },
   { href: "/prime", label: "Prime", localize: false },
   { href: "/best-football-team-ever", label: "Best", localize: false },
 ]

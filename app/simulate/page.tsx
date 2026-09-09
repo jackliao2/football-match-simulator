@@ -1,19 +1,16 @@
 import type { Metadata } from "next"
 import { MatchSetupGate } from "@/components/simulator/MatchSetupGate"
 import { PageHeader } from "@/components/ui/PageHeader"
+import { SIMULATE_PAGE } from "@/data/collection-copy"
 import { defaultOpponent, todaysDebate } from "@/data/matchups"
 import { getTeam } from "@/data/teams"
 import { languageAlternates } from "@/lib/i18n"
 import { pageMetadata } from "@/lib/seo"
 import { SITE, absoluteUrl } from "@/lib/site"
 
-const TITLE = "Football Match Simulator — Play Any Two Squads"
-const DESCRIPTION =
-  "Football match simulator for historical and current squads. Pick two named seasons, get a score, scorers, xG and 100-match probabilities. The engine writes the result; AI only explains it."
-
 export const metadata: Metadata = pageMetadata({
-  title: TITLE,
-  description: DESCRIPTION,
+  title: SIMULATE_PAGE.title,
+  description: SIMULATE_PAGE.description,
   path: "/simulate",
   languages: languageAlternates("/simulate", ["es"]),
   keywords: [
@@ -29,12 +26,8 @@ export const metadata: Metadata = pageMetadata({
 
 const FAQ = [
   [
-    "What is a football match simulator?",
-    "A football match simulator lets you pick two squads and play a match decided by ratings, tactics and a random seed. LegendaryMatch is that kind of simulator: every team is a named season, not a badge with a slider.",
-  ],
-  [
-    "Can I simulate a custom football match online?",
-    "Yes. Choose any two sides in the catalogue — a 1970 World Cup winner against a 2011 club side, or two current squads — and run one match or 1,000. The score is not typed by a chatbot.",
+    "Can I simulate Barcelona 2010/11 against Real Madrid 2016/17?",
+    "Yes. Those two sides are named seasons in the catalogue. Pick them, run one match, or open Expert AI Analysis for a 100-match spread. The score comes from ratings, tactics and a seed — not a chatbot.",
   ],
   [
     "Does AI decide the winner?",
@@ -43,6 +36,10 @@ const FAQ = [
   [
     "Is this predicting a real fixture?",
     "No. It is a counterfactual game. Nothing on the page is betting advice or a forecast of Saturday’s result.",
+  ],
+  [
+    "Can I play Brazil 1970 against Spain 2010?",
+    "Yes. Brazil 1970, Spain 2010, United 1999 and the rest of the archive are playable sides. Mix a World Cup winner with a club peak; repeating the fixture is another plausible night, not a bug.",
   ],
 ] as const
 
@@ -75,7 +72,7 @@ export default async function SimulatePage({
             applicationCategory: "GameApplication",
             operatingSystem: "Web",
             url: absoluteUrl("/simulate"),
-            description: DESCRIPTION,
+            description: SIMULATE_PAGE.description,
           }),
         }}
       />
@@ -94,9 +91,9 @@ export default async function SimulatePage({
         }}
       />
       <PageHeader
-        kicker="Football match simulator"
-        title="Simulate any two squads"
-        lead="Pick named seasons, not abstract ratings. The match engine writes the score; Expert AI Analysis explains the matchup afterwards and never gets a vote."
+        kicker={SIMULATE_PAGE.kicker}
+        title={SIMULATE_PAGE.h1}
+        lead={SIMULATE_PAGE.lead}
         crumbs={[{ href: "/", label: "Home" }, { href: "/simulate", label: "Simulate" }]}
       />
       <MatchSetupGate
@@ -106,9 +103,9 @@ export default async function SimulatePage({
       />
       <section className="grid gap-3 border-t border-white/10 pt-6" aria-labelledby="simulator-guide">
         <div>
-          <p className="page-kicker">How a match is actually decided</p>
+          <p className="page-kicker">{SIMULATE_PAGE.guideKicker}</p>
           <h2 id="simulator-guide" className="section-title mt-1">
-            This is a football match simulator, not a chatbot picking a winner
+            {SIMULATE_PAGE.guideHeading}
           </h2>
         </div>
         <div className="editorial-copy max-w-3xl">
@@ -141,7 +138,7 @@ export default async function SimulatePage({
         </div>
       </section>
       <section className="grid gap-3" aria-labelledby="simulator-faq">
-        <h2 id="simulator-faq" className="section-title">Football match simulator FAQ</h2>
+        <h2 id="simulator-faq" className="section-title">{SIMULATE_PAGE.faqHeading}</h2>
         <div className="home-faq-list">
           {FAQ.map(([question, answer]) => (
             <details key={question} className="home-faq-item group">

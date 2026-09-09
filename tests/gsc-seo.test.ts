@@ -10,7 +10,7 @@ import { isIndexableTeamPage } from "@/data/team-editorial"
 import { getTeam, getTeamsByClub, teams } from "@/data/teams"
 import { FEATURED_MATCHUPS } from "@/data/matchups"
 import { matchupFeature } from "@/data/vs-editorial"
-import { BEST_TEAM, COMPARE_HUB, HOME_SECTIONS, PRIME_HUB, VS_HUB } from "@/data/collection-copy"
+import { BEST_TEAM, COMPARE_HUB, HOME_SECTIONS, PRIME_HUB, SEARCH_PAGE, SIMULATE_PAGE, VS_HUB } from "@/data/collection-copy"
 import { orgHubCopy, firstSentence, teamH1, teamPageCopy, vsPageCopy } from "@/lib/page-copy"
 import { compareOgCopy, teamOgCopy } from "@/lib/og-copy"
 import { informalSeason, isCurrentSquad, modelledCurrentSquadNote, squadKeywords } from "@/lib/seo"
@@ -81,7 +81,8 @@ describe("GSC landing pages", () => {
   it("puts who-is-better language on the Milan compare pair", () => {
     const milan = CLUB_COMPARES.find((pair) => pair.slug === "ac-milan-vs-inter-milan")!
     expect(milan.keywords.join(" ")).toMatch(/who is better/)
-    expect(milan.title.toLowerCase()).toMatch(/who is better/)
+    expect(milan.title).toMatch(/Which Is Better/)
+    expect(milan.title).not.toMatch(/^Who Is Better, /)
     expect(milan.seoTitle).toMatch(/Sacchi|2010/)
     expect(compareSearchDescription(milan)).toMatch(/^Milan across European history/)
     expect(compareSearchDescription(milan)).toMatch(/AC Milan 1988\/89/)
@@ -106,6 +107,7 @@ describe("GSC landing pages", () => {
       expect(faqs.some((item) => item.q.startsWith("Can I simulate"))).toBe(false)
       const seo = compareSeoTitle(pair, pair.leftClubId, pair.rightClubId)
       expect(seo, pair.slug).not.toMatch(/^Who Is Better, /)
+      expect(pair.title, pair.slug).not.toMatch(/^Who Is Better, /)
       expect(titles.has(seo), seo).toBe(false)
       titles.add(seo)
     }
@@ -282,6 +284,37 @@ describe("GSC landing pages", () => {
     expect(HOME_SECTIONS.clubsTitle).not.toBe("Legendary clubs")
     expect(HOME_SECTIONS.nationsTitle).not.toBe("Legendary nations")
     expect(HOME_SECTIONS.howTitle).not.toBe("How the football simulator works")
+
+    expect(SIMULATE_PAGE.h1).not.toBe("Simulate any two squads")
+    expect(SIMULATE_PAGE.h1).toMatch(/2010\/11/)
+    expect(SIMULATE_PAGE.title).toMatch(/2010\/11/)
+    expect(SIMULATE_PAGE.kicker).toBe("Football match simulator")
+    expect(SIMULATE_PAGE.guideHeading).not.toMatch(/not a chatbot picking a winner/)
+    expect(VS_HUB.crumb).not.toBe("Dreams")
+    expect(VS_HUB.crumb).not.toBe("Dream matches")
+
+    expect(SEARCH_PAGE.h1).not.toBe("Find a squad, then play it")
+    expect(SEARCH_PAGE.popularKicker).not.toBe("Popular sides")
+    expect(SEARCH_PAGE.popularKicker).toMatch(/1970|08\/09/)
+  })
+
+  it("names flagship sides on Spanish and Portuguese hubs instead of factory catalog labels", async () => {
+    const { LOCALIZED_COPY } = await import("@/lib/i18n")
+    expect(LOCALIZED_COPY.es.home.metaTitle).toMatch(/2010\/11/)
+    expect(LOCALIZED_COPY.es.home.metaTitle).not.toMatch(/\| LegendaryMatch$/)
+    expect(LOCALIZED_COPY.es.simulate.title).toMatch(/2010\/11/)
+    expect(LOCALIZED_COPY.es.simulate.metaTitle).toMatch(/2010\/11/)
+    expect(LOCALIZED_COPY.es.dreams.title).not.toBe("Partidos soñados")
+    expect(LOCALIZED_COPY.es.sections.dream).not.toBe("Duelos populares")
+    expect(LOCALIZED_COPY.es.howTitle).not.toBe("Cómo funciona el simulador")
+    expect(LOCALIZED_COPY.es.faq.at(-1)?.[0]).toMatch(/2010\/11/)
+
+    expect(LOCALIZED_COPY["pt-br"].home.metaTitle).toMatch(/2010\/11/)
+    expect(LOCALIZED_COPY["pt-br"].simulate.title).toMatch(/2010\/11/)
+    expect(LOCALIZED_COPY["pt-br"].dreams.title).not.toBe("Jogos dos sonhos")
+    expect(LOCALIZED_COPY["pt-br"].sections.clubs).not.toBe("Clubes lendários")
+    expect(LOCALIZED_COPY["pt-br"].howTitle).not.toBe("Como funciona o simulador")
+    expect(LOCALIZED_COPY["pt-br"].faq.at(-1)?.[0]).toMatch(/2010\/11/)
   })
 
   it("gives compare hub cards unique leads instead of Who is better, X or Y", () => {

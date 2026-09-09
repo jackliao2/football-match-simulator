@@ -4,14 +4,11 @@ import { SearchBox } from "@/components/search/SearchBox"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { PixelCrest } from "@/components/teams/PixelCrest"
 import { OvrStamp } from "@/components/ui/OvrStamp"
+import { SEARCH_PAGE } from "@/data/collection-copy"
 import { HOMEPAGE_TEAMS, HOMEPAGE_NATIONS } from "@/data/matchups"
 import { searchCatalog, TEAM_CATALOG } from "@/data/team-catalog"
 import { pageMetadata } from "@/lib/seo"
 import { teamPath } from "@/lib/paths"
-
-const TITLE = "Search historical football squads"
-const DESCRIPTION =
-  "Search 156 named club and national-team seasons on LegendaryMatch. Open a squad page or send two sides straight into the football match simulator."
 
 export async function generateMetadata({
   searchParams,
@@ -19,8 +16,8 @@ export async function generateMetadata({
   const params = await searchParams
   const query = typeof params.q === "string" ? params.q.trim() : ""
   const meta = pageMetadata({
-    title: query ? `Search results for “${query}”` : TITLE,
-    description: DESCRIPTION,
+    title: query ? `Search results for “${query}”` : SEARCH_PAGE.title,
+    description: SEARCH_PAGE.description,
     path: query ? `/search?q=${encodeURIComponent(query)}` : "/search",
   })
   if (query) meta.robots = { index: false, follow: true }
@@ -41,8 +38,8 @@ export default async function SearchPage({ searchParams }: PageProps<"/search">)
   return (
     <div className="grid gap-6">
       <PageHeader
-        kicker="Catalogue search"
-        title="Find a squad, then play it"
+        kicker={SEARCH_PAGE.kicker}
+        title={SEARCH_PAGE.h1}
         lead={`${TEAM_CATALOG.length} named seasons. Search by club, country, year or a short season like 04/05, then open the page or send it into the simulator.`}
         crumbs={[{ href: "/", label: "Home" }, { href: "/search", label: "Search" }]}
       />
@@ -69,7 +66,7 @@ export default async function SearchPage({ searchParams }: PageProps<"/search">)
         </section>
       ) : (
         <section className="grid gap-3">
-          <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-gold">Popular sides</p>
+          <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-gold">{SEARCH_PAGE.popularKicker}</p>
           <ul className="search-results">
             {suggestions.map((entry) => (
               <SearchHit key={entry.id} entry={entry} />
