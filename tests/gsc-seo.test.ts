@@ -236,12 +236,18 @@ describe("GSC landing pages", () => {
 
   it("gives every club and nation hub a unique written title", () => {
     const titles = new Set<string>()
+    const descriptions = new Set<string>()
     for (const org of [...clubs, ...nations]) {
       expect(HUB_COPY[org.id], org.id).toBeDefined()
       const copy = orgHubCopy(org, getTeamsByClub(org.id))
       expect(copy.title.toLowerCase(), org.id).not.toMatch(/playable years|in the simulator$/)
+      expect(copy.description.toLowerCase(), org.id).not.toMatch(
+        /\bplayable\b|simulate them|simulate either|then simulate|lineups?, ratings|in the simulator/,
+      )
       expect(titles.has(copy.title), copy.title).toBe(false)
+      expect(descriptions.has(copy.description), copy.description).toBe(false)
       titles.add(copy.title)
+      descriptions.add(copy.description)
     }
   })
 

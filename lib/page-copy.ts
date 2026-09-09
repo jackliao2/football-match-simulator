@@ -293,7 +293,7 @@ export const LEAGUE_NOTES: Record<ClubLeague, string> = {
   "other-europe":
     "The nights that still get put on grainy tape: Red Star in Bari, Steaua in Seville, Galatasaray in Copenhagen. Not a ‘rest of world’ junk drawer — three specific miracles.",
   "south-america":
-    "Santos with Pelé, Flamengo with Zico, Boca and River as club sides rather than just Argentina shirts. Libertadores memory, playable.",
+    "Santos with Pelé, Flamengo with Zico, Boca and River as club sides rather than just Argentina shirts. Libertadores nights, not national-team shirts with a different badge.",
 }
 
 export const REGION_NOTES: Record<NationRegion, string> = {
