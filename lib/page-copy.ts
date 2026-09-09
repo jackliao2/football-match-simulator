@@ -52,6 +52,14 @@ export type TeamPageCopy = {
   dossierHeading: string
   faqHeading: string
   starsHeading: string
+  xiHeading: string
+  benchHeading: string
+  ratingsHeading: string
+  modelHeading: string
+  tagsHeading: string
+  honoursHeading: string
+  formationHeading: string
+  simulateCta: string
 }
 
 export function teamH1(team: HistoricalTeam): string {
@@ -134,6 +142,14 @@ export function teamPageCopy(team: HistoricalTeam, opponentArg?: HistoricalTeam)
     starsHeading: top
       ? `${top.name} and ${team.clubName} ${team.displaySeason}`
       : `${team.manager}'s ${team.clubName} ${team.displaySeason} names`,
+    xiHeading: `${team.clubName} ${team.displaySeason} XI`,
+    benchHeading: `${team.clubName} ${team.displaySeason} bench`,
+    ratingsHeading: `${team.clubName} ${team.displaySeason} ratings`,
+    modelHeading: `How ${team.clubName} ${team.displaySeason} is modelled`,
+    tagsHeading: `${team.clubName} ${team.displaySeason} labels`,
+    honoursHeading: `${team.clubName} ${team.displaySeason} honours`,
+    formationHeading: `${team.manager}'s ${team.formation}`,
+    simulateCta: `Simulate ${team.clubName} ${team.displaySeason}`,
   }
 }
 
@@ -334,7 +350,7 @@ export function vsPageCopy(home: HistoricalTeam, away: HistoricalTeam, _runs: nu
     lead: editorial,
     editorial,
     kicker: feature?.title ?? `${home.displaySeason} vs ${away.displaySeason}`,
-    sectionHeading: `${home.manager}'s ${home.displaySeason} ${home.formation} against ${away.manager}'s ${away.displaySeason}`,
+    sectionHeading: `${home.manager}'s ${home.displaySeason} against ${away.manager}'s ${away.displaySeason}`,
     snapshotHeading: `${home.clubName} ${home.displaySeason} against ${away.clubName} ${away.displaySeason} — what the runs say`,
     contextHeading: `What ${home.manager}'s ${home.clubName} ${home.displaySeason} actually was`,
     hingeHeading: `${homeTag} against ${awayTag}`,

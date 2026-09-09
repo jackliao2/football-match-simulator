@@ -1,6 +1,7 @@
 import { StatTip } from "@/components/teams/StatTip"
 import { faceStats } from "@/lib/player-stats"
 import { slotsForFormation } from "@/lib/formations"
+import { teamPageCopy } from "@/lib/page-copy"
 import type { HistoricalTeam } from "@/types"
 
 export function Formation({ team }: { team: HistoricalTeam }) {
@@ -10,12 +11,13 @@ export function Formation({ team }: { team: HistoricalTeam }) {
     player: byId.get(id),
     slot: slots[index] ?? { x: 50, y: 50, label: "" },
   }))
+  const copy = teamPageCopy(team)
 
   return (
     <div className="result-panel overflow-hidden">
       <div className="flex items-center justify-between border-b border-white/10 px-3 py-2">
         <span className="font-display text-[8px] uppercase tracking-[0.18em] text-gold">
-          Formation {team.formation}
+          {copy.formationHeading}
         </span>
         <span className="font-mono text-xs text-muted">{team.manager}</span>
       </div>

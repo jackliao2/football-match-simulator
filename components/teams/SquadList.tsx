@@ -2,6 +2,7 @@ import { PixelFlag } from "@/components/teams/PixelFlag"
 import { StatStrip } from "@/components/teams/StatTip"
 import { faceStats } from "@/lib/player-stats"
 import { nationOf } from "@/lib/nationality"
+import { teamPageCopy } from "@/lib/page-copy"
 import { ovrTone } from "@/lib/stars"
 import type { HistoricalTeam, Player } from "@/types"
 
@@ -42,12 +43,13 @@ export function SquadList({ team }: { team: HistoricalTeam }) {
     .map((id) => team.players.find((player) => player.id === id))
     .filter((player): player is Player => Boolean(player))
   const rest = team.players.filter((player) => !starting.has(player.id))
+  const copy = teamPageCopy(team)
 
   return (
     <div className="grid gap-4 lg:grid-cols-2">
       <section className="result-panel">
         <h2 className="border-b border-white/10 px-3 py-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
-          Starting XI
+          {copy.xiHeading}
         </h2>
         <ol className="p-1">
           {xi.map((player) => (
@@ -57,7 +59,7 @@ export function SquadList({ team }: { team: HistoricalTeam }) {
       </section>
       <section className="result-panel">
         <h2 className="border-b border-white/10 px-3 py-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
-          Bench
+          {copy.benchHeading}
         </h2>
         <ol className="p-1">
           {rest.map((player) => (

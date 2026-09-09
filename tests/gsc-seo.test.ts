@@ -216,6 +216,17 @@ describe("GSC landing pages", () => {
       expect(copy.dossierHeading, team.id).toMatch(team.manager)
       expect(copy.faqHeading, team.id).not.toMatch(/— questions$/)
       expect(copy.dossierHeading, team.id).not.toMatch(/Why .+ mattered$/)
+      if (isIndexableTeamPage(team.id)) {
+        expect(copy.xiHeading, team.id).not.toBe("Starting XI")
+        expect(copy.xiHeading, team.id).toMatch(team.displaySeason)
+        expect(copy.benchHeading, team.id).not.toBe("Bench")
+        expect(copy.ratingsHeading, team.id).not.toBe("Ratings")
+        expect(copy.modelHeading, team.id).not.toBe("How the model treats this XI")
+        expect(copy.tagsHeading, team.id).not.toBe("Style tags")
+        expect(copy.honoursHeading, team.id).not.toBe("Achievements")
+        expect(copy.formationHeading, team.id).not.toMatch(/^Formation /)
+        expect(copy.simulateCta, team.id).not.toBe("Simulate this team")
+      }
       expect(titles.has(copy.title), `${team.id} duplicates title: ${copy.title}`).toBe(false)
       titles.add(copy.title)
       if (isIndexableTeamPage(team.id)) {
@@ -268,6 +279,7 @@ describe("GSC landing pages", () => {
       const copy = vsPageCopy(home, away, 100)
       expect(copy.kicker, `${a}-vs-${b}`).not.toBe("Dream match")
       expect(copy.sectionHeading).not.toMatch(/Two football ideas/)
+      expect(copy.sectionHeading, `${a}-vs-${b}`).not.toMatch(/\d-\d-\d against/)
       expect(copy.description, `${a}-vs-${b}`).not.toMatch(/Compare the squads and \d+ simulated matches/)
       expect(copy.playHeading, `${a}-vs-${b}`).not.toMatch(/^Simulate /)
       expect(copy.snapshotHeading, `${a}-vs-${b}`).not.toMatch(/on the model$/)

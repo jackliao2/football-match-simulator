@@ -11,8 +11,8 @@ export const SITE = {
   editorName: process.env.NEXT_PUBLIC_EDITOR_NAME?.trim() || "Jack",
   legalUpdated: "30 August 2026",
   legalUpdatedIso: "2026-08-30",
-  contentUpdated: "9 September 2026",
-  contentUpdatedIso: "2026-09-09",
+  contentUpdated: "10 September 2026",
+  contentUpdatedIso: "2026-09-10",
   tagline: "Barcelona 2010/11 vs Madrid 2016/17. One simulated night.",
   description:
     "LegendaryMatch is an online football and soccer match simulator. Play Barcelona 2010/11 against Madrid 2016/17, Brazil 1970 against Spain 2010, or any two named seasons — score, scorers, xG and who-would-win probabilities.",

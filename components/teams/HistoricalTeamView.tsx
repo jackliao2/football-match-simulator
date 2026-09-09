@@ -237,7 +237,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
           <QuickMatch home={team} away={opponent} />
         ) : (
           <Link href={`/simulate?home=${team.id}&away=${opponentId}`} className="rail-btn rail-btn-primary rail-btn-inline">
-            Simulate this team
+            {copy.simulateCta}
           </Link>
         )}
       </header>
@@ -271,7 +271,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
 
       <section className="result-panel">
         <h2 className="border-b border-white/10 px-3 py-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
-          Style tags
+          {copy.tagsHeading}
         </h2>
         <div className="flex flex-wrap gap-1.5 p-3">
           {team.styleTags.map((tag) => (
@@ -284,7 +284,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
 
       <section className="result-panel">
         <h2 className="border-b border-white/10 px-3 py-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
-          Achievements
+          {copy.honoursHeading}
         </h2>
         <ul className="grid gap-1 px-3 py-2 font-mono text-[12px] leading-5">
           {team.achievements.map((item) => (

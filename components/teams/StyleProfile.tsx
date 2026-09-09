@@ -1,4 +1,5 @@
 import { RatingBar } from "@/components/ui/RatingBar"
+import { teamPageCopy } from "@/lib/page-copy"
 import type { HistoricalTeam } from "@/types"
 
 const AXES = [
@@ -14,11 +15,12 @@ export function StyleProfile({ team }: { team: HistoricalTeam }) {
   const values = AXES.map((axis) => team[axis.key])
   const points = values.map((value, index) => polar(value, index, values.length)).join(" ")
   const rings = [25, 50, 75, 100]
+  const copy = teamPageCopy(team)
 
   return (
     <section className="result-panel">
       <h2 className="border-b border-white/10 px-3 py-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
-        How the model treats this XI
+        {copy.modelHeading}
       </h2>
       <div className="grid gap-4 px-3 py-3 sm:grid-cols-[10rem_minmax(0,1fr)] sm:items-center">
         <svg viewBox="0 0 120 120" className="style-radar mx-auto w-40" role="img" aria-label={`${team.clubName} ${team.displaySeason} tactical profile`}>

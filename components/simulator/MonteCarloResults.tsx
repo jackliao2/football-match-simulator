@@ -54,7 +54,7 @@ export function MonteCarloResults({ result }: { result: MonteCarloResult }) {
       <div className="grid lg:grid-cols-2">
         <section className="px-4 py-4 sm:px-6 lg:border-r lg:border-white/10">
           <h3 className="mb-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
-            Most likely scores
+            {result.homeClub} vs {result.awayClub} scores
           </h3>
           <ol className="grid gap-1.5 sm:grid-cols-2">
             {result.scorelines.map((line) => (
@@ -71,7 +71,7 @@ export function MonteCarloResults({ result }: { result: MonteCarloResult }) {
 
         <section className="border-t border-white/10 px-4 py-4 sm:px-6 lg:border-t-0">
           <h3 className="mb-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
-            Match profile
+            {result.homeClub} vs {result.awayClub} profile
           </h3>
           <Split label="xG" home={formatXg(result.avgHomeXg ?? 0)} away={formatXg(result.avgAwayXg ?? 0)} homeN={result.avgHomeXg ?? 0} awayN={result.avgAwayXg ?? 0} />
           <Split label="Shots" home={String(result.avgHomeShots ?? 0)} away={String(result.avgAwayShots ?? 0)} homeN={result.avgHomeShots ?? 0} awayN={result.avgAwayShots ?? 0} />
@@ -87,7 +87,7 @@ export function MonteCarloResults({ result }: { result: MonteCarloResult }) {
       {homeScorers.length > 0 || awayScorers.length > 0 ? (
         <section className="border-t border-white/10 px-4 py-4 sm:px-6">
           <h3 className="mb-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
-            Goals in {result.runs} matches
+            {result.homeClub} vs {result.awayClub} goals
           </h3>
           <div className="grid gap-3 sm:grid-cols-2">
             <Scorers
@@ -107,7 +107,9 @@ export function MonteCarloResults({ result }: { result: MonteCarloResult }) {
           </div>
           {homeAssists.length > 0 || awayAssists.length > 0 ? (
             <div className="mt-4 border-t border-white/10 pt-4">
-              <h3 className="mb-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">Assists in {result.runs} matches</h3>
+              <h3 className="mb-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
+                {result.homeClub} vs {result.awayClub} assists
+              </h3>
               <div className="grid gap-3 sm:grid-cols-2">
                 <Assists label={result.homeClub} rows={homeAssists} tone="gold" />
                 <Assists label={result.awayClub} rows={awayAssists} tone="danger" />
