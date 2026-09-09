@@ -1,3 +1,4 @@
+import { HUB_COPY } from "@/data/hub-copy"
 import { FEATURED_MATCHUPS, allVsPairs, defaultOpponent } from "@/data/matchups"
 import { getTeam, teams } from "@/data/teams"
 import { teamStars } from "@/lib/stars"
@@ -59,8 +60,6 @@ export function teamPageCopy(team: HistoricalTeam, opponentArg?: HistoricalTeam)
   const slot = copySlot(team.id, 9)
   const names = stars(team, 3)
   const top = names[0]
-  const second = names[1]
-  const third = names[2]
   const current = isCurrentSquad(team)
   const silver = trophyBits(team)
   const wonWorldCup = team.trophies.some((trophy) => trophy.code === "world-cup")
@@ -105,51 +104,19 @@ export function teamPageCopy(team: HistoricalTeam, opponentArg?: HistoricalTeam)
   const title = team.seoTitle.trim() || generatedTitle
   const description = clip(team.seoDescription.trim() || closers[slot] || team.summary)
 
-  const kickers = current
+  const kicker = current
     ? team.kind === "nation"
-      ? ["2026 cycle", "Recent national side", "Latest dataset", "World Cup year"]
-      : ["Recent squad", "Latest dataset", "2025/26", "Season snapshot"]
-    : wonWorldCup
-      ? ["World Cup winners", "World Cup squad", "Champions", team.kind === "nation" ? "National side" : "Club side"]
-      : wonEuros
-        ? ["Euros winners", "European champions", "Tournament side", "National side"]
-        : wonUcl
-          ? ["European Cup", "UCL winners", "Club side", "That night"]
-          : team.kind === "nation"
-            ? ["National side", "Tournament squad", "International XI", "World Cup squad"]
-            : ["Club side", "League season", "Historical squad", "That year"]
-  const kicker = kickers[copySlot(`${team.id}-k`, kickers.length)]!
+      ? "Modelled 2026 cycle"
+      : "Modelled current season"
+    : team.achievements[0] ?? team.trophies[0]?.label ?? (team.kind === "nation" ? "National side" : "Club season")
 
-  const decks = [
-    `${team.manager} · ${team.formation}`,
-    feat ?? `${team.manager} · ${team.formation}`,
-    top && second && third ? `${top.name}, ${second.name}, ${third.name}` : `${team.manager} · ${team.formation}`,
-    silver ? silver : `${team.formation}, overall ${team.overallRating}`,
-    tag ? `${tag} · OVR ${team.overallRating}` : `OVR ${team.overallRating}`,
-    current
-      ? `The ${team.displaySeason} squad, as we have it`
-      : `${team.eraYear} as a ${team.formation}`,
-    top ? `${top.name} at ${top.overall}` : team.formation,
-    team.kind === "nation"
-      ? `${team.clubName} at ${team.displaySeason}`
-      : `${team.clubName} in ${team.displaySeason}`,
-    `${team.attackRating} attack · ${team.defenseRating} defence`,
-  ]
-  const deck = decks[slot]!
+  const deck = firstSentence(team.summary)
 
   const paragraphs = extraParagraphs(team)
 
-  const matchupHeadings = [
-    "Who they get thrown at",
-    "Dream matches from here",
-    "If not this XI, then who?",
-    "Sides people run them against",
-    "The usual arguments",
-    "Simulate them against",
-    "Other pages from this debate",
-    "Matchups",
-    "Pick a fight",
-  ]
+  const matchupHeading = opponent
+    ? `Against ${opponent.clubName} ${opponent.displaySeason}`
+    : "Dream matches from here"
 
   return {
     title,
@@ -158,7 +125,7 @@ export function teamPageCopy(team: HistoricalTeam, opponentArg?: HistoricalTeam)
     kicker,
     deck,
     paragraphs,
-    matchupHeading: matchupHeadings[copySlot(`${team.id}-m`, matchupHeadings.length)]!,
+    matchupHeading,
   }
 }
 
@@ -281,64 +248,20 @@ export type OrgHubCopy = {
 }
 
 export function orgHubCopy(org: Club, sides: HistoricalTeam[]): OrgHubCopy {
-  const current = sides.find((side) => isCurrentSquad(side))
-  const historic = sides.filter((side) => !isCurrentSquad(side))
+  const custom = HUB_COPY[org.id]
   const years = sides.map((side) => side.displaySeason)
-  const managers = [...new Set(sides.map((side) => side.manager))]
-  const slot = copySlot(org.id, 6)
-  const nation = org.kind === "nation" || sides[0]?.kind === "nation"
-
-  const kicker = nation
-    ? current
-      ? "National sides"
-      : "Tournament sides"
-    : current
-      ? "Club seasons"
-      : "Club history"
-
-  const titleOptions = nation
-    ? [
-        `${org.name} national teams`,
-        `${org.name} squads`,
-        `${org.name} at the World Cup`,
-        `${org.name}: the years we built`,
-      ]
-    : [
-        `${org.name} squads`,
-        `${org.name} seasons`,
-        `${org.name} in the simulator`,
-        `${org.name}: playable years`,
-      ]
-  const title = titleOptions[slot % titleOptions.length]!
-
   const sketches = sides.map((side) => `${side.displaySeason} — ${firstSentence(side.summary)}`)
-  const sketchLead = sketches[0]
-  const moreYears = years.length > 1 ? `Also here: ${years.slice(1).join(", ")}.` : ""
-
-  const leads = [
-    sketchLead
-      ? `${sketchLead} ${moreYears}`.trim()
-      : `${org.name} has ${sides.length} playable side${sides.length === 1 ? "" : "s"} in the catalogue.`,
-    historic.length > 0 && current
-      ? `${org.name} has a recent-season dataset (${current.displaySeason}) and ${historic.length} older XI${historic.length === 1 ? "" : "s"}: ${historic.map((side) => side.displaySeason).join(", ")}. They are not the same team with a new kit.`
-      : `${org.name}: ${years.join(", ")}.`,
-    managers.length <= 3
-      ? `${org.name} pages run through ${managers.join("; ")}. Years: ${years.join(", ")}.`
-      : `${org.name} across ${years.join(", ")}.`,
-    `${org.name} (${org.city}). ${sides.length} squad${sides.length === 1 ? "" : "s"} you can actually play, not a wiki infobox.`,
-    firstSentence(sides[0]?.summary ?? `${org.name} in the simulator.`),
-    nation
-      ? `${org.name} as national sides, ${years.join(" / ")}. Ratings stay in their year.`
-      : `${org.name} of ${org.country}. Playable seasons: ${years.join(", ")}.`,
-  ]
-
-  const lead = leads[slot]!
+  const nation = org.kind === "nation" || sides[0]?.kind === "nation"
+  const title = custom?.title ?? `${org.name}: ${years.join(" · ")}`
+  const lead = custom?.lead ?? sketches.join(" ")
+  const kicker = custom?.kicker ?? (nation ? "National sides" : "Club seasons")
   const description = clip(
-    `${lead} ${
-      nation
-        ? "Open a year for the XI and the ratings, then run them against a club or another country."
-        : "Open a season for the XI and the ratings."
-    }`,
+    custom?.description ??
+      `${lead} ${
+        nation
+          ? "Open a year for the XI and the ratings, then run them against a club or another country."
+          : "Open a season for the XI and the ratings."
+      }`,
   )
 
   return { kicker, title, lead, description }

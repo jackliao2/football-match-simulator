@@ -65,9 +65,9 @@ export const brazil1970: HistoricalTeam = makeTeam({
   styleTags: ["Samba Football", "Creative Overload", "Wide Play", "Improvisation", "First-Time Finishing"],
   summary:
     "Zagallo's 1970 Brazil. Pelé at the centre of the most celebrated attacking side in World Cup history, with Jairzinho scoring in every match.",
-  seoTitle: "Brazil 1970 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Brazil 1970 World Cup Squad — Pelé, Jairzinho, Tostão",
   seoDescription:
-    "Explore the Brazil 1970 World Cup squad, starting XI, formation and team ratings, then simulate the legendary side against football teams from any era.",
+    "Brazil 1970 World Cup squad: Zagallo's Mexico winners. Pelé at the centre, Jairzinho scoring in every match, the most celebrated attacking XI in the tournament.",
 })
 
 export const brazil2002: HistoricalTeam = makeTeam({
@@ -134,9 +134,9 @@ export const brazil2002: HistoricalTeam = makeTeam({
   styleTags: ["Three Forwards", "Wing-Back Overlap", "Counter Attack", "Individual Brilliance", "Direct Play"],
   summary:
     "Scolari's 2002 Brazil. The three R's — Ronaldo, Rivaldo, Ronaldinho — in front of Cafu and Roberto Carlos, winning a fifth World Cup in Japan and Korea.",
-  seoTitle: "Brazil 2002 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Brazil 2002 World Cup Squad — Ronaldo, Rivaldo, Ronaldinho",
   seoDescription:
-    "Explore the Brazil 2002 World Cup squad, starting XI, formation and team ratings, then simulate the Ronaldo-Rivaldo-Ronaldinho side against teams from any era.",
+    "Brazil 2002 World Cup squad: Scolari's 3Rs. Ronaldo's redemption, Rivaldo, Ronaldinho, Cafu and Roberto Carlos as wing-backs. Knockout XI and ratings.",
 })
 
 export const brazil1982: HistoricalTeam = makeTeam({
@@ -201,9 +201,9 @@ export const brazil1982: HistoricalTeam = makeTeam({
   styleTags: ["Samba Football", "Creative Overload", "Positional Play", "Improvisation", "Star Midfield"],
   summary:
     "Santana's 1982 Brazil. Zico and Sócrates as the brain, Falcão as the extra pass, and a 3–2 afternoon against Italy that still feels like a crime.",
-  seoTitle: "Brazil 1982 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Brazil 1982 World Cup Squad — Zico, Sócrates, Falcão",
   seoDescription:
-    "Explore the Brazil 1982 World Cup squad, starting XI, formation and team ratings, then simulate Santana's Zico-Sócrates side against teams from any era.",
+    "Brazil 1982 World Cup squad: Telê Santana's side that did not lift the trophy and still gets shouted about. Zico, Sócrates, Falcão — playable XI.",
 })
 
 export const brazil1958: HistoricalTeam = makeTeam({
@@ -268,9 +268,9 @@ export const brazil1958: HistoricalTeam = makeTeam({
   styleTags: ["Samba Football", "Wide Play", "Individual Brilliance", "Youth Core", "First-Time Finishing"],
   summary:
     "Feola's 1958 Brazil. A 17-year-old Pelé, Garrincha on the right, Didi as the brain, and a first World Cup that started the count.",
-  seoTitle: "Brazil 1958 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Brazil 1958 World Cup Squad — Pelé at 17, Garrincha",
   seoDescription:
-    "Explore the Brazil 1958 World Cup squad, starting XI, formation and team ratings, then simulate Pelé's first world champions against teams from any era.",
+    "Brazil 1958 World Cup squad: first title in Sweden. A 17-year-old Pelé, Garrincha isolating full-backs, the origin of the Seleção argument.",
 })
 
 export const brazil1962: HistoricalTeam = makeTeam({
@@ -335,9 +335,9 @@ export const brazil1962: HistoricalTeam = makeTeam({
   styleTags: ["Samba Football", "Wide Play", "Individual Brilliance", "Tournament Steel", "Counter Attack"],
   summary:
     "Moreira's 1962 Brazil. Pelé went home hurt. Garrincha took the tournament, Vavá finished, and Brazil kept the trophy.",
-  seoTitle: "Brazil 1962 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Brazil 1962 World Cup Squad — Garrincha, Chile Retention",
   seoDescription:
-    "Explore the Brazil 1962 World Cup squad, starting XI, formation and team ratings, then simulate Garrincha's world champions against teams from any era.",
+    "Brazil 1962 World Cup squad: the Chile retention after Pelé was injured. Garrincha's tournament, not the 1970 Mexico side.",
 })
 
 export const brazil1994: HistoricalTeam = makeTeam({
@@ -402,9 +402,9 @@ export const brazil1994: HistoricalTeam = makeTeam({
   styleTags: ["Compact Block", "Two Strikers", "Counter Attack", "Tournament Steel", "Set Pieces"],
   summary:
     "Parreira's 1994 Brazil. Romário as the finish, Dunga as the spine, and a World Cup won in the heat without the old samba label.",
-  seoTitle: "Brazil 1994 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Brazil 1994 World Cup Squad — Romário, Dunga, USA",
   seoDescription:
-    "Explore the Brazil 1994 World Cup squad, starting XI, formation and team ratings, then simulate Romário's world champions against teams from any era.",
+    "Brazil 1994 World Cup squad: Parreira's pragmatic champions. Romário as the blade, a final won on penalties — not the 1970 fluent side.",
 })
 
 export const brazil1998: HistoricalTeam = makeTeam({

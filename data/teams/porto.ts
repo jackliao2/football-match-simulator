@@ -62,9 +62,9 @@ export const porto200304: HistoricalTeam = makeTeam({
   styleTags: ["Compact Block", "Deco Tempo", "Set Pieces", "Counter Attack", "Cup Steel"],
   summary:
     "Mourinho's Porto. Deco as the brain, Carvalho as the wall, Derlei and McCarthy as the finishers, and a Champions League won without a galaxy of stars.",
-  seoTitle: "Porto 2003/04 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Porto 2003/04 Squad — Mourinho's Champions League",
   seoDescription:
-    "Explore the Porto 2003/04 squad, starting XI, formation and ratings, then simulate Mourinho's Champions League winners against teams from any era.",
+    "Porto 2003/04 squad: Mourinho's European Cup from a mid-table Portuguese budget. Deco, Carvalho, a knockout side — not Villas-Boas later.",
 })
 
 export const porto201011: HistoricalTeam = makeTeam({

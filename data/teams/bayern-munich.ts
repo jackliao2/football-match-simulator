@@ -65,9 +65,9 @@ export const bayernMunich201213: HistoricalTeam = makeTeam({
   styleTags: ["Wide Forwards", "High Press", "Robben Inside", "Sweeper Keeper", "Control Midfield"],
   summary:
     "Heynckes' treble Bayern. Ribéry and Robben from the flanks, Müller between the lines, Neuer rewriting the goalkeeper role, and a 7–0 statement against Barcelona.",
-  seoTitle: "Bayern Munich 2012/13 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Bayern 2012/13 Squad — Heynckes Treble, 7–0 Barcelona",
   seoDescription:
-    "Explore the Bayern Munich 2012/13 squad, starting XI, formation and team ratings, then simulate Heynckes' treble winners against football teams from any era.",
+    "Bayern Munich 2012/13 squad: Heynckes' treble. Ribéry and Robben from the flanks, Müller, Neuer, a 7–0 against Barcelona — not Flick's later sextuple.",
 })
 
 export const bayernMunich201920: HistoricalTeam = makeTeam({
@@ -133,7 +133,7 @@ export const bayernMunich201920: HistoricalTeam = makeTeam({
   styleTags: ["High Press", "Wide Overloads", "Lewandowski Finishing", "Vertical Attack", "Full-Back Pace"],
   summary:
     "Flick's 2019/20 treble Bayern. Lewandowski at the peak of his finishing, Müller connecting everything, and a side that overwhelmed Europe after the restart.",
-  seoTitle: "Bayern Munich 2019/20 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Bayern 2019/20 Squad — Flick, Lewandowski, Lisbon 8–2",
   seoDescription:
-    "Explore the Bayern Munich 2019/20 squad, starting XI, formation and team ratings, then simulate Flick's treble winners against football teams from any era.",
+    "Bayern Munich 2019/20 squad: Flick's treble after the restart. Lewandowski finishing, Müller connecting, 8–2 in Lisbon — not Heynckes 2013.",
 })

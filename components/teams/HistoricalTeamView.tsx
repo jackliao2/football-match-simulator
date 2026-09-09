@@ -19,7 +19,7 @@ import { getTeamEditorial } from "@/data/team-editorial"
 import { getTeam, getTeamsByClub } from "@/data/teams"
 import { cachedMatchupModel } from "@/lib/matchup-model"
 import { orgIndexPath, orgPath, teamPath } from "@/lib/paths"
-import { relatedMatchups, teamPageCopy } from "@/lib/page-copy"
+import { firstSentence, relatedMatchups, teamPageCopy } from "@/lib/page-copy"
 import { informalSeason, isCurrentSquad, modelledCurrentSquadNote } from "@/lib/seo"
 import { SITE, absoluteUrl } from "@/lib/site"
 import type { HistoricalTeam } from "@/types"
@@ -125,7 +125,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
   const faqs = [
     {
       q: `What was the ${team.clubName} ${team.displaySeason} squad?`,
-      a: `This page is the ${team.clubName} ${team.displaySeason} squad used in the simulator: starting XI, bench, ${team.formation} under ${team.manager}, and era-relative ratings.`,
+      a: `${firstSentence(team.summary)} The simulator uses this ${team.formation} under ${team.manager}, with the starting XI and bench listed below.`
     },
     ...(shortSeason
       ? [
@@ -146,7 +146,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
         },
     {
       q: `What formation did ${team.clubName} ${team.displaySeason} play?`,
-      a: `${team.clubName} ${team.displaySeason} is modelled in a ${team.formation} under ${team.manager}, with attack ${team.attackRating}, midfield ${team.midfieldRating} and defence ${team.defenseRating}.`,
+      a: `${team.manager} used a ${team.formation}. ${team.styleTags.slice(0, 2).join(" and ")} is the label on this XI — attack ${team.attackRating}, midfield ${team.midfieldRating}, defence ${team.defenseRating}, chemistry ${team.chemistryRating}.`
     },
     opponent
       ? {

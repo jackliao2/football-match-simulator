@@ -63,9 +63,9 @@ export const netherlands1974: HistoricalTeam = makeTeam({
   styleTags: ["Total Football", "Positional Interchange", "High Press", "Offside Trap", "Creative Overload"],
   summary:
     "Michels' 1974 Netherlands. Cruyff as conductor, Neeskens as the engine, and a way of playing that changed football even in defeat.",
-  seoTitle: "Netherlands 1974 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Netherlands 1974 World Cup Squad — Cruyff, Total Football",
   seoDescription:
-    "Explore the Netherlands 1974 World Cup squad, starting XI, formation and team ratings, then simulate Total Football against teams from any era.",
+    "Netherlands 1974 World Cup squad: Michels' Total Football. Cruyff, Neeskens, a final they lost — not the 1988 side that actually lifted a trophy.",
 })
 
 export const netherlands1988: HistoricalTeam = makeTeam({
@@ -130,9 +130,9 @@ export const netherlands1988: HistoricalTeam = makeTeam({
   styleTags: ["Total Football", "Star Forwards", "Technical Midfield", "High Press", "Individual Brilliance"],
   summary:
     "Michels' 1988 Netherlands. Gullit as captain, Van Basten as the finish, Rijkaard as the screen — the one Dutch side that actually lifted the thing.",
-  seoTitle: "Netherlands 1988 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Netherlands 1988 Euros Squad — Van Basten, Gullit, the Trophy",
   seoDescription:
-    "Explore the Netherlands 1988 Euros squad, starting XI, formation and team ratings, then simulate Michels' European champions against teams from any era.",
+    "Netherlands 1988 Euros squad: the only Dutch side to turn the talent into a major trophy. Van Basten's volley, Gullit — not 1974.",
 })
 
 export const netherlands2010: HistoricalTeam = makeTeam({

@@ -283,6 +283,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     leftPeakId: "juventus-2016-17",
     rightPeakId: "ac-milan-1988-89",
     title: "Juventus or AC Milan — Which Is Better?",
+    seoTitle: "Juventus vs AC Milan: Who Is Better?",
     description:
       "Juventus or AC Milan: Italian giants compared, then Juventus 2016/17 against Sacchi’s Milan in the simulator.",
     keywords: keywords("Juventus", "AC Milan"),
@@ -513,6 +514,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     leftPeakId: "real-madrid-2016-17",
     rightPeakId: "bayern-munich-2012-13",
     title: "Real Madrid or Bayern Munich — Which Is Better?",
+    seoTitle: "Real Madrid vs Bayern: Who Is Better All Time?",
     description:
       "Real Madrid or Bayern: Europe’s serial winners compared, then Zidane’s 2016/17 Madrid against Heynckes’ 2012/13 treble side.",
     keywords: keywords("Real Madrid", "Bayern Munich"),
@@ -675,6 +677,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     leftPeakId: "brazil-1970",
     rightPeakId: "argentina-1986",
     title: "Who Is Better, Brazil or Argentina?",
+    seoTitle: "Brazil vs Argentina: Who Is Better?",
     description:
       "Brazil or Argentina: five World Cups against three, Pelé’s 1970 side against Maradona’s 1986 winners. Separate the all-time nations from the prime teams, then simulate Mexico 1970 vs Mexico 1986.",
     keywords: keywords("Brazil", "Argentina", [
@@ -704,6 +707,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     leftPeakId: "england-1966",
     rightPeakId: "germany-1990",
     title: "Who Is Better, England or Germany?",
+    seoTitle: "England vs Germany: Who Is Better?",
     description:
       "England or Germany: 1966 against four World Cups, Wembley against Turin. Compare the nations, then simulate Ramsey’s winners versus Beckenbauer’s 1990 side.",
     keywords: keywords("England", "Germany", [

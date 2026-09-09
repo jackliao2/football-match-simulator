@@ -130,7 +130,7 @@ export const uruguay1950: HistoricalTeam = makeTeam({
   styleTags: ["Tournament Steel", "Direct Attack", "Captain's Side", "Counter Attack", "Wide Play"],
   summary:
     "López's 1950 Uruguay. Varela as the captain who refused the noise, Schiaffino as the brain, Ghiggia as the last word in the Maracanã.",
-  seoTitle: "Uruguay 1950 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Uruguay 1950 World Cup Squad — Maracanazo, Schiaffino",
   seoDescription:
-    "Explore the Uruguay 1950 World Cup squad, starting XI, formation and team ratings, then simulate the Maracanazo winners against teams from any era.",
+    "Uruguay 1950 World Cup squad: the Maracanazo. A smaller country wrecking a host in Rio — not Tabárez's later 2010 semi-finalists.",
 })

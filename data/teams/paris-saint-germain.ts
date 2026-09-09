@@ -62,9 +62,9 @@ export const parisSaintGermain201718: HistoricalTeam = makeTeam({
   styleTags: ["Star Forwards", "Individual Brilliance", "Wide Play", "Counter Attack", "Chance Creation"],
   summary:
     "Emery's 2017/18 PSG. Neymar as the new face, Mbappé as the explosion, Cavani as the finisher, and a domestic treble that never quite became Europe.",
-  seoTitle: "Paris Saint-Germain 2017/18 Squad, Lineup, Formation & Ratings",
+  seoTitle: "PSG 2017/18 Squad — Neymar, Mbappé, Cavani",
   seoDescription:
-    "Explore the PSG 2017/18 squad, starting XI, formation and ratings, then simulate Neymar, Mbappé and Cavani against teams from any era.",
+    "Paris Saint-Germain 2017/18 squad: Emery's league machine. Neymar, Mbappé and Cavani — not the later Messi trio.",
 })
 
 export const parisSaintGermain202223: HistoricalTeam = makeTeam({

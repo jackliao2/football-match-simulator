@@ -62,9 +62,9 @@ export const borussiaDortmund201213: HistoricalTeam = makeTeam({
   styleTags: ["Gegenpressing", "Vertical Runs", "Counter Attack", "High Tempo", "Youth Core"],
   summary:
     "Klopp's 2012/13 Dortmund. Reus and Götze between the lines, Lewandowski finishing, and a press that hunted the ball until Wembley ran out.",
-  seoTitle: "Borussia Dortmund 2012/13 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Dortmund 2012/13 Squad — Klopp, Reus, Wembley Final",
   seoDescription:
-    "Explore the Borussia Dortmund 2012/13 squad, starting XI, formation and ratings, then simulate Klopp's Champions League finalists against teams from any era.",
+    "Borussia Dortmund 2012/13 squad: Klopp's Champions League finalists. Lewandowski, Reus, a press that is not the 2010/11 title side.",
 })
 
 export const borussiaDortmund201011: HistoricalTeam = makeTeam({

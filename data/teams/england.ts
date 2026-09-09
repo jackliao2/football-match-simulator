@@ -63,9 +63,9 @@ export const england1966: HistoricalTeam = makeTeam({
   styleTags: ["Wingless Wonders", "Set Pieces", "Defensive Steel", "Work Rate", "Home Soil"],
   summary:
     "Ramsey's 1966 England. Banks in goal, Moore as captain, Charlton from midfield, and Hurst writing the final in extra time.",
-  seoTitle: "England 1966 Squad, Lineup, Formation & Ratings",
+  seoTitle: "England 1966 World Cup Squad — Ramsey, Hurst, Wembley",
   seoDescription:
-    "Explore the England 1966 World Cup squad, starting XI, formation and team ratings, then simulate the Wembley world champions against teams from any era.",
+    "England 1966 World Cup squad: Ramsey's wingless wonders. Banks, Moore, Charlton, Hurst's extra-time hat-trick — the only English World Cup.",
 })
 
 export const england1990: HistoricalTeam = makeTeam({

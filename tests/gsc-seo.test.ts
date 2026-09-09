@@ -2,11 +2,13 @@ import { describe, expect, it } from "vitest"
 import nextConfig from "../next.config"
 import robots from "@/app/robots"
 import { CLUB_COMPARES, compareFaqs, compareSearchDescription } from "@/data/compare"
+import { clubs, nations } from "@/data/clubs"
+import { HUB_COPY } from "@/data/hub-copy"
 import { getPrimeEntity } from "@/data/prime"
 import { getPrimeEditorial } from "@/data/prime-editorial"
-import { isIndexableTeamPage } from "@/data/team-editorial"
-import { getTeam } from "@/data/teams"
-import { teamH1, teamPageCopy } from "@/lib/page-copy"
+import { editorialTeamIds, isIndexableTeamPage } from "@/data/team-editorial"
+import { getTeam, getTeamsByClub } from "@/data/teams"
+import { orgHubCopy, teamH1, teamPageCopy } from "@/lib/page-copy"
 import { informalSeason, isCurrentSquad, modelledCurrentSquadNote, squadKeywords } from "@/lib/seo"
 import { getSiteUrl } from "@/lib/site"
 
@@ -164,6 +166,31 @@ describe("GSC landing pages", () => {
   it("uses short-season titles on Arsenal 03/04 and Liverpool 04/05", () => {
     expect(teamPageCopy(getTeam("arsenal-2003-04")!).title).toMatch(/03\/04/)
     expect(teamPageCopy(getTeam("liverpool-2004-05")!).title).toMatch(/04\/05/)
+  })
+
+  it("does not reuse the factory squad title on indexable dossiers", () => {
+    for (const id of editorialTeamIds()) {
+      const copy = teamPageCopy(getTeam(id)!)
+      expect(copy.title, id).not.toMatch(/Squad, Lineup, Formation & Ratings/)
+      expect(copy.description, id).not.toMatch(/^Explore the /)
+    }
+  })
+
+  it("gives Napoli 86/87, Italy 2006 and Barcelona 2010/11 specific titles", () => {
+    expect(teamPageCopy(getTeam("napoli-1986-87")!).title).toMatch(/Maradona/i)
+    expect(teamPageCopy(getTeam("italy-2006")!).title).toMatch(/Cannavaro|Pirlo|Lippi/)
+    expect(teamPageCopy(getTeam("barcelona-2010-11")!).title).toMatch(/false nine|Wembley/i)
+  })
+
+  it("gives every club and nation hub a unique written title", () => {
+    const titles = new Set<string>()
+    for (const org of [...clubs, ...nations]) {
+      expect(HUB_COPY[org.id], org.id).toBeDefined()
+      const copy = orgHubCopy(org, getTeamsByClub(org.id))
+      expect(copy.title.toLowerCase(), org.id).not.toMatch(/playable years|in the simulator$/)
+      expect(titles.has(copy.title), copy.title).toBe(false)
+      titles.add(copy.title)
+    }
   })
 
   it("publishes a Liverpool prime page with a real case and counter-case", () => {

@@ -65,9 +65,9 @@ export const argentina1986: HistoricalTeam = makeTeam({
   styleTags: ["Maradona Gravity", "Compact Block", "Counter Attack", "Set Pieces", "Street Football"],
   summary:
     "Bilardo's 1986 Argentina. A functional side built around the greatest individual tournament performance ever: Maradona dragging a nation to the title.",
-  seoTitle: "Argentina 1986 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Argentina 1986 World Cup Squad — Maradona in Mexico",
   seoDescription:
-    "Explore the Argentina 1986 World Cup squad, starting XI, formation and team ratings, then simulate Maradona's World Cup winners against teams from any era.",
+    "Argentina 1986 World Cup squad: Bilardo's Mexico winners. Maradona carrying a tournament, Burruchaga, Valdano — not Messi's 2022 side.",
 })
 
 export const argentina2022: HistoricalTeam = makeTeam({
@@ -135,7 +135,7 @@ export const argentina2022: HistoricalTeam = makeTeam({
   styleTags: ["Messi Gravity", "Emotional Resilience", "Compact Midfield", "Counter Attack", "Set-Piece Nerve"],
   summary:
     "Scaloni's 2022 Argentina. Messi's last dance, a midfield that refused to break, and a final in Lusail that settled a career.",
-  seoTitle: "Argentina 2022 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Argentina 2022 World Cup Squad — Messi, Scaloni, Qatar",
   seoDescription:
-    "Explore the Argentina 2022 World Cup squad, starting XI, formation and team ratings, then simulate Messi's World Cup winners against teams from any era.",
+    "Argentina 2022 World Cup squad: Scaloni's Qatar champions. Messi sharing the load, Di María, a final that went the long way — not 1986.",
 })

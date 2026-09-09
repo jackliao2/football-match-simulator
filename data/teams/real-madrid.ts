@@ -64,9 +64,9 @@ export const realMadrid201314: HistoricalTeam = makeTeam({
   styleTags: ["Counter Attack", "BBC Front Three", "Wide Forwards", "Direct Transition", "Set-Piece Threat"],
   summary:
     "Ancelotti's La Décima side. Ronaldo, Bale and Benzema on the break, Di María everywhere, and Ramos arriving in extra time.",
-  seoTitle: "Real Madrid 2013/14 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Real Madrid 2013/14 Squad — La Décima, Ramos Extra Time",
   seoDescription:
-    "Explore the Real Madrid 2013/14 squad, starting XI, formation and team ratings, then simulate the La Décima side against football teams from any era.",
+    "Real Madrid 2013/14 squad: Ancelotti's Décima. Ronaldo, Bale, Benzema, Ramos in extra time against Atlético — not Zidane's three-in-a-row.",
 })
 
 export const realMadrid201617: HistoricalTeam = makeTeam({
@@ -133,7 +133,7 @@ export const realMadrid201617: HistoricalTeam = makeTeam({
   styleTags: ["Counter Attack", "Fast Transition", "Strong Midfield", "Wide Fullbacks", "Aerial Threat"],
   summary:
     "Zidane's 2016/17 Madrid. Casemiro-Kroos-Modrić as the midfield spine, Ronaldo still scoring everything, and a side that could win ugly or cut teams open on the break.",
-  seoTitle: "Real Madrid 2016/17 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Real Madrid 2016/17 Squad — Zidane, Three in a Row",
   seoDescription:
-    "Explore the Real Madrid 2016/17 squad, starting XI, formation and team ratings, then simulate the legendary side against football teams from any era.",
+    "Real Madrid 2016/17 squad: Zidane's third straight European Cup. Casemiro–Kroos–Modrić, Ronaldo still scoring everything — not the 2014 Décima side.",
 })

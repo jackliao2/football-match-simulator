@@ -63,9 +63,9 @@ export const hungary1954: HistoricalTeam = makeTeam({
   styleTags: ["False Nine", "Positional Interchange", "Attacking Overload", "Technical Midfield", "Total Football"],
   summary:
     "Sebes' Mighty Magyars. Hidegkuti dropping off, Puskás and Kocsis finishing, Bozsik conducting — the side that rewrote attacking football and still left Bern without the trophy.",
-  seoTitle: "Hungary 1954 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Hungary 1954 World Cup Squad — Mighty Magyars, Puskás",
   seoDescription:
-    "Explore the Hungary 1954 World Cup squad, starting XI, formation and team ratings, then simulate the Mighty Magyars against teams from any era.",
+    "Hungary 1954 World Cup squad: Puskás, Hidegkuti, a final they were supposed to win. The Mighty Magyars, not a later Hungary.",
 })
 
 export const hungary1966: HistoricalTeam = makeTeam({

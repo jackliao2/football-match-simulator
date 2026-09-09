@@ -7,12 +7,13 @@ function pack(
     seoDescription?: string
   },
 ): HistoricalTeam {
+  const hook = input.summary.trim().split(/(?<=\.)\s/)[0] ?? input.summary
   return makeTeam({
     ...input,
-    seoTitle: input.seoTitle ?? `${input.clubName} ${input.displaySeason} Squad, Lineup, Formation & Ratings`,
+    seoTitle: input.seoTitle ?? `${input.clubName} ${input.displaySeason} — ${hook.replace(/\.$/, "")}`.slice(0, 72),
     seoDescription:
       input.seoDescription ??
-      `Explore the ${input.clubName} ${input.displaySeason} squad, starting XI, formation and ratings, then simulate them in a football match simulator.`,
+      `${input.summary.trim()} Starting XI, ${input.formation} and ratings in the simulator.`,
   })
 }
 

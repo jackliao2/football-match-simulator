@@ -65,9 +65,9 @@ export const manchesterUnited199899: HistoricalTeam = makeTeam({
   styleTags: ["Wide Crosses", "Never Give Up", "Strike Partnership", "Set Pieces", "Late Goals"],
   summary:
     "Ferguson's treble winners. Beckham and Giggs on the flanks, Keane and Scholes in the middle, Yorke and Cole up top — and Solskjær waiting on the bench.",
-  seoTitle: "Manchester United 1998/99 Squad, Lineup & Ratings",
+  seoTitle: "Manchester United 1998/99 Squad — Treble, Camp Nou",
   seoDescription:
-    "Explore the Manchester United 1998/99 squad, starting XI, formation and team ratings, then simulate the treble winners against football teams from any era.",
+    "Manchester United 1998/99 squad: Ferguson's treble. Beckham, Giggs, Yorke and Cole, Solskjær off the bench in Barcelona — not the 2008 Moscow side.",
 })
 
 export const manchesterUnited200708: HistoricalTeam = makeTeam({
@@ -132,7 +132,7 @@ export const manchesterUnited200708: HistoricalTeam = makeTeam({
   styleTags: ["Counter Attack", "Wide Forwards", "Power Front Two", "High Tempo", "Set-Piece Defence"],
   summary:
     "Ferguson's 2007/08 European champions. Peak Ronaldo on the right, Rooney and Tevez through the middle, Vidić and Ferdinand behind them.",
-  seoTitle: "Manchester United 2007/08 Squad, Lineup & Ratings",
+  seoTitle: "Manchester United 2007/08 Squad — Ronaldo, Moscow",
   seoDescription:
-    "Explore the Manchester United 2007/08 squad, starting XI, formation and team ratings, then simulate Ferguson's Moscow winners against football teams from any era.",
+    "Manchester United 2007/08 squad: Ferguson's Moscow winners. Peak Ronaldo, Rooney and Tevez, Vidić and Ferdinand — not the 1999 treble.",
 })

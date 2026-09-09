@@ -63,9 +63,9 @@ export const juventus201617: HistoricalTeam = makeTeam({
   styleTags: ["BBC Defence", "Wide Wing-Backs", "Set Pieces", "Experience", "Counter Attack"],
   summary:
     "Allegri's 2016/17 Juventus. Buffon and the BBC, Higuaín scoring, Dybala creating, and a domestic double that stopped one night short of Europe.",
-  seoTitle: "Juventus 2016/17 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Juventus 2016/17 Squad — Buffon, Chiellini, Cardiff",
   seoDescription:
-    "Explore the Juventus 2016/17 squad, starting XI, formation and ratings, then simulate Allegri's BBC side against football teams from any era.",
+    "Juventus 2016/17 squad: Allegri's Champions League finalists. Buffon, Chiellini, Dybala — not Lippi's Nedvěd side.",
 })
 
 export const juventus200203: HistoricalTeam = makeTeam({
@@ -129,7 +129,7 @@ export const juventus200203: HistoricalTeam = makeTeam({
   styleTags: ["Two Strikers", "Wide Forwards", "Defensive Steel", "Counter Attack", "Star Midfield"],
   summary:
     "Lippi's 2002/03 Juventus. Buffon and Thuram as the wall, Nedvěd as the engine, Del Piero and Trezeguet as the finish, and a European night in Manchester that went to the lottery.",
-  seoTitle: "Juventus 2002/03 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Juventus 2002/03 Squad — Nedvěd's Ballon d'Or, Lippi",
   seoDescription:
-    "Explore the Juventus 2002/03 squad, starting XI, formation and ratings, then simulate Lippi's Nedvěd-Del Piero side against teams from any era.",
+    "Juventus 2002/03 squad: Lippi with Del Piero and Nedvěd. A European night that is not the later 3-5-2 that reached Cardiff.",
 })

@@ -62,9 +62,9 @@ export const napoli198687: HistoricalTeam = makeTeam({
   styleTags: ["Individual Brilliance", "Two Strikers", "Street Football", "Set Pieces", "Home Soil"],
   summary:
     "Bianchi's 1986/87 Napoli. Maradona as the entire idea, Giordano and Carnevale as the finish, and a first scudetto that still belongs to a whole city.",
-  seoTitle: "Napoli 1986/87 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Napoli 1986/87 Squad — Maradona's First Scudetto",
   seoDescription:
-    "Explore the Napoli 1986/87 squad, starting XI, formation and ratings, then simulate Maradona's first scudetto side against teams from any era.",
+    "Napoli 1986/87 squad: Bianchi's first title, Maradona as the 10, Giordano and Carnevale finishing. 4-3-1-2, ratings, a city as a team.",
 })
 
 export const napoli202223: HistoricalTeam = makeTeam({
@@ -128,7 +128,7 @@ export const napoli202223: HistoricalTeam = makeTeam({
   styleTags: ["High Press", "Wide Forwards", "Vertical Runs", "Star Forwards", "Positional Play"],
   summary:
     "Spalletti's 2022/23 Napoli. Kvaratskhelia on the left, Osimhen through the middle, and a scudetto that finally arrived without needing a 10 from another planet.",
-  seoTitle: "Napoli 2022/23 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Napoli 2022/23 Squad — Osimhen, Kvaratskhelia, Scudetto",
   seoDescription:
-    "Explore the Napoli 2022/23 squad, starting XI, formation and ratings, then simulate Spalletti's scudetto winners against teams from any era.",
+    "Napoli 2022/23 squad: Spalletti's title without a classic 10. Kvaratskhelia left, Osimhen through the middle, first scudetto since Maradona.",
 })

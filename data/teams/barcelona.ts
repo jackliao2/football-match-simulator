@@ -65,9 +65,9 @@ export const barcelona200809: HistoricalTeam = makeTeam({
   styleTags: ["Tiki-Taka", "Positional Play", "High Press", "Short Passing", "Midfield Control"],
   summary:
     "Pep Guardiola's first Barcelona side. A treble-winning team built around Xavi, Iniesta and a 21-year-old Messi, with Eto'o and Henry finishing the chances.",
-  seoTitle: "Barcelona 2008/09 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Barcelona 2008/09 Squad — Guardiola's First Treble",
   seoDescription:
-    "Explore the Barcelona 2008/09 squad, starting XI, formation and team ratings, then simulate Pep Guardiola's treble winners against football teams from any era.",
+    "Barcelona 2008/09 squad: Guardiola's first treble, Messi still a right-sided attacker, Xavi and Iniesta occupying the middle. Starting XI, 4-3-3 and ratings.",
 })
 
 export const barcelona201011: HistoricalTeam = makeTeam({
@@ -134,9 +134,9 @@ export const barcelona201011: HistoricalTeam = makeTeam({
   styleTags: ["Tiki-Taka", "False Nine", "Positional Play", "Midfield Dominance", "High Press"],
   summary:
     "Often called the peak of tiki-taka. Messi drifted inside as a false nine, Villa and Pedro stretched the pitch, and Xavi-Iniesta-Busquets controlled everything.",
-  seoTitle: "Barcelona 2010/11 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Barcelona 2010/11 Squad — Messi's False Nine, Wembley",
   seoDescription:
-    "Explore the Barcelona 2010/11 squad, starting XI, formation and team ratings, then simulate Guardiola's Wembley side against football teams from any era.",
+    "Barcelona 2010/11 squad: Guardiola's Wembley side, Messi as a false nine, Xavi–Iniesta–Busquets as the triangle. The XI this site picks for the best-team argument.",
 })
 
 export const barcelona201415: HistoricalTeam = makeTeam({
@@ -203,7 +203,7 @@ export const barcelona201415: HistoricalTeam = makeTeam({
   styleTags: ["MSN Front Three", "Direct Combinations", "Wide Overloads", "Vertical Attack", "Counter Attack"],
   summary:
     "Luis Enrique's treble winners. Messi, Suárez and Neymar formed one of the most lethal forward lines ever assembled, with Busquets still stitching the midfield together.",
-  seoTitle: "Barcelona 2014/15 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Barcelona 2014/15 Squad — MSN Treble, Luis Enrique",
   seoDescription:
-    "Explore the Barcelona 2014/15 squad, starting XI, formation and team ratings, then simulate the MSN treble side against football teams from any era.",
+    "Barcelona 2014/15 squad: Messi, Suárez and Neymar's treble season under Luis Enrique. Starting XI, 4-3-3, ratings — not Guardiola's earlier sides.",
 })

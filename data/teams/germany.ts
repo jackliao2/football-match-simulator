@@ -65,9 +65,9 @@ export const germany2014: HistoricalTeam = makeTeam({
   styleTags: ["Positional Play", "Sweeper Keeper", "Midfield Control", "High Press", "Squad Depth"],
   summary:
     "Löw's 2014 Germany. Kroos and Schweinsteiger running the match, Müller finding space, Neuer rewriting the goalkeeper role, and a title in Rio.",
-  seoTitle: "Germany 2014 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Germany 2014 World Cup Squad — Löw, 7–1, Brazil",
   seoDescription:
-    "Explore the Germany 2014 World Cup squad, starting XI, formation and team ratings, then simulate Löw's world champions against teams from any era.",
+    "Germany 2014 World Cup squad: Löw's winners in Brazil. Müller, Kroos, a 7–1, a positional tournament — not Beckenbauer's 1990 side.",
 })
 
 export const germany1990: HistoricalTeam = makeTeam({
@@ -132,9 +132,9 @@ export const germany1990: HistoricalTeam = makeTeam({
   styleTags: ["Tournament Steel", "Box-to-Box", "Set Pieces", "Direct Attack", "Experience"],
   summary:
     "Beckenbauer's 1990 West Germany. Matthäus as captain and engine, Klinsmann and Völler as the spear, Brehme writing the last line in Rome.",
-  seoTitle: "West Germany 1990 Squad, Lineup, Formation & Ratings",
+  seoTitle: "West Germany 1990 World Cup Squad — Beckenbauer, Matthäus",
   seoDescription:
-    "Explore the West Germany 1990 World Cup squad, starting XI, formation and team ratings, then simulate Beckenbauer's world champions against teams from any era.",
+    "West Germany 1990 World Cup squad: Beckenbauer's winners. Matthäus through the middle, a sweeper, a final that was ugly on purpose — not 2014.",
 })
 
 export const germany2006: HistoricalTeam = makeTeam({

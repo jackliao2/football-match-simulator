@@ -130,7 +130,7 @@ export const arsenal199798: HistoricalTeam = makeTeam({
   styleTags: ["Two Strikers", "Wide Overloads", "Technical Midfield", "Counter Attack", "Defensive Steel"],
   summary:
     "Wenger's first Arsenal. Vieira and Petit as the midfield, Bergkamp as the brain, Overmars as the break, and a double that rewired English football.",
-  seoTitle: "Arsenal 1997/98 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Arsenal 1997/98 Squad — Wenger's First Double",
   seoDescription:
-    "Explore the Arsenal 1997/98 squad, starting XI, formation and ratings, then simulate Wenger's first double winners against teams from any era.",
+    "Arsenal 1997/98 squad: Wenger's first Double. Overmars, Anelka, Vieira still building the later Invincibles core. Lineup, ratings, playable.",
 })

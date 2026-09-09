@@ -63,9 +63,9 @@ export const denmark1992: HistoricalTeam = makeTeam({
   styleTags: ["Low Block", "Counter Attack", "Star Goalkeeper", "Tournament Steel", "Set Pieces"],
   summary:
     "Møller Nielsen's 1992 Denmark. A side that was not even supposed to be there, Schmeichel as the last line, and a European title that still reads like a short story.",
-  seoTitle: "Denmark 1992 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Denmark 1992 Euros Squad — Late Invite, Schmeichel",
   seoDescription:
-    "Explore the Denmark 1992 Euros squad, starting XI, formation and team ratings, then simulate the shock European champions against teams from any era.",
+    "Denmark 1992 Euros squad: Møller Nielsen's shock champions after a fax. Schmeichel, the Laudrup question, a tournament won the ugly way.",
 })
 
 export const denmark1998: HistoricalTeam = makeTeam({

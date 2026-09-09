@@ -65,9 +65,9 @@ export const manchesterCity202223: HistoricalTeam = makeTeam({
   styleTags: ["Positional Play", "Inverted Fullbacks", "Control Possession", "Haaland Finishing", "Rest Defence"],
   summary:
     "Guardiola's treble City. Haaland scoring at a historic rate, De Bruyne still the supply line, Rodri holding the structure, and Stones stepping into midfield.",
-  seoTitle: "Manchester City 2022/23 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Manchester City 2022/23 Squad — Haaland Treble",
   seoDescription:
-    "Explore the Manchester City 2022/23 squad, starting XI, formation and team ratings, then simulate Guardiola's treble winners against football teams from any era.",
+    "Manchester City 2022/23 squad: Guardiola's English treble. Haaland, Rodri, Stones stepping into midfield — not the 100-point 2017/18 side.",
 })
 
 export const manchesterCity201718: HistoricalTeam = makeTeam({
@@ -131,7 +131,7 @@ export const manchesterCity201718: HistoricalTeam = makeTeam({
   styleTags: ["Positional Play", "Wide Forwards", "Control Possession", "Chance Creation", "High Press"],
   summary:
     "Guardiola's 100-point City. De Bruyne and Silva as the supply, Agüero as the finish, Sané and Sterling as the stretch, and a league season that looked like a video game.",
-  seoTitle: "Manchester City 2017/18 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Manchester City 2017/18 Squad — 100 Points, 106 Goals",
   seoDescription:
-    "Explore the Manchester City 2017/18 squad, starting XI, formation and ratings, then simulate Guardiola's 100-point side against teams from any era.",
+    "Manchester City 2017/18 squad: Guardiola's first title, 100 points, Sterling–Agüero–Sané. A league machine, not the 2023 treble.",
 })

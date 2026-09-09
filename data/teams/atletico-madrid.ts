@@ -62,9 +62,9 @@ export const atleticoMadrid201314: HistoricalTeam = makeTeam({
   styleTags: ["Low Block", "Set Pieces", "Aggressive Press", "Direct Attack", "Defensive Steel"],
   summary:
     "Simeone's 2013/14 Atlético. Courtois and Godín as the wall, Costa as the battering ram, and a league title stolen from Madrid and Barcelona.",
-  seoTitle: "Atlético Madrid 2013/14 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Atlético 2013/14 Squad — Simeone Takes the League",
   seoDescription:
-    "Explore the Atlético Madrid 2013/14 squad, starting XI, formation and ratings, then simulate Simeone's La Liga winners against teams from any era.",
+    "Atlético Madrid 2013/14 squad: Simeone's champions, the year they took the title from Barcelona and Madrid. Godín, Costa, a low block that travelled.",
 })
 
 export const atleticoMadrid202021: HistoricalTeam = makeTeam({

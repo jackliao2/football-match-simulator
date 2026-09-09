@@ -62,9 +62,9 @@ export const tottenham201617: HistoricalTeam = makeTeam({
   styleTags: ["High Press", "Vertical Runs", "Star Forwards", "Youth Core", "Chance Creation"],
   summary:
     "Pochettino's 2016/17 Tottenham. Kane scoring, Alli arriving, Eriksen supplying, Walker bombing on, and 86 points that still were not enough for the title.",
-  seoTitle: "Tottenham 2016/17 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Tottenham 2016/17 Squad — 86 Points, Pochettino's Peak",
   seoDescription:
-    "Explore the Tottenham 2016/17 squad, starting XI, formation and ratings, then simulate Pochettino's 86-point side against teams from any era.",
+    "Tottenham 2016/17 squad: Pochettino's league peak, 86 points, Kane and Son. Not the 2018/19 Champions League finalists.",
 })
 
 export const tottenham201819: HistoricalTeam = makeTeam({
@@ -128,7 +128,7 @@ export const tottenham201819: HistoricalTeam = makeTeam({
   styleTags: ["Counter Attack", "Star Forwards", "Tournament Steel", "Wide Play", "High Press"],
   summary:
     "Pochettino's 2018/19 Tottenham. A Champions League run built on Son, Kane, Eriksen and one night in Amsterdam — then a final in Madrid that Liverpool ended.",
-  seoTitle: "Tottenham 2018/19 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Tottenham 2018/19 Squad — Champions League Finalists",
   seoDescription:
-    "Explore the Tottenham 2018/19 squad, starting XI, formation and ratings, then simulate Pochettino's Champions League finalists against teams from any era.",
+    "Tottenham 2018/19 squad: Pochettino's Madrid finalists. Kane, Son, a European night that is not the 86-point league season.",
 })

@@ -66,9 +66,9 @@ export const france1998: HistoricalTeam = makeTeam({
   styleTags: ["Zidane Control", "Defensive Steel", "Wide Pace", "Set-Piece Threat", "Compact Midfield"],
   summary:
     "Jacquet's 1998 France. Zidane as the artist, Desailly and Thuram as the steel, and a home World Cup sealed 3–0 against Brazil.",
-  seoTitle: "France 1998 Squad, Lineup, Formation & Ratings",
+  seoTitle: "France 1998 World Cup Squad — Zidane, Thuram, Home Soil",
   seoDescription:
-    "Explore the France 1998 World Cup squad, starting XI, formation and team ratings, then simulate Zidane's home winners against teams from any era.",
+    "France 1998 World Cup squad: Jacquet's home winners. Zidane's two finals headers, Thuram, Desailly, a midfield with Deschamps as ballast.",
 })
 
 export const france2018: HistoricalTeam = makeTeam({
@@ -135,9 +135,9 @@ export const france2018: HistoricalTeam = makeTeam({
   styleTags: ["Vertical Counter", "Athletic Midfield", "Mbappé Transition", "Deep Block", "Set Pieces"],
   summary:
     "Deschamps' 2018 France. Kanté and Pogba as the engine, Griezmann between the lines, Mbappé destroying teams on the break.",
-  seoTitle: "France 2018 Squad, Lineup, Formation & Ratings",
+  seoTitle: "France 2018 World Cup Squad — Mbappé, Kanté, Griezmann",
   seoDescription:
-    "Explore the France 2018 World Cup squad, starting XI, formation and team ratings, then simulate Deschamps' winners against teams from any era.",
+    "France 2018 World Cup squad: Deschamps winning as manager. Mbappé in open field, Kanté, Griezmann — a transition champion, not 1998.",
 })
 
 export const france1984: HistoricalTeam = makeTeam({
@@ -202,7 +202,7 @@ export const france1984: HistoricalTeam = makeTeam({
   styleTags: ["Star Midfield", "Technical Midfield", "Home Soil", "Chance Creation", "Individual Brilliance"],
   summary:
     "Hidalgo's 1984 France. Platini as the tournament, the Carré Magique as the midfield, and a European title won at home the way French football still measures itself.",
-  seoTitle: "France 1984 Squad, Lineup, Formation & Ratings",
+  seoTitle: "France 1984 Euros Squad — Platini's Carré Magique",
   seoDescription:
-    "Explore the France 1984 Euros squad, starting XI, formation and team ratings, then simulate Platini's Carré Magique against teams from any era.",
+    "France 1984 Euros squad: Platini's European champions. The Carré Magique midfield, a home tournament, not Zidane's later World Cup.",
 })

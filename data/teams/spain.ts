@@ -65,9 +65,9 @@ export const spain2010: HistoricalTeam = makeTeam({
   styleTags: ["Tiki-Taka", "Midfield Dominance", "Positional Play", "Patient Press", "Short Passing"],
   summary:
     "Del Bosque's 2010 Spain. Xavi, Iniesta and Busquets as the brain, Villa as the finisher, and a World Cup won the Barcelona way.",
-  seoTitle: "Spain 2010 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Spain 2010 World Cup Squad — Iniesta, Tiki-Taka, Johannesburg",
   seoDescription:
-    "Explore the Spain 2010 World Cup squad, starting XI, formation and team ratings, then simulate the tiki-taka world champions against teams from any era.",
+    "Spain 2010 World Cup squad: Del Bosque's winners. Xavi, Iniesta, Busquets, Villa, Iniesta in extra time — tiki-taka as a World Cup, not only a Euro.",
 })
 
 export const spain2012: HistoricalTeam = makeTeam({
@@ -132,7 +132,7 @@ export const spain2012: HistoricalTeam = makeTeam({
   styleTags: ["Tiki-Taka", "False Nine", "Midfield Dominance", "Positional Play", "Short Passing"],
   summary:
     "Del Bosque's 2012 Spain. Fàbregas as the false nine, Xavi and Iniesta as the brain, and a 4–0 final that closed the tiki-taka era.",
-  seoTitle: "Spain 2012 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Spain 2012 Euros Squad — Fàbregas False Nine, 4–0 Final",
   seoDescription:
-    "Explore the Spain 2012 Euros squad, starting XI, formation and team ratings, then simulate the tiki-taka European champions against teams from any era.",
+    "Spain 2012 Euros squad: Del Bosque's encore. Fàbregas as the false nine, a 4–0 final that closed the tiki-taka era — not the 2010 World Cup page.",
 })

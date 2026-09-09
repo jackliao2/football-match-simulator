@@ -62,9 +62,9 @@ export const ajax199495: HistoricalTeam = makeTeam({
   styleTags: ["Total Football", "Youth Core", "Pressing", "Positional Play", "Wide Overloads"],
   summary:
     "Van Gaal's 1994/95 Ajax. An unbeaten league, a Champions League in Vienna, and a generation — Kluivert, Seedorf, Davids, Overmars — arriving all at once.",
-  seoTitle: "Ajax 1994/95 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Ajax 1994/95 Squad — Van Gaal's Unbeaten European Cup",
   seoDescription:
-    "Explore the Ajax 1994/95 squad, starting XI, formation and ratings, then simulate Van Gaal's unbeaten Champions League winners against teams from any era.",
+    "Ajax 1994/95 squad: Van Gaal's young European Cup winners. Kluivert, Overmars, the children of Total Football — not Ten Hag's later run.",
 })
 
 export const ajax201819: HistoricalTeam = makeTeam({
@@ -128,7 +128,7 @@ export const ajax201819: HistoricalTeam = makeTeam({
   styleTags: ["Youth Core", "Pressing", "Positional Play", "Wide Overloads", "Chance Creation"],
   summary:
     "Ten Hag's 2018/19 Ajax. Kids and Tadić knocking Real Madrid out of the Bernabéu, then a semi-final that slipped in extra time against Tottenham.",
-  seoTitle: "Ajax 2018/19 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Ajax 2018/19 Squad — Ten Hag, the Bernabéu Night",
   seoDescription:
-    "Explore the Ajax 2018/19 squad, starting XI, formation and ratings, then simulate Ten Hag's Champions League semi-finalists against teams from any era.",
+    "Ajax 2018/19 squad: Ten Hag knocking Madrid out of their own stadium. De Jong, Ziyech, De Ligt — not Van Gaal's 1995 winners.",
 })

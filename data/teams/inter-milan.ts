@@ -65,9 +65,9 @@ export const interMilan200910: HistoricalTeam = makeTeam({
   styleTags: ["Counter Attack", "Compact Block", "Sneijder Creation", "Aerial Threat", "Wide Fullbacks"],
   summary:
     "Mourinho's treble Inter. Milito scoring the big goals, Sneijder threading them, Eto'o working both ends, and a defence that refused to yield in Europe.",
-  seoTitle: "Inter Milan 2009/10 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Inter 2009/10 Squad — Mourinho's Treble, Sneijder",
   seoDescription:
-    "Explore the Inter Milan 2009/10 squad, starting XI, formation and team ratings, then simulate Mourinho's treble winners against football teams from any era.",
+    "Inter Milan 2009/10 squad: Mourinho's treble. Sneijder, Milito, a Champions League won away from comforts — not Trapattoni's 1989 title.",
 })
 
 export const interMilan198889: HistoricalTeam = makeTeam({
@@ -131,7 +131,7 @@ export const interMilan198889: HistoricalTeam = makeTeam({
   styleTags: ["Box-to-Box", "Two Strikers", "Set Pieces", "Defensive Steel", "Star Midfield"],
   summary:
     "Trapattoni's 1988/89 Inter. Matthäus as the engine, Zenga as the wall, Klinsmann as the finish, and a scudetto that still looks like the German Inter.",
-  seoTitle: "Inter Milan 1988/89 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Inter 1988/89 Squad — Matthäus, Klinsmann, Record Title",
   seoDescription:
-    "Explore the Inter Milan 1988/89 squad, starting XI, formation and ratings, then simulate Trapattoni's record scudetto side against teams from any era.",
+    "Inter Milan 1988/89 squad: Trapattoni's record Scudetto. Matthäus, Klinsmann, Brehme — not Mourinho's later treble.",
 })

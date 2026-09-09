@@ -65,9 +65,9 @@ export const acMilan200607: HistoricalTeam = makeTeam({
   styleTags: ["Christmas Tree", "Pirlo Tempo", "Defensive Steel", "Kaká Carries", "Experienced Core"],
   summary:
     "Ancelotti's Christmas-tree Milan. Pirlo running the match, Kaká carrying it, Nesta and Maldini locking the back, Inzaghi finishing the European nights.",
-  seoTitle: "AC Milan 2006/07 Squad, Lineup, Formation & Ratings",
+  seoTitle: "AC Milan 2006/07 Squad — Kaká, Pirlo, Athens",
   seoDescription:
-    "Explore the AC Milan 2006/07 squad, starting XI, formation and team ratings, then simulate Ancelotti's Athens winners against football teams from any era.",
+    "AC Milan 2006/07 squad: Ancelotti's Christmas tree. Pirlo running the match, Kaká carrying it, Inzaghi finishing Athens against Liverpool.",
 })
 
 export const acMilan198889: HistoricalTeam = makeTeam({
@@ -131,7 +131,7 @@ export const acMilan198889: HistoricalTeam = makeTeam({
   styleTags: ["High Press", "Offside Trap", "Dutch Pair", "Zonal Marking", "Vertical Runs"],
   summary:
     "Sacchi's 1988/89 Milan. Baresi as the brain of the back four, Gullit and Van Basten as the spear, and a 4–0 European Cup final that still looks modern.",
-  seoTitle: "AC Milan 1988/89 Squad, Lineup, Formation & Ratings",
+  seoTitle: "AC Milan 1988/89 Squad — Sacchi, Baresi, Dutch Trio",
   seoDescription:
-    "Explore the AC Milan 1988/89 squad, starting XI, formation and ratings, then simulate Sacchi's European Cup winners against teams from any era.",
+    "AC Milan 1988/89 squad: Sacchi's press, Baresi stepping with the line, Gullit and Van Basten as the spear. 4–0 in the European Cup final.",
 })

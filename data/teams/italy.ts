@@ -65,9 +65,9 @@ export const italy2006: HistoricalTeam = makeTeam({
   styleTags: ["Defensive Mastery", "Pirlo Tempo", "Counter Attack", "Set-Piece Threat", "Experience"],
   summary:
     "Lippi's 2006 Italy. Buffon, Cannavaro and a midfield of Pirlo and Gattuso. A World Cup won in Berlin after a night that became folklore.",
-  seoTitle: "Italy 2006 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Italy 2006 World Cup Squad — Lippi, Cannavaro, Pirlo",
   seoDescription:
-    "Explore the Italy 2006 World Cup squad, starting XI, formation and team ratings, then simulate Lippi's world champions against teams from any era.",
+    "Italy 2006 World Cup squad: Lippi's Berlin winners. Buffon, Cannavaro, Pirlo, Grosso's semi-final, a shootout after Zidane's red. Knockout XI and ratings.",
 })
 
 export const italy1994: HistoricalTeam = makeTeam({
@@ -199,7 +199,7 @@ export const italy2021: HistoricalTeam = makeTeam({
   styleTags: ["Positional Play", "High Press", "Technical Midfield", "Wide Forwards", "Tournament Steel"],
   summary:
     "Mancini's 2021 Italy. Verratti and Jorginho keeping the ball, Chiesa breaking games open, and a European title won on the same Wembley turf England wanted.",
-  seoTitle: "Italy 2021 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Italy 2021 Euros Squad — Mancini, Chiesa, Wembley",
   seoDescription:
-    "Explore the Italy 2021 Euros squad, starting XI, formation and team ratings, then simulate Mancini's European champions against teams from any era.",
+    "Italy 2021 Euros squad: Mancini's European champions. Verratti and Jorginho keeping the ball, Chiesa breaking games, Donnarumma's shootout at Wembley.",
 })

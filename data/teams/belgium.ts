@@ -63,9 +63,9 @@ export const belgium2018: HistoricalTeam = makeTeam({
   styleTags: ["Creative Overload", "Wide Wing-Backs", "Counter Attack", "Technical Midfield", "Star Forwards"],
   summary:
     "Martínez's 2018 Belgium. De Bruyne and Hazard as the creators, Lukaku as the finish, and a golden generation that beat Brazil and finished third.",
-  seoTitle: "Belgium 2018 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Belgium 2018 World Cup Squad — Hazard, De Bruyne, Lukaku",
   seoDescription:
-    "Explore the Belgium 2018 World Cup squad, starting XI, formation and team ratings, then simulate the golden generation against teams from any era.",
+    "Belgium 2018 World Cup squad: the golden generation's semi-final. Hazard, De Bruyne, Lukaku — a midfield that still asks if it was wasted.",
 })
 
 export const belgium1986: HistoricalTeam = makeTeam({

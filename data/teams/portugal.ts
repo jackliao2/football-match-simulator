@@ -63,9 +63,9 @@ export const portugal2016: HistoricalTeam = makeTeam({
   styleTags: ["Low Block", "Counter Attack", "Set Pieces", "Tournament Steel", "Experience"],
   summary:
     "Santos' 2016 Portugal. A stubborn tournament side that absorbed, countered, and won Europe the hard way after Ronaldo left the final early.",
-  seoTitle: "Portugal 2016 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Portugal 2016 Euros Squad — Santos, Éder, Champions",
   seoDescription:
-    "Explore the Portugal 2016 Euros squad, starting XI, formation and team ratings, then simulate the European champions against teams from any era.",
+    "Portugal 2016 Euros squad: Fernando Santos' European champions. Ronaldo leaving the final early, Éder finishing — not the 2004 home final they lost.",
 })
 
 export const portugal2004: HistoricalTeam = makeTeam({
