@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest"
 import nextConfig from "../next.config"
 import robots from "@/app/robots"
 import { CLUB_COMPARES, compareFaqs, compareSearchDescription, compareSeoTitle } from "@/data/compare"
-import { clubs, nations } from "@/data/clubs"
+import { clubs, getClub, nations } from "@/data/clubs"
 import { HUB_COPY } from "@/data/hub-copy"
 import { getPrimeEntity, primeEntities } from "@/data/prime"
 import { getPrimeEditorial } from "@/data/prime-editorial"
@@ -10,8 +10,9 @@ import { isIndexableTeamPage } from "@/data/team-editorial"
 import { getTeam, getTeamsByClub, teams } from "@/data/teams"
 import { FEATURED_MATCHUPS } from "@/data/matchups"
 import { matchupFeature } from "@/data/vs-editorial"
-import { BEST_TEAM, COMPARE_HUB, PRIME_HUB, VS_HUB } from "@/data/collection-copy"
+import { BEST_TEAM, COMPARE_HUB, HOME_SECTIONS, PRIME_HUB, VS_HUB } from "@/data/collection-copy"
 import { orgHubCopy, firstSentence, teamH1, teamPageCopy, vsPageCopy } from "@/lib/page-copy"
+import { compareOgCopy, teamOgCopy } from "@/lib/og-copy"
 import { informalSeason, isCurrentSquad, modelledCurrentSquadNote, squadKeywords } from "@/lib/seo"
 import { teamFaqs } from "@/lib/team-faqs"
 import { getSiteUrl } from "@/lib/site"
@@ -220,7 +221,11 @@ describe("GSC landing pages", () => {
       expect(headings.has(copy.sectionHeading), copy.sectionHeading).toBe(false)
       headings.add(copy.sectionHeading)
       const feature = matchupFeature(home, away)
-      if (feature) expect(copy.kicker).toBe(feature.title)
+      expect(copy.title, `${a}-vs-${b}`).not.toMatch(/Who Would Win/)
+      if (feature) {
+        expect(copy.kicker).toBe(feature.title)
+        expect(copy.title).toContain(feature.title)
+      }
     }
   })
 
@@ -259,6 +264,8 @@ describe("GSC landing pages", () => {
     expect(VS_HUB.h1).toMatch(/2010\/11/)
     expect(VS_HUB.title).toMatch(/Madrid 2016\/17/)
     expect(VS_HUB.kicker).toBe("Dream matches")
+    expect(VS_HUB.crumb).toBe("Matchups")
+    expect(VS_HUB.crumb).not.toBe(VS_HUB.kicker)
 
     expect(COMPARE_HUB.h1).not.toBe("Who is better?")
     expect(COMPARE_HUB.title).not.toMatch(/^Who Is Better\?/)
@@ -270,6 +277,11 @@ describe("GSC landing pages", () => {
     expect(BEST_TEAM.title).toMatch(/2010\/11/)
     expect(BEST_TEAM.kicker).toMatch(/best football team ever/i)
     expect(BEST_TEAM.homeCardTitle).toMatch(/2010\/11/)
+    expect(HOME_SECTIONS.matchupsTitle).not.toBe("Popular dream matches")
+    expect(HOME_SECTIONS.matchupsTitle).toMatch(/2010\/11/)
+    expect(HOME_SECTIONS.clubsTitle).not.toBe("Legendary clubs")
+    expect(HOME_SECTIONS.nationsTitle).not.toBe("Legendary nations")
+    expect(HOME_SECTIONS.howTitle).not.toBe("How the football simulator works")
   })
 
   it("gives compare hub cards unique leads instead of Who is better, X or Y", () => {
@@ -279,6 +291,26 @@ describe("GSC landing pages", () => {
       expect(line, pair.slug).not.toMatch(/^Who is better,/i)
       expect(leads.has(line), line).toBe(false)
       leads.add(line)
+    }
+  })
+
+  it("gives OG cards a unique line instead of factory squad or Who is better chrome", () => {
+    const subtitles = new Set<string>()
+    for (const team of teams) {
+      const og = teamOgCopy(team)
+      expect(og.subtitle, team.id).not.toMatch(/Squad, lineup, formation/i)
+      expect(subtitles.has(og.subtitle), og.subtitle).toBe(false)
+      subtitles.add(og.subtitle)
+    }
+    const headings = new Set<string>()
+    for (const pair of CLUB_COMPARES) {
+      const left = getClub(pair.leftClubId)!
+      const right = getClub(pair.rightClubId)!
+      const og = compareOgCopy(pair, left.name, right.name)
+      expect(og.heading, pair.slug).not.toMatch(/^Who is better/i)
+      expect(og.heading, pair.slug).not.toMatch(/ or .+\?$/)
+      expect(headings.has(og.heading), og.heading).toBe(false)
+      headings.add(og.heading)
     }
   })
 

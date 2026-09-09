@@ -7,7 +7,7 @@ import {
   todaysDebate,
   vsPath,
 } from "@/data/matchups"
-import { BEST_TEAM, PRIME_HUB } from "@/data/collection-copy"
+import { BEST_TEAM, HOME_SECTIONS, PRIME_HUB } from "@/data/collection-copy"
 import { primeEntities } from "@/data/prime"
 import { getTeam } from "@/data/teams"
 import { DreamMatchCarousel } from "@/components/ui/DreamMatchCarousel"
@@ -148,8 +148,8 @@ export default function HomePage() {
       <section className="home-section">
         <div className="home-section-head">
           <div>
-            <p className="home-section-kicker">Dream matches</p>
-            <h2 className="home-section-title">Popular dream matches</h2>
+            <p className="home-section-kicker">{HOME_SECTIONS.matchupsKicker}</p>
+            <h2 className="home-section-title">{HOME_SECTIONS.matchupsTitle}</h2>
           </div>
           <Link href="/vs" className="home-section-link">
             All matchups →
@@ -162,7 +162,7 @@ export default function HomePage() {
       </section>
 
       <section className="home-editorial-section">
-        <EditorialHeading kicker="Three steps" title="How the football simulator works" />
+        <EditorialHeading kicker="Three steps" title={HOME_SECTIONS.howTitle} />
         <div className="home-how-grid">
           {HOW_STEPS.map(([step, title, copy]) => (
             <div key={step} className="home-how-card">
@@ -177,8 +177,8 @@ export default function HomePage() {
       <section className="home-section">
         <div className="home-section-head">
           <div>
-            <p className="home-section-kicker">Clubs</p>
-            <h2 className="home-section-title">Legendary clubs</h2>
+            <p className="home-section-kicker">{HOME_SECTIONS.clubsKicker}</p>
+            <h2 className="home-section-title">{HOME_SECTIONS.clubsTitle}</h2>
           </div>
           <Link href="/teams" className="home-section-link">
             All club teams →
@@ -194,8 +194,8 @@ export default function HomePage() {
       <section className="home-section">
         <div className="home-section-head">
           <div>
-            <p className="home-section-kicker">Nations</p>
-            <h2 className="home-section-title">Legendary nations</h2>
+            <p className="home-section-kicker">{HOME_SECTIONS.nationsKicker}</p>
+            <h2 className="home-section-title">{HOME_SECTIONS.nationsTitle}</h2>
           </div>
           <Link href="/national-teams" className="home-section-link">
             All national teams →

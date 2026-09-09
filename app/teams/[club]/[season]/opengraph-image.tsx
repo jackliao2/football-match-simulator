@@ -1,7 +1,8 @@
 import { ImageResponse } from "next/og"
 import { getTeamByClubSeason } from "@/data/teams"
+import { teamOgCopy } from "@/lib/og-copy"
 
-export const alt = "Historical football squad"
+export const alt = "Named historical football season"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
@@ -12,10 +13,7 @@ export default async function TeamOpenGraphImage({
 }) {
   const { club, season } = await params
   const team = getTeamByClubSeason(club, season)
-  const title = team ? `${team.clubName} ${team.displaySeason}` : "Historical Team"
-  const subtitle = team
-    ? "Squad, lineup, formation and ratings"
-    : "LegendaryMatch"
+  const copy = team ? teamOgCopy(team) : null
 
   return new ImageResponse(
     (
@@ -33,10 +31,12 @@ export default async function TeamOpenGraphImage({
         }}
       >
         <div style={{ fontSize: 20, letterSpacing: 6, color: "#d4b45a" }}>
-          {team ? `[ ${team.clubCode} ]` : "LM"}
+          {copy?.kicker ?? "LM"}
         </div>
-        <div style={{ fontSize: 52, marginTop: 24, lineHeight: 1.15 }}>{title}</div>
-        <div style={{ fontSize: 24, marginTop: 16, color: "#7e9876" }}>{subtitle}</div>
+        <div style={{ fontSize: 52, marginTop: 24, lineHeight: 1.15 }}>{copy?.heading ?? "Historical Team"}</div>
+        <div style={{ fontSize: 24, marginTop: 16, color: "#7e9876", lineHeight: 1.3 }}>
+          {copy?.subtitle ?? "LegendaryMatch"}
+        </div>
         {team ? (
           <div style={{ display: "flex", gap: 28, marginTop: 40, fontSize: 22, color: "#d4b45a" }}>
             <span>{`ATK ${team.attackRating}`}</span>

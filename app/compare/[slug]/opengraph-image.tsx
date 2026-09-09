@@ -1,8 +1,9 @@
 import { ImageResponse } from "next/og"
 import { resolveClubCompare } from "@/data/compare"
 import { getClub } from "@/data/clubs"
+import { compareOgCopy } from "@/lib/og-copy"
 
-export const alt = "Who is better?"
+export const alt = "Club or nation comparison on LegendaryMatch"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
@@ -15,8 +16,14 @@ export default async function CompareOpenGraphImage({
   const pair = resolveClubCompare(slug)
   const left = pair ? getClub(pair.leftClubId) : undefined
   const right = pair ? getClub(pair.rightClubId) : undefined
-  const title = left && right ? `${left.name} or ${right.name}?` : "Who is better?"
-  const call = pair?.verdictHeading ?? "Compare two primes, then simulate the night."
+  const copy =
+    pair && left && right
+      ? compareOgCopy(pair, left.name, right.name)
+      : {
+          kicker: "WHO IS BETTER",
+          heading: "Compare two primes",
+          subtitle: "Then simulate the night.",
+        }
 
   return new ImageResponse(
     (
@@ -34,11 +41,11 @@ export default async function CompareOpenGraphImage({
         }}
       >
         <div style={{ display: "flex", fontSize: 20, letterSpacing: 6, color: "#d4b45a" }}>
-          WHO IS BETTER
+          {copy.kicker}
         </div>
-        <div style={{ display: "flex", fontSize: 52, marginTop: 24, lineHeight: 1.15 }}>{title}</div>
+        <div style={{ display: "flex", fontSize: 48, marginTop: 24, lineHeight: 1.15 }}>{copy.heading}</div>
         <div style={{ display: "flex", fontSize: 26, marginTop: 20, color: "#f0d57a", lineHeight: 1.3 }}>
-          {call}
+          {copy.subtitle}
         </div>
         <div style={{ display: "flex", marginTop: 36, fontSize: 22, color: "#7e9876" }}>
           LegendaryMatch — then simulate the primes

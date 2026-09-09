@@ -8,11 +8,22 @@ export const PRIME_HUB = {
   homeHeading: "Barcelona 2010/11. Liverpool 2018/19. United 07/08.",
 } as const
 
+export const HOME_SECTIONS = {
+  matchupsKicker: "Dream matches",
+  matchupsTitle: "Barcelona 2010/11 vs Madrid 2016/17",
+  clubsKicker: "Clubs",
+  clubsTitle: "Guardiola’s Barça, Madrid 2016/17, United’s treble",
+  nationsKicker: "Nations",
+  nationsTitle: "Brazil 1970, Maradona’s 86, Spain 2010",
+  howTitle: "Pick two seasons. Play one night. Test the argument.",
+} as const
+
 export const VS_HUB = {
   title: "Barcelona 2010/11 vs Madrid 2016/17 — Dream Matches You Can Play",
   description:
     "Dream football matchups you can actually play: Barcelona 2010/11 vs Madrid 2016/17, Brazil 1970 vs Spain 2010, United 1999 vs Barça. Simulated scores and who-would-win percentages, not archive results.",
   kicker: "Dream matches",
+  crumb: "Matchups",
   h1: "Barcelona 2010/11 vs Madrid 2016/17, Brazil 1970 vs Spain 2010",
   lead: "No fixture filler and no current-season pairings just because they are new. This is a short, hand-picked card of sides that belong in the greatest-team argument.",
 } as const

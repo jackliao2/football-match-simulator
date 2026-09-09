@@ -116,7 +116,7 @@ export function teamPageCopy(team: HistoricalTeam, opponentArg?: HistoricalTeam)
 
   const matchupHeading = opponent
     ? `Against ${opponent.clubName} ${opponent.displaySeason}`
-    : "Dream matches from here"
+    : `${team.clubName} ${team.displaySeason} against another peak`
 
   return {
     title,
@@ -321,7 +321,7 @@ export function vsPageCopy(home: HistoricalTeam, away: HistoricalTeam, runs: num
   const homeTag = home.styleTags[0] ?? home.formation
   const awayTag = away.styleTags[0] ?? away.formation
   return {
-    title: `${matchup}: Who Would Win?`,
+    title: feature ? `${home.clubName} vs ${away.clubName}: ${feature.title}` : matchup,
     description: clip(`${editorial} Compare the squads and ${runs} simulated matches.`),
     lead: editorial,
     editorial,

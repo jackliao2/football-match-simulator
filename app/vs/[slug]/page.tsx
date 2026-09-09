@@ -12,6 +12,7 @@ import { EditorialByline, personSchema } from "@/components/ui/EditorialByline"
 import { allVsPairs, isPublishedMatchup, vsSimulationRuns } from "@/data/matchups"
 import { getTeam } from "@/data/teams"
 import { matchupFeature } from "@/data/vs-editorial"
+import { VS_HUB } from "@/data/collection-copy"
 import { canonicalVsSlug, parseVsSlug } from "@/lib/match-id"
 import { vsPageCopy } from "@/lib/page-copy"
 import { teamPath } from "@/lib/paths"
@@ -69,11 +70,11 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
           kicker="Playable matchup"
           title={`${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}`}
           lead="Both squads are in the database, but this pairing is not one of the curated dream-match dossiers. Simulate it here, or open the written matchups."
-          crumbs={[{ href: "/vs", label: "Dream matches" }]}
+          crumbs={[{ href: "/vs", label: VS_HUB.crumb }]}
         />
         <MatchSetupGate defaultHome={home.id} defaultAway={away.id} />
         <Link href="/vs" className="font-mono text-sm text-gold hover:text-gold-2">
-          Browse curated dream matches →
+          Browse the matchup card →
         </Link>
       </div>
     )
@@ -110,8 +111,8 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Dream matches", item: absoluteUrl("/vs") },
-              { "@type": "ListItem", position: 2, name: `${home.clubName} vs ${away.clubName}`, item: absoluteUrl(`/vs/${slug}`) },
+              { "@type": "ListItem", position: 1, name: VS_HUB.crumb, item: absoluteUrl("/vs") },
+              { "@type": "ListItem", position: 2, name: `${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}`, item: absoluteUrl(`/vs/${slug}`) },
             ],
           }),
         }}
@@ -136,7 +137,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
         kicker={copy.kicker}
         title={`${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}`}
         lead={copy.lead}
-        crumbs={[{ href: "/vs", label: "Dream matches" }]}
+        crumbs={[{ href: "/vs", label: VS_HUB.crumb }]}
       />
       {feature ? <EditorialByline /> : null}
 
