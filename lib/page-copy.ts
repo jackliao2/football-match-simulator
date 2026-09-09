@@ -181,7 +181,7 @@ function buildTitle(
   if (bits.current) {
     const options = [
       `${name} ${year} squad`,
-      `${name} ${year} lineup and formation`,
+      `${name} ${year} snapshot`,
       `${team.manager}'s ${name} ${year}`,
       `${name} ${year} season squad`,
     ]

@@ -888,7 +888,11 @@ function TeamColumn({
       </div>
 
       <div className="faceoff-squad">
-        <FaceOffSquad squad={squad} benchLabel={benchLabel} />
+        <FaceOffSquad
+          squad={squad}
+          xiLabel={`${team.clubName} ${team.displaySeason} XI`}
+          benchLabel={`${team.clubName} ${team.displaySeason} ${benchLabel}`}
+        />
       </div>
       <input type="hidden" name={name} value={team.id} />
     </article>

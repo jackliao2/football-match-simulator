@@ -187,7 +187,7 @@ export const france2026: HistoricalTeam = makeTeam({
     "Deschamps' 2026 France. Mbappé through the middle, Dembélé as the chaos, Saliba as the wall, and a generation that still expects a final.",
   seoTitle: "France 2026 Squad — Modelled Deschamps XI, Mbappé",
   seoDescription:
-    "Deschamps' modelled 2026 France: Mbappé through the middle, Dembélé as the chaos, Saliba as the wall. A playable cycle, not a FIFA roster.",
+    "Deschamps' modelled 2026 France: Mbappé through the middle, Dembélé as the chaos, Saliba as the wall. A modelled tournament-cycle snapshot, not a FIFA roster.",
 })
 
 export const spain2026: HistoricalTeam = makeTeam({
@@ -628,7 +628,7 @@ export const croatia2026: HistoricalTeam = makeTeam({
     "Dalić's 2026 Croatia. Modrić still the brain, Gvardiol as the modern wall, and a midfield country that never arrives underdressed.",
   seoTitle: "Croatia 2026 Squad — Modelled Dalić XI, Modrić",
   seoDescription:
-    "Dalić's modelled 2026 Croatia: Modrić still the brain, Gvardiol as the modern wall. A midfield country in the simulator, not a FIFA official list.",
+    "Dalić's modelled 2026 Croatia: Modrić still the brain, Gvardiol as the modern wall. A midfield country in a modelled 2026 snapshot, not a FIFA official list.",
 })
 
 export const uruguay2026: HistoricalTeam = makeTeam({
@@ -817,7 +817,7 @@ export const hungary2026: HistoricalTeam = makeTeam({
     "Rossi's 2026 Hungary. Szoboszlai as the whole idea, Kerkez on the overlap, and a side that still plays like a small country with a loud number 10.",
   seoTitle: "Hungary 2026 Squad — Modelled Rossi XI, Szoboszlai",
   seoDescription:
-    "Rossi's modelled 2026 Hungary: Szoboszlai as the whole idea, Kerkez on the overlap. A small-country number 10 in the simulator, not an MLSZ official list.",
+    "Rossi's modelled 2026 Hungary: Szoboszlai as the whole idea, Kerkez on the overlap. A small-country number 10 in a modelled 2026 snapshot, not an MLSZ official list.",
 })
 
 export const colombia2026: HistoricalTeam = makeTeam({

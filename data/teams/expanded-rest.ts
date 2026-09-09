@@ -5,13 +5,10 @@ function pack(input: Record<string, unknown>): HistoricalTeam {
   const clubName = String(input.clubName)
   const displaySeason = String(input.displaySeason)
   const summary = String(input.summary ?? "")
-  const formation = String(input.formation ?? "")
   const hook = (summary.split(/(?<=\.)\s/)[0] || summary).replace(/\.$/, "")
   return makeTeam({
     seoTitle: `${clubName} ${displaySeason} — ${hook}`.slice(0, 72),
-    seoDescription: summary
-      ? `${summary} Starting XI, ${formation} and ratings in the simulator.`
-      : `${clubName} ${displaySeason} squad, starting XI and ratings.`,
+    seoDescription: summary || `${clubName} ${displaySeason}`,
     ...(input as object),
   } as Parameters<typeof makeTeam>[0])
 }

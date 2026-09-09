@@ -5,9 +5,13 @@ import { ovrTone, type SquadMember } from "@/lib/stars"
 export function SquadPanel({
   squad,
   teamOvr,
+  xiLabel = "XI",
+  benchLabel = "Bench",
 }: {
   squad: SquadMember[]
   teamOvr: number
+  xiLabel?: string
+  benchLabel?: string
 }) {
   const xi = squad.filter((player) => player.starter)
   const bench = squad.filter((player) => !player.starter)
@@ -20,7 +24,7 @@ export function SquadPanel({
       </div>
       <div className="squad-scroll max-h-[22rem] overflow-y-auto overflow-x-visible">
         <p className="sticky top-0 z-10 bg-panel px-3 py-1.5 font-display text-[8px] uppercase tracking-[0.14em] text-muted">
-          Starting XI
+          {xiLabel}
         </p>
         <ul>
           {xi.map((player) => (
@@ -30,7 +34,7 @@ export function SquadPanel({
         {bench.length > 0 ? (
           <>
             <p className="sticky top-0 z-10 border-t border-line bg-panel px-3 py-1.5 font-display text-[8px] uppercase tracking-[0.14em] text-muted">
-              Bench
+              {benchLabel}
             </p>
             <ul>
               {bench.map((player) => (
@@ -47,16 +51,20 @@ export function SquadPanel({
 export function CompactSquad({
   squad,
   showBench = true,
+  xiLabel,
+  benchLabel = "Bench",
 }: {
   squad: SquadMember[]
   showBench?: boolean
+  xiLabel: string
+  benchLabel?: string
 }) {
   const xi = squad.filter((player) => player.starter)
   const bench = squad.filter((player) => !player.starter)
 
   return (
     <div className="grid gap-2">
-      <p className="font-display text-[8px] uppercase tracking-[0.16em] text-muted">Starting XI</p>
+      <p className="font-display text-[8px] uppercase tracking-[0.16em] text-muted">{xiLabel}</p>
       <ul className="grid grid-cols-2 gap-x-3 gap-y-0.5">
         {xi.map((player) => (
           <MiniRow key={player.id} player={player} />
@@ -76,13 +84,21 @@ export function CompactSquad({
   )
 }
 
-export function FaceOffSquad({ squad, benchLabel = "Bench" }: { squad: SquadMember[]; benchLabel?: string }) {
+export function FaceOffSquad({
+  squad,
+  xiLabel = "XI",
+  benchLabel = "Bench",
+}: {
+  squad: SquadMember[]
+  xiLabel?: string
+  benchLabel?: string
+}) {
   const xi = squad.filter((player) => player.starter)
   const bench = squad.filter((player) => !player.starter)
 
   return (
     <div className="grid gap-0.5">
-      <p className="px-1 font-display text-[7px] uppercase tracking-[0.16em] text-gold">XI</p>
+      <p className="px-1 font-display text-[7px] uppercase tracking-[0.16em] text-gold">{xiLabel}</p>
       <ul className="grid gap-px">
         {xi.map((player) => (
           <FaceRow key={player.id} player={player} compact />

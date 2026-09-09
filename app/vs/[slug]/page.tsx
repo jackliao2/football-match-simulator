@@ -70,7 +70,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
         <PageHeader
           kicker={copy.kicker}
           title={copy.title}
-          lead={`${home.clubName} ${home.displaySeason} against ${away.clubName} ${away.displaySeason} is playable here, but it is not one of the curated dossiers. Run the night, or open the written card.`}
+          lead={`${home.clubName} ${home.displaySeason} against ${away.clubName} ${away.displaySeason} is not one of the curated dossiers. Run the night, or open the written card.`}
           crumbs={[{ href: "/vs", label: VS_HUB.crumb }]}
         />
         <MatchSetupGate defaultHome={home.id} defaultAway={away.id} />
@@ -261,7 +261,9 @@ function VsSquadCard({ team, away = false }: { team: HistoricalTeam; away?: bool
       <Link href={teamPath(team)} className={`faceoff-identity flex items-center gap-3 no-underline hover:bg-white/5 ${away ? "flex-row-reverse text-right" : ""}`}>
         <PixelCrest clubId={team.clubId} size={48} />
         <span className="min-w-0 flex-1">
-          <span className={`block font-display text-[8px] uppercase tracking-[0.2em] ${away ? "text-danger" : "text-gold"}`}>{away ? "Away XI" : "Home XI"}</span>
+          <span className={`block font-display text-[8px] uppercase tracking-[0.2em] ${away ? "text-danger" : "text-gold"}`}>
+            {away ? `Away · ${team.clubName} ${team.displaySeason}` : `Home · ${team.clubName} ${team.displaySeason}`}
+          </span>
           <span className="mt-1 block truncate font-brand text-xl font-semibold text-text">{team.clubName}</span>
           <span className="mt-0.5 block font-mono text-xs text-gold">{team.displaySeason}</span>
           <span className="mt-1 block truncate font-mono text-[10px] text-muted">{team.manager} · {team.formation}</span>
@@ -269,7 +271,7 @@ function VsSquadCard({ team, away = false }: { team: HistoricalTeam; away?: bool
         <OvrStamp value={team.overallRating} size="md" align={away ? "left" : "right"} />
       </Link>
       <div className="border-t border-line px-2 py-2">
-        <FaceOffSquad squad={teamSquad(team)} />
+        <FaceOffSquad squad={teamSquad(team)} xiLabel={`${team.clubName} ${team.displaySeason} XI`} benchLabel={`${team.clubName} ${team.displaySeason} bench`} />
       </div>
     </section>
   )

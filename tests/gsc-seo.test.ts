@@ -334,6 +334,18 @@ describe("GSC landing pages", () => {
     expect(getTeamEditorial("england-2026")?.intro).not.toMatch(/\bplayable\b/)
   })
 
+  it("drops factory simulator tails from packed and current-squad descriptions", () => {
+    for (const team of teams) {
+      expect(team.seoDescription, team.id).not.toMatch(/Starting XI, .+ ratings in the simulator/)
+      expect(team.seoDescription, team.id).not.toMatch(/squad, starting XI and ratings/)
+      expect(team.seoDescription, team.id).not.toMatch(/\bplayable\b/)
+      expect(team.seoDescription, team.id).not.toMatch(/in the simulator/)
+      const copy = teamPageCopy(team)
+      expect(copy.description, team.id).not.toMatch(/Starting XI, .+ ratings in the simulator/)
+      expect(copy.title, team.id).not.toMatch(/lineup and formation/i)
+    }
+  })
+
   it("publishes a Liverpool prime page with a real case and counter-case", () => {
     const page = getPrimeEntity("liverpool")
     const editorial = getPrimeEditorial("liverpool")

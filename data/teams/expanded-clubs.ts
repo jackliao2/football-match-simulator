@@ -12,8 +12,7 @@ function pack(
     ...input,
     seoTitle: input.seoTitle ?? `${input.clubName} ${input.displaySeason} — ${hook.replace(/\.$/, "")}`.slice(0, 72),
     seoDescription:
-      input.seoDescription ??
-      `${input.summary.trim()} Starting XI, ${input.formation} and ratings in the simulator.`,
+      input.seoDescription ?? input.summary.trim(),
   })
 }
 
