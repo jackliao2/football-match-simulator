@@ -51,8 +51,8 @@ export default function VsIndexPage() {
         <p className="mt-2 max-w-4xl font-mono text-xs leading-6 text-text/75">Each pairing needs a real argument behind it: two sides regularly placed among football’s greatest, a clash of defining tactical ideas, or two generations of the same national tradition. Famous matches that already happened only stay when a different peak version changes the question.</p>
       </section>
       {[
-        { title: "Club dynasties", lead: "Guardiola, Sacchi, Zidane, Ferguson and the club sides that changed the standard.", rows: rows.slice(0, 12) },
-        { title: "Greatest national sides", lead: "World champions, beautiful runners-up and the teams that still define an era.", rows: rows.slice(12) },
+        { title: VS_HUB.clubHeading, lead: VS_HUB.clubLead, rows: rows.slice(0, 12) },
+        { title: VS_HUB.nationHeading, lead: VS_HUB.nationLead, rows: rows.slice(12) },
       ].map((section) => (
         <section key={section.title} className="grid gap-3">
           <div>

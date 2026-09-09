@@ -49,6 +49,9 @@ export type TeamPageCopy = {
   deck: string
   paragraphs: string[]
   matchupHeading: string
+  dossierHeading: string
+  faqHeading: string
+  starsHeading: string
 }
 
 export function teamH1(team: HistoricalTeam): string {
@@ -121,11 +124,14 @@ export function teamPageCopy(team: HistoricalTeam, opponentArg?: HistoricalTeam)
   return {
     title,
     description,
-    h1: teamH1(team),
+    h1: title,
     kicker,
     deck,
     paragraphs,
     matchupHeading,
+    dossierHeading: `Why ${team.clubName} ${team.displaySeason} mattered`,
+    faqHeading: `${team.clubName} ${team.displaySeason} — questions`,
+    starsHeading: `${team.clubName} ${team.displaySeason} names`,
   }
 }
 

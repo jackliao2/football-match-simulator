@@ -34,10 +34,10 @@ export async function generateMetadata({
 }: PageProps<"/vs/[slug]">): Promise<Metadata> {
   const { slug } = await params
   const parsed = parseVsSlug(slug)
-  if (!parsed) return { title: "Dream Match" }
+  if (!parsed) return { title: "Named-season matchup" }
   const home = getTeam(parsed.homeId)
   const away = getTeam(parsed.awayId)
-  if (!home || !away) return { title: "Dream Match" }
+  if (!home || !away) return { title: "Named-season matchup" }
   const copy = vsPageCopy(home, away, vsSimulationRuns(home.id, away.id))
   const canonical = canonicalVsSlug(home.id, away.id)
   const indexable = slug === canonical && isPublishedMatchup(home.id, away.id)
@@ -64,12 +64,13 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
   const canonical = canonicalVsSlug(home.id, away.id)
   if (slug !== canonical) redirect(`/vs/${canonical}`)
   if (!isPublishedMatchup(home.id, away.id)) {
+    const copy = vsPageCopy(home, away, vsSimulationRuns(home.id, away.id))
     return (
       <div className="grid gap-6">
         <PageHeader
-          kicker="Playable matchup"
-          title={`${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}`}
-          lead="Both squads are in the database, but this pairing is not one of the curated dream-match dossiers. Simulate it here, or open the written matchups."
+          kicker={copy.kicker}
+          title={copy.title}
+          lead={`${home.clubName} ${home.displaySeason} against ${away.clubName} ${away.displaySeason} is playable here, but it is not one of the curated dossiers. Run the night, or open the written card.`}
           crumbs={[{ href: "/vs", label: VS_HUB.crumb }]}
         />
         <MatchSetupGate defaultHome={home.id} defaultAway={away.id} />

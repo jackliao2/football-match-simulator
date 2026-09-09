@@ -3,14 +3,15 @@ import Link from "next/link"
 import { LegalDoc } from "@/components/ui/LegalDoc"
 import { EditorialByline, personSchema } from "@/components/ui/EditorialByline"
 import { StyleProfile } from "@/components/teams/StyleProfile"
+import { METHODOLOGY_PAGE } from "@/data/collection-copy"
 import { pageMetadata } from "@/lib/seo"
 import { SITE, absoluteUrl } from "@/lib/site"
 import { getTeam } from "@/data/teams"
 import { cachedMatchupModel } from "@/lib/matchup-model"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Football Simulator Methodology",
-  description: "How LegendaryMatch selects historical squads, rates players and teams, simulates matches and separates the score engine from optional AI analysis.",
+  title: METHODOLOGY_PAGE.title,
+  description: METHODOLOGY_PAGE.description,
   path: "/methodology",
 })
 
@@ -21,10 +22,10 @@ export default function MethodologyPage() {
 
   return <>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-      "@context": "https://schema.org", "@type": "TechArticle", headline: "LegendaryMatch simulation methodology", url: absoluteUrl("/methodology"),
+      "@context": "https://schema.org", "@type": "TechArticle", headline: METHODOLOGY_PAGE.h1, url: absoluteUrl("/methodology"),
       author: personSchema(), datePublished: SITE.legalUpdatedIso, dateModified: SITE.contentUpdatedIso,
     }) }} />
-    <LegalDoc kicker="How it works" title="Simulation methodology" lead="The model is opinionated, repeatable and deliberately visible. These are the choices behind the score rather than a claim that football can be solved." updated={SITE.contentUpdated}>
+    <LegalDoc kicker={METHODOLOGY_PAGE.kicker} title={METHODOLOGY_PAGE.h1} lead={METHODOLOGY_PAGE.lead} updated={SITE.contentUpdated}>
       <EditorialByline />
       <section>
         <h2>1. A team means a named season</h2>
@@ -43,13 +44,13 @@ export default function MethodologyPage() {
       </section>
       <section>
         <h2>4. Multi-match percentages describe uncertainty</h2>
-        <p>Dream Match pages run the matchup many times and report the distribution of home wins, draws, away wins and common scorelines. A 55% win rate does not mean a side “definitely wins”; it means that side won 55 of every 100 comparable model runs on average.</p>
+        <p>The Barcelona 2010/11 vs Madrid 2016/17 matchup page runs the fixture many times and reports the distribution of home wins, draws, away wins and common scorelines. A 55% win rate does not mean a side “definitely wins”; it means that side won 55 of every 100 comparable model runs on average.</p>
         <p>This is more useful than presenting a single score as certainty, especially when elite teams are close. It is still a simulation, not a betting market, a forecast of a scheduled fixture or evidence that one era was objectively superior.</p>
       </section>
       <section>
         <h2>5. Expert AI explains; it does not decide</h2>
         <p>Expert AI Analysis receives the selected squads and structured model output, then writes a compact tactical interpretation. The language model cannot replace the score after seeing famous names. It can describe a key battle, identify likely scorers across repeated runs and explain why the engine leans one way.</p>
-        <p>AI wording can occasionally be too confident or miss football context. Treat it as commentary on the model. Permanent squad pages and editorial Dream Match introductions are maintained separately.</p>
+        <p>AI wording can occasionally be too confident or miss football context. Treat it as commentary on the model. Permanent squad pages and the written Barça vs Madrid introduction are maintained separately.</p>
       </section>
       <section>
         <h2>6. Limitations and corrections</h2>
@@ -63,7 +64,7 @@ export default function MethodologyPage() {
       </section>
       <section>
         <h2>8. A worked example: Barcelona 2010/11 vs Madrid 2016/17</h2>
-        <p>This is the same 400-run sample the dream-match page uses, written out so the method is inspectable. Barcelona are the possession/pressing side; Madrid are the transition side. The engine is not asked who was “better in history”. It is asked what happens if those two rating sheets share a pitch 400 times with a fixed seed prefix.</p>
+        <p>This is the same 400-run sample the Barcelona 2010/11 vs Madrid 2016/17 matchup page uses, written out so the method is inspectable. Barcelona are the possession/pressing side; Madrid are the transition side. The engine is not asked who was “better in history”. It is asked what happens if those two rating sheets share a pitch 400 times with a fixed seed prefix.</p>
         {sample && barcelona && madrid ? (
           <div className="mt-4 grid gap-4">
             <p>

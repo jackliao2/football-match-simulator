@@ -29,7 +29,7 @@ export const LOCALIZED_COPY = {
     nav: { simulate: "Simular", teams: "Clubes", nations: "Selecciones", dreams: "Duelos" },
     home: {
       kicker: "Simulador de partidos de fútbol",
-      title: "Leyendas. Épocas. Un partido imposible.",
+      title: "Barcelona 2010/11 contra Madrid 2016/17, en un simulador",
       tagline: ["Barcelona 2010/11", "Madrid 2016/17", "Una noche simulada"],
       lead: "Elige dos equipos de temporadas distintas. Simula el marcador, los goleadores, el xG y cien versiones del mismo duelo.",
       metaTitle: "Simulador de fútbol: Barcelona 2010/11 contra Madrid 2016/17",
@@ -55,7 +55,7 @@ export const LOCALIZED_COPY = {
     ],
     aboutTitle: "Un simulador para partidos que el tiempo hizo imposibles",
     aboutBody: "LegendaryMatch no intenta reescribir resultados históricos ni predecir apuestas. Convierte plantillas concretas —con temporada, entrenador, formación y jugadores— en enfrentamientos hipotéticos que se pueden repetir y comparar.",
-    faqTitle: "Preguntas sobre el simulador",
+    faqTitle: "Barça 2010/11, Brasil 1970, y lo que suele preguntarse",
     faq: [
       ["¿Cómo funciona el simulador?", "Las valoraciones, el estilo, la química y una semilla generan el marcador, el xG, los goleadores y los eventos. La IA solo explica el enfrentamiento."],
       ["¿Puedo enfrentar equipos de épocas distintas?", "Sí. Puedes jugar con Brasil 1970 contra España 2010 o Barcelona 2008/09 contra Real Madrid 2016/17."],
@@ -71,7 +71,7 @@ export const LOCALIZED_COPY = {
     nav: { simulate: "Simular", teams: "Clubes", nations: "Seleções", dreams: "Duelos" },
     home: {
       kicker: "Simulador de partidas de futebol",
-      title: "Lendas. Eras. Um jogo impossível.",
+      title: "Barcelona 2010/11 contra Madrid 2016/17, num simulador",
       tagline: ["Barcelona 2010/11", "Madrid 2016/17", "Uma noite simulada"],
       lead: "Escolha dois times de temporadas diferentes. Simule o placar, os gols, o xG e cem versões do mesmo confronto.",
       metaTitle: "Simulador de futebol: Barcelona 2010/11 contra Madrid 2016/17",
@@ -97,7 +97,7 @@ export const LOCALIZED_COPY = {
     ],
     aboutTitle: "Um simulador para jogos que o tempo tornou impossíveis",
     aboutBody: "LegendaryMatch não tenta reescrever resultados históricos nem prever apostas. Ele transforma elencos específicos —com temporada, treinador, formação e jogadores— em confrontos hipotéticos que podem ser repetidos e comparados.",
-    faqTitle: "Perguntas sobre o simulador",
+    faqTitle: "Barça 2010/11, Brasil 1970, e o que as pessoas perguntam",
     faq: [
       ["Como funciona o simulador?", "Notas, estilo, entrosamento e uma semente geram placar, xG, gols e eventos. A IA apenas explica o confronto."],
       ["Posso enfrentar times de épocas diferentes?", "Sim. Você pode jogar Brasil 1970 contra Espanha 2010 ou Barcelona 2008/09 contra Real Madrid 2016/17."],

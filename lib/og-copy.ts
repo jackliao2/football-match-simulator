@@ -6,8 +6,8 @@ export function teamOgCopy(team: HistoricalTeam) {
   const copy = teamPageCopy(team)
   return {
     kicker: `[ ${team.clubCode} ]`,
-    heading: `${team.clubName} ${team.displaySeason}`,
-    subtitle: copy.title,
+    heading: copy.title,
+    subtitle: copy.deck,
     alt: copy.title,
   }
 }
@@ -17,6 +17,7 @@ export function compareOgCopy(pair: ClubCompare, leftName: string, rightName: st
     kicker: "WHO IS BETTER",
     heading: pair.verdictHeading,
     subtitle: `${leftName} vs ${rightName}`,
+    footer: `Simulate ${leftName} against ${rightName}`,
     alt: compareSeoTitle(pair, leftName, rightName),
   }
 }

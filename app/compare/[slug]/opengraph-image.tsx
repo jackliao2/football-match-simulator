@@ -21,8 +21,9 @@ export default async function CompareOpenGraphImage({
       ? compareOgCopy(pair, left.name, right.name)
       : {
           kicker: "WHO IS BETTER",
-          heading: "Compare two primes",
-          subtitle: "Then simulate the night.",
+          heading: "Barcelona or Madrid, Brazil or Argentina",
+          subtitle: "All-time cabinets, then the prime teams.",
+          footer: "LegendaryMatch",
         }
 
   return new ImageResponse(
@@ -48,7 +49,7 @@ export default async function CompareOpenGraphImage({
           {copy.subtitle}
         </div>
         <div style={{ display: "flex", marginTop: 36, fontSize: 22, color: "#7e9876" }}>
-          LegendaryMatch — then simulate the primes
+          {copy.footer}
         </div>
       </div>
     ),

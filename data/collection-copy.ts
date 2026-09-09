@@ -54,6 +54,10 @@ export const VS_HUB = {
   crumb: "Matchups",
   h1: "Barcelona 2010/11 vs Madrid 2016/17, Brazil 1970 vs Spain 2010",
   lead: "No fixture filler and no current-season pairings just because they are new. This is a short, hand-picked card of sides that belong in the greatest-team argument.",
+  clubHeading: "Guardiola, Sacchi, Zidane — the club nights",
+  clubLead: "Guardiola’s Barça, Sacchi’s Milan, Zidane’s Madrid, Ferguson’s United: club sides that changed the standard, not a dynasty dump.",
+  nationHeading: "Brazil 1970, Spain 2010, Maradona’s 86",
+  nationLead: "World Cup sides and the nearly teams that still define an era — Brazil 1970 first, then Spain 2010 and Maradona’s Mexico.",
 } as const
 
 export const COMPARE_HUB = {
@@ -74,11 +78,20 @@ export const SIMULATE_PAGE = {
   lead: "Or Brazil 1970 against Spain 2010. Every side is a named season, not a slider. The match engine writes the score; Expert AI Analysis explains the matchup afterwards and never gets a vote.",
   guideKicker: "How a match is actually decided",
   guideHeading: "The engine writes Barça vs Madrid. A chatbot does not.",
-  faqHeading: "Football match simulator FAQ",
+  faqHeading: "Barça 2010/11 vs Madrid 2016/17, and the simulator questions",
+} as const
+
+export const METHODOLOGY_PAGE = {
+  title: "How Barcelona 2010/11 vs Madrid 2016/17 is scored",
+  description:
+    "How LegendaryMatch rates named seasons, prices chances, and scores Barcelona 2010/11 against Madrid 2016/17 across 400 runs. The engine writes the result; AI only explains it.",
+  kicker: "How it works",
+  h1: "How we score Barcelona 2010/11 vs Madrid 2016/17",
+  lead: "The model is opinionated, repeatable and visible. The worked example on this page is Guardiola’s 2010/11 Barça against Zidane’s 2016/17 Madrid — 400 seeded nights, not a claim that football can be solved.",
 } as const
 
 export const SEARCH_PAGE = {
-  title: "Search historical football squads",
+  title: "Search Barcelona 08/09, Brazil 1970, or any named season",
   description:
     "Search 156 named club and national-team seasons on LegendaryMatch. Open a squad page or send two sides straight into the football match simulator.",
   kicker: "Catalogue search",

@@ -246,8 +246,8 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
       {editorial ? (
         <section className="grid gap-4 border-y border-white/10 py-6" aria-labelledby="season-dossier">
           <div className="max-w-3xl">
-            <p className="page-kicker">Season dossier</p>
-            <h2 id="season-dossier" className="section-title mt-1">Why this team mattered</h2>
+            <p className="page-kicker">{team.displaySeason} dossier</p>
+            <h2 id="season-dossier" className="section-title mt-1">{copy.dossierHeading}</h2>
           </div>
           <div className="grid gap-3 md:grid-cols-2">
             {editorial.sections.map((section, index) => (
@@ -263,7 +263,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
         </section>
       ) : null}
 
-      <StarPlayers team={team} count={6} title="Key Players" />
+      <StarPlayers team={team} count={6} title={copy.starsHeading} />
       <Formation team={team} />
       <SquadList team={team} />
       <TeamRatings team={team} />
@@ -307,7 +307,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
       {editorial ? (
         <section className="result-panel p-4 sm:p-5">
           <p className="page-kicker">FAQ</p>
-          <h2 className="section-title mt-1">Questions about this squad</h2>
+          <h2 className="section-title mt-1">{copy.faqHeading}</h2>
           <dl className="mt-3 grid gap-3">
             {faqs.map((item) => (
               <div key={item.q}>

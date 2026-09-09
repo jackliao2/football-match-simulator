@@ -10,7 +10,7 @@ import { isIndexableTeamPage } from "@/data/team-editorial"
 import { getTeam, getTeamsByClub, teams } from "@/data/teams"
 import { FEATURED_MATCHUPS } from "@/data/matchups"
 import { matchupFeature } from "@/data/vs-editorial"
-import { BEST_TEAM, COMPARE_HUB, HOME_PAGE, HOME_SECTIONS, NATIONS_HUB, PRIME_HUB, SEARCH_PAGE, SIMULATE_PAGE, TEAMS_HUB, VS_HUB } from "@/data/collection-copy"
+import { BEST_TEAM, COMPARE_HUB, HOME_PAGE, HOME_SECTIONS, METHODOLOGY_PAGE, NATIONS_HUB, PRIME_HUB, SEARCH_PAGE, SIMULATE_PAGE, TEAMS_HUB, VS_HUB } from "@/data/collection-copy"
 import { orgHubCopy, firstSentence, teamH1, teamPageCopy, vsPageCopy } from "@/lib/page-copy"
 import { compareOgCopy, teamOgCopy } from "@/lib/og-copy"
 import { informalSeason, isCurrentSquad, modelledCurrentSquadNote, squadKeywords } from "@/lib/seo"
@@ -57,7 +57,10 @@ describe("GSC landing pages", () => {
     expect(keys).toEqual(expect.arrayContaining(["chelsea 04 05", "chelsea 04/05 squad", "chelsea fc 2004 squad"]))
     const copy = teamPageCopy(team)
     expect(copy.title.toLowerCase()).toContain("04/05")
+    expect(copy.h1).toBe(copy.title)
     expect(copy.h1.toLowerCase()).toContain("squad")
+    expect(copy.dossierHeading).toMatch(/Chelsea 2004\/05/)
+    expect(copy.faqHeading).toMatch(/Chelsea 2004\/05/)
     expect(copy.description.toLowerCase()).toMatch(/04\/05|2004\/05/)
     expect(isIndexableTeamPage(team.id)).toBe(true)
   })
@@ -76,6 +79,8 @@ describe("GSC landing pages", () => {
     )
     const copy = teamPageCopy(team)
     expect(copy.title.toLowerCase()).toContain("england 2026 squad")
+    expect(copy.h1).toBe(copy.title)
+    expect(copy.h1.toLowerCase()).not.toBe("england 2026 squad")
   })
 
   it("puts who-is-better language on the Milan compare pair", () => {
@@ -117,7 +122,10 @@ describe("GSC landing pages", () => {
     for (const id of ["everton-1984-85", "chelsea-2011-12", "senegal-2002", "croatia-2018"]) {
       expect(getTeam(id), id).toBeDefined()
       expect(isIndexableTeamPage(id), id).toBe(true)
-      expect(teamPageCopy(getTeam(id)!).h1.toLowerCase()).toContain("squad")
+      const team = getTeam(id)!
+      const copy = teamPageCopy(team)
+      expect(copy.h1).toBe(copy.title)
+      expect(copy.h1.toLowerCase(), id).not.toBe(teamH1(team).toLowerCase())
     }
   })
 
@@ -132,7 +140,10 @@ describe("GSC landing pages", () => {
     ]) {
       expect(getTeam(id), id).toBeDefined()
       expect(isIndexableTeamPage(id), id).toBe(true)
-      expect(teamPageCopy(getTeam(id)!).h1.toLowerCase()).toContain("squad")
+      const team = getTeam(id)!
+      const copy = teamPageCopy(team)
+      expect(copy.h1).toBe(copy.title)
+      expect(copy.h1.toLowerCase(), id).not.toBe(teamH1(team).toLowerCase())
     }
   })
 
@@ -153,7 +164,10 @@ describe("GSC landing pages", () => {
     ]) {
       expect(getTeam(id), id).toBeDefined()
       expect(isIndexableTeamPage(id), id).toBe(true)
-      expect(teamPageCopy(getTeam(id)!).h1.toLowerCase()).toContain("squad")
+      const team = getTeam(id)!
+      const copy = teamPageCopy(team)
+      expect(copy.h1).toBe(copy.title)
+      expect(copy.h1.toLowerCase(), id).not.toBe(teamH1(team).toLowerCase())
     }
   })
 
@@ -187,6 +201,10 @@ describe("GSC landing pages", () => {
       const copy = teamPageCopy(team)
       expect(copy.title, team.id).not.toMatch(/Squad, Lineup, Formation & Ratings/)
       expect(copy.description, team.id).not.toMatch(/^Explore the /)
+      expect(copy.h1, team.id).toBe(copy.title)
+      expect(copy.h1.toLowerCase(), team.id).not.toBe(teamH1(team).toLowerCase())
+      expect(copy.dossierHeading, team.id).toMatch(team.displaySeason)
+      expect(copy.faqHeading, team.id).toMatch(team.clubName)
       expect(titles.has(copy.title), `${team.id} duplicates title: ${copy.title}`).toBe(false)
       titles.add(copy.title)
       if (isCurrentSquad(team)) {
@@ -294,8 +312,21 @@ describe("GSC landing pages", () => {
     expect(VS_HUB.crumb).not.toBe("Dream matches")
 
     expect(SEARCH_PAGE.h1).not.toBe("Find a squad, then play it")
+    expect(SEARCH_PAGE.title).toMatch(/1970|08\/09/)
     expect(SEARCH_PAGE.popularKicker).not.toBe("Popular sides")
     expect(SEARCH_PAGE.popularKicker).toMatch(/1970|08\/09/)
+
+    expect(SIMULATE_PAGE.faqHeading).not.toBe("Football match simulator FAQ")
+    expect(SIMULATE_PAGE.faqHeading).toMatch(/2010\/11/)
+
+    expect(METHODOLOGY_PAGE.title).toMatch(/2010\/11/)
+    expect(METHODOLOGY_PAGE.h1).toMatch(/2010\/11/)
+    expect(METHODOLOGY_PAGE.kicker).toBe("How it works")
+    expect(METHODOLOGY_PAGE.h1).not.toBe("Simulation methodology")
+
+    expect(VS_HUB.clubHeading).not.toBe("Club dynasties")
+    expect(VS_HUB.clubHeading).toMatch(/Guardiola|Sacchi|Zidane/)
+    expect(VS_HUB.nationHeading).toMatch(/1970/)
 
     expect(HOME_PAGE.title).not.toMatch(/Football & Soccer Match Simulator/)
     expect(HOME_PAGE.title).toMatch(/2010\/11/)
@@ -329,12 +360,16 @@ describe("GSC landing pages", () => {
     expect(LOCALIZED_COPY.es.dreams.title).not.toBe("Partidos soñados")
     expect(LOCALIZED_COPY.es.sections.dream).not.toBe("Duelos populares")
     expect(LOCALIZED_COPY.es.howTitle).not.toBe("Cómo funciona el simulador")
+    expect(LOCALIZED_COPY.es.home.title).toMatch(/2010\/11/)
+    expect(LOCALIZED_COPY.es.faqTitle).toMatch(/2010\/11/)
     expect(LOCALIZED_COPY.es.faq.at(-1)?.[0]).toMatch(/2010\/11/)
 
     expect(LOCALIZED_COPY["pt-br"].home.metaTitle).toMatch(/2010\/11/)
     expect(LOCALIZED_COPY["pt-br"].simulate.title).toMatch(/2010\/11/)
     expect(LOCALIZED_COPY["pt-br"].dreams.title).not.toBe("Jogos dos sonhos")
     expect(LOCALIZED_COPY["pt-br"].sections.clubs).not.toBe("Clubes lendários")
+    expect(LOCALIZED_COPY["pt-br"].home.title).toMatch(/2010\/11/)
+    expect(LOCALIZED_COPY["pt-br"].faqTitle).toMatch(/2010\/11/)
     expect(LOCALIZED_COPY["pt-br"].howTitle).not.toBe("Como funciona o simulador")
     expect(LOCALIZED_COPY["pt-br"].faq.at(-1)?.[0]).toMatch(/2010\/11/)
   })
@@ -350,22 +385,29 @@ describe("GSC landing pages", () => {
   })
 
   it("gives OG cards a unique line instead of factory squad or Who is better chrome", () => {
-    const subtitles = new Set<string>()
+    const headings = new Set<string>()
     for (const team of teams) {
       const og = teamOgCopy(team)
+      expect(og.heading, team.id).toBe(teamPageCopy(team).title)
+      expect(og.heading, team.id).not.toBe(`${team.clubName} ${team.displaySeason}`)
       expect(og.subtitle, team.id).not.toMatch(/Squad, lineup, formation/i)
-      expect(subtitles.has(og.subtitle), og.subtitle).toBe(false)
-      subtitles.add(og.subtitle)
+      expect(headings.has(og.heading), og.heading).toBe(false)
+      headings.add(og.heading)
     }
-    const headings = new Set<string>()
+    const compareHeadings = new Set<string>()
+    const footers = new Set<string>()
     for (const pair of CLUB_COMPARES) {
       const left = getClub(pair.leftClubId)!
       const right = getClub(pair.rightClubId)!
       const og = compareOgCopy(pair, left.name, right.name)
       expect(og.heading, pair.slug).not.toMatch(/^Who is better/i)
       expect(og.heading, pair.slug).not.toMatch(/ or .+\?$/)
-      expect(headings.has(og.heading), og.heading).toBe(false)
-      headings.add(og.heading)
+      expect(og.footer, pair.slug).not.toBe("LegendaryMatch — then simulate the primes")
+      expect(og.footer, pair.slug).toMatch(left.name)
+      expect(compareHeadings.has(og.heading), og.heading).toBe(false)
+      compareHeadings.add(og.heading)
+      expect(footers.has(og.footer), og.footer).toBe(false)
+      footers.add(og.footer)
     }
   })
 
