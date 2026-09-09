@@ -71,7 +71,7 @@ export default async function ClubPage({ params }: PageProps<"/teams/[club]">) {
       >
         {prime ? (
           <Link href={`/prime/${club}`} className="font-mono text-sm text-gold hover:text-gold-2">
-            When was {clubMeta.name}&apos;s prime? →
+            When was {clubMeta.name}&apos;s prime? {prime.pick} →
           </Link>
         ) : null}
       </PageHeader>

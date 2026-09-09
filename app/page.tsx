@@ -66,7 +66,7 @@ const FAQ = [
   ],
   [
     "When was Barcelona's prime?",
-    "Prime pages compare candidate seasons — Barcelona 2008/09, 2010/11 and 2014/15, plus the latest dataset — then send you into the simulator. Same idea for Real Madrid, Manchester United, Liverpool, Messi, Brazil and Argentina.",
+    "Our pick is 2010/11: Messi's false nine inside Guardiola's best midfield. 2008/09 began the era; 2014/15 MSN is the counter. The prime page compares those sides, then you can simulate them.",
   ],
   [
     "Who is better, Brazil or Argentina?",
@@ -252,7 +252,7 @@ export default function HomePage() {
                 <span>Prime dossier</span>
                 <h3>{entity.title}</h3>
                 <p>{entity.description}</p>
-                <b>Explore the eras →</b>
+                <b>Open {entity.name} →</b>
               </Link>
             ))}
         </div>

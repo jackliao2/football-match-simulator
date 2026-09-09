@@ -5,12 +5,13 @@ export const primeEntities: PrimeEntity[] = [
     slug: "barcelona",
     name: "Barcelona",
     kind: "club",
-    title: "When Was Barcelona's Prime?",
+    title: "Barcelona's Prime Is 2010/11, Not the First Treble",
+    pick: "2010/11",
     description:
       "Barcelona's modern peak is a three-way argument: Guardiola's first treble, the Wembley tiki-taka side, or the MSN treble. Each season is playable in the simulator.",
-    seoTitle: "Prime Barcelona — When Was Barcelona's Prime?",
+    seoTitle: "Barcelona Prime: 2010/11 Wembley, Not 2009 or MSN",
     seoDescription:
-      "When was Barcelona's prime? Compare the 2008/09 treble, 2010/11 Wembley side and 2014/15 MSN team, then simulate each legendary squad.",
+      "Barcelona's prime is 2010/11: Messi's false nine, Wembley, Xavi and Iniesta. Compare the 2008/09 treble and MSN 2014/15, then simulate the three sides.",
     verdict: "Our pick is 2010/11: not Barcelona's most explosive front three, but the season when Messi's false nine, Xavi and Iniesta made Guardiola's positional football feel most complete. The 2008/09 treble began the era; 2014/15 supplied its deadliest attack.",
     candidates: [
       {
@@ -36,12 +37,13 @@ export const primeEntities: PrimeEntity[] = [
     slug: "real-madrid",
     name: "Real Madrid",
     kind: "club",
-    title: "When Was Real Madrid's Prime?",
+    title: "Real Madrid's Prime Is Zidane's 2016/17, Not La Décima",
+    pick: "2016/17",
     description:
       "Décima in 2014, or the 2016/17 side that won the league and retained the Champions League? Both are in the database.",
-    seoTitle: "Prime Real Madrid — When Was Real Madrid's Prime?",
+    seoTitle: "Real Madrid Prime: 2016/17, Not Only La Décima",
     seoDescription:
-      "When was Real Madrid's prime? Compare the 2013/14 La Décima side and the 2016/17 Champions League winners, then simulate each squad.",
+      "Real Madrid's prime here is Zidane 2016/17 — league plus a retained Champions League — not only La Décima. Simulate 2013/14 against 2016/17.",
     verdict: "Our pick is 2016/17. La Décima carried the greater emotional weight, but Zidane's later side paired Ronaldo's knockout scoring with the Casemiro–Kroos–Modrić midfield, won La Liga and became the first team to retain the modern Champions League.",
     candidates: [
       {
@@ -63,12 +65,13 @@ export const primeEntities: PrimeEntity[] = [
     slug: "manchester-united",
     name: "Manchester United",
     kind: "club",
-    title: "When Was Manchester United's Prime?",
+    title: "United's Strongest XI Is 2007/08, Not the Treble",
+    pick: "2007/08",
     description:
       "The 1999 treble or the 2008 Moscow winners with peak Ronaldo. Two different United sides, both legendary.",
-    seoTitle: "Prime Manchester United — When Was United's Prime?",
+    seoTitle: "Manchester United Prime: Moscow 2008 vs 1999 Treble",
     seoDescription:
-      "When was Manchester United's prime? Compare the 1998/99 treble winners and the 2007/08 Moscow side, then simulate each squad.",
+      "Manchester United's strongest XI is 2007/08: peak Ronaldo, Moscow, Ferdinand and Vidić. The 1998/99 treble remains the greater achievement. Simulate both.",
     verdict: "The 1998/99 treble is United's defining achievement; the 2007/08 side is our pick for playing strength. Peak Ronaldo, Rooney and Tevez attacked ahead of Ferdinand and Vidić, giving Ferguson elite quality in every line.",
     candidates: [
       {
@@ -89,12 +92,13 @@ export const primeEntities: PrimeEntity[] = [
     slug: "messi",
     name: "Lionel Messi",
     kind: "player",
-    title: "When Was Messi's Prime?",
+    title: "Messi's Prime as a Team Player Is 2010/11",
+    pick: "2010/11",
     description:
       "Search demand around Messi's prime usually points at Barcelona. These three sides are the main candidates in this database.",
-    seoTitle: "Messi's Prime — Which Barcelona Season?",
+    seoTitle: "Messi's Prime: False Nine 2010/11, Not MSN",
     seoDescription:
-      "When was Messi's prime year? Compare Barcelona 2008/09, 2010/11 and 2014/15, then simulate those legendary squads.",
+      "Messi's prime as a team player is Barcelona 2010/11, the false-nine season. 2014/15 MSN is the counter; 2008/09 is the breakout. Simulate the three Barça sides.",
     verdict: "For control of an entire match, 2010/11 is the clearest answer: Messi as a false nine inside Barcelona's greatest midfield. For the broadest attacking version, 2014/15 has the counter-case, with Messi creating and finishing beside Suárez and Neymar.",
     candidates: [
       {
@@ -115,12 +119,13 @@ export const primeEntities: PrimeEntity[] = [
     slug: "brazil",
     name: "Brazil",
     kind: "nation",
-    title: "When Was Brazil's Prime?",
+    title: "Brazil's Prime Is Mexico 1970",
+    pick: "1970",
     description:
       "1958, 1970, 1994 or 2002? Pelé twice, Romário in the heat, or the three R's. All of them are playable.",
-    seoTitle: "Prime Brazil — When Was Brazil's Prime?",
+    seoTitle: "Brazil Prime: 1970, Not 1958 or the Three R's",
     seoDescription:
-      "When was Brazil's prime? Compare 1958, 1970, 1994 and 2002, then simulate each World Cup squad.",
+      "Brazil's prime is Mexico 1970: Pelé, Jairzinho, a 4–1 final. 1958 announced him; 2002 restored the three R's. Simulate the World Cup sides.",
     verdict: "Our pick is 1970. The 1958 side announced Pelé and 2002 restored Brazil's attacking mythology, but the Mexico team joined a perfect World Cup record to a front five whose movement still defines jogo bonito.",
     candidates: [
       {
@@ -149,12 +154,13 @@ export const primeEntities: PrimeEntity[] = [
     slug: "argentina",
     name: "Argentina",
     kind: "nation",
-    title: "When Was Argentina's Prime?",
+    title: "Argentina's Collective Prime Is Qatar 2022",
+    pick: "2022",
     description:
       "Maradona in Mexico, or Messi in Qatar. Two captains, two World Cups, one endless argument.",
-    seoTitle: "Prime Argentina — When Was Argentina's Prime?",
+    seoTitle: "Argentina Prime: 2022 Collective vs Maradona 1986",
     seoDescription:
-      "When was Argentina's prime? Compare the 1986 Maradona side and the 2022 Messi World Cup winners, then simulate each squad.",
+      "Argentina's collective prime is Qatar 2022. Mexico 1986 is the stronger one-player World Cup. Simulate Maradona against Messi's winners.",
     verdict: "Argentina's two peaks answer different questions. Mexico 1986 is the strongest individual-tournament argument, built around Maradona; Qatar 2022 is our pick as the more adaptable collective, able to change shape and survive several different kinds of match.",
     candidates: [
       {
@@ -175,12 +181,13 @@ export const primeEntities: PrimeEntity[] = [
     slug: "chelsea",
     name: "Chelsea",
     kind: "club",
-    title: "When Was Chelsea's Prime?",
+    title: "Chelsea's Prime Is Mourinho 2004/05, Not Munich",
+    pick: "2004/05",
     description:
       "Mourinho's 95-point first title side, or the battered 2012 team that won the Champions League in Munich. Two different Chels, both legendary.",
-    seoTitle: "Prime Chelsea — When Was Chelsea's Prime?",
+    seoTitle: "Chelsea Prime: 95 Points in 2004/05, Not Munich 2012",
     seoDescription:
-      "When was Chelsea's prime? Compare the 2004/05 Mourinho title winners and the 2011/12 Munich Champions League side, then simulate each squad.",
+      "Chelsea's prime is Mourinho 2004/05: 95 points, 15 conceded. Munich 2012 won Europe the hard way. Simulate both Chels.",
     verdict: "Our pick is 2004/05. Munich 2012 delivered the trophy Chelsea wanted most, but Mourinho's first champions were the stronger week-to-week side: 95 league points, only 15 goals conceded and a spine built to control English football.",
     candidates: [
       {
@@ -197,12 +204,13 @@ export const primeEntities: PrimeEntity[] = [
     slug: "ac-milan",
     name: "AC Milan",
     kind: "club",
-    title: "When Was AC Milan's Prime?",
+    title: "Milan's Prime Is Sacchi 1988/89",
+    pick: "1988/89",
     description:
       "Sacchi's pressing 1988/89 European Cup winners, or Ancelotti's Christmas-tree side that won Athens in 2007. Both are playable.",
-    seoTitle: "Prime AC Milan — When Was Milan's Prime?",
+    seoTitle: "AC Milan Prime: Sacchi 1988/89, Not Athens 2007",
     seoDescription:
-      "When was AC Milan's prime? Compare Sacchi's 1988/89 European Cup winners and Ancelotti's 2006/07 Athens side, then simulate each squad.",
+      "AC Milan's prime is Sacchi 1988/89: Baresi, the Dutch trio, a 4–0 European Cup final. Athens 2007 is the experienced counter. Simulate both.",
     verdict: "Our pick is 1988/89. Ancelotti's 2007 side had Kaká at his European peak and extraordinary experience, but Sacchi's Milan changed how elite teams pressed, defended space and moved as a unit while fielding Baresi, Maldini and the Dutch trio.",
     candidates: [
       {
@@ -219,12 +227,13 @@ export const primeEntities: PrimeEntity[] = [
     slug: "spain",
     name: "Spain",
     kind: "nation",
-    title: "When Was Spain's Prime?",
+    title: "Spain's Playing Prime Is Euro 2012",
+    pick: "2012",
     description:
       "The 2010 World Cup in South Africa, or the 2012 Euros side that beat Italy 4–0 in the final. Tiki-taka at two peaks.",
-    seoTitle: "Prime Spain — When Was Spain's Prime?",
+    seoTitle: "Spain Prime: Euro 2012 Control, Not Only 2010",
     seoDescription:
-      "When was Spain's prime? Compare the 2010 World Cup winners and the 2012 Euros side, then simulate each tiki-taka squad.",
+      "Spain's playing prime is Euro 2012, the 4–0 final. 2010 owns the World Cup. Simulate both tiki-taka sides.",
     verdict: "The 2010 team won Spain's greatest prize; our playing-strength pick is 2012. Del Bosque's side had deeper control, more tactical flexibility and ended the tournament by dismantling Italy 4–0 in the final.",
     candidates: [
       {
@@ -241,12 +250,13 @@ export const primeEntities: PrimeEntity[] = [
     slug: "england",
     name: "England",
     kind: "nation",
-    title: "When Was England's Prime?",
+    title: "England's Prime Is Still 1966",
+    pick: "1966",
     description:
       "1966 at Wembley, the golden generation of 2004, or Southgate's 2018 run. More than one England is playable — including sides that never lifted a trophy.",
-    seoTitle: "Prime England — When Was England's Prime?",
+    seoTitle: "England Prime: 1966, Not the Golden Generation",
     seoDescription:
-      "When was England's prime? Compare 1966, Italia 90, Euro 96, the 2004 golden generation, 2018 and 2021, then simulate each squad.",
+      "England's prime is still 1966. The 2004 golden generation wins the names-on-paper argument; 2018 restored belief. Simulate the sides.",
     verdict: "1966 remains the only defensible answer by achievement and is our overall pick. The 2004 squad wins the talent-on-paper argument, while 2018 restored tournament belief, but neither converted its strongest qualities into a final.",
     candidates: [
       {
@@ -267,12 +277,13 @@ export const primeEntities: PrimeEntity[] = [
     slug: "liverpool",
     name: "Liverpool",
     kind: "club",
-    title: "When Was Liverpool's Prime?",
+    title: "Liverpool's Stronger Side Is 2018/19, Not Istanbul",
+    pick: "2018/19",
     description:
       "Istanbul 2005, or the 2018/19 side that pressed as a team and won the Champions League in Madrid. Two European Cups, two different Liverpools.",
-    seoTitle: "Prime Liverpool — When Was Liverpool's Prime?",
+    seoTitle: "Liverpool Prime: Klopp 2018/19 vs Istanbul 2005",
     seoDescription:
-      "When was Liverpool's prime? Compare Benítez's 2004/05 Istanbul winners with Klopp's 2018/19 Champions League side, then simulate each squad.",
+      "Liverpool's stronger side is Klopp 2018/19, not Istanbul. Simulate Benítez 2004/05 against Salah, Mané and van Dijk.",
     verdict:
       "Our pick is 2018/19. Istanbul is the greater story and the more famous night; Klopp's side is the stronger football team — 97 league points, a front three that pressed as a unit, and a Champions League won without needing a 3–0 deficit to become folklore.",
     candidates: [

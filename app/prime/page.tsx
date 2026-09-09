@@ -57,7 +57,7 @@ export default function PrimeIndexPage() {
             <span>Prime dossier</span>
             <h2>{entity.title}</h2>
             <p className="mt-2 text-sm leading-6 text-muted">{entity.description}</p>
-            <b>Explore the eras →</b>
+            <b>Open {entity.name} →</b>
           </Link>
         ))}
       </div>

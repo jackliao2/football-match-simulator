@@ -71,7 +71,7 @@ export default async function NationPage({ params }: PageProps<"/national-teams/
       >
         {prime ? (
           <Link href={`/prime/${team}`} className="font-mono text-sm text-gold hover:text-gold-2">
-            When was {nation.name}&apos;s prime? →
+            When was {nation.name}&apos;s prime? {prime.pick} →
           </Link>
         ) : null}
       </PageHeader>

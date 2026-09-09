@@ -4,7 +4,7 @@ import robots from "@/app/robots"
 import { CLUB_COMPARES, compareFaqs, compareSearchDescription, compareSeoTitle } from "@/data/compare"
 import { clubs, nations } from "@/data/clubs"
 import { HUB_COPY } from "@/data/hub-copy"
-import { getPrimeEntity } from "@/data/prime"
+import { getPrimeEntity, primeEntities } from "@/data/prime"
 import { getPrimeEditorial } from "@/data/prime-editorial"
 import { isIndexableTeamPage } from "@/data/team-editorial"
 import { getTeam, getTeamsByClub, teams } from "@/data/teams"
@@ -240,9 +240,26 @@ describe("GSC landing pages", () => {
     const page = getPrimeEntity("liverpool")
     const editorial = getPrimeEditorial("liverpool")
     expect(page?.seoTitle.toLowerCase()).toContain("liverpool")
+    expect(page?.title).toMatch(/2018\/19/)
+    expect(page?.pick).toBe("2018/19")
     expect(editorial?.sections?.length).toBeGreaterThanOrEqual(3)
     expect(editorial!.caseFor).toMatch(/2018\/19/)
     expect(editorial!.counterCase).toMatch(/2004\/05|Istanbul/)
+  })
+
+  it("gives every prime page a unique verdict title instead of When Was X's Prime", () => {
+    const titles = new Set<string>()
+    const seos = new Set<string>()
+    for (const entity of primeEntities) {
+      expect(entity.pick, entity.slug).toBeTruthy()
+      expect(entity.title, entity.slug).not.toMatch(/^When Was .+['’]s Prime\?$/)
+      expect(entity.seoTitle, entity.slug).not.toMatch(/When Was .+ Prime/)
+      expect(entity.seoDescription, entity.slug).not.toMatch(/^When was .+ prime\?/i)
+      expect(titles.has(entity.title), entity.title).toBe(false)
+      expect(seos.has(entity.seoTitle), entity.seoTitle).toBe(false)
+      titles.add(entity.title)
+      seos.add(entity.seoTitle)
+    }
   })
 
   it("keeps reciprocal hreflang on English and Spanish simulate pages", async () => {

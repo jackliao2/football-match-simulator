@@ -30,6 +30,7 @@ export async function generateMetadata({
     description: page.seoDescription,
     keywords: [
       page.title.toLowerCase(),
+      `when was ${page.name.toLowerCase()}'s prime`,
       `prime ${page.name.toLowerCase()}`,
       `${page.name.toLowerCase()} prime`,
       ...candidateTeams.map((team) => `${page.name.toLowerCase()} ${team!.displaySeason}`),
@@ -73,7 +74,7 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
         author: personSchema(),
         publisher: { "@type": "Organization", name: SITE.name, url: absoluteUrl("/") },
         datePublished: SITE.legalUpdatedIso,
-        dateModified: SITE.legalUpdatedIso,
+        dateModified: SITE.contentUpdatedIso,
         about: { "@type": page.kind === "player" ? "Person" : "SportsTeam", name: page.name },
       }) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -85,7 +86,7 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
         ],
       }) }} />
       <PageHeader
-        kicker="Prime"
+        kicker={`When was ${page.name}'s prime?`}
         title={page.title}
         lead={page.description}
         crumbs={[{ href: "/prime", label: "Prime" }]}
@@ -95,17 +96,17 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
       <section className="result-panel overflow-hidden border-2 border-gold/40 shadow-[6px_6px_0_#000]">
         <div className="border-b border-white/10 bg-gold/[0.05] px-4 py-3 sm:px-5">
           <p className="font-display text-[8px] uppercase tracking-[0.22em] text-gold">Editorial verdict</p>
-          <h2 className="mt-1 font-brand text-xl font-semibold tracking-wide text-text">Our answer</h2>
+          <h2 className="mt-1 font-brand text-xl font-semibold tracking-wide text-text">{page.name}&apos;s prime: {page.pick}</h2>
         </div>
         <p className="max-w-4xl px-4 py-4 text-[15px] leading-7 text-text/90 sm:px-5">{page.verdict}</p>
       </section>
 
       {editorial ? (
         <section className="grid gap-3" aria-labelledby="prime-reasoning">
-          <div><p className="page-kicker">The reasoning</p><h2 id="prime-reasoning" className="section-title mt-1">Why this verdict — and why it is arguable</h2></div>
+          <div><p className="page-kicker">The reasoning</p><h2 id="prime-reasoning" className="section-title mt-1">Why {page.pick} — and why it is arguable</h2></div>
           <div className="grid gap-3 md:grid-cols-2">
-            <article className="result-panel p-4 sm:p-5"><h3 className="font-brand text-lg font-semibold text-text">The case for our pick</h3><p className="mt-3 text-sm leading-7 text-muted">{editorial.caseFor}</p></article>
-            <article className="result-panel p-4 sm:p-5"><h3 className="font-brand text-lg font-semibold text-text">The strongest counter-case</h3><p className="mt-3 text-sm leading-7 text-muted">{editorial.counterCase}</p></article>
+            <article className="result-panel p-4 sm:p-5"><h3 className="font-brand text-lg font-semibold text-text">The case for {page.pick}</h3><p className="mt-3 text-sm leading-7 text-muted">{editorial.caseFor}</p></article>
+            <article className="result-panel p-4 sm:p-5"><h3 className="font-brand text-lg font-semibold text-text">The strongest case against {page.pick}</h3><p className="mt-3 text-sm leading-7 text-muted">{editorial.counterCase}</p></article>
           </div>
         </section>
       ) : null}
@@ -114,8 +115,8 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
         <section className="grid gap-4 border-y border-white/10 py-6" aria-labelledby="prime-deep-dive">
           <div className="max-w-3xl">
             <p className="page-kicker">Deep dive</p>
-            <h2 id="prime-deep-dive" className="section-title mt-1">The seasons behind the answer</h2>
-            <p className="mt-2 text-sm leading-7 text-muted">A prime is a claim that needs a definition, evidence and a limit. These are the parts of the argument the short verdict cannot carry.</p>
+            <h2 id="prime-deep-dive" className="section-title mt-1">The seasons behind {page.name}&apos;s prime</h2>
+            <p className="mt-2 text-sm leading-7 text-muted">A {page.name} prime is a claim that needs a definition, evidence and a limit. These are the parts of the argument the short verdict cannot carry.</p>
           </div>
           <div className="grid gap-3">
             {editorial.sections.map((section, index) => (
@@ -162,7 +163,7 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
 
       {first && second ? (
         <section className="result-panel p-4">
-          <h2 className="font-brand text-lg font-semibold tracking-wide">Settle it in the simulator</h2>
+          <h2 className="font-brand text-lg font-semibold tracking-wide">Simulate two {page.name} eras</h2>
           <p className="mt-2 font-mono text-sm text-muted">
             {first.clubName} {first.displaySeason} vs {second.clubName} {second.displaySeason}
           </p>

@@ -93,6 +93,7 @@ export interface PrimeEntity {
   name: string
     kind: "club" | "nation" | "player"
   title: string
+  pick: string
   description: string
   seoTitle: string
     seoDescription: string
