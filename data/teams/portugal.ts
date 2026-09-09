@@ -130,7 +130,7 @@ export const portugal2004: HistoricalTeam = makeTeam({
   styleTags: ["Star Midfield", "Wide Forwards", "Home Soil", "Technical Midfield", "Counter Attack"],
   summary:
     "Scolari's 2004 Portugal. Figo still the face, Deco the brain, Ronaldo arriving, and a home Euros that ended in the strangest final of the decade.",
-  seoTitle: "Portugal 2004 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Portugal 2004 Squad — Scolari, Figo, Home Euros",
   seoDescription:
-    "Explore the Portugal 2004 Euros squad, starting XI, formation and team ratings, then simulate Scolari's home-tournament finalists against teams from any era.",
+    "Scolari's 2004 Portugal: Figo still the face, Deco the brain, Ronaldo arriving, and a home Euros that ended in the strangest final of the decade.",
 })

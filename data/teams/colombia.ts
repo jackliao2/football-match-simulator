@@ -63,9 +63,9 @@ export const colombia1994: HistoricalTeam = makeTeam({
   styleTags: ["Technical Midfield", "Star Playmaker", "Counter Attack", "Improvisation", "Individual Brilliance"],
   summary:
     "Maturana's 1994 Colombia. Valderrama as the pass, Asprilla as the chaos, Rincón as the runner — a favourite that ran into a World Cup that did not care about favourites.",
-  seoTitle: "Colombia 1994 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Colombia 1994 Squad — Maturana, Valderrama, USA 94",
   seoDescription:
-    "Explore the Colombia 1994 World Cup squad, starting XI, formation and team ratings, then simulate Valderrama's side against teams from any era.",
+    "Maturana's 1994 Colombia: Valderrama as the pass, Asprilla as the chaos, Rincón as the runner — a favourite that ran into a World Cup that did not care.",
 })
 
 export const colombia2014: HistoricalTeam = makeTeam({
@@ -130,7 +130,7 @@ export const colombia2014: HistoricalTeam = makeTeam({
   styleTags: ["Counter Attack", "Star Playmaker", "Wide Forwards", "Direct Attack", "Tournament Steel"],
   summary:
     "Pékerman's 2014 Colombia. James as the tournament's best player, Cuadrado as the stretch, and a quarter-final in Brazil that still felt like a country arriving.",
-  seoTitle: "Colombia 2014 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Colombia 2014 Squad — Pékerman, James, World Cup",
   seoDescription:
-    "Explore the Colombia 2014 World Cup squad, starting XI, formation and team ratings, then simulate James Rodríguez's Golden Boot side against teams from any era.",
+    "Pékerman's 2014 Colombia: James as the tournament's best player, Cuadrado as the stretch, and a quarter-final in Brazil that still felt like a country arriving.",
 })

@@ -128,7 +128,7 @@ export const porto201011: HistoricalTeam = makeTeam({
   styleTags: ["High Press", "Vertical Runs", "Star Forwards", "Counter Attack", "Wide Play"],
   summary:
     "Villas-Boas' 2010/11 Porto. Falcao as the European finisher, Hulk as the battering ram, Moutinho as the supply, and a treble that made the continent notice.",
-  seoTitle: "Porto 2010/11 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Porto 2010/11 Squad — Villas-Boas, Falcao, Europa Treble",
   seoDescription:
-    "Explore the Porto 2010/11 squad, starting XI, formation and ratings, then simulate Villas-Boas' Europa League winners against teams from any era.",
+    "Villas-Boas' 2010/11 Porto: Falcao as the European finisher, Hulk as the battering ram, a treble you can simulate against any era.",
 })

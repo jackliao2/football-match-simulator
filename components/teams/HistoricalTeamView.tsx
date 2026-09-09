@@ -19,8 +19,9 @@ import { getTeamEditorial } from "@/data/team-editorial"
 import { getTeam, getTeamsByClub } from "@/data/teams"
 import { cachedMatchupModel } from "@/lib/matchup-model"
 import { orgIndexPath, orgPath, teamPath } from "@/lib/paths"
-import { firstSentence, relatedMatchups, teamPageCopy } from "@/lib/page-copy"
-import { informalSeason, isCurrentSquad, modelledCurrentSquadNote } from "@/lib/seo"
+import { relatedMatchups, teamPageCopy } from "@/lib/page-copy"
+import { isCurrentSquad, modelledCurrentSquadNote } from "@/lib/seo"
+import { teamFaqs } from "@/lib/team-faqs"
 import { SITE, absoluteUrl } from "@/lib/site"
 import type { HistoricalTeam } from "@/types"
 
@@ -120,44 +121,8 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
   const orgIndexHref = orgIndexPath(team.kind)
   const TEAM_RUNS = 100
   const model = opponent ? cachedMatchupModel(team, opponent, TEAM_RUNS, `team:${team.id}`) : null
-  const shortSeason = informalSeason(team)
   const yearNote = SEARCH_YEAR_NOTES[team.id] ?? (isCurrentSquad(team) ? modelledCurrentSquadNote(team) : undefined)
-  const faqs = [
-    {
-      q: `What was the ${team.clubName} ${team.displaySeason} squad?`,
-      a: `${firstSentence(team.summary)} The simulator uses this ${team.formation} under ${team.manager}, with the starting XI and bench listed below.`
-    },
-    ...(shortSeason
-      ? [
-          {
-            q: `Is this the ${team.clubName} ${shortSeason} squad?`,
-            a: `Yes. ${team.clubName} ${shortSeason}, ${team.clubName} ${team.displaySeason} squad and ${team.clubName} ${team.eraYear} lineup searches all refer to this ${team.manager} side.`,
-          },
-        ]
-      : []),
-    opponent && model
-      ? {
-          q: `Who would win between ${team.clubName} ${team.displaySeason} and ${opponent.clubName} ${opponent.displaySeason}?`,
-          a: `Across ${TEAM_RUNS} seeded simulations, ${team.clubName} won ${model.homeWinPct}%, ${opponent.clubName} won ${model.awayWinPct}%, and ${model.drawPct}% finished level. The most common score was ${model.mostCommonScore.replace("-", "–")}. This is a modelled hypothetical, not a prediction of a real fixture.`,
-        }
-      : {
-          q: `Can I simulate the ${team.clubName} ${team.displaySeason} squad?`,
-          a: `Yes. Open the simulator from this page, pick an opponent, and run a single match or 100 matches with the same ratings and formation shown here.`,
-        },
-    {
-      q: `What formation did ${team.clubName} ${team.displaySeason} play?`,
-      a: `${team.manager} used a ${team.formation}. ${team.styleTags.slice(0, 2).join(" and ")} is the label on this XI — attack ${team.attackRating}, midfield ${team.midfieldRating}, defence ${team.defenseRating}, chemistry ${team.chemistryRating}.`
-    },
-    opponent
-      ? {
-          q: `How do I play ${team.clubName} ${team.displaySeason} against ${opponent.clubName}?`,
-          a: `Use the simulator on this page for a fresh seeded result, or open the dream-match page for the written dossier and the 100-match distribution.`,
-        }
-      : {
-          q: `Where is the ${team.clubName} ${team.displaySeason} starting XI?`,
-          a: `The starting XI, bench and ratings are listed on this page. They are the squad the match simulator uses.`,
-        },
-  ]
+  const faqs = teamFaqs(team, { opponent, model, editorial, runs: TEAM_RUNS })
 
   return (
     <div className="grid gap-6">
@@ -210,7 +175,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
               description: copy.description,
               url: absoluteUrl(teamPath(team)),
               datePublished: SITE.legalUpdatedIso,
-              dateModified: SITE.legalUpdatedIso,
+              dateModified: SITE.contentUpdatedIso,
               author: personSchema(),
               publisher: { "@type": "Organization", name: SITE.name, url: absoluteUrl("/") },
             }),

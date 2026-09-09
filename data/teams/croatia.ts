@@ -130,7 +130,7 @@ export const croatia1998: HistoricalTeam = makeTeam({
   styleTags: ["Star Forwards", "Technical Midfield", "Counter Attack", "Wide Wing-Backs", "Individual Brilliance"],
   summary:
     "Blažević's 1998 Croatia. Šuker finishing, Boban and Prosinečki conducting, and a third-place finish in a first World Cup that still looks like a miracle.",
-  seoTitle: "Croatia 1998 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Croatia 1998 Squad — Šuker, Boban, World Cup Bronze",
   seoDescription:
-    "Explore the Croatia 1998 World Cup squad, starting XI, formation and team ratings, then simulate Šuker's Golden Boot side against teams from any era.",
+    "Blažević's 1998 Croatia: Šuker finishing, Boban and Prosinečki conducting, and a third-place finish in a first World Cup that still looks like a miracle.",
 })

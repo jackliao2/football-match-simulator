@@ -15,6 +15,7 @@ import { matchupFeature } from "@/data/vs-editorial"
 import { canonicalVsSlug, parseVsSlug } from "@/lib/match-id"
 import { vsPageCopy } from "@/lib/page-copy"
 import { teamPath } from "@/lib/paths"
+import { vsFaqs } from "@/lib/team-faqs"
 import { SITE, absoluteUrl } from "@/lib/site"
 import { cachedMatchupModel } from "@/lib/matchup-model"
 import { teamSquad } from "@/lib/stars"
@@ -83,20 +84,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
 
   const copy = vsPageCopy(home, away, VS_RUNS)
   const feature = matchupFeature(home, away)
-  const faqs = [
-    {
-      q: `Who would win between ${home.clubName} ${home.displaySeason} and ${away.clubName} ${away.displaySeason}?`,
-      a: `Across ${VS_RUNS} seeded simulations, ${home.clubName} won ${model.homeWinPct}%, ${away.clubName} won ${model.awayWinPct}%, and ${model.drawPct}% finished level. The most common score was ${model.mostCommonScore.replace("-", "–")}. This is a modelled hypothetical, not a prediction of a real fixture.`,
-    },
-    {
-      q: `What was the ${home.clubName} vs ${away.clubName} simulated score?`,
-      a: `There is no single official score. The model's most frequent scoreline across ${VS_RUNS} matches was ${model.mostCommonScore.replace("-", "–")}, with average goals ${model.avgHomeGoals}–${model.avgAwayGoals}.`,
-    },
-    {
-      q: `How do I simulate ${home.clubName} ${home.displaySeason} against ${away.clubName} ${away.displaySeason}?`,
-      a: `The simulator on this page is already loaded with both squads. Run one match for a fresh seed, or read the ${VS_RUNS}-match distribution above for the model's range of results.`,
-    },
-  ]
+  const faqs = vsFaqs(home, away, model, VS_RUNS)
 
   return (
     <div className="grid gap-6">
@@ -111,7 +99,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
             description: copy.description,
             author: personSchema(),
             datePublished: SITE.legalUpdatedIso,
-            dateModified: SITE.legalUpdatedIso,
+            dateModified: SITE.contentUpdatedIso,
           }),
         }}
       />

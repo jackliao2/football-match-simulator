@@ -469,9 +469,9 @@ export const brazil1998: HistoricalTeam = makeTeam({
   styleTags: ["Star Forwards", "Wide Fullbacks", "Counter Attack", "Individual Brilliance", "Direct Attack"],
   summary:
     "Zagallo's 1998 Brazil. Ronaldo at the peak of fear, Rivaldo as the left blade, Cafu and Roberto Carlos as the flanks — and a final that never felt right.",
-  seoTitle: "Brazil 1998 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Brazil 1998 Squad — Zagallo, Ronaldo, France Final",
   seoDescription:
-    "Explore the Brazil 1998 World Cup squad, starting XI, formation and team ratings, then simulate Ronaldo's finalists against teams from any era.",
+    "Zagallo's 1998 Brazil: Ronaldo at the peak of fear, Rivaldo as the left blade, Cafu and Roberto Carlos as the flanks — and a final that never felt right.",
 })
 
 export const brazil2014: HistoricalTeam = makeTeam({
@@ -536,7 +536,7 @@ export const brazil2014: HistoricalTeam = makeTeam({
   styleTags: ["Home Soil", "Star Forwards", "Vertical Attack", "High Tempo", "Wide Fullbacks"],
   summary:
     "Scolari's 2014 Brazil. Neymar as the way out, a home World Cup that believed, and a semi-final in Belo Horizonte that still does not make sense.",
-  seoTitle: "Brazil 2014 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Brazil 2014 Squad — Scolari, Neymar, Belo Horizonte",
   seoDescription:
-    "Explore the Brazil 2014 World Cup squad, starting XI, formation and team ratings, then simulate the home World Cup side against teams from any era.",
+    "Scolari's 2014 Brazil: Neymar as the way out, a home World Cup that believed, and a semi-final in Belo Horizonte that still does not make sense.",
 })

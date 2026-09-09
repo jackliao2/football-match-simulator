@@ -130,7 +130,7 @@ export const denmark1998: HistoricalTeam = makeTeam({
   styleTags: ["Star Playmaker", "Counter Attack", "Wide Forwards", "Star Goalkeeper", "Technical Midfield"],
   summary:
     "Johansson's 1998 Denmark. Michael and Brian Laudrup together, Schmeichel still the wall, and a quarter-final against Brazil that felt like the last dance.",
-  seoTitle: "Denmark 1998 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Denmark 1998 Squad — Laudrup Brothers, Schmeichel",
   seoDescription:
-    "Explore the Denmark 1998 World Cup squad, starting XI, formation and team ratings, then simulate the Laudrup brothers against teams from any era.",
+    "Johansson's 1998 Denmark: Michael and Brian Laudrup together, Schmeichel still the wall, and a quarter-final against Brazil that felt like the last dance.",
 })

@@ -63,9 +63,9 @@ export const uruguay2010: HistoricalTeam = makeTeam({
   styleTags: ["Direct Attack", "Set Pieces", "Counter Attack", "Tournament Steel", "Two Strikers"],
   summary:
     "Tabárez's 2010 Uruguay. Forlán as the tournament's best player, Suárez as the cutting edge, and a small nation that reached the last four.",
-  seoTitle: "Uruguay 2010 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Uruguay 2010 Squad — Tabárez, Forlán, World Cup Semis",
   seoDescription:
-    "Explore the Uruguay 2010 World Cup squad, starting XI, formation and team ratings, then simulate Tabárez's semi-finalists against teams from any era.",
+    "Tabárez's 2010 Uruguay: Forlán as the tournament's best player, Suárez as the cutting edge, and a small nation that reached the last four.",
 })
 
 export const uruguay1950: HistoricalTeam = makeTeam({

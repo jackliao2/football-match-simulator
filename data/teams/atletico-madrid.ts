@@ -128,7 +128,7 @@ export const atleticoMadrid202021: HistoricalTeam = makeTeam({
   styleTags: ["Low Block", "Counter Attack", "Set Pieces", "Defensive Steel", "Direct Attack"],
   summary:
     "Simeone's 2020/21 Atlético. Oblak as the constant, Llorente as the runner, Suárez as the borrowed finisher, and a league title taken on the last stretch.",
-  seoTitle: "Atlético Madrid 2020/21 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Atlético Madrid 2020/21 Squad — Simeone, Suárez, La Liga",
   seoDescription:
-    "Explore the Atlético Madrid 2020/21 squad, starting XI, formation and ratings, then simulate Simeone's league winners against teams from any era.",
+    "Simeone's 2020/21 Atlético: Oblak as the constant, Llorente as the runner, Suárez as the borrowed finisher, and a league title taken late.",
 })

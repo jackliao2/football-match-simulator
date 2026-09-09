@@ -128,7 +128,7 @@ export const borussiaDortmund201011: HistoricalTeam = makeTeam({
   styleTags: ["Gegenpressing", "Youth Core", "High Tempo", "Vertical Runs", "Counter Attack"],
   summary:
     "Klopp's first Dortmund title. Kagawa between the lines, a teenage Götze, Sahin as the metronome, and a press that made the Bundesliga look slow.",
-  seoTitle: "Borussia Dortmund 2010/11 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Borussia Dortmund 2010/11 Squad — Klopp's First Title, Kagawa",
   seoDescription:
-    "Explore the Borussia Dortmund 2010/11 squad, starting XI, formation and ratings, then simulate Klopp's first title side against teams from any era.",
+    "Klopp's first Dortmund title: Kagawa between the lines, a teenage Götze, Sahin as the metronome, and a press that made the Bundesliga look slow.",
 })

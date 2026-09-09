@@ -6,10 +6,13 @@ import { clubs, nations } from "@/data/clubs"
 import { HUB_COPY } from "@/data/hub-copy"
 import { getPrimeEntity } from "@/data/prime"
 import { getPrimeEditorial } from "@/data/prime-editorial"
-import { editorialTeamIds, isIndexableTeamPage } from "@/data/team-editorial"
-import { getTeam, getTeamsByClub } from "@/data/teams"
-import { orgHubCopy, teamH1, teamPageCopy } from "@/lib/page-copy"
+import { isIndexableTeamPage } from "@/data/team-editorial"
+import { getTeam, getTeamsByClub, teams } from "@/data/teams"
+import { FEATURED_MATCHUPS } from "@/data/matchups"
+import { matchupFeature } from "@/data/vs-editorial"
+import { orgHubCopy, teamH1, teamPageCopy, vsPageCopy } from "@/lib/page-copy"
 import { informalSeason, isCurrentSquad, modelledCurrentSquadNote, squadKeywords } from "@/lib/seo"
+import { teamFaqs } from "@/lib/team-faqs"
 import { getSiteUrl } from "@/lib/site"
 
 describe("GSC landing pages", () => {
@@ -168,11 +171,17 @@ describe("GSC landing pages", () => {
     expect(teamPageCopy(getTeam("liverpool-2004-05")!).title).toMatch(/04\/05/)
   })
 
-  it("does not reuse the factory squad title on indexable dossiers", () => {
-    for (const id of editorialTeamIds()) {
-      const copy = teamPageCopy(getTeam(id)!)
-      expect(copy.title, id).not.toMatch(/Squad, Lineup, Formation & Ratings/)
-      expect(copy.description, id).not.toMatch(/^Explore the /)
+  it("does not reuse the factory squad title on any team page", () => {
+    const titles = new Set<string>()
+    for (const team of teams) {
+      const copy = teamPageCopy(team)
+      expect(copy.title, team.id).not.toMatch(/Squad, Lineup, Formation & Ratings/)
+      expect(copy.description, team.id).not.toMatch(/^Explore the /)
+      expect(titles.has(copy.title), `${team.id} duplicates title: ${copy.title}`).toBe(false)
+      titles.add(copy.title)
+      if (isCurrentSquad(team)) {
+        expect(copy.description, team.id).toMatch(/modelled/i)
+      }
     }
   })
 
@@ -191,6 +200,30 @@ describe("GSC landing pages", () => {
       expect(titles.has(copy.title), copy.title).toBe(false)
       titles.add(copy.title)
     }
+  })
+
+  it("gives featured vs pages a written kicker instead of Dream match", () => {
+    for (const [a, b] of FEATURED_MATCHUPS) {
+      const home = getTeam(a)!
+      const away = getTeam(b)!
+      const copy = vsPageCopy(home, away, 100)
+      expect(copy.kicker, `${a}-vs-${b}`).not.toBe("Dream match")
+      const feature = matchupFeature(home, away)
+      if (feature) expect(copy.kicker).toBe(feature.title)
+    }
+  })
+
+  it("writes current-squad FAQs as modelled, not official lineups", () => {
+    const faqs = teamFaqs(getTeam("barcelona-2025-26")!, { runs: 100 })
+    expect(faqs[0]?.q).toMatch(/official/)
+    expect(faqs[0]?.a).toMatch(/modelled/i)
+    expect(faqs.some((item) => item.q.startsWith("How do I play"))).toBe(false)
+  })
+
+  it("keeps historic FAQs attached to the dossier, not a fill-in-the-blank", () => {
+    const faqs = teamFaqs(getTeam("napoli-1986-87")!, { runs: 100 })
+    expect(faqs[0]?.a).toMatch(/Maradona|scudetto|Diego/i)
+    expect(faqs.some((item) => item.q.startsWith("How do I play"))).toBe(false)
   })
 
   it("publishes a Liverpool prime page with a real case and counter-case", () => {

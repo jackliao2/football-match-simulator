@@ -197,7 +197,7 @@ export const netherlands2010: HistoricalTeam = makeTeam({
   styleTags: ["Counter Attack", "Wide Forwards", "Compact Midfield", "Direct Attack", "Tournament Steel"],
   summary:
     "Van Marwijk's 2010 Netherlands. Sneijder running the knockouts, Robben on the break, and a final in Johannesburg that Iniesta ended.",
-  seoTitle: "Netherlands 2010 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Netherlands 2010 Squad — Van Marwijk, Sneijder, Johannesburg",
   seoDescription:
-    "Explore the Netherlands 2010 World Cup squad, starting XI, formation and team ratings, then simulate the Johannesburg finalists against teams from any era.",
+    "Van Marwijk's 2010 Netherlands: Sneijder running the knockouts, Robben on the break, and a final in Johannesburg that Iniesta ended.",
 })

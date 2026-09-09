@@ -130,9 +130,9 @@ export const england1990: HistoricalTeam = makeTeam({
   styleTags: ["Direct Attack", "Set Pieces", "Wide Play", "Tournament Steel", "Work Rate"],
   summary:
     "Robson's 1990 England. Gascoigne bursting through Italy, Lineker still finishing, and a penalty-shootout night in Turin that the country never quite put down.",
-  seoTitle: "England 1990 Squad, Lineup, Formation & Ratings",
+  seoTitle: "England 1990 Squad — Robson, Gascoigne, Italia 90",
   seoDescription:
-    "Explore the England 1990 World Cup squad, starting XI, formation and team ratings, then simulate Robson's Italia 90 semi-finalists against teams from any era.",
+    "Robson's 1990 England: Gascoigne bursting through Italy, Lineker still finishing, and a penalty-shootout night in Turin the country never quite put down.",
 })
 
 export const england1996: HistoricalTeam = makeTeam({
@@ -197,9 +197,9 @@ export const england1996: HistoricalTeam = makeTeam({
   styleTags: ["Home Soil", "Two Strikers", "Wide Play", "Set Pieces", "Work Rate"],
   summary:
     "Venables' Euro 96. Shearer scoring, Gascoigne floating, football coming home — until a penalty at Wembley against Germany.",
-  seoTitle: "England 1996 Squad, Lineup, Formation & Ratings",
+  seoTitle: "England 1996 Squad — Venables, Shearer, Football's Coming Home",
   seoDescription:
-    "Explore the England 1996 Euros squad, starting XI, formation and team ratings, then simulate Venables' Wembley semi-finalists against teams from any era.",
+    "Venables' Euro 96: Shearer scoring, Gascoigne floating, football coming home — until a penalty at Wembley against Germany.",
 })
 
 export const england2004: HistoricalTeam = makeTeam({
@@ -264,9 +264,9 @@ export const england2004: HistoricalTeam = makeTeam({
   styleTags: ["Star Midfield", "Two Strikers", "Set Pieces", "Counter Attack", "Individual Brilliance"],
   summary:
     "Eriksson's 2004 England. Beckham, Gerrard, Lampard and Scholes in the same midfield, Rooney arriving like a meteor, and a golden generation that never quite became a trophy.",
-  seoTitle: "England 2004 Squad, Lineup, Formation & Ratings",
+  seoTitle: "England 2004 Squad — Eriksson, Rooney, Golden Generation",
   seoDescription:
-    "Explore the England 2004 Euros squad, starting XI, formation and team ratings, then simulate the golden generation against teams from any era.",
+    "Eriksson's 2004 England: Beckham, Gerrard, Lampard and Scholes in the same midfield, Rooney arriving like a meteor, and a golden generation without a trophy.",
 })
 
 export const england2018: HistoricalTeam = makeTeam({
@@ -331,9 +331,9 @@ export const england2018: HistoricalTeam = makeTeam({
   styleTags: ["Set Pieces", "Wide Wing-Backs", "Direct Attack", "Youth Core", "Tournament Steel"],
   summary:
     "Southgate's 2018 England. Kane scoring, Trippier whipping, a back three that travelled further than anyone expected, and a semi-final that felt like a country exhaling.",
-  seoTitle: "England 2018 Squad, Lineup, Formation & Ratings",
+  seoTitle: "England 2018 Squad — Southgate, Kane, World Cup Semis",
   seoDescription:
-    "Explore the England 2018 World Cup squad, starting XI, formation and team ratings, then simulate Southgate's semi-finalists against teams from any era.",
+    "Southgate's 2018 England: Kane scoring, Trippier whipping, a back three that travelled further than anyone expected, and a semi-final that felt like a country exhaling.",
 })
 
 export const england2021: HistoricalTeam = makeTeam({
@@ -398,7 +398,7 @@ export const england2021: HistoricalTeam = makeTeam({
   styleTags: ["Low Block", "Wide Forwards", "Set Pieces", "Youth Core", "Tournament Steel"],
   summary:
     "Southgate's 2021 England. Sterling running the group, Kane arriving in the knockouts, and a Wembley final that ended the only way English finals know.",
-  seoTitle: "England 2021 Squad, Lineup, Formation & Ratings",
+  seoTitle: "England 2021 Squad — Southgate, Sterling, Wembley Final",
   seoDescription:
-    "Explore the England 2021 Euros squad, starting XI, formation and team ratings, then simulate the Wembley finalists against teams from any era.",
+    "Southgate's 2021 England: Sterling running the group, Kane arriving in the knockouts, and a Wembley final that ended the only way English finals know.",
 })

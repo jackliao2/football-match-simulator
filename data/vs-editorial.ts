@@ -227,8 +227,15 @@ function key(a: string, b: string) {
   return [a, b].sort().join("|")
 }
 
+export function writtenMatchupEditorial(home: HistoricalTeam, away: HistoricalTeam): string | undefined {
+  return EDITORIAL[key(home.id, away.id)]
+}
+
 export function matchupEditorial(home: HistoricalTeam, away: HistoricalTeam): string {
-  return EDITORIAL[key(home.id, away.id)] ?? `${home.manager}'s ${home.clubName} ${home.displaySeason} bring ${home.formation} and ${home.styleTags.slice(0, 2).join(" with ").toLowerCase()}. ${away.manager}'s ${away.clubName} ${away.displaySeason} answer with ${away.formation} and ${away.styleTags.slice(0, 2).join(" with ").toLowerCase()}; the matchup is decided by which side can impose that identity without exposing its weakest transition.`
+  return (
+    writtenMatchupEditorial(home, away) ??
+    `${home.manager}'s ${home.clubName} ${home.displaySeason} bring ${home.formation} and ${home.styleTags.slice(0, 2).join(" with ").toLowerCase()}. ${away.manager}'s ${away.clubName} ${away.displaySeason} answer with ${away.formation} and ${away.styleTags.slice(0, 2).join(" with ").toLowerCase()}; the matchup is decided by which side can impose that identity without exposing its weakest transition.`
+  )
 }
 
 export function matchupFeature(home: HistoricalTeam, away: HistoricalTeam): MatchupFeature | undefined {

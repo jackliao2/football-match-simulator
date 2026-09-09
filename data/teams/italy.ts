@@ -132,9 +132,9 @@ export const italy1994: HistoricalTeam = makeTeam({
   styleTags: ["Defensive Steel", "Individual Brilliance", "Pressing", "Counter Attack", "Experience"],
   summary:
     "Sacchi's 1994 Italy. Baresi and Maldini as the wall, Baggio as the entire attack, and a penalty in Pasadena that still hangs in the air.",
-  seoTitle: "Italy 1994 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Italy 1994 Squad — Sacchi, Baggio, Pasadena",
   seoDescription:
-    "Explore the Italy 1994 World Cup squad, starting XI, formation and team ratings, then simulate Sacchi's finalists against teams from any era.",
+    "Sacchi's 1994 Italy: Baresi and Maldini as the wall, Baggio as the entire attack, and a penalty in Pasadena that still hangs in the air.",
 })
 
 export const italy2021: HistoricalTeam = makeTeam({

@@ -3,7 +3,7 @@ import { FEATURED_MATCHUPS, allVsPairs, defaultOpponent } from "@/data/matchups"
 import { getTeam, teams } from "@/data/teams"
 import { teamStars } from "@/lib/stars"
 import type { Club, ClubLeague, HistoricalTeam, NationRegion } from "@/types"
-import { matchupEditorial } from "@/data/vs-editorial"
+import { matchupEditorial, matchupFeature } from "@/data/vs-editorial"
 
 export function copySlot(id: string, modulo: number): number {
   let hash = 2166136261
@@ -317,11 +317,12 @@ export function catalogCounts(): { clubs: number; nations: number; clubSides: nu
 export function vsPageCopy(home: HistoricalTeam, away: HistoricalTeam, runs: number) {
   const matchup = `${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}`
   const editorial = matchupEditorial(home, away)
+  const feature = matchupFeature(home, away)
   return {
     title: `${matchup}: Who Would Win?`,
     description: clip(`${editorial} Compare the squads and ${runs} simulated matches.`),
     lead: editorial,
     editorial,
-    kicker: "Dream match",
+    kicker: feature?.title ?? `${home.displaySeason} vs ${away.displaySeason}`,
   }
 }

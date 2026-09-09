@@ -130,7 +130,7 @@ export const hungary1966: HistoricalTeam = makeTeam({
   styleTags: ["Technical Attack", "False Nine", "Wide Play", "Counter Attack", "Individual Brilliance"],
   summary:
     "Baróti's 1966 Hungary. Albert as the Ballon d'Or brain, Bene and Farkas as the finishers, and an afternoon against Brazil that still gets replayed in Budapest.",
-  seoTitle: "Hungary 1966 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Hungary 1966 Squad — Albert, Bene, World Cup Magyars",
   seoDescription:
-    "Explore the Hungary 1966 World Cup squad, starting XI, formation and team ratings, then simulate Albert's Magyars against teams from any era.",
+    "Baróti's 1966 Hungary: Albert as the Ballon d'Or brain, Bene and Farkas as the finishers, and an afternoon against Brazil that still gets replayed in Budapest.",
 })

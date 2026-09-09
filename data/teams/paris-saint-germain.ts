@@ -128,7 +128,7 @@ export const parisSaintGermain202223: HistoricalTeam = makeTeam({
   styleTags: ["Star Forwards", "Individual Brilliance", "Chance Creation", "Counter Attack", "Wide Play"],
   summary:
     "Galtier's 2022/23 PSG. Messi, Neymar and Mbappé as the most expensive forward line on earth, and a league title that never answered the European question.",
-  seoTitle: "Paris Saint-Germain 2022/23 Squad, Lineup, Formation & Ratings",
+  seoTitle: "PSG 2022/23 Squad — Messi, Neymar, Mbappé",
   seoDescription:
-    "Explore the PSG 2022/23 squad, starting XI, formation and ratings, then simulate Messi, Neymar and Mbappé against teams from any era.",
+    "Galtier's 2022/23 PSG: Messi, Neymar and Mbappé as the most expensive forward line on earth, and a league title that never answered the European question.",
 })

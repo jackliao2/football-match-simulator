@@ -130,7 +130,7 @@ export const belgium1986: HistoricalTeam = makeTeam({
   styleTags: ["Counter Attack", "Tournament Steel", "Star Goalkeeper", "Work Rate", "Direct Attack"],
   summary:
     "Thys' 1986 Belgium. Pfaff in goal, Scifo between the lines, Ceulemans as the captain, and a run to the last four that still surprises people.",
-  seoTitle: "Belgium 1986 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Belgium 1986 Squad — Thys, Scifo, World Cup Semis",
   seoDescription:
-    "Explore the Belgium 1986 World Cup squad, starting XI, formation and team ratings, then simulate Thys' semi-finalists against teams from any era.",
+    "Thys' 1986 Belgium: Pfaff in goal, Scifo between the lines, Ceulemans as the captain, and a World Cup run to the last four.",
 })

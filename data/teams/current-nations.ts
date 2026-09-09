@@ -59,9 +59,9 @@ export const brazil2026: HistoricalTeam = makeTeam({
   styleTags: ["Star Forwards", "Wide Play", "Counter Attack", "Individual Brilliance", "Vertical Attack"],
   summary:
     "Ancelotti's 2026 Brazil. Vinícius as the edge, Rodrygo as the other blade, and a World Cup side built to settle the oldest argument in the sport.",
-  seoTitle: "Brazil 2026 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Brazil 2026 Squad — Modelled Ancelotti World Cup XI",
   seoDescription:
-    "Brazil 2026 World Cup squad, starting XI and ratings. Simulate Vinícius, Rodrygo and Ancelotti's current side against historical teams from any era.",
+    "Ancelotti's modelled 2026 Brazil: Vinícius as the edge, Rodrygo as the other blade. A tournament-cycle XI, not an official FIFA list.",
 })
 
 export const argentina2026: HistoricalTeam = makeTeam({
@@ -122,9 +122,9 @@ export const argentina2026: HistoricalTeam = makeTeam({
   styleTags: ["Messi Gravity", "Compact Midfield", "Counter Attack", "Tournament Steel", "Set Pieces"],
   summary:
     "Scaloni's 2026 Argentina. Messi still the idea, Álvarez as the runner, Romero as the bite, and a side that already knows how a World Cup ends.",
-  seoTitle: "Argentina 2026 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Argentina 2026 Squad — Modelled Scaloni XI, Messi",
   seoDescription:
-    "Argentina 2026 World Cup squad, starting XI and ratings. Simulate Messi, Álvarez and Scaloni's current side against historical teams from any era.",
+    "Scaloni's modelled 2026 Argentina: Messi still the idea, Álvarez as the runner, Romero as the bite. Not an official AFA World Cup list.",
 })
 
 export const france2026: HistoricalTeam = makeTeam({
@@ -185,9 +185,9 @@ export const france2026: HistoricalTeam = makeTeam({
   styleTags: ["Vertical Counter", "Athletic Midfield", "Star Forwards", "Defensive Steel", "Wide Play"],
   summary:
     "Deschamps' 2026 France. Mbappé through the middle, Dembélé as the chaos, Saliba as the wall, and a generation that still expects a final.",
-  seoTitle: "France 2026 Squad, Lineup, Formation & Ratings",
+  seoTitle: "France 2026 Squad — Modelled Deschamps XI, Mbappé",
   seoDescription:
-    "France 2026 World Cup squad, starting XI and ratings. Simulate Mbappé, Dembélé and Saliba against historical football teams from any era.",
+    "Deschamps' modelled 2026 France: Mbappé through the middle, Dembélé as the chaos, Saliba as the wall. A playable cycle, not a FIFA roster.",
 })
 
 export const spain2026: HistoricalTeam = makeTeam({
@@ -248,9 +248,9 @@ export const spain2026: HistoricalTeam = makeTeam({
   styleTags: ["Positional Play", "Youth Core", "Wide Forwards", "Midfield Dominance", "Short Passing"],
   summary:
     "De la Fuente's 2026 Spain. Yamal on the right, Pedri as the brain, Rodri as the screen, and a side that still wants the ball more than anyone.",
-  seoTitle: "Spain 2026 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Spain 2026 Squad — Modelled De la Fuente XI, Yamal",
   seoDescription:
-    "Spain 2026 World Cup squad, starting XI and ratings. Simulate Yamal, Pedri and Rodri against historical football teams from any era.",
+    "De la Fuente's modelled 2026 Spain: Yamal on the right, Pedri as the brain, Rodri as the screen. Not an official RFEF World Cup list.",
 })
 
 export const germany2026: HistoricalTeam = makeTeam({
@@ -311,9 +311,9 @@ export const germany2026: HistoricalTeam = makeTeam({
   styleTags: ["High Press", "Technical Midfield", "Wide Forwards", "Vertical Attack", "Positional Play"],
   summary:
     "Nagelsmann's 2026 Germany. Musiala and Wirtz as the creators, Havertz as the runner, and a side still trying to look like 2014 without copying it.",
-  seoTitle: "Germany 2026 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Germany 2026 Squad — Modelled Nagelsmann XI, Musiala",
   seoDescription:
-    "Germany 2026 World Cup squad, starting XI and ratings. Simulate Musiala, Wirtz and Kimmich against historical football teams from any era.",
+    "Nagelsmann's modelled 2026 Germany: Musiala and Wirtz as the creators, Havertz as the runner. A simulator cycle, not a DFB official squad.",
 })
 
 export const italy2026: HistoricalTeam = makeTeam({
@@ -374,9 +374,9 @@ export const italy2026: HistoricalTeam = makeTeam({
   styleTags: ["Technical Midfield", "Wide Forwards", "Defensive Steel", "Positional Play", "Athletic Full-Backs"],
   summary:
     "Spalletti's 2026 Italy. Barella as the engine, Chiesa as the spark, Bastoni as the passer, and a side still built to suffer then strike.",
-  seoTitle: "Italy 2026 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Italy 2026 Squad — Modelled Spalletti XI, Barella",
   seoDescription:
-    "Italy 2026 World Cup squad, starting XI and ratings. Simulate Chiesa, Barella and Donnarumma against historical football teams from any era.",
+    "Spalletti's modelled 2026 Italy: Barella as the engine, Chiesa as the spark, Bastoni as the passer. Not an official FIGC World Cup list.",
 })
 
 export const netherlands2026: HistoricalTeam = makeTeam({
@@ -437,9 +437,9 @@ export const netherlands2026: HistoricalTeam = makeTeam({
   styleTags: ["Positional Play", "Wide Forwards", "Defensive Steel", "Technical Midfield", "Vertical Attack"],
   summary:
     "Koeman's 2026 Netherlands. Van Dijk as the captain, Frenkie as the passer, Gakpo as the stretch.",
-  seoTitle: "Netherlands 2026 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Netherlands 2026 Squad — Modelled Koeman XI, Van Dijk",
   seoDescription:
-    "Netherlands 2026 World Cup squad, starting XI and ratings. Simulate Van Dijk, Frenkie and Gakpo against historical football teams from any era.",
+    "Koeman's modelled 2026 Netherlands: Van Dijk as the captain, Frenkie as the passer, Gakpo as the stretch. Not an official KNVB list.",
 })
 
 export const england2026: HistoricalTeam = makeTeam({
@@ -563,9 +563,9 @@ export const portugal2026: HistoricalTeam = makeTeam({
   styleTags: ["Star Forwards", "Technical Midfield", "Counter Attack", "Wide Play", "Experience"],
   summary:
     "Martínez's 2026 Portugal. Ronaldo still the reference, Leão as the stretch, Vitinha as the metronome, and a tournament side that always looks dangerous on the break.",
-  seoTitle: "Portugal 2026 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Portugal 2026 Squad — Modelled Martínez XI, Ronaldo",
   seoDescription:
-    "Portugal 2026 World Cup squad, starting XI and ratings. Simulate Ronaldo, Leão and Bernardo against historical football teams from any era.",
+    "Martínez's modelled 2026 Portugal: Ronaldo still the reference, Leão as the stretch, Vitinha as the metronome. Not an official FPF World Cup list.",
 })
 
 export const croatia2026: HistoricalTeam = makeTeam({
@@ -626,9 +626,9 @@ export const croatia2026: HistoricalTeam = makeTeam({
   styleTags: ["Technical Midfield", "Tournament Steel", "Experience", "Compact Block", "Set Pieces"],
   summary:
     "Dalić's 2026 Croatia. Modrić still the brain, Gvardiol as the modern wall, and a midfield country that never arrives underdressed.",
-  seoTitle: "Croatia 2026 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Croatia 2026 Squad — Modelled Dalić XI, Modrić",
   seoDescription:
-    "Croatia 2026 World Cup squad, starting XI and ratings. Simulate Modrić, Gvardiol and Kovačić against historical football teams from any era.",
+    "Dalić's modelled 2026 Croatia: Modrić still the brain, Gvardiol as the modern wall. A midfield country in the simulator, not a FIFA official list.",
 })
 
 export const uruguay2026: HistoricalTeam = makeTeam({
@@ -689,9 +689,9 @@ export const uruguay2026: HistoricalTeam = makeTeam({
   styleTags: ["High Press", "Vertical Attack", "Defensive Steel", "Direct Attack", "Athletic Midfield"],
   summary:
     "Bielsa's 2026 Uruguay. Valverde as the engine, Núñez as the chaos, Araújo as the wall, and a press that does not come with an off switch.",
-  seoTitle: "Uruguay 2026 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Uruguay 2026 Squad — Modelled Bielsa XI, Valverde",
   seoDescription:
-    "Uruguay 2026 World Cup squad, starting XI and ratings. Simulate Valverde, Núñez and Bielsa's current side against historical teams from any era.",
+    "Bielsa's modelled 2026 Uruguay: Valverde as the engine, Núñez as the chaos, Araújo as the wall. Not an official AUF World Cup list.",
 })
 
 export const belgium2026: HistoricalTeam = makeTeam({
@@ -752,9 +752,9 @@ export const belgium2026: HistoricalTeam = makeTeam({
   styleTags: ["Star Playmaker", "Wide Forwards", "Counter Attack", "Vertical Attack", "Athletic Midfield"],
   summary:
     "Garcia's 2026 Belgium. De Bruyne still the supply, Doku as the chaos, Openda as the finish, and a golden generation playing its last loud tournament.",
-  seoTitle: "Belgium 2026 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Belgium 2026 Squad — Modelled Garcia XI, De Bruyne",
   seoDescription:
-    "Belgium 2026 World Cup squad, starting XI and ratings. Simulate De Bruyne, Doku and Openda against historical football teams from any era.",
+    "Garcia's modelled 2026 Belgium: De Bruyne still the supply, Doku as the chaos, Openda as the finish. A last loud golden-generation cycle, not a FIFA list.",
 })
 
 export const hungary2026: HistoricalTeam = makeTeam({
@@ -815,9 +815,9 @@ export const hungary2026: HistoricalTeam = makeTeam({
   styleTags: ["Counter Attack", "Set Pieces", "Direct Attack", "Work Rate", "Star Playmaker"],
   summary:
     "Rossi's 2026 Hungary. Szoboszlai as the whole idea, Kerkez on the overlap, and a side that still plays like a small country with a loud number 10.",
-  seoTitle: "Hungary 2026 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Hungary 2026 Squad — Modelled Rossi XI, Szoboszlai",
   seoDescription:
-    "Hungary 2026 World Cup squad, starting XI and ratings. Simulate Szoboszlai and Rossi's current side against historical football teams from any era.",
+    "Rossi's modelled 2026 Hungary: Szoboszlai as the whole idea, Kerkez on the overlap. A small-country number 10 in the simulator, not an MLSZ official list.",
 })
 
 export const colombia2026: HistoricalTeam = makeTeam({
@@ -878,9 +878,9 @@ export const colombia2026: HistoricalTeam = makeTeam({
   styleTags: ["Wide Forwards", "Star Playmaker", "Counter Attack", "Vertical Attack", "Tournament Steel"],
   summary:
     "Lorenzo's 2026 Colombia. Díaz as the stretch, James as the memory, Durán as the new finish.",
-  seoTitle: "Colombia 2026 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Colombia 2026 Squad — Modelled Lorenzo XI, Díaz",
   seoDescription:
-    "Colombia 2026 World Cup squad, starting XI and ratings. Simulate Díaz, James and Lorenzo's current side against historical football teams from any era.",
+    "Lorenzo's modelled 2026 Colombia: Díaz as the stretch, James as the memory, Durán as the new finish. Not an official FCF World Cup list.",
 })
 
 export const denmark2026: HistoricalTeam = makeTeam({
@@ -941,9 +941,9 @@ export const denmark2026: HistoricalTeam = makeTeam({
   styleTags: ["Compact Block", "Set Pieces", "Technical Midfield", "Direct Attack", "Work Rate"],
   summary:
     "Riemer's 2026 Denmark. Eriksen as the passer, Højlund as the runner, and a side that still defends like a small country that expects to be there in July.",
-  seoTitle: "Denmark 2026 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Denmark 2026 Squad — Modelled Riemer XI, Eriksen",
   seoDescription:
-    "Denmark 2026 World Cup squad, starting XI and ratings. Simulate Eriksen, Højlund and Højbjerg against historical football teams from any era.",
+    "Riemer's modelled 2026 Denmark: Eriksen as the passer, Højlund as the runner. A tournament-cycle XI, not an official DBU list.",
 })
 
 

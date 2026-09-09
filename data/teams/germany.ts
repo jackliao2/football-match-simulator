@@ -199,7 +199,7 @@ export const germany2006: HistoricalTeam = makeTeam({
   styleTags: ["High Tempo", "Two Strikers", "Home Soil", "Youth Core", "Direct Attack"],
   summary:
     "Klinsmann's 2006 Germany. A home World Cup that did not end with the trophy, but with Ballack, Podolski and a country falling back in love with the side.",
-  seoTitle: "Germany 2006 Squad, Lineup, Formation & Ratings",
+  seoTitle: "Germany 2006 Squad — Klinsmann, Ballack, Home World Cup",
   seoDescription:
-    "Explore the Germany 2006 World Cup squad, starting XI, formation and team ratings, then simulate Klinsmann's home-tournament side against teams from any era.",
+    "Klinsmann's 2006 Germany: a home World Cup that did not end with the trophy, but with Ballack, Podolski and a country falling back in love with the side.",
 })
