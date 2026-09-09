@@ -10,7 +10,7 @@ import { isIndexableTeamPage } from "@/data/team-editorial"
 import { getTeam, getTeamsByClub, teams } from "@/data/teams"
 import { FEATURED_MATCHUPS } from "@/data/matchups"
 import { matchupFeature } from "@/data/vs-editorial"
-import { BEST_TEAM, COMPARE_HUB, HOME_PAGE, HOME_SECTIONS, METHODOLOGY_PAGE, NATIONS_HUB, PRIME_HUB, SEARCH_PAGE, SIMULATE_PAGE, TEAMS_HUB, VS_HUB } from "@/data/collection-copy"
+import { ABOUT_PAGE, BEST_TEAM, COMPARE_HUB, HOME_PAGE, HOME_SECTIONS, METHODOLOGY_PAGE, NATIONS_HUB, PRIME_HUB, SEARCH_PAGE, SIMULATE_PAGE, TEAMS_HUB, VS_HUB } from "@/data/collection-copy"
 import { orgHubCopy, firstSentence, teamH1, teamPageCopy, vsPageCopy } from "@/lib/page-copy"
 import { compareOgCopy, teamOgCopy } from "@/lib/og-copy"
 import { informalSeason, isCurrentSquad, modelledCurrentSquadNote, squadKeywords } from "@/lib/seo"
@@ -86,8 +86,9 @@ describe("GSC landing pages", () => {
   it("puts who-is-better language on the Milan compare pair", () => {
     const milan = CLUB_COMPARES.find((pair) => pair.slug === "ac-milan-vs-inter-milan")!
     expect(milan.keywords.join(" ")).toMatch(/who is better/)
-    expect(milan.title).toMatch(/Which Is Better/)
-    expect(milan.title).not.toMatch(/^Who Is Better, /)
+    expect(milan.title).toBe(milan.verdictHeading)
+    expect(milan.title).toMatch(/Sacchi|2010|Europe/)
+    expect(milan.title).not.toMatch(/Which Is Better/)
     expect(milan.seoTitle).toMatch(/Sacchi|2010/)
     expect(compareSearchDescription(milan)).toMatch(/^Milan across European history/)
     expect(compareSearchDescription(milan)).toMatch(/AC Milan 1988\/89/)
@@ -112,7 +113,8 @@ describe("GSC landing pages", () => {
       expect(faqs.some((item) => item.q.startsWith("Can I simulate"))).toBe(false)
       const seo = compareSeoTitle(pair, pair.leftClubId, pair.rightClubId)
       expect(seo, pair.slug).not.toMatch(/^Who Is Better, /)
-      expect(pair.title, pair.slug).not.toMatch(/^Who Is Better, /)
+      expect(pair.title, pair.slug).toBe(pair.verdictHeading)
+      expect(pair.title, pair.slug).not.toMatch(/Which Is Better/)
       expect(titles.has(seo), seo).toBe(false)
       titles.add(seo)
     }
@@ -291,6 +293,14 @@ describe("GSC landing pages", () => {
     expect(COMPARE_HUB.title).not.toMatch(/^Who Is Better\?/)
     expect(COMPARE_HUB.title).toMatch(/Brazil/)
     expect(COMPARE_HUB.kicker).toBe("Who is better?")
+    expect(COMPARE_HUB.nationHeading).toMatch(/Brazil|Argentina/)
+    expect(COMPARE_HUB.clubHeading).toMatch(/Clásico|United/)
+    expect(COMPARE_HUB.nationHeading).not.toBe("National teams")
+    expect(COMPARE_HUB.clubHeading).not.toBe("Clubs")
+
+    expect(ABOUT_PAGE.h1).toMatch(/2010\/11/)
+    expect(ABOUT_PAGE.title).toMatch(/2010\/11/)
+    expect(ABOUT_PAGE.kicker).toBe("The project")
 
     expect(BEST_TEAM.h1).not.toBe("What is the best football team ever?")
     expect(BEST_TEAM.h1).toMatch(/2010\/11/)
@@ -360,7 +370,9 @@ describe("GSC landing pages", () => {
     expect(LOCALIZED_COPY.es.dreams.title).not.toBe("Partidos soñados")
     expect(LOCALIZED_COPY.es.sections.dream).not.toBe("Duelos populares")
     expect(LOCALIZED_COPY.es.howTitle).not.toBe("Cómo funciona el simulador")
-    expect(LOCALIZED_COPY.es.home.title).toMatch(/2010\/11/)
+    expect(LOCALIZED_COPY.es.aboutTitle).toMatch(/2010\/11/)
+    expect(LOCALIZED_COPY.es.how[0]?.[1]).toMatch(/2010\/11|1970/)
+    expect(LOCALIZED_COPY.es.faq[0]?.[1]).toMatch(/2010\/11/)
     expect(LOCALIZED_COPY.es.faqTitle).toMatch(/2010\/11/)
     expect(LOCALIZED_COPY.es.faq.at(-1)?.[0]).toMatch(/2010\/11/)
 
@@ -368,6 +380,8 @@ describe("GSC landing pages", () => {
     expect(LOCALIZED_COPY["pt-br"].simulate.title).toMatch(/2010\/11/)
     expect(LOCALIZED_COPY["pt-br"].dreams.title).not.toBe("Jogos dos sonhos")
     expect(LOCALIZED_COPY["pt-br"].sections.clubs).not.toBe("Clubes lendários")
+    expect(LOCALIZED_COPY["pt-br"].aboutTitle).toMatch(/2010\/11/)
+    expect(LOCALIZED_COPY["pt-br"].how[0]?.[1]).toMatch(/2010\/11|1970/)
     expect(LOCALIZED_COPY["pt-br"].home.title).toMatch(/2010\/11/)
     expect(LOCALIZED_COPY["pt-br"].faqTitle).toMatch(/2010\/11/)
     expect(LOCALIZED_COPY["pt-br"].howTitle).not.toBe("Como funciona o simulador")

@@ -60,11 +60,11 @@ export default function CompareIndexPage() {
     <div className="grid gap-6">
       <PageHeader kicker={COMPARE_HUB.kicker} title={COMPARE_HUB.h1} lead={COMPARE_HUB.lead} />
       <section className="grid gap-3">
-        <h2 className="section-title">National teams</h2>
+        <h2 className="section-title">{COMPARE_HUB.nationHeading}</h2>
         <CompareList rows={nations} kicker="Nation debate" />
       </section>
       <section className="grid gap-3">
-        <h2 className="section-title">Clubs</h2>
+        <h2 className="section-title">{COMPARE_HUB.clubHeading}</h2>
         <CompareList rows={clubs} kicker="Club debate" />
       </section>
     </div>

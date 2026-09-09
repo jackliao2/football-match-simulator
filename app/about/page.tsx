@@ -2,31 +2,32 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { LegalDoc } from "@/components/ui/LegalDoc"
 import { EditorialByline, personSchema } from "@/components/ui/EditorialByline"
+import { ABOUT_PAGE } from "@/data/collection-copy"
 import { pageMetadata } from "@/lib/seo"
 import { SITE, absoluteUrl } from "@/lib/site"
 
 export const metadata: Metadata = pageMetadata({
-  title: "About LegendaryMatch",
-  description: "Who makes LegendaryMatch, why the independent football simulator exists, what is editorial judgement and how to report a squad error.",
+  title: ABOUT_PAGE.title,
+  description: ABOUT_PAGE.description,
   path: "/about",
 })
 
 export default function AboutPage() {
   return <>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-      "@context": "https://schema.org", "@type": "AboutPage", name: "About LegendaryMatch", url: absoluteUrl("/about"),
+      "@context": "https://schema.org", "@type": "AboutPage", name: ABOUT_PAGE.h1, url: absoluteUrl("/about"),
       mainEntity: { "@type": "Organization", name: SITE.name, url: absoluteUrl("/"), email: SITE.email, founder: personSchema() },
     }) }} />
-    <LegalDoc kicker="The project" title="About LegendaryMatch" lead="A football time machine built for one question: what happens when the teams in two different memories have to share a pitch?" updated={SITE.legalUpdated}>
+    <LegalDoc kicker={ABOUT_PAGE.kicker} title={ABOUT_PAGE.h1} lead={ABOUT_PAGE.lead} updated={SITE.legalUpdated}>
       <EditorialByline date={SITE.legalUpdated} dateTime={SITE.legalUpdatedIso} />
       <section>
         <h2>Who writes this</h2>
-        <p>{SITE.editorName} edits LegendaryMatch: the squad catalogue, the ratings arguments, the dream-match long reads and the methodology. It is a named independent project, not an anonymous template farm. Corrections and disagreements go to the same inbox as legal mail: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+        <p>{SITE.editorName} edits LegendaryMatch: the squad catalogue, the ratings arguments, the Barcelona 2010/11 vs Madrid 2016/17 long reads and the methodology. It is a named independent project, not an anonymous template farm. Corrections and disagreements go to the same inbox as legal mail: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
         <p>The voice on the pages is editorial on purpose. A season dossier is a claim about how a team played, not a generated caption on a ratings card. If a paragraph is wrong, it has an author who can change it.</p>
       </section>
       <section>
         <h2>Why this site exists</h2>
-        <p>Football arguments usually collapse into clips, trophy counts or the age of the person making the argument. LegendaryMatch gives the debate a playable form. Choose two named seasons, inspect the actual squad choices and run one possible match. The result is not history rewritten; it is a transparent way to test the assumptions behind the argument.</p>
+        <p>Football arguments usually collapse into clips, trophy counts or the age of the person making the argument. LegendaryMatch gives the debate a playable form. Choose two named seasons — Barcelona 2010/11 against Madrid 2016/17, Brazil 1970 against Spain 2010 — inspect the actual squad choices and run one possible match. The result is not history rewritten; it is a transparent way to test the assumptions behind the argument.</p>
         <p>The catalogue is intentionally selective. It favours sides with a real football story: champions, tactical landmarks, cult teams and recent squads people genuinely want to put against the past. We would rather explain 100 teams properly than publish thousands of empty badge pages.</p>
       </section>
       <section>

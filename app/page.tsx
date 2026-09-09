@@ -38,11 +38,11 @@ export const metadata: Metadata = {
 const FAQ = [
   [
     "Is this also a soccer match simulator?",
-    "Yes. Football and soccer describe the same sport here. US fans can use this soccer match simulator to match squads from different seasons, play one game, or open Expert AI Analysis for a 100-match probability read.",
+    "Yes. Football and soccer are the same sport here. Play Barcelona 2010/11 against Madrid 2016/17, or Brazil 1970 against Spain 2010, in this soccer match simulator — one game, or Expert AI Analysis for a 100-match spread.",
   ],
   [
     "Is this predicting a real match?",
-    "No. It is a counterfactual game built for historical what-if debates, not betting advice or a forecast. Team ratings, tactical profiles and a random seed create one plausible match between the selected squads.",
+    "No. Barcelona 2010/11 never met Madrid 2016/17. The engine writes a counterfactual night from ratings, tactics and a seed — not betting advice and not Saturday’s forecast.",
   ],
   [
     "Can I simulate a custom football match online?",
@@ -50,19 +50,19 @@ const FAQ = [
   ],
   [
     "Is this a football match simulator with AI?",
-    "The score comes from the match engine — ratings, tactics and a seed — not from a chatbot picking a winner. Optional Expert AI Analysis then explains the 100-match probabilities. A football match simulator AI query still lands on a simulated game, not a language-model scoreline.",
+    "The score for Barça vs Madrid comes from the match engine — ratings, tactics and a seed — not from a chatbot picking a winner. Optional Expert AI Analysis then explains the 100-match probabilities.",
   ],
   [
     "Why does the result change when I simulate again?",
-    "A great team does not win every night. Each new seed creates another plausible game, so the score and scorers can change. Expert AI Analysis adds a fresh 100-match distribution behind its tactical verdict.",
+    "Guardiola’s 2010/11 side does not win every night against Zidane’s Madrid. Each new seed is another plausible game, so the score and scorers can change. Expert AI Analysis adds a fresh 100-match distribution.",
   ],
   [
     "What does Expert AI Analysis do?",
-    "The match engine produces the numbers first. Expert AI then reads the two real squad lists, managers, shapes and the 100-match evidence to explain the tactical matchup. It does not secretly replace the simulated result.",
+    "The engine scores Barcelona 2010/11 vs Madrid 2016/17 first. Expert AI then reads those squads, managers, shapes and the 100-match evidence. It does not secretly replace the simulated result.",
   ],
   [
     "How do you rate players?",
-    "Overall ratings are era-relative. A 95 in 1970 means greatness in 1970, not a claim about modern athleticism. Hover a player for PAC, SHO, PAS, DRI, DEF and PHY.",
+    "A 95 on Pelé in 1970 means greatness in 1970. Messi in 2010/11 is rated in that season, not against a modern athletic test. Hover a player for PAC, SHO, PAS, DRI, DEF and PHY.",
   ],
   [
     "When was Barcelona's prime?",
@@ -75,9 +75,9 @@ const FAQ = [
 ] as const
 
 const HOW_STEPS = [
-  ["01", "Pick two shirts", "Choose a club peak, a World Cup side or a recent named season. Every card opens the actual squad and era behind the rating."],
-  ["02", "Play one possible night", "The engine combines player ratings, team style and a seed into the score, xG, scorers and match events."],
-  ["03", "Test the argument", "Run it again for a different night, or ask Expert AI for a tactical verdict backed by 100 alternate matches."],
+  ["01", "Pick Barça 2010/11 or Brazil 1970", "Every card is a named season with an XI — Guardiola’s Barça, Zidane’s Madrid, a World Cup side — not a badge with a slider."],
+  ["02", "Play one night against Madrid 2016/17", "The engine combines those ratings and a seed into the score, xG, scorers and match events. Repeating the fixture is another plausible night."],
+  ["03", "Read the 100-match spread", "One 2–1 is one night. Expert AI Analysis explains Barça vs Madrid with a hundred alternate scores behind it, and never votes."],
 ] as const
 
 export default function HomePage() {

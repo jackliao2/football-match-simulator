@@ -25,7 +25,7 @@ export async function generateMetadata({
 }: PageProps<"/compare/[slug]">): Promise<Metadata> {
   const { slug } = await params
   const pair = resolveClubCompare(slug)
-  if (!pair) return { title: "Club comparison" }
+  if (!pair) return { title: "Named-season comparison" }
   const leftClub = getClub(pair.leftClubId)
   const rightClub = getClub(pair.rightClubId)
   const title =
@@ -128,7 +128,7 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
       <section>
         <p className="page-kicker">Argument by category</p>
         <h2 className="section-title mt-2 mb-3">
-          {pair.kind === "nation" ? "Where each country has the edge" : "Where each club has the edge"}
+          {leftClub.name} vs {rightClub.name} by category
         </h2>
         <div className="comparison-table">
           <div className="comparison-row">

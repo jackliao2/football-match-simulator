@@ -67,6 +67,8 @@ export const COMPARE_HUB = {
   kicker: "Who is better?",
   h1: "All-time cabinets first. Then the prime teams.",
   lead: "An all-time nation is not the same as a prime squad. Each page separates those questions, then opens the two sides in the simulator.",
+  nationHeading: "Brazil or Argentina, England or Germany",
+  clubHeading: "Clásico, United–Liverpool, the Milan derby",
 } as const
 
 export const SIMULATE_PAGE = {
@@ -107,4 +109,13 @@ export const BEST_TEAM = {
   h1: "Barcelona 2010/11, Then Brazil 1970 and Sacchi's Milan",
   lead: "There is no neutral time machine. This ranking weighs dominance in context, tactical influence, quality across the XI and how convincingly the team answered the strongest opponents available.",
   homeCardTitle: "Barcelona 2010/11 is our pick for best team ever",
+} as const
+
+export const ABOUT_PAGE = {
+  title: "About LegendaryMatch — Barcelona 2010/11 vs Madrid 2016/17",
+  description:
+    "Who writes LegendaryMatch, why Barcelona 2010/11 vs Madrid 2016/17 is playable, what is editorial judgement and how to report a squad error.",
+  kicker: "The project",
+  h1: "Built to play Barcelona 2010/11 against Madrid 2016/17",
+  lead: "A named-season football simulator for arguments the calendar made impossible — Guardiola’s Barça against Zidane’s Madrid, Brazil 1970 against Spain 2010, not a badge with a slider.",
 } as const

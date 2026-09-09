@@ -41,7 +41,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "real-madrid",
     leftPeakId: "barcelona-2010-11",
     rightPeakId: "real-madrid-2016-17",
-    title: "Barcelona or Real Madrid — Which Is Better?",
+    title: "Real Madrid all-time; Barcelona at their modern peak",
     seoTitle: "Barcelona vs Real Madrid: All-Time vs 2010/11 Peak",
     description:
       "Real Madrid lead the all-time European case; Barcelona 2010/11 reached the higher modern peak. Compare their history, greatest teams and prime matchup.",
@@ -68,7 +68,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "liverpool",
     leftPeakId: "manchester-united-2007-08",
     rightPeakId: "liverpool-2018-19",
-    title: "Manchester United or Liverpool — Which Is Better?",
+    title: "United across the modern era; Liverpool on the biggest nights",
     description:
       "Manchester United or Liverpool: compare English football’s defining rivalry across history, then simulate United 2007/08 vs Liverpool 2018/19.",
     keywords: keywords("Manchester United", "Liverpool"),
@@ -91,7 +91,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "manchester-city",
     leftPeakId: "manchester-united-1998-99",
     rightPeakId: "manchester-city-2022-23",
-    title: "Manchester United or Manchester City — Which Is Better?",
+    title: "City at their peak; United as a historical club",
     description:
       "Manchester United or Manchester City: treble history versus Guardiola’s treble, then simulate United 1998/99 vs City 2022/23.",
     keywords: keywords("Manchester United", "Manchester City", ["manchester derby which is better"]),
@@ -114,7 +114,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "arsenal",
     leftPeakId: "manchester-united-1998-99",
     rightPeakId: "arsenal-2003-04",
-    title: "Manchester United or Arsenal — Which Is Better?",
+    title: "United as a club; the Invincibles as a league statement",
     description:
       "Manchester United or Arsenal: Ferguson’s treble winners against the Invincibles. Compare the clubs, then simulate 1998/99 vs 2003/04.",
     keywords: keywords("Manchester United", "Arsenal"),
@@ -137,7 +137,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "manchester-city",
     leftPeakId: "liverpool-2018-19",
     rightPeakId: "manchester-city-2022-23",
-    title: "Liverpool or Manchester City — Which Is Better?",
+    title: "City as a serial winner; Liverpool as the rival peak",
     description:
       "Liverpool or Manchester City: Klopp’s Champions League winners against Guardiola’s treble side. Compare the clubs and simulate the peaks.",
     keywords: keywords("Liverpool", "Manchester City"),
@@ -160,7 +160,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "everton",
     leftPeakId: "liverpool-2018-19",
     rightPeakId: "everton-1984-85",
-    title: "Liverpool or Everton — Which Is Better?",
+    title: "Liverpool as a European giant; Everton at their 1980s peak",
     description:
       "Liverpool or Everton: the Merseyside argument across history, then a simulated meeting of Liverpool 2018/19 and Everton 1984/85.",
     keywords: keywords("Liverpool", "Everton", ["merseyside derby which is better"]),
@@ -183,7 +183,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "chelsea",
     leftPeakId: "arsenal-2003-04",
     rightPeakId: "chelsea-2004-05",
-    title: "Arsenal or Chelsea — Which Is Better?",
+    title: "Chelsea as a title machine; Arsenal as the Invincibles",
     description:
       "Arsenal or Chelsea: Invincibles versus Mourinho’s first title side. Compare London’s modern rivals, then simulate 2003/04 vs 2004/05.",
     keywords: keywords("Arsenal", "Chelsea"),
@@ -206,7 +206,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "tottenham",
     leftPeakId: "arsenal-2003-04",
     rightPeakId: "tottenham-2018-19",
-    title: "Arsenal or Tottenham — Which Is Better?",
+    title: "Arsenal as a club; Tottenham at their European peak",
     description:
       "Arsenal or Tottenham: North London’s club case, then a simulated meeting of the Invincibles and Pochettino’s 2018/19 finalists.",
     keywords: keywords("Arsenal", "Tottenham", ["north london derby which is better"]),
@@ -229,7 +229,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "tottenham",
     leftPeakId: "chelsea-2011-12",
     rightPeakId: "tottenham-2018-19",
-    title: "Chelsea or Tottenham — Which Is Better?",
+    title: "Chelsea on trophies; Tottenham on a peak league-to-Europe season",
     description:
       "Chelsea or Tottenham: a London club comparison, then Chelsea’s 2012 Champions League winners against Tottenham’s 2018/19 finalists.",
     keywords: keywords("Chelsea", "Tottenham"),
@@ -252,7 +252,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "inter-milan",
     leftPeakId: "ac-milan-1988-89",
     rightPeakId: "inter-milan-2009-10",
-    title: "AC Milan or Inter Milan — Which Is Better?",
+    title: "Milan across European history; Inter in 2010",
     seoTitle: "AC Milan vs Inter: Sacchi History vs 2010 Treble",
     description:
       "AC Milan lead the all-time European case; Inter’s 2009/10 treble is the stronger modern peak. Compare their history, trophies and greatest teams.",
@@ -282,7 +282,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "ac-milan",
     leftPeakId: "juventus-2016-17",
     rightPeakId: "ac-milan-1988-89",
-    title: "Juventus or AC Milan — Which Is Better?",
+    title: "Milan in Europe; Juventus as a league dynasty",
     seoTitle: "Juventus vs AC Milan: League Dynasty vs Europe",
     description:
       "Juventus or AC Milan: Italian giants compared, then Juventus 2016/17 against Sacchi’s Milan in the simulator.",
@@ -306,7 +306,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "inter-milan",
     leftPeakId: "juventus-2016-17",
     rightPeakId: "inter-milan-2009-10",
-    title: "Juventus or Inter — Which Is Better?",
+    title: "Inter’s treble; Juventus’ league machine",
     description:
       "Juventus or Inter Milan: two Italian giants, then a simulated meeting of Juve 2016/17 and Inter’s 2010 treble winners.",
     keywords: keywords("Juventus", "Inter"),
@@ -329,7 +329,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "borussia-dortmund",
     leftPeakId: "bayern-munich-2012-13",
     rightPeakId: "borussia-dortmund-2012-13",
-    title: "Bayern Munich or Borussia Dortmund — Which Is Better?",
+    title: "Bayern as a club; Dortmund in 2012/13",
     description:
       "Bayern or Dortmund: Germany’s defining club rivalry, then the 2012/13 Champions League final pairing in the simulator.",
     keywords: keywords("Bayern Munich", "Borussia Dortmund", ["der klassiker which is better"]),
@@ -352,7 +352,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "atletico-madrid",
     leftPeakId: "real-madrid-2013-14",
     rightPeakId: "atletico-madrid-2013-14",
-    title: "Real Madrid or Atlético Madrid — Which Is Better?",
+    title: "Madrid in Europe; Atlético in 2013/14",
     description:
       "Real Madrid or Atlético: the Madrid derby as a club question, then La Décima against Simeone’s 2013/14 league winners.",
     keywords: keywords("Real Madrid", "Atletico Madrid", ["madrid derby which is better"]),
@@ -375,7 +375,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "feyenoord",
     leftPeakId: "ajax-1994-95",
     rightPeakId: "feyenoord-1969-70",
-    title: "Ajax or Feyenoord — Which Is Better?",
+    title: "Ajax as a European idea; Feyenoord as the first Dutch champions of Europe",
     description:
       "Ajax or Feyenoord: the Netherlands’ oldest club argument, then Van Gaal’s 1994/95 Ajax against Feyenoord’s 1970 European Cup winners.",
     keywords: keywords("Ajax", "Feyenoord"),
@@ -398,7 +398,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "benfica",
     leftPeakId: "porto-2003-04",
     rightPeakId: "benfica-1961-62",
-    title: "Porto or Benfica — Which Is Better?",
+    title: "Benfica in the 1960s; Porto in 2004",
     description:
       "Porto or Benfica: Portugal’s club giants, then Mourinho’s 2004 Champions League winners against Eusébio’s Benfica.",
     keywords: keywords("Porto", "Benfica"),
@@ -421,7 +421,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "rangers",
     leftPeakId: "celtic-1966-67",
     rightPeakId: "rangers-1992-93",
-    title: "Celtic or Rangers — Which Is Better?",
+    title: "Celtic in Europe; Rangers as a domestic dynasty",
     description:
       "Celtic or Rangers: the Old Firm as a club question, then the Lisbon Lions against Rangers’ early-1990s side.",
     keywords: keywords("Celtic", "Rangers", ["old firm which is better"]),
@@ -444,7 +444,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "river-plate",
     leftPeakId: "boca-juniors-2000",
     rightPeakId: "river-plate-2018",
-    title: "Boca Juniors or River Plate — Which Is Better?",
+    title: "Two Argentine peaks, not one capital ranking",
     description:
       "Boca or River: Superclásico as a club debate, then Boca 2000 against River 2018 in the football match simulator.",
     keywords: keywords("Boca Juniors", "River Plate", ["superclasico which is better"]),
@@ -467,7 +467,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "marseille",
     leftPeakId: "paris-saint-germain-2022-23",
     rightPeakId: "marseille-1992-93",
-    title: "PSG or Marseille — Which Is Better?",
+    title: "Marseille in 1993; PSG as a modern giant",
     description:
       "PSG or Marseille: Le Classique as a club question, then Messi–Mbappé–Neymar PSG against Marseille’s 1993 European champions.",
     keywords: keywords("PSG", "Marseille", ["paris saint-germain or marseille"]),
@@ -490,7 +490,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "manchester-united",
     leftPeakId: "barcelona-2010-11",
     rightPeakId: "manchester-united-2007-08",
-    title: "Barcelona or Manchester United — Which Is Better?",
+    title: "Barcelona at the modern peak; United as a complete English champion",
     description:
       "Barcelona or Manchester United: two global clubs, then Guardiola’s 2010/11 side against Ferguson’s 2007/08 Champions League winners.",
     keywords: keywords("Barcelona", "Manchester United"),
@@ -513,7 +513,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "bayern-munich",
     leftPeakId: "real-madrid-2016-17",
     rightPeakId: "bayern-munich-2012-13",
-    title: "Real Madrid or Bayern Munich — Which Is Better?",
+    title: "Madrid across Europe; Bayern’s 2013 treble",
     seoTitle: "Real Madrid vs Bayern: Knockout Nights vs 2013 Treble",
     description:
       "Real Madrid or Bayern: Europe’s serial winners compared, then Zidane’s 2016/17 Madrid against Heynckes’ 2012/13 treble side.",
@@ -537,7 +537,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "ac-milan",
     leftPeakId: "liverpool-2004-05",
     rightPeakId: "ac-milan-2006-07",
-    title: "Liverpool or AC Milan — Which Is Better?",
+    title: "Two European Cup identities, one unfinished argument",
     description:
       "Liverpool or AC Milan: Istanbul and Athens as club memory, then Benítez’s 2005 winners against Ancelotti’s 2007 Milan.",
     keywords: keywords("Liverpool", "AC Milan", ["istanbul 2005"]),
@@ -560,7 +560,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "juventus",
     leftPeakId: "napoli-1986-87",
     rightPeakId: "juventus-2016-17",
-    title: "Napoli or Juventus — Which Is Better?",
+    title: "Juventus as an institution; Napoli in the Maradona years",
     description:
       "Napoli or Juventus: Maradona’s scudetto side against Allegri’s 2016/17 Juventus. Compare the clubs, then simulate the peaks.",
     keywords: keywords("Napoli", "Juventus"),
@@ -583,7 +583,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "benfica",
     leftPeakId: "sporting-2001-02",
     rightPeakId: "benfica-1961-62",
-    title: "Sporting or Benfica — Which Is Better?",
+    title: "Benfica in Europe; Sporting as a Lisbon rival peak",
     description:
       "Sporting or Benfica: Lisbon’s derby as a club question, then Sporting 2001/02 against Eusébio’s Benfica.",
     keywords: keywords("Sporting", "Benfica", ["lisbon derby which is better"]),
@@ -606,7 +606,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "psv",
     leftPeakId: "ajax-1994-95",
     rightPeakId: "psv-1987-88",
-    title: "Ajax or PSV — Which Is Better?",
+    title: "Ajax as a style; PSV in 1988",
     description:
       "Ajax or PSV: Dutch giants compared, then Van Gaal’s 1994/95 Ajax against PSV’s 1988 European Cup winners.",
     keywords: keywords("Ajax", "PSV"),
@@ -629,7 +629,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "santos",
     leftPeakId: "flamengo-1981",
     rightPeakId: "santos-1962",
-    title: "Flamengo or Santos — Which Is Better?",
+    title: "Santos with Pelé; Flamengo with Zico",
     description:
       "Flamengo or Santos: Brazilian club giants, then Zico’s 1981 Flamengo against Pelé’s 1962 Santos.",
     keywords: keywords("Flamengo", "Santos"),
@@ -652,7 +652,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "liverpool",
     leftPeakId: "chelsea-2004-05",
     rightPeakId: "liverpool-2018-19",
-    title: "Chelsea or Liverpool — Which Is Better?",
+    title: "Liverpool in Europe; Chelsea as a 2000s title machine",
     description:
       "Chelsea or Liverpool: Mourinho’s first title side against Klopp’s Champions League winners. Compare the clubs and simulate the peaks.",
     keywords: keywords("Chelsea", "Liverpool"),
@@ -676,7 +676,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "argentina",
     leftPeakId: "brazil-1970",
     rightPeakId: "argentina-1986",
-    title: "Brazil or Argentina — Which Is Better?",
+    title: "Brazil as a footballing nation; Argentina when one player carried a tournament",
     seoTitle: "Brazil vs Argentina: Five World Cups vs Maradona",
     description:
       "Brazil or Argentina: five World Cups against three, Pelé’s 1970 side against Maradona’s 1986 winners. Separate the all-time nations from the prime teams, then simulate Mexico 1970 vs Mexico 1986.",
@@ -706,7 +706,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightClubId: "germany",
     leftPeakId: "england-1966",
     rightPeakId: "germany-1990",
-    title: "England or Germany — Which Is Better?",
+    title: "Germany as a tournament nation; England in 1966",
     seoTitle: "England vs Germany: 1966 vs Four World Cups",
     description:
       "England or Germany: 1966 against four World Cups, Wembley against Turin. Compare the nations, then simulate Ramsey’s winners versus Beckenbauer’s 1990 side.",
@@ -776,14 +776,13 @@ export function compareFaqs(
   leftPeak: string,
   rightPeak: string,
 ): Array<{ q: string; a: string }> {
-  const noun = pair.kind === "nation" ? "national team" : "club"
   return [
     {
       q: `Who is better, ${leftName} or ${rightName}?`,
       a: `${pair.verdictHeading}. ${pair.verdict[0]}`,
     },
     {
-      q: `Which ${noun} has the stronger all-time case?`,
+      q: `Does ${leftName} have the stronger all-time case?`,
       a: pair.verdict[0],
     },
     {
