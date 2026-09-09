@@ -1,7 +1,7 @@
 export const PRIME_HUB = {
   title: "Club Primes: Barcelona 2010/11, United 2007/08, Liverpool 2018/19",
   description:
-    "When was Barcelona's prime? 2010/11. United's? Moscow 2008. Liverpool's? Klopp 2018/19. Each dossier names the pick, the famous counter-season, and the squads you can simulate.",
+    "When was Barcelona's prime? 2010/11. United's? Moscow 2008. Liverpool's? Klopp 2018/19. Each dossier names the pick and the famous counter-season.",
   kicker: "When was their prime?",
   h1: "Barcelona's prime is 2010/11. United's is 2007/08.",
   lead: "Liverpool's stronger side is 2018/19, not Istanbul. Brazil's is 1970. Current squads sit on the page for comparison; they are never labelled a prime before the story is finished.",
@@ -41,15 +41,15 @@ export const TEAMS_HUB = {
 export const NATIONS_HUB = {
   title: "National Teams: Brazil 1970, Maradona’s 86, Spain 2010",
   description:
-    "Brazil 1970, Argentina 1986, Spain 2010, France 2026 — World Cup and Euros XIs you can play against club sides from any era.",
+    "Brazil 1970, Argentina 1986, Spain 2010, France 2026 — World Cup and Euros sides named by year, not a badge with a slider.",
   kicker: "World Cup sides",
   h1: "Brazil 1970, Maradona’s 86, Spain 2010",
 } as const
 
 export const VS_HUB = {
-  title: "Barcelona 2010/11 vs Madrid 2016/17 — Dream Matches You Can Play",
+  title: "Barcelona 2010/11 vs Madrid 2016/17 — Dream Matches, Named Seasons",
   description:
-    "Dream football matchups you can actually play: Barcelona 2010/11 vs Madrid 2016/17, Brazil 1970 vs Spain 2010, United 1999 vs Barça. Simulated scores and who-would-win percentages, not archive results.",
+    "Barcelona 2010/11 vs Madrid 2016/17, Brazil 1970 vs Spain 2010, United 1999 vs Barça. Simulated scores and who-would-win percentages, not archive results.",
   kicker: "Dream matches",
   crumb: "Matchups",
   h1: "Barcelona 2010/11 vs Madrid 2016/17, Brazil 1970 vs Spain 2010",
@@ -63,10 +63,10 @@ export const VS_HUB = {
 export const COMPARE_HUB = {
   title: "Compare Clubs and Nations: Clásico, Brazil–Argentina, United–Liverpool",
   description:
-    "Who is better, Barcelona or Real Madrid? Brazil or Argentina? England or Germany? Each page splits the all-time cabinet from the prime teams, then opens those sides in the simulator.",
+    "Who is better, Barcelona or Real Madrid? Brazil or Argentina? England or Germany? Each page splits the all-time cabinet from the prime teams.",
   kicker: "Who is better?",
   h1: "All-time cabinets first. Then the prime teams.",
-  lead: "An all-time nation is not the same as a prime squad. Each page separates those questions, then opens the two sides in the simulator.",
+  lead: "An all-time nation is not the same as a prime squad. Each page separates those questions before naming the two sides.",
   nationHeading: "Brazil or Argentina, England or Germany",
   clubHeading: "Clásico, United–Liverpool, the Milan derby",
 } as const
@@ -95,7 +95,7 @@ export const METHODOLOGY_PAGE = {
 export const SEARCH_PAGE = {
   title: "Search Barcelona 08/09, Brazil 1970, or any named season",
   description:
-    "Search 156 named club and national-team seasons on LegendaryMatch. Open a squad page or send two sides straight into the football match simulator.",
+    "Search 156 named club and national-team seasons on LegendaryMatch. Open a squad page or send two named sides into a matchup.",
   kicker: "Catalogue search",
   h1: "Find Barcelona 08/09, Brazil 1970, or any named season",
   popularKicker: "Barcelona 08/09, Madrid 16/17, Brazil 1970",
@@ -104,7 +104,7 @@ export const SEARCH_PAGE = {
 export const BEST_TEAM = {
   title: "Best Football Team Ever: Barcelona 2010/11, Not the 2009 Treble",
   description:
-    "What is the best football team ever? Our pick is Barcelona 2010/11, then Brazil 1970 and Sacchi's Milan. Compare six legendary sides, then simulate the argument.",
+    "What is the best football team ever? Our pick is Barcelona 2010/11, then Brazil 1970 and Sacchi's Milan. Six legendary sides, one ranking.",
   kicker: "What is the best football team ever?",
   h1: "Barcelona 2010/11, Then Brazil 1970 and Sacchi's Milan",
   lead: "There is no neutral time machine. This ranking weighs dominance in context, tactical influence, quality across the XI and how convincingly the team answered the strongest opponents available.",
@@ -114,7 +114,7 @@ export const BEST_TEAM = {
 export const ABOUT_PAGE = {
   title: "About LegendaryMatch — Barcelona 2010/11 vs Madrid 2016/17",
   description:
-    "Who writes LegendaryMatch, why Barcelona 2010/11 vs Madrid 2016/17 is playable, what is editorial judgement and how to report a squad error.",
+    "Who writes LegendaryMatch, why Barcelona 2010/11 vs Madrid 2016/17 is the worked example, what is editorial judgement and how to report a squad error.",
   kicker: "The project",
   h1: "Built to play Barcelona 2010/11 against Madrid 2016/17",
   lead: "A named-season football simulator for arguments the calendar made impossible — Guardiola’s Barça against Zidane’s Madrid, Brazil 1970 against Spain 2010, not a badge with a slider.",

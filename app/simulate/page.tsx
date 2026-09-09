@@ -39,7 +39,7 @@ const FAQ = [
   ],
   [
     "Can I play Brazil 1970 against Spain 2010?",
-    "Yes. Brazil 1970, Spain 2010, United 1999 and the rest of the archive are playable sides. Mix a World Cup winner with a club peak; repeating the fixture is another plausible night, not a bug.",
+    "Yes. Brazil 1970, Spain 2010, United 1999 and the rest of the archive are named seasons. Mix a World Cup winner with a club peak; repeating the fixture is another plausible night, not a bug.",
   ],
 ] as const
 

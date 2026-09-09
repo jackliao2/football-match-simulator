@@ -115,6 +115,9 @@ describe("GSC landing pages", () => {
       expect(seo, pair.slug).not.toMatch(/^Who Is Better, /)
       expect(pair.title, pair.slug).toBe(pair.verdictHeading)
       expect(pair.title, pair.slug).not.toMatch(/Which Is Better/)
+      expect(pair.description, pair.slug).not.toMatch(
+        /then simulate|simulate the peaks|in the football match simulator|simulated meeting of/i,
+      )
       expect(titles.has(seo), seo).toBe(false)
       titles.add(seo)
     }
@@ -300,6 +303,13 @@ describe("GSC landing pages", () => {
     expect(PRIME_HUB.title).toMatch(/2010\/11/)
     expect(PRIME_HUB.kicker).toBe("When was their prime?")
     expect(PRIME_HUB.homeHeading).toMatch(/2018\/19/)
+    expect(PRIME_HUB.description).not.toMatch(/you can simulate/i)
+    expect(COMPARE_HUB.description).not.toMatch(/in the simulator/)
+    expect(COMPARE_HUB.lead).not.toMatch(/in the simulator/)
+    expect(NATIONS_HUB.description).not.toMatch(/you can play/)
+    expect(VS_HUB.title).not.toMatch(/You Can Play/)
+    expect(BEST_TEAM.description).not.toMatch(/then simulate/)
+    expect(ABOUT_PAGE.description).not.toMatch(/is playable/)
 
     expect(VS_HUB.h1).not.toBe("Dream matches")
     expect(VS_HUB.h1).toMatch(/2010\/11/)
@@ -452,6 +462,8 @@ describe("GSC landing pages", () => {
       expect(entity.title, entity.slug).not.toMatch(/^When Was .+['’]s Prime\?$/)
       expect(entity.seoTitle, entity.slug).not.toMatch(/When Was .+ Prime/)
       expect(entity.seoDescription, entity.slug).not.toMatch(/^When was .+ prime\?/i)
+      expect(entity.seoDescription, entity.slug).not.toMatch(/\bsimulate\b/i)
+      expect(entity.description, entity.slug).not.toMatch(/\bplayable\b/)
       expect(titles.has(entity.title), entity.title).toBe(false)
       expect(seos.has(entity.seoTitle), entity.seoTitle).toBe(false)
       titles.add(entity.title)

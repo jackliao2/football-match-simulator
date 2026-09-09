@@ -66,11 +66,11 @@ const FAQ = [
   ],
   [
     "When was Barcelona's prime?",
-    "Our pick is 2010/11: Messi's false nine inside Guardiola's best midfield. 2008/09 began the era; 2014/15 MSN is the counter. The prime page compares those sides, then you can simulate them.",
+    "Our pick is 2010/11: Messi's false nine inside Guardiola's best midfield. 2008/09 began the era; 2014/15 MSN is the counter. The prime page compares those sides: 2010/11 as the pick, not the first treble.",
   ],
   [
     "Who is better, Brazil or Argentina?",
-    "Brazil have the heavier World Cup record; Argentina have 1986 and 2022 as individual peaks. The compare page separates those questions, then opens Brazil 1970 against Argentina 1986 in the simulator.",
+    "Brazil have the heavier World Cup record; Argentina have 1986 and 2022 as individual peaks. The compare page separates those questions, then names Brazil 1970 against Argentina 1986 as the prime matchup.",
   ],
 ] as const
 
@@ -262,7 +262,7 @@ export default function HomePage() {
         <div className="home-prime-grid">
           <Link href="/best-football-team-ever" className="home-prime-card">
             <span>Editorial ranking</span><h3>{BEST_TEAM.homeCardTitle}</h3>
-            <p>Six historically great sides, one set of criteria and a clear answer — with every candidate playable.</p>
+            <p>Six historically great sides, one set of criteria and a clear answer — Barcelona 2010/11 first, then Brazil 1970 and Sacchi's Milan.</p>
             <b>Read the verdict →</b>
           </Link>
           <Link href="/compare/barcelona-vs-real-madrid" className="home-prime-card">

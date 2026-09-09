@@ -60,7 +60,7 @@ const PRIME_EDITORIAL: Record<string, PrimeEditorial> = {
         heading: "There are several correct versions of peak Messi",
         paragraphs: [
           "A serious answer has to separate four questions: Messi’s best season inside the best team, his greatest scoring year, his most complete attacking role and his best late-career tournament. Those questions point to different dates. This page chooses 2010/11 for the cleanest union of individual level, tactical influence and collective dominance, not because every statistical record belongs to that season.",
-          "The candidate cards below are playable Barcelona squads in this simulator. They are not a claim that 2008/09, 2010/11 and 2014/15 are the only seasons in the debate. In particular, leaving 2011/12 and 2018/19 unexplained would make any Messi-prime article incomplete.",
+          "The candidate cards below are the Barcelona squads this page uses. They are not a claim that 2008/09, 2010/11 and 2014/15 are the only seasons in the debate. In particular, leaving 2011/12 and 2018/19 unexplained would make any Messi-prime article incomplete.",
         ],
       },
       {

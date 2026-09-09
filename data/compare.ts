@@ -70,7 +70,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightPeakId: "liverpool-2018-19",
     title: "United across the modern era; Liverpool on the biggest nights",
     description:
-      "Manchester United or Liverpool: compare English football’s defining rivalry across history, then simulate United 2007/08 vs Liverpool 2018/19.",
+      "Manchester United or Liverpool: English football’s defining rivalry. United 2007/08 against Klopp’s 2018/19 Liverpool — two primes, not one shirt colour.",
     keywords: keywords("Manchester United", "Liverpool"),
     lead: "United have the larger modern trophy haul and the Ferguson era as a complete dynasty. Liverpool’s European nights and Klopp peak still win a different argument.",
     verdictHeading: "United across the modern era; Liverpool on the biggest nights",
@@ -93,7 +93,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightPeakId: "manchester-city-2022-23",
     title: "City at their peak; United as a historical club",
     description:
-      "Manchester United or Manchester City: treble history versus Guardiola’s treble, then simulate United 1998/99 vs City 2022/23.",
+      "Manchester United or Manchester City: Ferguson’s 1998/99 treble against Guardiola’s 2022/23 treble. Two different English machines.",
     keywords: keywords("Manchester United", "Manchester City", ["manchester derby which is better"]),
     lead: "City’s 2022/23 treble is the cleaner modern statement. United’s 1998/99 treble still carries the longer institutional case.",
     verdictHeading: "City at their peak; United as a historical club",
@@ -116,7 +116,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightPeakId: "arsenal-2003-04",
     title: "United as a club; the Invincibles as a league statement",
     description:
-      "Manchester United or Arsenal: Ferguson’s treble winners against the Invincibles. Compare the clubs, then simulate 1998/99 vs 2003/04.",
+      "Manchester United or Arsenal: Ferguson’s treble winners against the Invincibles. 1998/99 vs 2003/04, not one North-West/London blur.",
     keywords: keywords("Manchester United", "Arsenal"),
     lead: "United won more often. Arsenal 2003/04 went a league season unbeaten. Those are not the same claim.",
     verdictHeading: "United as a club; the Invincibles as a league statement",
@@ -139,7 +139,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightPeakId: "manchester-city-2022-23",
     title: "City as a serial winner; Liverpool as the rival peak",
     description:
-      "Liverpool or Manchester City: Klopp’s Champions League winners against Guardiola’s treble side. Compare the clubs and simulate the peaks.",
+      "Liverpool or Manchester City: Klopp’s 2018/19 Champions League winners against Guardiola’s 2022/23 treble. Two modern English peaks.",
     keywords: keywords("Liverpool", "Manchester City"),
     lead: "City collected more league titles in the Guardiola years. Liverpool 2018/19 still feels like the side that could hurt them most.",
     verdictHeading: "City as a serial winner; Liverpool as the rival peak",
@@ -162,7 +162,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightPeakId: "everton-1984-85",
     title: "Liverpool as a European giant; Everton at their 1980s peak",
     description:
-      "Liverpool or Everton: the Merseyside argument across history, then a simulated meeting of Liverpool 2018/19 and Everton 1984/85.",
+      "Liverpool or Everton: the Merseyside argument. Klopp 2018/19 against Kendall’s 1984/85 — two different Anfield and Goodison nights.",
     keywords: keywords("Liverpool", "Everton", ["merseyside derby which is better"]),
     lead: "Liverpool are the larger European club. Everton’s mid-1980s side is the version that still belongs in a greatest-Everton conversation.",
     verdictHeading: "Liverpool as a European giant; Everton at their 1980s peak",
@@ -185,7 +185,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightPeakId: "chelsea-2004-05",
     title: "Chelsea as a title machine; Arsenal as the Invincibles",
     description:
-      "Arsenal or Chelsea: Invincibles versus Mourinho’s first title side. Compare London’s modern rivals, then simulate 2003/04 vs 2004/05.",
+      "Arsenal or Chelsea: Invincibles versus Mourinho’s first title side. 2003/04 unbeaten against 2004/05’s 95 points.",
     keywords: keywords("Arsenal", "Chelsea"),
     lead: "Arsenal’s unbeaten league is the purer footballing statement. Chelsea’s 2004/05 side was built to stop them and to win the title.",
     verdictHeading: "Chelsea as a title machine; Arsenal as the Invincibles",
@@ -208,7 +208,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightPeakId: "tottenham-2018-19",
     title: "Arsenal as a club; Tottenham at their European peak",
     description:
-      "Arsenal or Tottenham: North London’s club case, then a simulated meeting of the Invincibles and Pochettino’s 2018/19 finalists.",
+      "Arsenal or Tottenham: North London’s club case. The Invincibles against Pochettino’s 2018/19 finalists.",
     keywords: keywords("Arsenal", "Tottenham", ["north london derby which is better"]),
     lead: "Arsenal have the trophy case. Tottenham’s 2018/19 Champions League run is the peak that still asks to be taken seriously.",
     verdictHeading: "Arsenal as a club; Tottenham at their European peak",
@@ -285,13 +285,13 @@ export const CLUB_COMPARES: ClubCompare[] = [
     title: "Milan in Europe; Juventus as a league dynasty",
     seoTitle: "Juventus vs AC Milan: League Dynasty vs Europe",
     description:
-      "Juventus or AC Milan: Italian giants compared, then Juventus 2016/17 against Sacchi’s Milan in the simulator.",
+      "Juventus or AC Milan: Italian giants compared. Milan's European Cups against Juventus 2016/17 as a league dynasty.",
     keywords: keywords("Juventus", "AC Milan"),
     lead: "Milan’s European Cup history is the heavier all-time case. Juventus 2016/17 is the modern Serie A machine that still asks to be tested.",
     verdictHeading: "Milan in Europe; Juventus as a league dynasty",
     verdict: [
       "AC Milan’s European Cup nights, especially Sacchi’s side, outrank Juventus on the biggest club stage.",
-      "Juventus 2016/17 — Buffon, Chiellini, Dybala — were a Champions League finalist built on defensive authority. The club argument is Milan in Europe; the peak-team argument is playable.",
+      "Juventus 2016/17 — Buffon, Chiellini, Dybala — were a Champions League finalist built on defensive authority. The club argument is Milan in Europe; the peak-team argument is a named matchup.",
     ],
     rows: [
       ["Serie A serials", "All-time", "European Cups"],
@@ -308,7 +308,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightPeakId: "inter-milan-2009-10",
     title: "Inter’s treble; Juventus’ league machine",
     description:
-      "Juventus or Inter Milan: two Italian giants, then a simulated meeting of Juve 2016/17 and Inter’s 2010 treble winners.",
+      "Juventus or Inter Milan: Allegri’s 2016/17 league machine against Inter’s 2010 treble. Two Italian peaks, not one Derby d’Italia blur.",
     keywords: keywords("Juventus", "Inter"),
     lead: "Inter 2009/10 have the treble. Juventus have the longer recent league run. Pick the question before you pick the club.",
     verdictHeading: "Inter’s treble; Juventus’ league machine",
@@ -331,7 +331,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightPeakId: "borussia-dortmund-2012-13",
     title: "Bayern as a club; Dortmund in 2012/13",
     description:
-      "Bayern or Dortmund: Germany’s defining club rivalry, then the 2012/13 Champions League final pairing in the simulator.",
+      "Bayern or Dortmund: Germany’s defining club rivalry, then the 2012/13 Champions League final pairing — Heynckes against Klopp.",
     keywords: keywords("Bayern Munich", "Borussia Dortmund", ["der klassiker which is better"]),
     lead: "Bayern are the greater German club. Dortmund 2012/13 is the version that still makes the Klassiker of primes feel like a final.",
     verdictHeading: "Bayern as a club; Dortmund in 2012/13",
@@ -446,7 +446,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightPeakId: "river-plate-2018",
     title: "Two Argentine peaks, not one capital ranking",
     description:
-      "Boca or River: Superclásico as a club debate, then Boca 2000 against River 2018 in the football match simulator.",
+      "Boca or River: Superclásico as a club debate. Bianchi’s Boca 2000 against Gallardo’s River 2018 — not just two Argentina shirts.",
     keywords: keywords("Boca Juniors", "River Plate", ["superclasico which is better"]),
     lead: "Boca 2000 still feel like the club’s European-night peak. River 2018 were a Copa Libertadores machine under Gallardo.",
     verdictHeading: "Two Argentine peaks, not one capital ranking",
@@ -522,7 +522,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     verdictHeading: "Madrid across Europe; Bayern’s 2013 treble",
     verdict: [
       "Real Madrid’s European Cup record is the all-time club case. The 2016/17 side added league and Champions League with a midfield that could control or explode.",
-      "Bayern 2012/13 won everything available and looked physically unplayable. The rivalry is two different ways to be a European giant — simulate the peaks instead of counting only stars on the badge.",
+      "Bayern 2012/13 won everything available and looked physically unplayable. The rivalry is two different ways to be a European giant — the 2013 treble against Madrid's knockout habit, not only stars on the badge.",
     ],
     rows: [
       ["More European Cups", "All-time", "2013 treble"],
@@ -545,7 +545,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     verdictHeading: "Two European Cup identities, one unfinished argument",
     verdict: [
       "Liverpool 2004/05 is immortal for Istanbul. That night is not a rating — it is a comeback that still distorts every later conversation.",
-      "Milan 2006/07 won the return in Athens with a more controlled Ancelotti side. As clubs, both are European aristocracy. As squads, the simulator can run the rematch without the folklore doing all the work.",
+      "Milan 2006/07 won the return in Athens with a more controlled Ancelotti side. As clubs, both are European aristocracy. As squads, Istanbul and Athens are different European Cup identities, not one unfinished night.",
     ],
     rows: [
       ["Istanbul 2005", "Folklore", "Athens 2007"],
@@ -562,7 +562,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightPeakId: "juventus-2016-17",
     title: "Juventus as an institution; Napoli in the Maradona years",
     description:
-      "Napoli or Juventus: Maradona’s scudetto side against Allegri’s 2016/17 Juventus. Compare the clubs, then simulate the peaks.",
+      "Napoli or Juventus: Maradona’s first scudetto against Allegri’s 2016/17 Juventus. A city title against a league machine.",
     keywords: keywords("Napoli", "Juventus"),
     lead: "Juventus have the larger Italian trophy case. Napoli 1986/87 is the Maradona season that still defines the club.",
     verdictHeading: "Juventus as an institution; Napoli in the Maradona years",
@@ -654,7 +654,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightPeakId: "liverpool-2018-19",
     title: "Liverpool in Europe; Chelsea as a 2000s title machine",
     description:
-      "Chelsea or Liverpool: Mourinho’s first title side against Klopp’s Champions League winners. Compare the clubs and simulate the peaks.",
+      "Chelsea or Liverpool: Mourinho’s first title side against Klopp’s Champions League winners. 2004/05 parked against 2018/19’s press.",
     keywords: keywords("Chelsea", "Liverpool"),
     lead: "Liverpool have the deeper European folklore. Chelsea 2004/05 were the Premier League’s most complete defensive champion of that decade.",
     verdictHeading: "Liverpool in Europe; Chelsea as a 2000s title machine",
@@ -679,7 +679,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     title: "Brazil as a footballing nation; Argentina when one player carried a tournament",
     seoTitle: "Brazil vs Argentina: Five World Cups vs Maradona",
     description:
-      "Brazil or Argentina: five World Cups against three, Pelé’s 1970 side against Maradona’s 1986 winners. Separate the all-time nations from the prime teams, then simulate Mexico 1970 vs Mexico 1986.",
+      "Brazil or Argentina: five World Cups against three, Pelé’s 1970 side against Maradona’s 1986 winners. Separate the all-time nations from the prime teams.",
     keywords: keywords("Brazil", "Argentina", [
       "brazil or argentina who is better",
       "who is better brazil or argentina",
@@ -690,7 +690,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     verdictHeading: "Brazil as a footballing nation; Argentina when one player carried a tournament",
     verdict: [
       "If “better” means the greater national team across World Cups, the answer is Brazil. Five titles, 1970 as a complete attacking idea, 2002 as a modern knockout machine. The record is not close, and treating 2022 as a reset button does not make it close.",
-      "If it means the highest peak by a single playmaker inside a winning side, Argentina 1986 still leads — and Argentina 2022 is the collective sequel. Maradona in Mexico did more of the carrying; Scaloni’s side shared the load and still finished the job. Simulate 1970 against 1986 if you want the cleanest prime-vs-prime night. Do not ask that match to settle which country is “better at football”.",
+      "If it means the highest peak by a single playmaker inside a winning side, Argentina 1986 still leads — and Argentina 2022 is the collective sequel. Maradona in Mexico did more of the carrying; Scaloni’s side shared the load and still finished the job. 1970 against 1986 is the cleanest prime-vs-prime night. Do not ask that match to settle which country is “better at football”.",
     ],
     rows: [
       ["Five World Cups", "All-time", "Three World Cups"],
@@ -709,7 +709,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     title: "Germany as a tournament nation; England in 1966",
     seoTitle: "England vs Germany: 1966 vs Four World Cups",
     description:
-      "England or Germany: 1966 against four World Cups, Wembley against Turin. Compare the nations, then simulate Ramsey’s winners versus Beckenbauer’s 1990 side.",
+      "England or Germany: 1966 against four World Cups, Wembley against Turin. Ramsey’s winners versus Beckenbauer’s 1990 side.",
     keywords: keywords("England", "Germany", [
       "england or germany who is better",
       "who is better england or germany",
@@ -720,7 +720,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     verdictHeading: "Germany as a tournament nation; England in 1966",
     verdict: [
       "Germany are the better national team if the test is repeating a World Cup. 1954, 1974, 1990 and 2014 are four different squads that still finished the job. England have not done that once away from Wembley. 1990 in Turin — penalties after extra time, then Germany lifting the trophy — is the night that still sits under every later meeting.",
-      "England 1966 remains the one English side that can be put against a German peak without apology: Moore, Charlton, Hurst, a functioning 4-4-2, a final they actually won. Italia 90 and Euro 96 are the emotional near-misses, not replacements. Simulate 1966 against 1990 if you want the argument as a match. Do not use a simulator to pretend the cabinets are even.",
+      "England 1966 remains the one English side that can be put against a German peak without apology: Moore, Charlton, Hurst, a functioning 4-4-2, a final they actually won. Italia 90 and Euro 96 are the emotional near-misses, not replacements. 1966 against 1990 is the argument as a match. Do not use a trophy table to pretend the cabinets are even.",
     ],
     rows: [
       ["One World Cup, at home", "All-time", "Four World Cups"],

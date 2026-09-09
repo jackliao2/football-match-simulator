@@ -20,7 +20,7 @@ export async function generateMetadata({
   const trophy = parseCatalogTrophy("clubs", params.trophy)
   const meta = pageMetadata({
     title: TEAMS_HUB.title,
-    description: `${counts.clubSides} playable club sides across ${counts.clubs} clubs — ${TEAMS_HUB.description}`,
+    description: `${counts.clubSides} named club seasons across ${counts.clubs} clubs — ${TEAMS_HUB.description}`,
     path: "/teams",
     keywords: ["historical soccer teams", "legendary football squads", "soccer teams by season", "football match simulator"],
   })
