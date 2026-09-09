@@ -1,5 +1,6 @@
 import { compareSeoTitle, type ClubCompare } from "@/data/compare"
-import { teamPageCopy } from "@/lib/page-copy"
+import { getTeam } from "@/data/teams"
+import { firstSentence, teamPageCopy } from "@/lib/page-copy"
 import type { HistoricalTeam } from "@/types"
 
 export function teamOgCopy(team: HistoricalTeam) {
@@ -13,11 +14,17 @@ export function teamOgCopy(team: HistoricalTeam) {
 }
 
 export function compareOgCopy(pair: ClubCompare, leftName: string, rightName: string) {
+  const leftPeak = getTeam(pair.leftPeakId)
+  const rightPeak = getTeam(pair.rightPeakId)
+  const peaks =
+    leftPeak && rightPeak
+      ? `${leftPeak.clubName} ${leftPeak.displaySeason} against ${rightPeak.clubName} ${rightPeak.displaySeason}`
+      : `${leftName} against ${rightName}`
   return {
-    kicker: "WHO IS BETTER",
+    kicker: `${leftName} vs ${rightName}`,
     heading: pair.verdictHeading,
-    subtitle: `${leftName} vs ${rightName}`,
-    footer: `Simulate ${leftName} against ${rightName}`,
+    subtitle: firstSentence(pair.lead),
+    footer: peaks,
     alt: compareSeoTitle(pair, leftName, rightName),
   }
 }

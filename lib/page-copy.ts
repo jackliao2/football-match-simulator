@@ -320,7 +320,7 @@ export function catalogCounts(): { clubs: number; nations: number; clubSides: nu
   }
 }
 
-export function vsPageCopy(home: HistoricalTeam, away: HistoricalTeam, runs: number) {
+export function vsPageCopy(home: HistoricalTeam, away: HistoricalTeam, _runs: number) {
   const matchup = `${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}`
   const editorial = matchupEditorial(home, away)
   const feature = matchupFeature(home, away)
@@ -328,7 +328,7 @@ export function vsPageCopy(home: HistoricalTeam, away: HistoricalTeam, runs: num
   const awayTag = away.styleTags[0] ?? away.formation
   return {
     title: feature ? `${home.clubName} vs ${away.clubName}: ${feature.title}` : matchup,
-    description: clip(`${editorial} Compare the squads and ${runs} simulated matches.`),
+    description: clip(editorial),
     lead: editorial,
     editorial,
     kicker: feature?.title ?? `${home.displaySeason} vs ${away.displaySeason}`,
@@ -338,6 +338,6 @@ export function vsPageCopy(home: HistoricalTeam, away: HistoricalTeam, runs: num
     hingeHeading: `${homeTag} against ${awayTag}`,
     readingHeading: `A ${home.clubName} win versus a ${away.clubName} win`,
     faqHeading: `${home.clubName} vs ${away.clubName} — FAQ`,
-    playHeading: `Simulate ${home.clubName} ${home.displaySeason} vs ${away.clubName}`,
+    playHeading: `${home.clubName} ${home.displaySeason} against ${away.clubName} ${away.displaySeason}`,
   }
 }

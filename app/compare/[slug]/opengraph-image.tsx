@@ -20,7 +20,7 @@ export default async function CompareOpenGraphImage({
     pair && left && right
       ? compareOgCopy(pair, left.name, right.name)
       : {
-          kicker: "WHO IS BETTER",
+          kicker: "Clásico · Brazil–Argentina",
           heading: "Barcelona or Madrid, Brazil or Argentina",
           subtitle: "All-time cabinets, then the prime teams.",
           footer: "LegendaryMatch",
