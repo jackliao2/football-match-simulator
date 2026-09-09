@@ -43,9 +43,9 @@ export const everton198485 = pack({
   achievements: ["First Division champions", "European Cup Winners' Cup winners"],
   styleTags: ["Direct Attack", "Set Pieces", "Work Rate", "Crossing", "Cup Steel"],
   summary: "Kendall's Everton. Southall in goal, Reid as the bite, Sheedy as the left foot, and a Merseyside side that briefly owned England.",
-  seoTitle: "Everton 84/85 Squad — 1984/85 Lineup, Players & Formation",
+  seoTitle: "Everton 84/85 Squad — Kendall, Southall, Sheedy",
   seoDescription:
-    "Everton 1984/85 squad, also searched as Everton 84/85: Kendall's title and Cup Winners' Cup side. Southall, Sheedy, Sharp and the starting XI you can simulate.",
+    "Kendall's Everton 1984/85: Southall in goal, Reid as the bite, Sheedy as the left foot. Title and Cup Winners' Cup — Merseyside that briefly owned England.",
 })
 
 export const leedsUnited197374 = pack({
@@ -102,6 +102,9 @@ export const nottinghamForest197980 = pack({
   achievements: ["European Cup winners — retained in Madrid"],
   styleTags: ["Wide Play", "Counter Attack", "Goalkeeper", "Cup Steel", "Direct Attack"],
   summary: "Clough's Forest retain the European Cup. Shilton as the wall, Robertson as the supply, Francis as the finish, and a provincial miracle made to look ordinary.",
+  seoTitle: "Forest 1979/80 Squad — Clough, Shilton, European Cup Retained",
+  seoDescription:
+    "Clough's Forest 1979/80: Shilton, Robertson and Francis retaining the European Cup in Madrid. Not the first-win side — the side that kept it.",
 })
 
 export const newcastle199596 = pack({
@@ -158,6 +161,9 @@ export const astonVilla198182 = pack({
   achievements: ["European Cup winners — Rotterdam"],
   styleTags: ["Direct Attack", "Cup Steel", "Work Rate", "Crossing", "Set Pieces"],
   summary: "Barton's Villa in Rotterdam. Withe as the finish, Cowans as the passer, and a European Cup that still sits in the Midlands.",
+  seoTitle: "Aston Villa 1981/82 Squad — Withe, Cowans, Rotterdam",
+  seoDescription:
+    "Barton's Villa 1981/82: Withe's header in Rotterdam, Cowans as the passer. The Midlands European Cup, not a later Premier League Villa.",
 })
 
 export const sevilla200506 = pack({
@@ -214,6 +220,9 @@ export const valencia200304 = pack({
   achievements: ["La Liga champions", "UEFA Cup winners"],
   styleTags: ["Compact Block", "Double Pivot", "Counter Attack", "Defensive Steel", "Cup Steel"],
   summary: "Benítez's Valencia. Albelda and Baraja as the screen, Aimar as the spark, Ayala as the wall, and a league-and-Europe double.",
+  seoTitle: "Valencia 2003/04 Squad — Benítez, Aimar, Liga and UEFA Cup",
+  seoDescription:
+    "Benítez's Valencia 2003/04: Albelda and Baraja as the screen, Aimar as the spark, Ayala as the wall. Liga and UEFA Cup, not a later Mestalla rebuild.",
 })
 
 export const athleticBilbao198384 = pack({

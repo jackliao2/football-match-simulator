@@ -67,7 +67,7 @@ export const barcelona200809: HistoricalTeam = makeTeam({
     "Pep Guardiola's first Barcelona side. A treble-winning team built around Xavi, Iniesta and a 21-year-old Messi, with Eto'o and Henry finishing the chances.",
   seoTitle: "Barcelona 2008/09 Squad — Guardiola's First Treble",
   seoDescription:
-    "Barcelona 2008/09 squad: Guardiola's first treble, Messi still a right-sided attacker, Xavi and Iniesta occupying the middle. Starting XI, 4-3-3 and ratings.",
+    "Barcelona 2008/09: Guardiola's first treble, Messi still a right-sided attacker, Xavi and Iniesta occupying the middle. Not the 2010/11 false nine.",
 })
 
 export const barcelona201011: HistoricalTeam = makeTeam({
@@ -205,5 +205,5 @@ export const barcelona201415: HistoricalTeam = makeTeam({
     "Luis Enrique's treble winners. Messi, Suárez and Neymar formed one of the most lethal forward lines ever assembled, with Busquets still stitching the midfield together.",
   seoTitle: "Barcelona 2014/15 Squad — MSN Treble, Luis Enrique",
   seoDescription:
-    "Barcelona 2014/15 squad: Messi, Suárez and Neymar's treble season under Luis Enrique. Starting XI, 4-3-3, ratings — not Guardiola's earlier sides.",
+    "Barcelona 2014/15: Messi, Suárez and Neymar's treble under Luis Enrique. Vertical MSN, not Guardiola's 2008/09 or 2010/11 sides.",
 })

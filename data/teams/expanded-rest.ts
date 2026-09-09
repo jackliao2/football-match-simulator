@@ -42,6 +42,9 @@ export const marseille199293 = pack({
   achievements: ["UEFA Champions League winners"],
   styleTags: ["Cup Steel", "Athletic Midfield", "Star Forwards", "Defensive Steel", "Counter Attack"],
   summary: "Goethals' Marseille. Desailly as the wall, Pelé as the spark, Boli as the header in Munich.",
+  seoTitle: "Marseille 1992/93 Squad — Desailly, Pelé, Munich Night",
+  seoDescription:
+    "Goethals' Marseille 1992/93: Desailly as the wall, Abedi Pelé as the spark, Boli's header in Munich. France's first European Cup, that Munich XI.",
 })
 
 export const lyon200506 = pack({
@@ -126,6 +129,9 @@ export const benfica196162 = pack({
   achievements: ["European Cup winners — retained in Amsterdam"],
   styleTags: ["Star Forwards", "Vertical Attack", "Wide Play", "Individual Brilliance", "Counter Attack"],
   summary: "Guttmann's Benfica. Eusébio as the thunder, Coluna as the brain, and a European Cup retained in Amsterdam.",
+  seoTitle: "Benfica 1961/62 Squad — Eusébio, Guttmann, Amsterdam",
+  seoDescription:
+    "Guttmann's Benfica 1961/62: Eusébio as the thunder, Coluna as the brain, a European Cup retained in Amsterdam — not the first-win year.",
 })
 
 export const sporting200203 = pack({
@@ -237,6 +243,9 @@ export const celtic196667 = pack({
   achievements: ["European Cup winners — Lisbon Lions"],
   styleTags: ["High Press", "Wide Play", "Youth Core", "Attacking Full-Backs", "Cup Steel"],
   summary: "Stein's Lisbon Lions. All from within 30 miles, Johnstone on the right, Gemmell overlapping, Chalmers finishing in Lisbon.",
+  seoTitle: "Celtic 1966/67 Squad — Lisbon Lions, Johnstone, Stein",
+  seoDescription:
+    "Stein's Lisbon Lions: Johnstone on the right, Gemmell overlapping, Chalmers finishing in Lisbon. All from within 30 miles, not a later Celtic generation.",
 })
 
 export const rangers199293 = pack({
@@ -293,6 +302,9 @@ export const santos1962 = pack({
   achievements: ["Copa Libertadores winners", "Intercontinental Cup winners"],
   styleTags: ["Star Forwards", "Individual Brilliance", "Vertical Attack", "Wide Play", "Samba"],
   summary: "Lula's Santos. Pelé at the summit, Coutinho as the partner, Pepe on the left, and a club side that looked like a national team.",
+  seoTitle: "Santos 1962 Squad — Pelé, Coutinho, Intercontinental",
+  seoDescription:
+    "Lula's Santos 1962: Pelé at the summit, Coutinho as the partner, Pepe on the left. Libertadores and Intercontinental — a club side that looked like Brazil.",
 })
 
 export const bocaJuniors2000 = pack({
@@ -377,6 +389,9 @@ export const redStar199091 = pack({
   achievements: ["European Cup winners — Bari on penalties"],
   styleTags: ["Star Playmaker", "Counter Attack", "Cup Steel", "Technical Midfield", "Set Pieces"],
   summary: "Petrović's Red Star. Prosinečki as the supply, Savićević as the silk, Pančev as the finish, and a European Cup won in Bari.",
+  seoTitle: "Red Star 1990/91 Squad — Prosinečki, Savićević, Bari",
+  seoDescription:
+    "Petrović's Red Star 1990/91: Prosinečki as the supply, Savićević as the silk, Pančev as the finish. European Cup on penalties in Bari, not a later Belgrade side.",
 })
 
 export const steaua198586 = pack({

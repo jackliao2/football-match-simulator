@@ -99,6 +99,9 @@ export const greece2004 = pack({
   achievements: ["European Championship winners"],
   styleTags: ["Low Block", "Set Pieces", "Tournament Steel", "Direct Attack", "Compact Block"],
   summary: "Rehhagel's Greece. Zagorakis as the captain, Charisteas as the header, and a Euros won the ugly way that still looks like a miracle.",
+  seoTitle: "Greece 2004 Euros Squad — Rehhagel, Charisteas, Zagorakis",
+  seoDescription:
+    "Rehhagel's Greece 2004: Zagorakis as captain, Charisteas as the header, a Euros won the ugly way. Not a later Greece cycle — the miracle XI.",
 })
 
 export const turkey2002 = pack({
@@ -239,9 +242,9 @@ export const senegal2002 = pack({
   achievements: ["World Cup quarter-finalists"],
   styleTags: ["Counter Attack", "Pace", "Tournament Steel", "Direct Attack", "High Tempo"],
   summary: "Metsu's Senegal. Diouf as the spark, Fadiga as the left foot, and a first World Cup that reached the last eight.",
-  seoTitle: "Senegal 2002 Squad — World Cup Quarter-Finalists, Lineup & Players",
+  seoTitle: "Senegal 2002 Squad — Diouf, Fadiga, France Upset",
   seoDescription:
-    "Senegal 2002 World Cup squad: the side that beat France 1–0, then reached the quarter-finals. Diouf, Fadiga, Diop and a playable starting XI.",
+    "Metsu's Senegal 2002: they beat France 1–0, then reached the last eight. Diouf, Fadiga, Diop — a first World Cup that was not a cameo.",
 })
 
 export const nigeria1994 = pack({

@@ -63,9 +63,9 @@ export const croatia2018: HistoricalTeam = makeTeam({
   styleTags: ["Midfield Control", "Tournament Steel", "Wide Forwards", "Set Pieces", "Experience"],
   summary:
     "Dalić's 2018 Croatia. Modrić running every match, Rakitić beside him, and a run of extra-time escapes that stopped one night short of the trophy.",
-  seoTitle: "Croatia 2018 Squad — World Cup Finalists, Lineup & Players",
+  seoTitle: "Croatia 2018 Squad — Modrić, Rakitić, Moscow Final",
   seoDescription:
-    "Croatia 2018 World Cup squad: Modrić, Rakitić, Mandžukić and the extra-time run to the Moscow final. Starting XI, formation and ratings you can simulate.",
+    "Croatia 2018: Modrić running every match, Rakitić beside him, Mandžukić in extra time, a World Cup final in Moscow. One night short of the trophy.",
 })
 
 export const croatia1998: HistoricalTeam = makeTeam({

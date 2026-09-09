@@ -203,7 +203,7 @@ export const brazil1982: HistoricalTeam = makeTeam({
     "Santana's 1982 Brazil. Zico and Sócrates as the brain, Falcão as the extra pass, and a 3–2 afternoon against Italy that still feels like a crime.",
   seoTitle: "Brazil 1982 World Cup Squad — Zico, Sócrates, Falcão",
   seoDescription:
-    "Brazil 1982 World Cup squad: Telê Santana's side that did not lift the trophy and still gets shouted about. Zico, Sócrates, Falcão — playable XI.",
+    "Santana's Brazil 1982: Zico and Sócrates as the brain, Falcão as the extra pass, a 3–2 afternoon against Italy that still feels like a crime.",
 })
 
 export const brazil1958: HistoricalTeam = makeTeam({

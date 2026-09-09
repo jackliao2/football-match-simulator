@@ -209,6 +209,11 @@ describe("GSC landing pages", () => {
       expect(copy.faqHeading, team.id).toMatch(team.clubName)
       expect(titles.has(copy.title), `${team.id} duplicates title: ${copy.title}`).toBe(false)
       titles.add(copy.title)
+      if (isIndexableTeamPage(team.id)) {
+        expect(copy.description, team.id).not.toMatch(/Starting XI, .+ ratings/)
+        expect(copy.description, team.id).not.toMatch(/Simulate .+ against any era/i)
+        expect(copy.title, team.id).not.toMatch(/Lineup & Players|Lineup, Players & Formation/)
+      }
       if (isCurrentSquad(team)) {
         expect(copy.description, team.id).toMatch(/modelled/i)
       }
@@ -219,6 +224,14 @@ describe("GSC landing pages", () => {
     expect(teamPageCopy(getTeam("napoli-1986-87")!).title).toMatch(/Maradona/i)
     expect(teamPageCopy(getTeam("italy-2006")!).title).toMatch(/Cannavaro|Pirlo|Lippi/)
     expect(teamPageCopy(getTeam("barcelona-2010-11")!).title).toMatch(/false nine|Wembley/i)
+  })
+
+  it("names packed indexable seasons instead of factory lineup chrome", () => {
+    expect(teamPageCopy(getTeam("greece-2004")!).title).toMatch(/Rehhagel|Charisteas/)
+    expect(teamPageCopy(getTeam("nottingham-forest-1979-80")!).title).toMatch(/Clough|Shilton/)
+    expect(teamPageCopy(getTeam("aston-villa-1981-82")!).title).toMatch(/Withe|Cowans|Rotterdam/)
+    expect(teamPageCopy(getTeam("senegal-2002")!).title).toMatch(/Diouf|Fadiga/)
+    expect(teamPageCopy(getTeam("croatia-2018")!).title).toMatch(/Modrić|Rakitić/)
   })
 
   it("gives every club and nation hub a unique written title", () => {

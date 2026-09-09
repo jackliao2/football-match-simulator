@@ -64,9 +64,9 @@ export const arsenal200304: HistoricalTeam = makeTeam({
   styleTags: ["Fluid Attack", "One-Touch Passing", "Wide Overloads", "Technical Midfield", "Counter Attack"],
   summary:
     "Wenger's Invincibles. Henry in his prime, Bergkamp dropping off, Vieira dominating midfield, and a side that did not lose a Premier League match all season.",
-  seoTitle: "Arsenal 03/04 Squad — Invincibles Lineup, Players & Formation",
+  seoTitle: "Arsenal 03/04 Squad — Invincibles, Henry, Vieira",
   seoDescription:
-    "Arsenal 2003/04 squad, also searched as Arsenal 03/04: Wenger's Invincibles starting XI, players, 4-4-2 and ratings. Simulate the unbeaten league side against any era.",
+    "Wenger's Invincibles 2003/04: Henry in his prime, Bergkamp dropping off, Vieira in midfield. Unbeaten in 38 — not a later Arsenal title.",
 })
 
 export const arsenal199798: HistoricalTeam = makeTeam({
@@ -132,5 +132,5 @@ export const arsenal199798: HistoricalTeam = makeTeam({
     "Wenger's first Arsenal. Vieira and Petit as the midfield, Bergkamp as the brain, Overmars as the break, and a double that rewired English football.",
   seoTitle: "Arsenal 1997/98 Squad — Wenger's First Double",
   seoDescription:
-    "Arsenal 1997/98 squad: Wenger's first Double. Overmars, Anelka, Vieira still building the later Invincibles core. Lineup, ratings, playable.",
+    "Wenger's first Arsenal 1997/98: Vieira and Petit, Bergkamp as the brain, Overmars as the break. The first Double, still building the Invincibles core.",
 })

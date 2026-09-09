@@ -40,14 +40,14 @@ export const HUB_COPY: Record<string, HubCopy> = {
     title: "Valencia 2003/04: Benítez's league and UEFA Cup",
     lead: "Albelda and Baraja as the screen, Aimar as the spark, a double that still sits next to later Mestalla sides without being them.",
     description:
-      "Valencia 2003/04 squad: Benítez's Liga and UEFA Cup winners. Starting XI, ratings, then simulate the double side.",
+      "Valencia 2003/04: Benítez's Liga and UEFA Cup. Albelda, Baraja, Aimar — the double, not a later Mestalla side.",
   },
   "athletic-bilbao": {
     kicker: "La Liga",
     title: "Athletic Bilbao 1983/84: Clemente's Basque double",
     lead: "Goikoetxea, Zubizarreta, and a league-and-cup that still defines the club more than any later rebuild.",
     description:
-      "Athletic Bilbao 1983/84 squad: Clemente's double winners. Basque XI, ratings, playable in the simulator.",
+      "Athletic Bilbao 1983/84: Clemente's double. Goikoetxea, Zubizarreta — Basque XI, not a later rebuild.",
   },
   "manchester-united": {
     kicker: "Premier League",
@@ -124,7 +124,7 @@ export const HUB_COPY: Record<string, HubCopy> = {
     title: "Aston Villa 1981/82: European Cup in Rotterdam",
     lead: "Withe, Cowans, Mortimer — a Midlands night that still sits in the cabinet, not a later Premier League Villa.",
     description:
-      "Aston Villa 1981/82 squad: Barton's Rotterdam winners. European Cup XI, ratings, playable.",
+      "Aston Villa 1981/82: Barton's Rotterdam winners. Withe, Cowans, a Midlands European Cup — not a later Premier League Villa.",
   },
   "ac-milan": {
     kicker: "Serie A",
@@ -285,7 +285,7 @@ export const HUB_COPY: Record<string, HubCopy> = {
     title: "Red Star 1990/91: European Cup in Bari",
     lead: "Prosinečki, Savićević, Pančev — a penalty shootout against Marseille that still gets put on grainy tape.",
     description:
-      "Red Star Belgrade 1990/91 squad: Petrović's European Cup. Bari 1991 XI, ratings, playable.",
+      "Red Star 1990/91: Petrović's European Cup in Bari. Prosinečki, Savićević, Pančev — penalties against Marseille.",
   },
   steaua: {
     kicker: "Rest of Europe",
@@ -306,7 +306,7 @@ export const HUB_COPY: Record<string, HubCopy> = {
     title: "Santos 1962: Pelé's club side that looked like a country",
     lead: "Coutinho, Pepe, an Intercontinental Cup. Not a modern Santos roster with the same badge.",
     description:
-      "Santos 1962 squad: Pelé, Coutinho, Pepe. World Club champions, playable starting XI and ratings.",
+      "Santos 1962: Pelé, Coutinho, Pepe. Libertadores and Intercontinental — a club side that looked like a country.",
   },
   flamengo: {
     kicker: "South America",
@@ -503,7 +503,7 @@ export const HUB_COPY: Record<string, HubCopy> = {
     title: "Senegal 2002: they beat France, then the last eight",
     lead: "Metsu, Diouf, Fadiga, Papa Bouba Diop. A first World Cup that was not a cameo.",
     description:
-      "Senegal 2002 World Cup squad: the side that beat France 1–0. Diouf, Fadiga — quarter-finalists, playable.",
+      "Senegal 2002: they beat France 1–0, then the last eight. Diouf, Fadiga, Papa Bouba Diop — Metsu's first World Cup.",
   },
   nigeria: {
     kicker: "World Cups",

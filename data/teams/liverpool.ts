@@ -64,9 +64,9 @@ export const liverpool200405: HistoricalTeam = makeTeam({
   styleTags: ["Never Give Up", "Counter Attack", "Set Pieces", "Gerrard Effect", "Deep Block"],
   summary:
     "Benítez's Istanbul side. Not the strongest Liverpool team on paper, but Gerrard, Alonso and a night in Istanbul made it immortal.",
-  seoTitle: "Liverpool 04/05 Squad — Istanbul Lineup, Players & Formation",
+  seoTitle: "Liverpool 04/05 Squad — Benítez, Gerrard, Istanbul",
   seoDescription:
-    "Liverpool 2004/05 squad, also searched as Liverpool 04/05: Benítez's Istanbul starting XI, players, formation and ratings. Simulate the Champions League winners against any era.",
+    "Benítez's Liverpool 2004/05: Gerrard, Alonso, a 3–3 in Istanbul. Not Klopp's later press — the night that made this XI immortal.",
 })
 
 export const liverpool201819: HistoricalTeam = makeTeam({
@@ -132,7 +132,7 @@ export const liverpool201819: HistoricalTeam = makeTeam({
   styleTags: ["Gegenpress", "High Tempo", "Full-Back Creation", "Front Three", "High Line"],
   summary:
     "Klopp's 2018/19 Liverpool. Salah, Mané and Firmino in attack, van Dijk restoring the defence, and a Champions League won in Madrid.",
-  seoTitle: "Liverpool 18/19 Squad — Klopp Champions League Lineup & Players",
+  seoTitle: "Liverpool 18/19 Squad — Klopp, Salah, Madrid Final",
   seoDescription:
-    "Liverpool 2018/19 squad, also searched as Liverpool 18/19: Salah, Mané, van Dijk and the Madrid final XI. Simulate Klopp's Champions League winners against any era.",
+    "Klopp's Liverpool 2018/19: Salah, Mané, van Dijk, a Champions League in Madrid. 97 points and still runners-up — not Istanbul.",
 })

@@ -63,9 +63,9 @@ export const chelsea200405: HistoricalTeam = makeTeam({
   styleTags: ["Low Block", "Set Pieces", "Counter Attack", "Defensive Steel", "Late Goals"],
   summary:
     "Mourinho's first Chelsea. Čech, Terry and Carvalho as the wall, Makelele as the screen, Lampard arriving late, Drogba and Robben as the threat.",
-  seoTitle: "Chelsea 04/05 Squad — 2004/05 Lineup, Players & Formation",
+  seoTitle: "Chelsea 04/05 Squad — Mourinho, Makelele, First Title",
   seoDescription:
-    "Chelsea 2004/05 squad, also searched as Chelsea 04/05: Mourinho's title-winning starting XI, players, 4-3-3 formation and ratings. Simulate the 04/05 Blues against any era.",
+    "Mourinho's first Chelsea 2004/05: Čech, Terry and Carvalho as the wall, Makelele as the screen. Ninety-five points — not the 2012 Munich side.",
 })
 
 export const chelsea201112: HistoricalTeam = makeTeam({
@@ -130,7 +130,7 @@ export const chelsea201112: HistoricalTeam = makeTeam({
   styleTags: ["Low Block", "Set Pieces", "Cup Steel", "Counter Attack", "Experience"],
   summary:
     "Di Matteo's Chelsea in Munich. A battered, stubborn side that parked, headed, and won Europe the hard way, with Drogba writing the last line.",
-  seoTitle: "Chelsea 11/12 Squad — 2012 Champions League Lineup & Players",
+  seoTitle: "Chelsea 11/12 Squad — Di Matteo, Drogba, Munich",
   seoDescription:
-    "Chelsea 2011/12 squad, also searched as Chelsea 2012 Champions League: Di Matteo's Munich starting XI, Drogba, Čech and the knockout run. Simulate them against any era.",
+    "Di Matteo's Chelsea 2011/12: Drogba's header in Munich, Čech as the wall, a Champions League parked and headed. Not Mourinho's 04/05 title machine.",
 })
