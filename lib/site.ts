@@ -11,6 +11,7 @@ export const SITE = {
   editorName: process.env.NEXT_PUBLIC_EDITOR_NAME?.trim() || "Jack",
   legalUpdated: "30 August 2026",
   legalUpdatedIso: "2026-08-30",
+  contentUpdated: "9 September 2026",
   contentUpdatedIso: "2026-09-09",
   tagline: "Pick a team. Pick an era. Settle the debate.",
   description:

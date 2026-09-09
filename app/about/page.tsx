@@ -18,7 +18,7 @@ export default function AboutPage() {
       mainEntity: { "@type": "Organization", name: SITE.name, url: absoluteUrl("/"), email: SITE.email, founder: personSchema() },
     }) }} />
     <LegalDoc kicker="The project" title="About LegendaryMatch" lead="A football time machine built for one question: what happens when the teams in two different memories have to share a pitch?" updated={SITE.legalUpdated}>
-      <EditorialByline />
+      <EditorialByline date={SITE.legalUpdated} dateTime={SITE.legalUpdatedIso} />
       <section>
         <h2>Who writes this</h2>
         <p>{SITE.editorName} edits LegendaryMatch: the squad catalogue, the ratings arguments, the dream-match long reads and the methodology. It is a named independent project, not an anonymous template farm. Corrections and disagreements go to the same inbox as legal mail: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>

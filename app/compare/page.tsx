@@ -1,14 +1,15 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { PageHeader } from "@/components/ui/PageHeader"
+import { COMPARE_HUB } from "@/data/collection-copy"
 import { CLUB_COMPARES } from "@/data/compare"
 import { getClub } from "@/data/clubs"
+import { firstSentence } from "@/lib/page-copy"
 import { pageMetadata } from "@/lib/seo"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Who Is Better? Clubs and Nations Compared",
-  description:
-    "Who is better, Barcelona or Real Madrid? Brazil or Argentina? England or Germany? Compare the all-time case, then simulate the prime teams.",
+  title: COMPARE_HUB.title,
+  description: COMPARE_HUB.description,
   path: "/compare",
   keywords: [
     "which football club is better",
@@ -29,7 +30,7 @@ function CompareList({
 }) {
   return (
     <ul className="grid gap-2 sm:grid-cols-2">
-      {rows.map(({ pair, left, right }) => (
+      {rows.map(({ pair }) => (
         <li key={pair.slug}>
           <Link href={`/compare/${pair.slug}`} className="result-panel block p-4 no-underline hover:border-gold">
             <span className="font-display text-[8px] uppercase tracking-[0.18em] text-gold">{kicker}</span>
@@ -37,7 +38,7 @@ function CompareList({
               {pair.verdictHeading}
             </span>
             <span className="mt-1 block font-mono text-xs text-muted">
-              Who is better, {left.name} or {right.name}?
+              {firstSentence(pair.lead)}
             </span>
           </Link>
         </li>
@@ -57,11 +58,7 @@ export default function CompareIndexPage() {
 
   return (
     <div className="grid gap-6">
-      <PageHeader
-        kicker="Comparisons"
-        title="Who is better?"
-        lead="An all-time nation is not the same as a prime squad. Each page separates those questions, then opens the two sides in the simulator."
-      />
+      <PageHeader kicker={COMPARE_HUB.kicker} title={COMPARE_HUB.h1} lead={COMPARE_HUB.lead} />
       <section className="grid gap-3">
         <h2 className="section-title">National teams</h2>
         <CompareList rows={nations} kicker="Nation debate" />

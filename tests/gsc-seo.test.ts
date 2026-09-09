@@ -10,7 +10,8 @@ import { isIndexableTeamPage } from "@/data/team-editorial"
 import { getTeam, getTeamsByClub, teams } from "@/data/teams"
 import { FEATURED_MATCHUPS } from "@/data/matchups"
 import { matchupFeature } from "@/data/vs-editorial"
-import { orgHubCopy, teamH1, teamPageCopy, vsPageCopy } from "@/lib/page-copy"
+import { BEST_TEAM, COMPARE_HUB, PRIME_HUB, VS_HUB } from "@/data/collection-copy"
+import { orgHubCopy, firstSentence, teamH1, teamPageCopy, vsPageCopy } from "@/lib/page-copy"
 import { informalSeason, isCurrentSquad, modelledCurrentSquadNote, squadKeywords } from "@/lib/seo"
 import { teamFaqs } from "@/lib/team-faqs"
 import { getSiteUrl } from "@/lib/site"
@@ -247,6 +248,40 @@ describe("GSC landing pages", () => {
     expect(editorial!.counterCase).toMatch(/2004\/05|Istanbul/)
   })
 
+  it("gives collection hubs a named verdict instead of a factory query", () => {
+    expect(PRIME_HUB.h1).not.toBe("When was their prime?")
+    expect(PRIME_HUB.h1).toMatch(/2010\/11/)
+    expect(PRIME_HUB.title).toMatch(/2010\/11/)
+    expect(PRIME_HUB.kicker).toBe("When was their prime?")
+    expect(PRIME_HUB.homeHeading).toMatch(/2018\/19/)
+
+    expect(VS_HUB.h1).not.toBe("Dream matches")
+    expect(VS_HUB.h1).toMatch(/2010\/11/)
+    expect(VS_HUB.title).toMatch(/Madrid 2016\/17/)
+    expect(VS_HUB.kicker).toBe("Dream matches")
+
+    expect(COMPARE_HUB.h1).not.toBe("Who is better?")
+    expect(COMPARE_HUB.title).not.toMatch(/^Who Is Better\?/)
+    expect(COMPARE_HUB.title).toMatch(/Brazil/)
+    expect(COMPARE_HUB.kicker).toBe("Who is better?")
+
+    expect(BEST_TEAM.h1).not.toBe("What is the best football team ever?")
+    expect(BEST_TEAM.h1).toMatch(/2010\/11/)
+    expect(BEST_TEAM.title).toMatch(/2010\/11/)
+    expect(BEST_TEAM.kicker).toMatch(/best football team ever/i)
+    expect(BEST_TEAM.homeCardTitle).toMatch(/2010\/11/)
+  })
+
+  it("gives compare hub cards unique leads instead of Who is better, X or Y", () => {
+    const leads = new Set<string>()
+    for (const pair of CLUB_COMPARES) {
+      const line = firstSentence(pair.lead)
+      expect(line, pair.slug).not.toMatch(/^Who is better,/i)
+      expect(leads.has(line), line).toBe(false)
+      leads.add(line)
+    }
+  })
+
   it("gives every prime page a unique verdict title instead of When Was X's Prime", () => {
     const titles = new Set<string>()
     const seos = new Set<string>()
@@ -305,5 +340,6 @@ describe("GSC landing pages", () => {
     expect(privacy?.lastModified).toBe(SITE.legalUpdatedIso)
     expect(compare?.lastModified).toBe(SITE.contentUpdatedIso)
     expect(SITE.contentUpdatedIso > SITE.legalUpdatedIso).toBe(true)
+    expect(SITE.contentUpdated).toMatch(/September 2026/)
   })
 })

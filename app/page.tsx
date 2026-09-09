@@ -7,6 +7,7 @@ import {
   todaysDebate,
   vsPath,
 } from "@/data/matchups"
+import { BEST_TEAM, PRIME_HUB } from "@/data/collection-copy"
 import { primeEntities } from "@/data/prime"
 import { getTeam } from "@/data/teams"
 import { DreamMatchCarousel } from "@/components/ui/DreamMatchCarousel"
@@ -239,7 +240,7 @@ export default function HomePage() {
       </section>
 
       <section className="home-editorial-section">
-        <EditorialHeading kicker="Era debates" title="When was their prime?" />
+        <EditorialHeading kicker={PRIME_HUB.kicker} title={PRIME_HUB.homeHeading} />
         <div className="home-prime-grid">
           {primeEntities
             .filter((entity) => entity.kind === "club")
@@ -249,7 +250,7 @@ export default function HomePage() {
                 href={`/prime/${entity.slug}`}
                 className="home-prime-card"
               >
-                <span>Prime dossier</span>
+                <span>Pick: {entity.pick}</span>
                 <h3>{entity.title}</h3>
                 <p>{entity.description}</p>
                 <b>Open {entity.name} →</b>
@@ -259,25 +260,25 @@ export default function HomePage() {
       </section>
 
       <section className="home-editorial-section">
-        <EditorialHeading kicker="Big arguments" title="Go beyond one simulated night" />
+        <EditorialHeading kicker="Big arguments" title="Best team ever, Clásico, Brazil–Argentina" />
         <div className="home-prime-grid">
           <Link href="/best-football-team-ever" className="home-prime-card">
-            <span>Editorial ranking</span><h3>What is the best football team ever?</h3>
+            <span>Editorial ranking</span><h3>{BEST_TEAM.homeCardTitle}</h3>
             <p>Six historically great sides, one set of criteria and a clear answer — with every candidate playable.</p>
             <b>Read the verdict →</b>
           </Link>
           <Link href="/compare/barcelona-vs-real-madrid" className="home-prime-card">
-            <span>Club comparison</span><h3>Barcelona or Real Madrid: which is better?</h3>
+            <span>Club comparison</span><h3>Real Madrid all-time; Barcelona at their modern peak</h3>
             <p>Separate the all-time club argument from the prime-team matchup, then test the best versions.</p>
             <b>Compare the giants →</b>
           </Link>
           <Link href="/compare/brazil-vs-argentina" className="home-prime-card">
-            <span>Nation comparison</span><h3>Who is better: Brazil or Argentina?</h3>
+            <span>Nation comparison</span><h3>Brazil as a footballing nation; Argentina when one player carried a tournament</h3>
             <p>Five stars against three, 1970 against 1986. The cabinets are not a tie; the prime teams are still a match.</p>
             <b>Open the argument →</b>
           </Link>
           <Link href="/compare/england-vs-germany" className="home-prime-card">
-            <span>Nation comparison</span><h3>Who is better: England or Germany?</h3>
+            <span>Nation comparison</span><h3>Germany as a tournament nation; England in 1966</h3>
             <p>Germany keep answering the tournament question. England have one undisputed answer, and it is 1966.</p>
             <b>Open the argument →</b>
           </Link>

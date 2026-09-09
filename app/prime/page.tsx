@@ -1,14 +1,14 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { PageHeader } from "@/components/ui/PageHeader"
+import { PRIME_HUB } from "@/data/collection-copy"
 import { primeEntities } from "@/data/prime"
 import { pageMetadata } from "@/lib/seo"
 import { absoluteUrl } from "@/lib/site"
 
 export const metadata: Metadata = pageMetadata({
-  title: "Prime Football Teams",
-  description:
-    "When was Barcelona's prime? Real Madrid's? Manchester United's? Messi's? Prime pages compare legendary seasons, then send you into the football match simulator.",
+  title: PRIME_HUB.title,
+  description: PRIME_HUB.description,
   path: "/prime",
   keywords: [
     "prime barcelona",
@@ -33,16 +33,13 @@ export default function PrimeIndexPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "CollectionPage",
-            name: "Prime Football Teams",
+            name: PRIME_HUB.title,
+            description: PRIME_HUB.description,
             url: absoluteUrl("/prime"),
           }),
         }}
       />
-      <PageHeader
-        kicker="Discovery"
-        title="When was their prime?"
-        lead="Prime pages ask when a club or player peaked, then link into historical squads you can simulate."
-      />
+      <PageHeader kicker={PRIME_HUB.kicker} title={PRIME_HUB.h1} lead={PRIME_HUB.lead} />
       <section className="result-panel p-4 sm:p-5">
         <p className="page-kicker">Editorial standard</p>
         <h2 className="section-title mt-2">Prime is a question, not the highest OVR</h2>
@@ -54,7 +51,7 @@ export default function PrimeIndexPage() {
       <div className="grid gap-3 sm:grid-cols-2">
         {primeEntities.map((entity) => (
           <Link key={entity.slug} href={`/prime/${entity.slug}`} className="home-prime-card">
-            <span>Prime dossier</span>
+            <span>Pick: {entity.pick}</span>
             <h2>{entity.title}</h2>
             <p className="mt-2 text-sm leading-6 text-muted">{entity.description}</p>
             <b>Open {entity.name} →</b>

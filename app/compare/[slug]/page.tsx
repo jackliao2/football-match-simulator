@@ -159,7 +159,7 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
         <section className="grid gap-3 sm:grid-cols-2">
           {leftPrime ? (
             <Link href={`/prime/${leftPrime.slug}`} className="home-prime-card">
-              <span>Prime dossier</span>
+              <span>Pick: {leftPrime.pick}</span>
               <h2>{leftPrime.title}</h2>
               <p>{firstSentence(leftPrime.description)}</p>
               <b>Open {leftClub.name} →</b>
@@ -167,7 +167,7 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
           ) : null}
           {rightPrime ? (
             <Link href={`/prime/${rightPrime.slug}`} className="home-prime-card">
-              <span>Prime dossier</span>
+              <span>Pick: {rightPrime.pick}</span>
               <h2>{rightPrime.title}</h2>
               <p>{firstSentence(rightPrime.description)}</p>
               <b>Open {rightClub.name} →</b>

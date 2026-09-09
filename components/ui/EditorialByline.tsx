@@ -1,14 +1,20 @@
 import Link from "next/link"
 import { SITE, absoluteUrl } from "@/lib/site"
 
-export function EditorialByline({ date = SITE.legalUpdated }: { date?: string }) {
+export function EditorialByline({
+  date = SITE.contentUpdated,
+  dateTime = SITE.contentUpdatedIso,
+}: {
+  date?: string
+  dateTime?: string
+}) {
   return (
     <p className="editorial-byline">
       By <Link href="/about">{SITE.editorName}</Link>
       <span aria-hidden="true"> · </span>
       <span>LegendaryMatch editor</span>
       <span aria-hidden="true"> · </span>
-      <time dateTime={SITE.legalUpdatedIso}>{date}</time>
+      <time dateTime={dateTime}>{date}</time>
     </p>
   )
 }

@@ -22,9 +22,9 @@ export default function MethodologyPage() {
   return <>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
       "@context": "https://schema.org", "@type": "TechArticle", headline: "LegendaryMatch simulation methodology", url: absoluteUrl("/methodology"),
-      author: personSchema(), datePublished: SITE.legalUpdatedIso, dateModified: SITE.legalUpdatedIso,
+      author: personSchema(), datePublished: SITE.legalUpdatedIso, dateModified: SITE.contentUpdatedIso,
     }) }} />
-    <LegalDoc kicker="How it works" title="Simulation methodology" lead="The model is opinionated, repeatable and deliberately visible. These are the choices behind the score rather than a claim that football can be solved." updated={SITE.legalUpdated}>
+    <LegalDoc kicker="How it works" title="Simulation methodology" lead="The model is opinionated, repeatable and deliberately visible. These are the choices behind the score rather than a claim that football can be solved." updated={SITE.contentUpdated}>
       <EditorialByline />
       <section>
         <h2>1. A team means a named season</h2>
