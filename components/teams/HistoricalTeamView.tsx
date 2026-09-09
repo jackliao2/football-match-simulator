@@ -25,19 +25,19 @@ import { teamFaqs } from "@/lib/team-faqs"
 import { SITE, absoluteUrl } from "@/lib/site"
 import type { HistoricalTeam } from "@/types"
 
-const SEARCH_YEAR_NOTES: Record<string, string> = {
-  "real-madrid-2016-17": "Often searched as the Real Madrid 2017 squad, this is Zidane's full 2016/17 team: starting XI, formation, manager and supporting players.",
+export const SEARCH_YEAR_NOTES: Record<string, string> = {
+  "real-madrid-2016-17": "Often searched as the Real Madrid 2017 squad, this is Zidane's full 2016/17 team: Ronaldo, Modrić, Kroos, Ramos and the supporting players around the fourth European Cup.",
   "real-madrid-2013-14": "Real Madrid 2014 squad searches usually mean this 2013/14 La Décima side rather than a later Zidane team.",
   "barcelona-2014-15": "Often searched as the Barcelona 2015 squad or 2015 Barça team, this is Luis Enrique's complete 2014/15 treble-winning group.",
-  "barcelona-2008-09": "The Barcelona 2009 squad search usually means this 2008/09 treble side, with its starting XI, formation and full supporting cast.",
-  "barcelona-2010-11": "The Barcelona 2011 squad search usually points here: Guardiola's 2010/11 team, its Wembley lineup and the players behind the starting XI.",
+  "barcelona-2008-09": "The Barcelona 2009 squad search usually means this 2008/09 treble side: Messi, Xavi, Iniesta and the supporting cast around Guardiola's first European Cup.",
+  "barcelona-2010-11": "The Barcelona 2011 squad search usually points here: Guardiola's 2010/11 team, the Wembley night against Manchester United, and the squad behind Messi, Xavi and Iniesta.",
   "manchester-united-2007-08": "Often searched as the Manchester United 2008 squad, this is Ferguson's complete 2007/08 Champions League-winning team.",
   "manchester-united-1998-99": "Often searched as the Manchester United 1999 squad, this is the complete 1998/99 treble team rather than only the Champions League final XI.",
-  "arsenal-2003-04": "Arsenal 03/04 and Arsenal 2004 searches point to the Invincibles: the full squad, preferred lineup and shape used across the unbeaten league season.",
+  "arsenal-2003-04": "Arsenal 03/04 and Arsenal 2004 searches point to the Invincibles: Henry, Vieira, Pires and the group that went unbeaten across the league season.",
   "arsenal-1997-98": "Arsenal 1998 squad searches usually mean Wenger's first Double team, with Overmars, Anelka and Vieira still building the later Invincibles core.",
-  "liverpool-2004-05": "Often searched as the Liverpool 2005 squad, this is Benítez's complete 2004/05 group rather than only the Istanbul final lineup.",
-  "liverpool-2018-19": "Often searched as the Liverpool 2019 squad, this is Klopp's full 2018/19 Champions League-winning team and preferred formation.",
-  "ac-milan-2006-07": "Often searched as the AC Milan 2007 squad, this is Ancelotti's complete 2006/07 Champions League-winning group and Athens-era lineup.",
+  "liverpool-2004-05": "Often searched as the Liverpool 2005 squad, this is Benítez's complete 2004/05 group rather than only the Istanbul final night.",
+  "liverpool-2018-19": "Often searched as the Liverpool 2019 squad, this is Klopp's full 2018/19 Champions League-winning team: Salah, van Dijk, Alisson and the supporting midfield.",
+  "ac-milan-2006-07": "Often searched as the AC Milan 2007 squad, this is Ancelotti's complete 2006/07 Champions League-winning group around the Athens night.",
   "ac-milan-1988-89": "Milan 1989 or Sacchi Milan searches land here: the 1988/89 European Cup side with Baresi, Rijkaard, Gullit and Van Basten.",
   "inter-milan-2009-10": "Inter 2010 treble searches point to Mourinho's 2009/10 squad, not a later Inter side with a similar badge.",
   "inter-milan-1988-89": "Inter 1989 squad searches usually mean the record Serie A winners with Matthäus, Klinsmann and Brehme.",
@@ -80,7 +80,7 @@ const SEARCH_YEAR_NOTES: Record<string, string> = {
   "netherlands-1988":
     "1988 Netherlands squad, 1988 Holland team and 1988 Hollanda kadrosu searches mean Van Basten's Euros winners, not the 1974 World Cup side.",
   "england-2026":
-    "England squad 2026, England 2026 national team and England World Cup 2026 players searches land here: a modelled starting XI and formation for the 2026 cycle, not an official FIFA list.",
+    "England squad 2026, England 2026 national team and England World Cup 2026 players searches land here: a modelled 2026-cycle dataset around Kane, Bellingham and Saka, not an official FIFA list.",
   "england-1966": "England 1966 World Cup squad searches mean Ramsey's home winners rather than a later tournament XI.",
   "denmark-1992": "Denmark 1992 Euros squad searches mean Møller Nielsen's late-invite winners, not a later Danish cycle.",
   "greece-2004": "Greece 2004 Euros squad searches mean Rehhagel's Lisbon winners, not a later Greek tournament side.",

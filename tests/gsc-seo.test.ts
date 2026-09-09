@@ -6,7 +6,7 @@ import { clubs, getClub, nations } from "@/data/clubs"
 import { HUB_COPY } from "@/data/hub-copy"
 import { getPrimeEntity, primeEntities } from "@/data/prime"
 import { getPrimeEditorial } from "@/data/prime-editorial"
-import { isIndexableTeamPage } from "@/data/team-editorial"
+import { isIndexableTeamPage, getTeamEditorial } from "@/data/team-editorial"
 import { getTeam, getTeamsByClub, teams } from "@/data/teams"
 import { FEATURED_MATCHUPS } from "@/data/matchups"
 import { matchupFeature } from "@/data/vs-editorial"
@@ -15,6 +15,7 @@ import { orgHubCopy, firstSentence, teamH1, teamPageCopy, vsPageCopy } from "@/l
 import { compareOgCopy, teamOgCopy } from "@/lib/og-copy"
 import { informalSeason, isCurrentSquad, modelledCurrentSquadNote, squadKeywords } from "@/lib/seo"
 import { teamFaqs } from "@/lib/team-faqs"
+import { SEARCH_YEAR_NOTES } from "@/components/teams/HistoricalTeamView"
 import { getSiteUrl, SITE } from "@/lib/site"
 
 describe("GSC landing pages", () => {
@@ -184,6 +185,8 @@ describe("GSC landing pages", () => {
     expect(modelledCurrentSquadNote(club)).toMatch(/modelled current-season/)
     expect(modelledCurrentSquadNote(nation)).toMatch(/modelled tournament-cycle/)
     expect(modelledCurrentSquadNote(getTeam("england-2026")!)).toMatch(/modelled/)
+    expect(modelledCurrentSquadNote(club)).not.toMatch(/starting XI|for the simulator/)
+    expect(modelledCurrentSquadNote(nation)).not.toMatch(/starting XI/)
   })
 
   it("publishes Brazil vs Argentina and England vs Germany as nation compares", () => {
@@ -210,6 +213,9 @@ describe("GSC landing pages", () => {
       expect(copy.h1.toLowerCase(), team.id).not.toBe(teamH1(team).toLowerCase())
       expect(copy.dossierHeading, team.id).toMatch(team.displaySeason)
       expect(copy.faqHeading, team.id).toMatch(team.clubName)
+      expect(copy.dossierHeading, team.id).toMatch(team.manager)
+      expect(copy.faqHeading, team.id).not.toMatch(/— questions$/)
+      expect(copy.dossierHeading, team.id).not.toMatch(/Why .+ mattered$/)
       expect(titles.has(copy.title), `${team.id} duplicates title: ${copy.title}`).toBe(false)
       titles.add(copy.title)
       if (isIndexableTeamPage(team.id)) {
@@ -264,6 +270,9 @@ describe("GSC landing pages", () => {
       expect(copy.sectionHeading).not.toMatch(/Two football ideas/)
       expect(copy.description, `${a}-vs-${b}`).not.toMatch(/Compare the squads and \d+ simulated matches/)
       expect(copy.playHeading, `${a}-vs-${b}`).not.toMatch(/^Simulate /)
+      expect(copy.snapshotHeading, `${a}-vs-${b}`).not.toMatch(/on the model$/)
+      expect(copy.contextHeading, `${a}-vs-${b}`).not.toMatch(/as a football idea$/)
+      expect(copy.faqHeading, `${a}-vs-${b}`).not.toMatch(/— FAQ$/)
       expect(headings.has(copy.sectionHeading), copy.sectionHeading).toBe(false)
       headings.add(copy.sectionHeading)
       const feature = matchupFeature(home, away)
@@ -279,13 +288,38 @@ describe("GSC landing pages", () => {
     const faqs = teamFaqs(getTeam("barcelona-2025-26")!, { runs: 100 })
     expect(faqs[0]?.q).toMatch(/official/)
     expect(faqs[0]?.a).toMatch(/modelled/i)
+    expect(faqs[0]?.a).not.toMatch(/highest-rated names in this/)
     expect(faqs.some((item) => item.q.startsWith("How do I play"))).toBe(false)
   })
 
   it("keeps historic FAQs attached to the dossier, not a fill-in-the-blank", () => {
     const faqs = teamFaqs(getTeam("napoli-1986-87")!, { runs: 100 })
     expect(faqs[0]?.a).toMatch(/Maradona|scudetto|Diego/i)
+    expect(faqs[0]?.a).not.toMatch(/lead the .+ under/)
     expect(faqs.some((item) => item.q.startsWith("How do I play"))).toBe(false)
+  })
+
+  it("writes indexable FAQ answers without factory XI labels", () => {
+    for (const team of teams) {
+      if (!isIndexableTeamPage(team.id)) continue
+      const faqs = teamFaqs(team, { runs: 100 })
+      expect(faqs.length, team.id).toBeGreaterThan(0)
+      for (const item of faqs) {
+        expect(item.a, `${team.id}: ${item.q}`).not.toMatch(/The labels on this XI/i)
+        expect(item.a, `${team.id}: ${item.q}`).not.toMatch(/Style tags on this XI/i)
+        expect(item.a, `${team.id}: ${item.q}`).not.toMatch(/lead the .+ under/)
+        expect(item.a, `${team.id}: ${item.q}`).not.toMatch(/seeded simulations of this modelled matchup/)
+      }
+    }
+  })
+
+  it("drops factory starting-XI language from on-page year notes", () => {
+    for (const [id, note] of Object.entries(SEARCH_YEAR_NOTES)) {
+      expect(note, id).not.toMatch(/starting XI, formation/i)
+      expect(note, id).not.toMatch(/preferred lineup/i)
+      expect(note, id).not.toMatch(/modelled starting XI and formation/)
+    }
+    expect(getTeamEditorial("england-2026")?.intro).not.toMatch(/\bplayable\b/)
   })
 
   it("publishes a Liverpool prime page with a real case and counter-case", () => {
@@ -359,6 +393,7 @@ describe("GSC landing pages", () => {
 
     expect(SIMULATE_PAGE.faqHeading).not.toBe("Football match simulator FAQ")
     expect(SIMULATE_PAGE.faqHeading).toMatch(/2010\/11/)
+    expect(SIMULATE_PAGE.faqHeading).not.toMatch(/simulator questions/)
 
     expect(METHODOLOGY_PAGE.title).toMatch(/2010\/11/)
     expect(METHODOLOGY_PAGE.h1).toMatch(/2010\/11/)

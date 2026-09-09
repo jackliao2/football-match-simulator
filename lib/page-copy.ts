@@ -129,9 +129,11 @@ export function teamPageCopy(team: HistoricalTeam, opponentArg?: HistoricalTeam)
     deck,
     paragraphs,
     matchupHeading,
-    dossierHeading: `Why ${team.clubName} ${team.displaySeason} mattered`,
-    faqHeading: `${team.clubName} ${team.displaySeason} — questions`,
-    starsHeading: `${team.clubName} ${team.displaySeason} names`,
+    dossierHeading: `Why ${team.manager}'s ${team.clubName} ${team.displaySeason} still gets argued`,
+    faqHeading: `${team.clubName} ${team.displaySeason} — what people still ask`,
+    starsHeading: top
+      ? `${top.name} and ${team.clubName} ${team.displaySeason}`
+      : `${team.manager}'s ${team.clubName} ${team.displaySeason} names`,
   }
 }
 
@@ -333,11 +335,11 @@ export function vsPageCopy(home: HistoricalTeam, away: HistoricalTeam, _runs: nu
     editorial,
     kicker: feature?.title ?? `${home.displaySeason} vs ${away.displaySeason}`,
     sectionHeading: `${home.manager}'s ${home.displaySeason} ${home.formation} against ${away.manager}'s ${away.displaySeason}`,
-    snapshotHeading: `${matchup} on the model`,
-    contextHeading: `${home.clubName} ${home.displaySeason} as a football idea`,
+    snapshotHeading: `${home.clubName} ${home.displaySeason} against ${away.clubName} ${away.displaySeason} — what the runs say`,
+    contextHeading: `What ${home.manager}'s ${home.clubName} ${home.displaySeason} actually was`,
     hingeHeading: `${homeTag} against ${awayTag}`,
     readingHeading: `A ${home.clubName} win versus a ${away.clubName} win`,
-    faqHeading: `${home.clubName} vs ${away.clubName} — FAQ`,
+    faqHeading: `${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}`,
     playHeading: `${home.clubName} ${home.displaySeason} against ${away.clubName} ${away.displaySeason}`,
   }
 }

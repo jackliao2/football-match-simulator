@@ -80,7 +80,7 @@ export const SIMULATE_PAGE = {
   lead: "Or Brazil 1970 against Spain 2010. Every side is a named season, not a slider. The match engine writes the score; Expert AI Analysis explains the matchup afterwards and never gets a vote.",
   guideKicker: "How a match is actually decided",
   guideHeading: "The engine writes Barça vs Madrid. A chatbot does not.",
-  faqHeading: "Barça 2010/11 vs Madrid 2016/17, and the simulator questions",
+  faqHeading: "Barça 2010/11 vs Madrid 2016/17 — who would win, and what the score means",
 } as const
 
 export const METHODOLOGY_PAGE = {

@@ -295,13 +295,13 @@ export const NATION_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
     ],
   ),
   "england-2026": d(
-    "England 2026 is the current-cycle national side in this catalogue: Tuchel as manager, Kane as the finish, Bellingham as the runner, Saka as the edge. It is a playable World Cup-year dataset, not the official 26-man FIFA list. Use it to argue England against Brazil 2002 or France 2018 with a named XI rather than a vibes rating.",
+    "England 2026 is the current-cycle national side in this catalogue: Tuchel as manager, Kane as the finish, Bellingham as the runner, Saka as the edge. It is a modelled World Cup-year snapshot, not the official 26-man FIFA list. Use it to argue England against Brazil 2002 or France 2018 with named players rather than a vibes rating.",
     [
       {
         heading: "Who is actually in the modelled XI",
         paragraphs: [
           "The starting shape is a 4-3-3. Pickford; James, Stones, Guéhi, Lewis; Palmer, Rice, Bellingham; Saka, Kane, Foden. That is a control midfield with two wide creators and a centre-forward who still occupies both centre-backs. The bench carries Watkins, Gordon, Mainoo, Trent and Colwill so the page is a squad, not eleven names and a shrug.",
-          "People searching England squad 2026, England 2026 national team or England World Cup 2026 players usually want this list: who starts, who is on the bench, what the formation is. They are not looking for a live injury bulletin. If the official tournament squad later differs, this page stays a 2026-cycle snapshot the simulator can actually run.",
+          "People searching England squad 2026, England 2026 national team or England World Cup 2026 players usually want this list: who starts, who is on the bench, what the shape is. They are not looking for a live injury bulletin. If the official tournament squad later differs, this page stays a 2026-cycle snapshot around Kane, Bellingham and Saka.",
         ],
       },
       {

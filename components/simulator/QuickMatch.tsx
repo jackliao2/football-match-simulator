@@ -85,7 +85,9 @@ export function QuickMatch({
   return (
     <section className="grid gap-3">
       <div>
-        <p className="page-kicker">Play this matchup</p>
+        <p className="page-kicker">
+          {home.manager}'s {home.displaySeason} against {away.manager}'s {away.displaySeason}
+        </p>
         <h2 className="section-title mt-1">
           {home.clubName} {home.displaySeason} vs {away.clubName} {away.displaySeason}
         </h2>

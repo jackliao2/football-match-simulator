@@ -34,19 +34,19 @@ export function teamFaqs(
   if (current) {
     faqs.push({
       q: `Is this the official ${team.clubName} ${team.displaySeason} lineup?`,
-      a: `${modelledCurrentSquadNote(team)} ${stars} are the highest-rated names in this ${team.formation} under ${team.manager}.`,
+      a: `${modelledCurrentSquadNote(team)} ${stars} are the highest-rated names under ${team.manager}.`,
     })
   } else {
     faqs.push({
       q: `What was the ${team.clubName} ${team.displaySeason} squad?`,
-      a: `${hook} ${stars} lead the ${team.formation} under ${team.manager}.`,
+      a: `${hook} ${stars} are the names people mean for ${team.clubName} ${team.displaySeason}.`,
     })
   }
 
   if (shortSeason && !current) {
     faqs.push({
       q: `Is this the ${team.clubName} ${shortSeason} squad?`,
-      a: `Yes — ${team.clubName} ${shortSeason} searches usually mean this ${team.displaySeason} side: ${stars}, ${team.formation}, ${team.manager}.`,
+      a: `Yes — ${team.clubName} ${shortSeason} searches usually mean this ${team.displaySeason} side: ${stars} under ${team.manager}, not a later rebuild.`,
     })
   }
 
@@ -54,10 +54,10 @@ export function teamFaqs(
     const written = writtenMatchupEditorial(team, opponent)
     const matchup = written
       ? firstSentence(written)
-      : `${stars} in a ${team.formation} against ${nameList(opponent)} in a ${opponent.formation}.`
+      : `${stars} against ${nameList(opponent)} — ${team.manager}'s ${team.displaySeason} versus ${opponent.manager}'s ${opponent.displaySeason}.`
     faqs.push({
       q: `Who would win between ${team.clubName} ${team.displaySeason} and ${opponent.clubName} ${opponent.displaySeason}?`,
-      a: `${matchup} In ${runs} seeded simulations of this modelled matchup, ${team.clubName} won ${model.homeWinPct}%, ${opponent.clubName} won ${model.awayWinPct}%, and ${model.drawPct}% finished level. The most common score was ${model.mostCommonScore.replace("-", "–")}. Not a real fixture and not betting advice.`,
+      a: `${matchup} In ${runs} seeded runs of ${team.clubName} ${team.displaySeason} against ${opponent.clubName} ${opponent.displaySeason}, ${team.clubName} won ${model.homeWinPct}%, ${opponent.clubName} won ${model.awayWinPct}%, and ${model.drawPct}% finished level. The most common score was ${model.mostCommonScore.replace("-", "–")}. Not a real fixture and not betting advice.`,
     })
   }
 
@@ -66,12 +66,12 @@ export function teamFaqs(
   if (current) {
     faqs.push({
       q: `Who starts for ${team.clubName} ${team.displaySeason} in the simulator?`,
-      a: `${team.manager}'s modelled ${team.formation} is led by ${stars}. Style tags on this XI: ${team.styleTags.slice(0, 2).join(" and ").toLowerCase()}. Ratings are era-relative, not a live FIFA card.`,
+      a: `${team.manager}'s ${team.displaySeason} ${team.clubName} is led by ${stars}. Era-relative ratings, not a live FIFA card.`,
     })
   } else {
     faqs.push({
       q: `What formation did ${team.clubName} ${team.displaySeason} play?`,
-      a: `${team.manager} used a ${team.formation}. ${feat ? `${feat}. ` : ""}${trophy ? `Silverware on this dossier: ${trophy}. ` : ""}The labels on this XI are ${team.styleTags.slice(0, 2).join(" and ").toLowerCase()}.`,
+      a: `${team.manager} used a ${team.formation}. ${feat ? `${feat}. ` : ""}${trophy ? `${trophy} that season. ` : ""}${stars} as the spine of that ${team.displaySeason} side.`,
     })
   }
 
@@ -83,15 +83,15 @@ export function vsFaqs(home: HistoricalTeam, away: HistoricalTeam, model: MonteC
   const feature = matchupFeature(home, away)
   const hook = written
     ? firstSentence(written)
-    : `${nameList(home)} in a ${home.formation} against ${nameList(away)} in a ${away.formation}.`
+    : `${nameList(home)} against ${nameList(away)} — ${home.manager}'s ${home.displaySeason} versus ${away.manager}'s ${away.displaySeason}.`
   const faqs: TeamFaq[] = [
     {
       q: `Who would win between ${home.clubName} ${home.displaySeason} and ${away.clubName} ${away.displaySeason}?`,
-      a: `${hook} Across ${runs} seeded simulations, ${home.clubName} won ${model.homeWinPct}%, ${away.clubName} won ${model.awayWinPct}%, and ${model.drawPct}% finished level. The most common score was ${model.mostCommonScore.replace("-", "–")}. Modelled hypothetical, not a real fixture.`,
+      a: `${hook} Across ${runs} seeded runs of ${home.clubName} ${home.displaySeason} against ${away.clubName} ${away.displaySeason}, ${home.clubName} won ${model.homeWinPct}%, ${away.clubName} won ${model.awayWinPct}%, and ${model.drawPct}% finished level. The most common score was ${model.mostCommonScore.replace("-", "–")}. Modelled hypothetical, not a real fixture.`,
     },
     {
       q: `What score does the model pick for ${home.clubName} vs ${away.clubName}?`,
-      a: `There is no single official score. Across ${runs} matches the most frequent line was ${model.mostCommonScore.replace("-", "–")}, with average goals ${model.avgHomeGoals}–${model.avgAwayGoals}.${feature ? ` ${firstSentence(feature.reading)}` : ""}`,
+      a: `There is no single official score. Across ${runs} runs of ${home.clubName} ${home.displaySeason} against ${away.clubName} ${away.displaySeason} the most frequent line was ${model.mostCommonScore.replace("-", "–")}, with average goals ${model.avgHomeGoals}–${model.avgAwayGoals}.${feature ? ` ${firstSentence(feature.reading)}` : ""}`,
     },
   ]
   if (feature) {

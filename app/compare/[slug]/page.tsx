@@ -177,7 +177,7 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
       ) : null}
       <section className="grid gap-3" aria-labelledby="compare-faq">
         <h2 id="compare-faq" className="section-title">
-          {leftClub.name} or {rightClub.name} — FAQ
+          {leftPeak} or {rightPeak} — what people ask
         </h2>
         <div className="home-faq-list">
           {faqs.map((item) => (
