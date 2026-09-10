@@ -13,7 +13,7 @@ export const metadata: Metadata = pageMetadata({
 export default function TermsPage() {
   return (
     <LegalDoc
-      kicker="Legal"
+      kicker="LegendaryMatch"
       title="Terms of use"
       lead="This is the football match simulator at LegendaryMatch, written out in plain language. If you run a match here, this page applies."
       updated={SITE.legalUpdated}
@@ -95,7 +95,7 @@ export default function TermsPage() {
           nickname is off, the score still stands as the engine’s score.
         </p>
         <p>
-          Hover stats (PAC, SHO, PAS and the rest) are our editorial numbers for this simulator, not
+          Hover stats (PAC, SHO, PAS and the rest) are our editorial numbers for this catalogue, not
           a licensed dump from a video game. Disagreeing with a 88 versus an 86 is part of football.
           Email a factual XI error if you have one; a taste argument about Gerrard’s 2005 rating is
           less likely to move the number.

@@ -139,7 +139,7 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
           <article key={candidate.teamId} className="result-panel grid gap-4 p-4 sm:grid-cols-[1fr_16rem] sm:items-center">
             <div>
               <p className="font-display text-[8px] uppercase tracking-[0.18em] text-gold">
-                Candidate {index + 1}
+                {candidate.team.displaySeason}
               </p>
               <h2 className="mt-2 font-brand text-lg font-semibold tracking-wide">
                 {candidate.team.clubName} {candidate.team.displaySeason}
@@ -163,20 +163,28 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
 
       {first && second ? (
         <section className="result-panel p-4">
-          <h2 className="font-brand text-lg font-semibold tracking-wide">Simulate two {page.name} eras</h2>
-          <p className="mt-2 font-mono text-sm text-muted">
+          <h2 className="font-brand text-lg font-semibold tracking-wide">
             {first.clubName} {first.displaySeason} vs {second.clubName} {second.displaySeason}
+          </h2>
+          <p className="mt-2 font-mono text-sm text-muted">
+            {first.manager} against {second.manager}
           </p>
           <Link href={isPublishedMatchup(first.id, second.id) ? vsPath(first.id, second.id) : `/simulate?home=${first.id}&away=${second.id}`} className="mt-3 inline-block font-mono text-sm text-gold hover:text-gold-2">
-            {isPublishedMatchup(first.id, second.id) ? "Open this dream match →" : "Simulate these two eras →"}
+            {isPublishedMatchup(first.id, second.id)
+              ? `Open ${first.displaySeason} vs ${second.displaySeason} →`
+              : `Simulate ${first.displaySeason} vs ${second.displaySeason} →`}
           </Link>
         </section>
       ) : null}
 
       <section className="grid gap-3 border-t border-white/10 pt-5">
         <div>
-          <p className="font-display text-[8px] uppercase tracking-[0.2em] text-gold">More era debates</p>
-          <h2 className="mt-1 font-brand text-lg font-semibold text-text">Other primes worth arguing about</h2>
+          <p className="font-display text-[8px] uppercase tracking-[0.2em] text-gold">
+            {related.map((item) => item.name).slice(0, 3).join(" · ")}
+          </p>
+          <h2 className="mt-1 font-brand text-lg font-semibold text-text">
+            {related[0] ? `${related[0].name}'s prime, and the rest` : "Other primes"}
+          </h2>
         </div>
         <div className="grid gap-2 sm:grid-cols-2">
           {related.map((item) => <Link key={item.slug} href={`/prime/${item.slug}`} className="result-panel p-3 no-underline hover:border-gold"><span className="font-brand text-sm font-semibold tracking-wide text-text">{item.title}</span><span className="mt-1 block line-clamp-2 text-xs leading-5 text-muted">{item.description}</span></Link>)}

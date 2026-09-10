@@ -252,7 +252,9 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
           <div className="grid gap-3 md:grid-cols-2">
             {editorial.sections.map((section, index) => (
               <article key={section.heading} className={`result-panel p-4 sm:p-5 ${index === editorial.sections.length - 1 && editorial.sections.length % 2 === 1 ? "md:col-span-2" : ""}`}>
-                <p className="font-display text-[8px] uppercase tracking-[0.2em] text-gold">Chapter {String(index + 1).padStart(2, "0")}</p>
+                <p className="font-display text-[8px] uppercase tracking-[0.2em] text-gold">
+                  {`${team.styleTags[index] ?? team.formation} · ${team.displaySeason}`}
+                </p>
                 <h3 className="mt-2 font-brand text-lg font-semibold tracking-wide text-text">{section.heading}</h3>
                 <div className="mt-3 grid gap-3 text-sm leading-7 text-muted">
                   {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}

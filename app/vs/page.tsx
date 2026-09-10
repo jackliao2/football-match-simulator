@@ -47,7 +47,7 @@ export default function VsIndexPage() {
       />
       <PageHeader kicker={VS_HUB.kicker} title={VS_HUB.h1} lead={VS_HUB.lead} />
       <section className="result-panel px-4 py-4 sm:px-5">
-        <p className="font-display text-[8px] uppercase tracking-[0.2em] text-gold">How the card was picked</p>
+        <p className="font-display text-[8px] uppercase tracking-[0.2em] text-gold">{VS_HUB.cardKicker}</p>
         <p className="mt-2 max-w-4xl font-mono text-xs leading-6 text-text/75">Each pairing needs a real argument behind it: two sides regularly placed among football’s greatest, a clash of defining tactical ideas, or two generations of the same national tradition. Famous matches that already happened only stay when a different peak version changes the question.</p>
       </section>
       {[
@@ -67,7 +67,9 @@ export default function VsIndexPage() {
       {extra.length > 0 ? (
         <section className="grid gap-3">
           <div>
-            <h2 className="font-brand text-xl font-semibold text-text">Same-club eras, derbies and default rivals</h2>
+            <h2 className="font-brand text-xl font-semibold text-text">
+              Barcelona 2008/09 vs 2010/11, derbies, default rivals
+            </h2>
             <p className="mt-1 font-mono text-xs text-muted">
               Extra pairings the model can still run — not the shortlist that opens the page.
             </p>

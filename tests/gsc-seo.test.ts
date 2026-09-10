@@ -418,7 +418,8 @@ describe("GSC landing pages", () => {
 
     expect(ABOUT_PAGE.h1).toMatch(/2010\/11/)
     expect(ABOUT_PAGE.title).toMatch(/2010\/11/)
-    expect(ABOUT_PAGE.kicker).toBe("The project")
+    expect(ABOUT_PAGE.kicker).toBe("Jack")
+    expect(ABOUT_PAGE.kicker).not.toBe("The project")
 
     expect(BEST_TEAM.h1).not.toBe("What is the best football team ever?")
     expect(BEST_TEAM.h1).toMatch(/2010\/11/)
@@ -450,8 +451,16 @@ describe("GSC landing pages", () => {
 
     expect(METHODOLOGY_PAGE.title).toMatch(/2010\/11/)
     expect(METHODOLOGY_PAGE.h1).toMatch(/2010\/11/)
-    expect(METHODOLOGY_PAGE.kicker).toBe("How it works")
+    expect(METHODOLOGY_PAGE.kicker).toBe("400 nights")
+    expect(METHODOLOGY_PAGE.kicker).not.toBe("How it works")
+    expect(METHODOLOGY_PAGE.kicker).not.toBe(SIMULATE_PAGE.guideKicker)
     expect(METHODOLOGY_PAGE.h1).not.toBe("Simulation methodology")
+    expect(SIMULATE_PAGE.guideKicker).toMatch(/Guardiola|Zidane|2010/)
+    expect(SIMULATE_PAGE.guideKicker).not.toBe("How a match is actually decided")
+    expect(SEARCH_PAGE.kicker).toMatch(/08\/09|1970|Barcelona/)
+    expect(SEARCH_PAGE.kicker).not.toBe("Catalogue search")
+    expect(VS_HUB.cardKicker).toMatch(/2010\/11|Barcelona/)
+    expect(VS_HUB.cardKicker).not.toBe("How the card was picked")
 
     expect(VS_HUB.clubHeading).not.toBe("Club dynasties")
     expect(VS_HUB.clubHeading).toMatch(/Guardiola|Sacchi|Zidane/)
@@ -469,11 +478,13 @@ describe("GSC landing pages", () => {
     expect(TEAMS_HUB.h1).not.toBe("Club squads, by the year that mattered")
     expect(TEAMS_HUB.title).not.toBe("Club squads by season")
     expect(TEAMS_HUB.h1).toMatch(/Barça|2016\/17/)
-    expect(TEAMS_HUB.kicker).toBe("Club database")
+    expect(TEAMS_HUB.kicker).toMatch(/Barça|Madrid|United/)
+    expect(TEAMS_HUB.kicker).not.toBe("Club database")
     expect(NATIONS_HUB.h1).not.toBe("National teams, the years that stuck")
     expect(NATIONS_HUB.title).not.toBe("National teams by tournament year")
     expect(NATIONS_HUB.h1).toMatch(/1970/)
-    expect(NATIONS_HUB.kicker).toBe("World Cup sides")
+    expect(NATIONS_HUB.kicker).toMatch(/1970|1986|2010/)
+    expect(NATIONS_HUB.kicker).not.toBe("World Cup sides")
   })
 
   it("drops playable from about, methodology, privacy and contact copy", () => {
@@ -504,6 +515,19 @@ describe("GSC landing pages", () => {
     expect(readFileSync("components/teams/HistoricalTeamView.tsx", "utf8")).not.toMatch(
       /displaySeason\} dossier/,
     )
+    expect(readFileSync("components/teams/HistoricalTeamView.tsx", "utf8")).not.toMatch(/Chapter /)
+    expect(readFileSync("app/prime/[entity]/page.tsx", "utf8")).not.toMatch(/Candidate \{/)
+    expect(readFileSync("app/prime/[entity]/page.tsx", "utf8")).not.toMatch(
+      /More era debates|Other primes worth arguing about|Open this dream match|Simulate these two eras/,
+    )
+    expect(readFileSync("components/simulator/MatchResult.tsx", "utf8")).not.toMatch(/Simulated result/)
+    expect(readFileSync("app/vs/page.tsx", "utf8")).not.toMatch(/How the card was picked/)
+    expect(readFileSync("app/teams/page.tsx", "utf8")).not.toMatch(/for the football and soccer match simulator/)
+    expect(readFileSync("app/national-teams/page.tsx", "utf8")).not.toMatch(/detail: "National team"/)
+    expect(readFileSync("app/terms/page.tsx", "utf8")).not.toMatch(/for this simulator/)
+    expect(readFileSync("app/privacy/page.tsx", "utf8")).not.toMatch(/kicker="Legal"/)
+    expect(readFileSync("app/terms/page.tsx", "utf8")).not.toMatch(/kicker="Legal"/)
+    expect(readFileSync("app/contact/page.tsx", "utf8")).not.toMatch(/kicker="Site"/)
   })
 
   it("names flagship sides on Spanish and Portuguese hubs instead of factory catalog labels", async () => {
@@ -511,6 +535,8 @@ describe("GSC landing pages", () => {
     expect(LOCALIZED_COPY.es.home.metaTitle).toMatch(/2010\/11/)
     expect(LOCALIZED_COPY.es.home.tagline).not.toContain("Elige un equipo")
     expect(LOCALIZED_COPY.es.home.tagline.join(" ")).toMatch(/2010\/11/)
+    expect(LOCALIZED_COPY.es.home.lead).toMatch(/2010\/11/)
+    expect(LOCALIZED_COPY.es.home.lead).not.toMatch(/Elige dos equipos/)
     expect(LOCALIZED_COPY["pt-br"].home.tagline).not.toContain("Escolha um time")
     expect(LOCALIZED_COPY["pt-br"].home.tagline.join(" ")).toMatch(/2010\/11/)
     expect(LOCALIZED_COPY.es.home.metaTitle).not.toMatch(/\| LegendaryMatch$/)
@@ -532,6 +558,8 @@ describe("GSC landing pages", () => {
     expect(LOCALIZED_COPY["pt-br"].aboutTitle).toMatch(/2010\/11/)
     expect(LOCALIZED_COPY["pt-br"].how[0]?.[1]).toMatch(/2010\/11|1970/)
     expect(LOCALIZED_COPY["pt-br"].home.title).toMatch(/2010\/11/)
+    expect(LOCALIZED_COPY["pt-br"].home.lead).toMatch(/2010\/11/)
+    expect(LOCALIZED_COPY["pt-br"].home.lead).not.toMatch(/Escolha dois times/)
     expect(LOCALIZED_COPY["pt-br"].faqTitle).toMatch(/2010\/11/)
     expect(LOCALIZED_COPY["pt-br"].howTitle).not.toBe("Como funciona o simulador")
     expect(LOCALIZED_COPY["pt-br"].faq.at(-1)?.[0]).toMatch(/2010\/11/)

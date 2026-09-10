@@ -22,7 +22,7 @@ export function MatchResult({
         : "Draw"
 
   return (
-    <ResultPanel kicker="Simulated result" aside={`Seed ${match.seed}`}>
+    <ResultPanel kicker={`${home.clubName} vs ${away.clubName}`} aside={`Seed ${match.seed}`}>
       <div className="grid gap-3 px-3 py-3 sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:gap-6 sm:px-5 sm:py-5">
         <div className="order-2 sm:order-1">
           <ResultTeam team={home} />

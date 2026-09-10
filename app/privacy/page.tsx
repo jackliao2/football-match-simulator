@@ -13,7 +13,7 @@ export const metadata: Metadata = pageMetadata({
 export default function PrivacyPage() {
   return (
     <LegalDoc
-      kicker="Legal"
+      kicker="Host logs"
       title="Privacy"
       lead="There is no login and nothing to buy. This page is about the little that still exists when you open a football simulator in a browser."
       updated={SITE.legalUpdated}

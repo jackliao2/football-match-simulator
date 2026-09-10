@@ -33,13 +33,14 @@ export const HOME_SECTIONS = {
   howTitle: "Pick two seasons. Play one night. Test the argument.",
   faqKicker: "2010/11 vs 2016/17",
   argumentsKicker: "Clásico · Brazil–Argentina",
+  argumentsTitle: "Best team ever, Clásico, Brazil–Argentina",
 } as const
 
 export const TEAMS_HUB = {
   title: "Club Squads: Guardiola’s Barça, Madrid 2016/17, United 1999",
   description:
     "Guardiola’s Barça, Istanbul, the Invincibles and the 2025/26 season. Open a year and run the match.",
-  kicker: "Club database",
+  kicker: "Barça · Madrid · United",
   h1: "Guardiola’s Barça, Madrid 2016/17, United’s treble",
 } as const
 
@@ -47,7 +48,7 @@ export const NATIONS_HUB = {
   title: "National Teams: Brazil 1970, Maradona’s 86, Spain 2010",
   description:
     "Brazil 1970, Argentina 1986, Spain 2010, France 2026 — World Cup and Euros sides named by year, not a badge with a slider.",
-  kicker: "World Cup sides",
+  kicker: "1970 · 1986 · 2010",
   h1: "Brazil 1970, Maradona’s 86, Spain 2010",
 } as const
 
@@ -63,6 +64,7 @@ export const VS_HUB = {
   clubLead: "Guardiola’s Barça, Sacchi’s Milan, Zidane’s Madrid, Ferguson’s United: club sides that changed the standard, not a dynasty dump.",
   nationHeading: "Brazil 1970, Spain 2010, Maradona’s 86",
   nationLead: "World Cup sides and the nearly teams that still define an era — Brazil 1970 first, then Spain 2010 and Maradona’s Mexico.",
+  cardKicker: "Barcelona 2010/11",
 } as const
 
 export const COMPARE_HUB = {
@@ -83,7 +85,7 @@ export const SIMULATE_PAGE = {
   kicker: "Football match simulator",
   h1: "Play Barcelona 2010/11 against Madrid 2016/17",
   lead: "Or Brazil 1970 against Spain 2010. Every side is a named season, not a slider. The match engine writes the score; Expert AI Analysis explains the matchup afterwards and never gets a vote.",
-  guideKicker: "How a match is actually decided",
+  guideKicker: "Guardiola vs Zidane",
   guideHeading: "The engine writes Barça vs Madrid. A chatbot does not.",
   faqHeading: "Barça 2010/11 vs Madrid 2016/17 — who would win, and what the score means",
 } as const
@@ -92,7 +94,7 @@ export const METHODOLOGY_PAGE = {
   title: "How Barcelona 2010/11 vs Madrid 2016/17 is scored",
   description:
     "How LegendaryMatch rates named seasons, prices chances, and scores Barcelona 2010/11 against Madrid 2016/17 across 400 runs. The engine writes the result; AI only explains it.",
-  kicker: "How it works",
+  kicker: "400 nights",
   h1: "How we score Barcelona 2010/11 vs Madrid 2016/17",
   lead: "The model is opinionated, repeatable and visible. The worked example on this page is Guardiola’s 2010/11 Barça against Zidane’s 2016/17 Madrid — 400 seeded nights, not a claim that football can be solved.",
 } as const
@@ -101,7 +103,7 @@ export const SEARCH_PAGE = {
   title: "Search Barcelona 08/09, Brazil 1970, or any named season",
   description:
     "Search 156 named club and national-team seasons on LegendaryMatch. Open a squad page or send two named sides into a matchup.",
-  kicker: "Catalogue search",
+  kicker: "Barcelona 08/09",
   h1: "Find Barcelona 08/09, Brazil 1970, or any named season",
   popularKicker: "Barcelona 08/09, Madrid 16/17, Brazil 1970",
 } as const
@@ -123,7 +125,7 @@ export const ABOUT_PAGE = {
   title: "About LegendaryMatch — Barcelona 2010/11 vs Madrid 2016/17",
   description:
     "Who writes LegendaryMatch, why Barcelona 2010/11 vs Madrid 2016/17 is the worked example, what is editorial judgement and how to report a squad error.",
-  kicker: "The project",
+  kicker: "Jack",
   h1: "Built to play Barcelona 2010/11 against Madrid 2016/17",
   lead: "A named-season football simulator for arguments the calendar made impossible — Guardiola’s Barça against Zidane’s Madrid, Brazil 1970 against Spain 2010, not a badge with a slider.",
 } as const

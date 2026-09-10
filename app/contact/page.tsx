@@ -32,7 +32,7 @@ export default function ContactPage() {
         }}
       />
       <LegalDoc
-        kicker="Site"
+        kicker="Inbox"
         title="Contact"
         lead="One address. No ticket form, no chatbot, no phone."
         updated={SITE.legalUpdated}

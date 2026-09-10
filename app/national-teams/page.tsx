@@ -40,7 +40,7 @@ export default async function NationalTeamsPage({ searchParams }: PageProps<"/na
       .map((nation) => ({
         id: nation.id,
         name: nation.name,
-        detail: "National team",
+        detail: nation.city,
         href: `/national-teams/${nation.id}`,
         teams: getTeamsByClub(nation.id).map(toCatalogCard),
       }))

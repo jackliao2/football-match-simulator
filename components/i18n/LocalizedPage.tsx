@@ -33,8 +33,11 @@ const SECTION_EDITORIAL: Record<Locale, Record<LocalizedSection, [string, string
 }
 
 function LocalizedEditorial({ locale, section }: { locale: Locale; section: LocalizedSection }) {
-  const [title, first, second] = SECTION_EDITORIAL[locale][section]
-  return <section className="result-panel p-4 sm:p-5"><h2 className="font-brand text-xl font-semibold text-text">{title}</h2><div className="editorial-copy mt-3"><p>{first}</p><p>{second}</p></div></section>
+  const copy = LOCALIZED_COPY[locale]
+  const [editorialTitle, first, second] = SECTION_EDITORIAL[locale][section]
+  const heading =
+    section === "teams" ? copy.teams.title : section === "national-teams" ? copy.nations.title : editorialTitle
+  return <section className="result-panel p-4 sm:p-5"><h2 className="font-brand text-xl font-semibold text-text">{heading}</h2><div className="editorial-copy mt-3"><p>{first}</p><p>{second}</p></div></section>
 }
 
 export function LocalizedPage({ locale, section }: { locale: Locale; section?: LocalizedSection }) {

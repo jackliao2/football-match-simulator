@@ -56,7 +56,7 @@ export default async function TeamsPage({ searchParams }: PageProps<"/teams">) {
             "@context": "https://schema.org",
             "@type": "CollectionPage",
             name: TEAMS_HUB.title,
-            description: `${counts.clubSides} historical and current club squads for the football and soccer match simulator.`,
+            description: TEAMS_HUB.description,
             url: absoluteUrl("/teams"),
             hasPart: sections.flatMap((section) =>
               section.orgs.map((item) => ({

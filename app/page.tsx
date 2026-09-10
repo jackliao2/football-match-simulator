@@ -258,7 +258,7 @@ export default function HomePage() {
       </section>
 
       <section className="home-editorial-section">
-        <EditorialHeading kicker={HOME_SECTIONS.argumentsKicker} title="Best team ever, Clásico, Brazil–Argentina" />
+        <EditorialHeading kicker={HOME_SECTIONS.argumentsKicker} title={HOME_SECTIONS.argumentsTitle} />
         <div className="home-prime-grid">
           <Link href="/best-football-team-ever" className="home-prime-card">
             <span>Barcelona 2010/11</span><h3>{BEST_TEAM.homeCardTitle}</h3>
