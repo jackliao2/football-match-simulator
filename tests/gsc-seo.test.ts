@@ -555,6 +555,18 @@ describe("GSC landing pages", () => {
     expect(readFileSync("components/simulator/QuickMatch.tsx", "utf8")).not.toMatch(
       /Play \$\{home\.displaySeason\}/,
     )
+    expect(readFileSync("components/simulator/AiAnalysisResult.tsx", "utf8")).not.toMatch(
+      /The opening 20|The duel to watch|The manager's move|The chaos factor/,
+    )
+    expect(readFileSync("components/simulator/AiAnalysisResult.tsx", "utf8")).not.toMatch(
+      /The call|Expert dossier|How the match develops|Era collision/,
+    )
+    expect(readFileSync("components/simulator/ClubPicker.tsx", "utf8")).not.toMatch(/label: "Other"/)
+    expect(readFileSync("components/simulator/ClubPicker.tsx", "utf8")).not.toMatch(
+      /Choose a club or nation/,
+    )
+    expect(readFileSync("app/teams/loading.tsx", "utf8")).not.toMatch(/Loading squads/)
+    expect(readFileSync("app/prime/[entity]/page.tsx", "utf8")).not.toMatch(/Other primes/)
   })
 
   it("names flagship sides on Spanish and Portuguese hubs instead of factory catalog labels", async () => {

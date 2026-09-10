@@ -87,7 +87,13 @@ export function ClubPicker({
     }).filter((group) => group.items.length > 0)
 
     const rest = clubs.filter((item) => !used.has(item.clubId) && matchesQuery(item, q))
-    if (rest.length > 0) groups.push({ id: "other", label: "Other", items: rest })
+    if (rest.length > 0) {
+      groups.push({
+        id: "other",
+        label: rest.slice(0, 2).map((item) => item.clubName).join(" · "),
+        items: rest,
+      })
+    }
     return groups
   }, [byId, clubs, q])
 
@@ -103,7 +109,13 @@ export function ClubPicker({
     }).filter((group) => group.items.length > 0)
 
     const rest = nations.filter((item) => !used.has(item.clubId) && matchesQuery(item, q))
-    if (rest.length > 0) groups.push({ id: "other", label: "Other", items: rest })
+    if (rest.length > 0) {
+      groups.push({
+        id: "other",
+        label: rest.slice(0, 2).map((item) => item.clubName).join(" · "),
+        items: rest,
+      })
+    }
     return groups
   }, [byId, nations, q])
 
@@ -119,7 +131,7 @@ export function ClubPicker({
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
-        aria-label="Choose a club or nation"
+        aria-label="Choose Barcelona, Madrid or Brazil"
         className="picker-shell"
         onClick={(event) => event.stopPropagation()}
       >
@@ -132,7 +144,7 @@ export function ClubPicker({
               className={tab === "clubs" ? "is-on" : ""}
               onClick={() => setTab("clubs")}
             >
-              Clubs
+              Club seasons
             </button>
             <button
               type="button"
@@ -141,7 +153,7 @@ export function ClubPicker({
               className={tab === "nations" ? "is-on" : ""}
               onClick={() => setTab("nations")}
             >
-              Nations
+              National sides
             </button>
           </div>
           <input
@@ -149,15 +161,15 @@ export function ClubPicker({
             className="picker-search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Find…"
-            aria-label="Filter teams"
+            placeholder="Barcelona 08/09…"
+            aria-label="Find Barcelona, Madrid or Brazil"
           />
           <button type="button" className="picker-close" onClick={onClose}>
             Close
           </button>
         </div>
         <div className="picker-body">
-          {empty ? <p className="picker-empty">No match.</p> : null}
+          {empty ? <p className="picker-empty">No named season matches.</p> : null}
           {groups.map((group) => (
             <section key={group.id} className="picker-league">
               <h3>{group.label}</h3>

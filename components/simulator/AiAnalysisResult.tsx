@@ -10,10 +10,10 @@ import type { HistoricalTeam } from "@/types"
 export function AiAnalysisLoading({ home, away }: { home: HistoricalTeam; away: HistoricalTeam }) {
   const [progress, setProgress] = useState(6)
   const phases = [
-    "Reading era, manager and starting XI…",
-    "Mapping tactical pressure points…",
-    "Comparing 100 alternate match worlds…",
-    "Writing the expert verdict…",
+    `Reading ${home.clubName} ${home.displaySeason}…`,
+    `Mapping ${home.manager} against ${away.manager}…`,
+    `Comparing 100 nights of ${home.displaySeason} vs ${away.displaySeason}…`,
+    `Writing the ${home.clubName} vs ${away.clubName} verdict…`,
   ]
 
   useEffect(() => {
@@ -28,10 +28,12 @@ export function AiAnalysisLoading({ home, away }: { home: HistoricalTeam; away: 
         home={home}
         away={away}
         progress={progress}
-        primary="AI"
+        primary={`${home.clubCode} vs ${away.clubCode}`}
         secondary={phases[Math.min(phases.length - 1, Math.floor(progress / 25))]!}
       />
-      <p className="mt-2 text-center font-mono text-[9px] uppercase tracking-[0.14em] text-muted">Expert analysis usually takes 5–15 seconds</p>
+      <p className="mt-2 text-center font-mono text-[9px] uppercase tracking-[0.14em] text-muted">
+        {home.clubName} vs {away.clubName} usually takes 5–15 seconds
+      </p>
     </div>
   )
 }
@@ -55,8 +57,8 @@ export function AiAnalysisResult({
     <section id="result-analysis" className="result-panel isolate overflow-hidden border-2 border-gold/50 shadow-[8px_8px_0_#000,0_0_0_1px_rgba(212,180,90,0.18)]">
       <header className="relative overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_50%_0%,rgba(212,180,90,0.15),transparent_50%)] px-4 py-4 sm:px-6">
         <div className="flex items-center justify-between gap-3">
-          <p className="font-display text-[8px] uppercase tracking-[0.28em] text-gold">{localBrief ? "Local brief" : "Expert AI Analysis"}</p>
-          <p className="font-display text-[8px] uppercase tracking-[0.2em] text-muted">{localBrief ? "Template fallback" : "Era collision"}</p>
+          <p className="font-display text-[8px] uppercase tracking-[0.28em] text-gold">{localBrief ? `${home.clubName} local brief` : "Expert AI Analysis"}</p>
+          <p className="font-display text-[8px] uppercase tracking-[0.2em] text-muted">{localBrief ? "Template fallback" : `${home.displaySeason} vs ${away.displaySeason}`}</p>
         </div>
         {localBrief ? (
           <p className="mt-2 text-center font-mono text-[10px] leading-4 text-muted">
@@ -68,7 +70,7 @@ export function AiAnalysisResult({
         <div className="mx-auto mt-3 grid max-w-3xl grid-cols-[minmax(0,1fr)_5rem_minmax(0,1fr)] items-center gap-2 sm:grid-cols-[minmax(0,1fr)_7rem_minmax(0,1fr)] sm:gap-4">
           <TeamMark team={home} />
           <div className="text-center">
-            <p className="font-display text-[7px] uppercase tracking-[0.18em] text-muted">Representative night</p>
+            <p className="font-display text-[7px] uppercase tracking-[0.18em] text-muted">{home.displaySeason} night</p>
             <p className="result-score mt-1 text-4xl leading-none sm:text-5xl">{score}</p>
             <p className="mt-1 font-mono text-[9px] text-muted">most common scoreline for this 100-world lean</p>
           </div>
@@ -83,37 +85,37 @@ export function AiAnalysisResult({
       <section className="border-b border-white/10">
         <div className="relative bg-gold/[0.045] px-4 py-3 sm:px-6 sm:py-4">
           <div className="absolute inset-y-0 left-0 w-0.5 bg-gold" />
-          <p className="font-display text-[8px] uppercase tracking-[0.24em] text-gold">The call</p>
+          <p className="font-display text-[8px] uppercase tracking-[0.24em] text-gold">{home.clubName} or {away.clubName}</p>
           <h3 className="mt-1 font-brand text-lg font-semibold tracking-wide text-text sm:text-xl">{copy.callTitle}</h3>
           <p className="mt-2 max-w-4xl text-sm leading-5 text-text">{copy.callBody}</p>
         </div>
         <div className="grid border-t border-white/10 md:grid-cols-[1.25fr_0.75fr]">
-          <AnalysisBeat label="The deciding sequence" text={copy.decidingSequence} />
-          <AnalysisBeat label="Pressure point" text={copy.pressurePoint} border />
+          <AnalysisBeat label={`${home.displaySeason} sequence`} text={copy.decidingSequence} />
+          <AnalysisBeat label={`${away.clubName} hinge`} text={copy.pressurePoint} border />
         </div>
       </section>
 
       <section className="border-b border-white/10 bg-black/10 px-4 py-4 sm:px-6 sm:py-5">
         <div className="flex flex-wrap items-end justify-between gap-2">
           <div>
-            <p className="font-display text-[8px] uppercase tracking-[0.24em] text-gold">Expert dossier</p>
-            <h3 className="mt-1 font-brand text-lg font-semibold tracking-wide text-text">How the match develops</h3>
+            <p className="font-display text-[8px] uppercase tracking-[0.24em] text-gold">{home.clubName} vs {away.clubName}</p>
+            <h3 className="mt-1 font-brand text-lg font-semibold tracking-wide text-text">{home.displaySeason} vs {away.displaySeason}</h3>
           </div>
-          <p className="font-mono text-[9px] text-muted">Tactics · personnel · game state</p>
+          <p className="font-mono text-[9px] text-muted">{home.formation} against {away.formation}</p>
         </div>
         <div className="mt-3 grid gap-px overflow-hidden border border-white/10 bg-white/10 md:grid-cols-2">
-          <DossierCard number="01" label="The opening 20" text={copy.openingPhase} />
-          <DossierCard number="02" label="The duel to watch" text={copy.keyDuel} />
-          <DossierCard number="03" label="The manager's move" text={copy.coachingMove} />
-          <DossierCard number="04" label="The chaos factor" text={copy.chaosFactor} />
+          <DossierCard number="01" label={`${home.displaySeason} opening`} text={copy.openingPhase} />
+          <DossierCard number="02" label={`${home.clubName} vs ${away.clubName}`} text={copy.keyDuel} />
+          <DossierCard number="03" label={`${home.manager}'s move`} text={copy.coachingMove} />
+          <DossierCard number="04" label={`${away.displaySeason} chaos`} text={copy.chaosFactor} />
         </div>
       </section>
 
       <section className="px-4 py-4 sm:px-6">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <p className="font-display text-[8px] uppercase tracking-[0.24em] text-gold">100 alternate nights</p>
-            <h3 className="mt-1 font-brand text-lg font-semibold tracking-wide text-text">The evidence behind the call</h3>
+            <p className="font-display text-[8px] uppercase tracking-[0.24em] text-gold">100 nights of {home.displaySeason}</p>
+            <h3 className="mt-1 font-brand text-lg font-semibold tracking-wide text-text">{home.displaySeason} vs {away.displaySeason} evidence</h3>
           </div>
           <p className="font-mono text-[10px] text-text/70">Same squads. A different bounce of the ball.</p>
         </div>
@@ -122,14 +124,14 @@ export function AiAnalysisResult({
           <UniverseGrid homeWins={sim.homeWins} draws={sim.draws} awayWins={sim.awayWins} />
           <div className="grid grid-cols-3 gap-2">
             <Outcome label={`${home.clubName} wins`} value={sim.homeWins} tone="gold" />
-            <Outcome label="Level" value={sim.draws} />
+            <Outcome label={`${home.clubCode}–${away.clubCode} draw`} value={sim.draws} />
             <Outcome label={`${away.clubName} wins`} value={sim.awayWins} tone="danger" />
           </div>
         </div>
 
         <div className="mt-3 grid gap-3 lg:grid-cols-[1fr_1.4fr]">
           <div>
-            <p className="font-display text-[8px] uppercase tracking-[0.18em] text-muted">Recurring scorelines</p>
+            <p className="font-display text-[8px] uppercase tracking-[0.18em] text-muted">{home.displaySeason} scores</p>
             <div className="mt-2 flex flex-wrap gap-2">
               {sim.scorelines.slice(0, 4).map((line) => (
                 <div key={line.score} className="border border-white/10 bg-black/20 px-3 py-2 font-mono">
@@ -141,7 +143,7 @@ export function AiAnalysisResult({
           </div>
 
           <div>
-            <p className="font-display text-[8px] uppercase tracking-[0.18em] text-muted">Match fingerprint</p>
+            <p className="font-display text-[8px] uppercase tracking-[0.18em] text-muted">{home.displaySeason} fingerprint</p>
             <div className="mt-2 grid grid-cols-3 gap-px overflow-hidden border border-white/10 bg-white/10">
               <Metric label="Avg goals" value={`${formatXg(sim.avgHomeGoals)}–${formatXg(sim.avgAwayGoals)}`} />
               <Metric label="Avg xG" value={`${formatXg(sim.avgHomeXg ?? 0)}–${formatXg(sim.avgAwayXg ?? 0)}`} />
@@ -154,7 +156,7 @@ export function AiAnalysisResult({
       </section>
 
       <footer className="border-t border-gold/25 bg-[linear-gradient(90deg,rgba(212,180,90,0.09),transparent)] px-4 py-4 sm:px-6">
-        <p className="font-display text-[8px] uppercase tracking-[0.24em] text-gold">Final word</p>
+        <p className="font-display text-[8px] uppercase tracking-[0.24em] text-gold">{home.clubName} last word</p>
         <p className="mt-2 max-w-4xl font-brand text-base leading-7 font-semibold tracking-wide text-text sm:text-lg">{copy.finalWord}</p>
       </footer>
     </section>
@@ -209,8 +211,8 @@ function Leaderboards({ sim, home, away }: { sim: PreMatchAnalysis["simulation"]
   ].sort((a, b) => b.value - a.value).slice(0, 5)
   return (
     <div className="mt-4 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2">
-      <Ranking title="Golden boot race" suffix="goals / 100" rows={scorers} />
-      <Ranking title="Top creators" suffix="assists / 100" rows={assists} />
+      <Ranking title={`${home.clubName}–${away.clubName} scorers`} suffix="goals / 100" rows={scorers} />
+      <Ranking title={`${home.clubName}–${away.clubName} assists`} suffix="assists / 100" rows={assists} />
     </div>
   )
 }

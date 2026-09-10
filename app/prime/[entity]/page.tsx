@@ -183,7 +183,7 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
             {related.map((item) => item.name).slice(0, 3).join(" · ")}
           </p>
           <h2 className="mt-1 font-brand text-lg font-semibold text-text">
-            {related[0] ? `${related[0].name}'s prime, and the rest` : "Other primes"}
+            {related[0] ? `${related[0].name}'s prime, and the rest` : "Prime dossiers"}
           </h2>
         </div>
         <div className="grid gap-2 sm:grid-cols-2">
