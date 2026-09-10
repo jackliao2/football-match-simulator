@@ -94,13 +94,13 @@ export function QuickMatch({
       </div>
       <div className="flex flex-wrap gap-2">
         <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" disabled={Boolean(play)} onClick={simulateOnce}>
-          {play?.kind === "match" ? "Playing…" : "Simulate"}
+          {play?.kind === "match" ? "Playing…" : `Play ${home.displaySeason}`}
         </button>
         <button type="button" className="rail-btn rail-btn-inline" disabled={Boolean(play)} onClick={runHundred}>
           {play?.kind === "batch" || play?.kind === "batch-running" ? `Running ${BATCH_RUNS}…` : `${BATCH_RUNS} matches`}
         </button>
         <Link href={`/simulate?home=${home.id}&away=${away.id}`} className="rail-btn rail-btn-inline">
-          Change opponent
+          Pick another side vs {home.displaySeason}
         </Link>
       </div>
       {play?.kind === "match" ? (

@@ -249,7 +249,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
       </section>
 
       <Link href="/simulate" className="font-mono text-sm text-gold hover:text-gold-2">
-        Choose different teams →
+        Choose sides other than {home.displaySeason} vs {away.displaySeason} →
       </Link>
     </div>
   )
@@ -262,7 +262,7 @@ function VsSquadCard({ team, away = false }: { team: HistoricalTeam; away?: bool
         <PixelCrest clubId={team.clubId} size={48} />
         <span className="min-w-0 flex-1">
           <span className={`block font-display text-[8px] uppercase tracking-[0.2em] ${away ? "text-danger" : "text-gold"}`}>
-            {away ? `Away · ${team.clubName} ${team.displaySeason}` : `Home · ${team.clubName} ${team.displaySeason}`}
+            {`${team.clubName} ${team.displaySeason}`}
           </span>
           <span className="mt-1 block truncate font-brand text-xl font-semibold text-text">{team.clubName}</span>
           <span className="mt-0.5 block font-mono text-xs text-gold">{team.displaySeason}</span>

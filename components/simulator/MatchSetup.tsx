@@ -528,7 +528,8 @@ export function MatchSetup({
       <div className="grid gap-3">
         <div id="setup" className="faceoff-board result-anchor">
           <TeamColumn
-            label={ui.home}
+            label={shownHome.displaySeason}
+            roleLabel={ui.home}
             side="home"
             seasons={homeSeasons}
             team={shownHome}
@@ -609,7 +610,8 @@ export function MatchSetup({
           </div>
 
           <TeamColumn
-            label={ui.away}
+            label={shownAway.displaySeason}
+            roleLabel={ui.away}
             side="away"
             seasons={awaySeasons}
             team={shownAway}
@@ -816,6 +818,7 @@ function uniqueOrgs(catalog: TeamCatalogEntry[], kind: TeamKind) {
 
 function TeamColumn({
   label,
+  roleLabel,
   side,
   seasons,
   team,
@@ -829,6 +832,7 @@ function TeamColumn({
   benchLabel,
 }: {
   label: string
+  roleLabel: string
   side: "home" | "away"
   seasons: TeamOption[]
   team: TeamOption
@@ -848,6 +852,7 @@ function TeamColumn({
   return (
     <article
       className={`faceoff-card ${away ? "away faceoff-away" : "home faceoff-home"} ${glow ? "era-shine" : ""} ${spinning ? "is-spinning" : ""}`}
+      aria-label={`${roleLabel}: ${team.clubName} ${team.displaySeason}`}
     >
       <div className={`faceoff-identity-wrap ${away ? "text-right" : ""} ${glow ? "era-sheen" : ""}`}>
         <button

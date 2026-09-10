@@ -149,7 +149,7 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
                 href={teamPath(candidate.team)}
                 className="mt-3 inline-block font-mono text-sm text-gold hover:text-gold-2"
               >
-                Open squad page →
+                Open {candidate.team.clubName} {candidate.team.displaySeason} →
               </Link>
             </div>
             <TeamCard team={candidate.team} />

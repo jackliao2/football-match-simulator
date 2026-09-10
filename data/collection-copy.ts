@@ -88,6 +88,9 @@ export const SIMULATE_PAGE = {
   guideKicker: "Guardiola vs Zidane",
   guideHeading: "The engine writes Barça vs Madrid. A chatbot does not.",
   faqHeading: "Barça 2010/11 vs Madrid 2016/17 — who would win, and what the score means",
+  cardNamed: "Barcelona 2008/09 is not 2014/15",
+  cardSpread: "One 3–1, then a hundred nights",
+  cardRatings: "A 95 in 1970",
 } as const
 
 export const METHODOLOGY_PAGE = {

@@ -40,7 +40,7 @@ export default async function SearchPage({ searchParams }: PageProps<"/search">)
       <PageHeader
         kicker={SEARCH_PAGE.kicker}
         title={SEARCH_PAGE.h1}
-        lead={`${TEAM_CATALOG.length} named seasons. Search by club, country, year or a short season like 04/05, then open the page or send it into the simulator.`}
+        lead={`${TEAM_CATALOG.length} named seasons. Search Barcelona 08/09, Brazil 1970, or a short season like 04/05.`}
         crumbs={[{ href: "/", label: "Home" }, { href: "/search", label: "Search" }]}
       />
       <SearchBox defaultQuery={query} />
@@ -92,13 +92,13 @@ function SearchHit({
             {entry.clubName}
           </span>
           <span className="block font-mono text-xs text-gold">
-            {entry.displaySeason} · {entry.kind === "nation" ? "Nation" : "Club"} · {entry.manager}
+            {entry.displaySeason} · {entry.manager}
           </span>
         </span>
         <OvrStamp value={entry.overallRating} size="sm" />
       </Link>
       <Link href={`/simulate?home=${encodeURIComponent(entry.id)}`} className="search-hit-play">
-        Simulate
+        Play {entry.displaySeason}
       </Link>
     </li>
   )

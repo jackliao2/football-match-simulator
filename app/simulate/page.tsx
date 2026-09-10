@@ -118,19 +118,19 @@ export default async function SimulatePage({
         </div>
         <div className="grid gap-3 lg:grid-cols-3">
           <article className="result-panel p-4">
-            <h3 className="font-brand text-lg font-semibold text-text">Named seasons</h3>
+            <h3 className="font-brand text-lg font-semibold text-text">{SIMULATE_PAGE.cardNamed}</h3>
             <p className="mt-2 text-sm leading-7 text-muted">
               Recent squads are dated snapshots, not live rosters. Historical sides use a representative XI for that campaign, not a fantasy composite of every star who ever wore the shirt.
             </p>
           </article>
           <article className="result-panel p-4">
-            <h3 className="font-brand text-lg font-semibold text-text">One score, then a distribution</h3>
+            <h3 className="font-brand text-lg font-semibold text-text">{SIMULATE_PAGE.cardSpread}</h3>
             <p className="mt-2 text-sm leading-7 text-muted">
               A single result is one night. Expert AI Analysis adds a 100-match spread so a 3–1 does not get mistaken for a law of nature.
             </p>
           </article>
           <article className="result-panel p-4">
-            <h3 className="font-brand text-lg font-semibold text-text">Era-relative ratings</h3>
+            <h3 className="font-brand text-lg font-semibold text-text">{SIMULATE_PAGE.cardRatings}</h3>
             <p className="mt-2 text-sm leading-7 text-muted">
               A 95 in 1970 means dominance in 1970. The methodology page is the longer version. Nothing here is a betting market.
             </p>

@@ -457,6 +457,11 @@ describe("GSC landing pages", () => {
     expect(METHODOLOGY_PAGE.h1).not.toBe("Simulation methodology")
     expect(SIMULATE_PAGE.guideKicker).toMatch(/Guardiola|Zidane|2010/)
     expect(SIMULATE_PAGE.guideKicker).not.toBe("How a match is actually decided")
+    expect(SIMULATE_PAGE.cardNamed).toMatch(/2008\/09|2014\/15/)
+    expect(SIMULATE_PAGE.cardNamed).not.toBe("Named seasons")
+    expect(SIMULATE_PAGE.cardSpread).not.toBe("One score, then a distribution")
+    expect(SIMULATE_PAGE.cardRatings).toMatch(/1970/)
+    expect(SIMULATE_PAGE.cardRatings).not.toBe("Era-relative ratings")
     expect(SEARCH_PAGE.kicker).toMatch(/08\/09|1970|Barcelona/)
     expect(SEARCH_PAGE.kicker).not.toBe("Catalogue search")
     expect(VS_HUB.cardKicker).toMatch(/2010\/11|Barcelona/)
@@ -528,6 +533,19 @@ describe("GSC landing pages", () => {
     expect(readFileSync("app/privacy/page.tsx", "utf8")).not.toMatch(/kicker="Legal"/)
     expect(readFileSync("app/terms/page.tsx", "utf8")).not.toMatch(/kicker="Legal"/)
     expect(readFileSync("app/contact/page.tsx", "utf8")).not.toMatch(/kicker="Site"/)
+    expect(readFileSync("app/simulate/page.tsx", "utf8")).not.toMatch(
+      /Named seasons|One score, then a distribution|Era-relative ratings/,
+    )
+    expect(readFileSync("app/prime/[entity]/page.tsx", "utf8")).not.toMatch(/Open squad page/)
+    expect(readFileSync("app/prime/page.tsx", "utf8")).not.toMatch(/Prime is a question, not the highest OVR/)
+    expect(readFileSync("components/simulator/QuickMatch.tsx", "utf8")).not.toMatch(/Change opponent/)
+    expect(readFileSync("components/simulator/MatchSetup.tsx", "utf8")).not.toMatch(/label=\{ui\.home\}/)
+    expect(readFileSync("app/vs/[slug]/page.tsx", "utf8")).not.toMatch(/Home · |Away · |Choose different teams/)
+    expect(readFileSync("app/search/page.tsx", "utf8")).not.toMatch(/send it into the simulator/)
+    expect(readFileSync("app/search/page.tsx", "utf8")).not.toMatch(/Nation" : "Club"/)
+    expect(readFileSync("app/best-football-team-ever/page.tsx", "utf8")).not.toMatch(
+      /Six sides that still have a case|Choose any two candidates/,
+    )
   })
 
   it("names flagship sides on Spanish and Portuguese hubs instead of factory catalog labels", async () => {
