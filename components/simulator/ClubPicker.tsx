@@ -192,9 +192,9 @@ export function ClubPicker({
                       </span>
                       <span className="picker-rating">
                         <strong>{item.overallRating}</strong>
-                        <small>PEAK</small>
+                        <small>{meta?.city ?? meta?.code ?? item.clubName}</small>
                       </span>
-                      {active ? <span className="picker-selected">Selected</span> : null}
+                      {active ? <span className="picker-selected">{meta?.city ?? item.clubName}</span> : null}
                     </button>
                   )
                 })}

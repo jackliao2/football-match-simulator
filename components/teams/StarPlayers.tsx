@@ -33,7 +33,7 @@ export function StarPlayers({
     return (
       <div className="border-2 border-line bg-panel-2">
         <div className="border-b border-line px-3 py-2 font-display text-[9px] uppercase tracking-[0.16em] text-gold">
-          Stars · OVR
+          {team ? `${team.clubName} ${team.displaySeason}` : title}
         </div>
         <ul>
           {list.map((player) => (
@@ -48,7 +48,9 @@ export function StarPlayers({
     <section className="result-panel overflow-hidden border-2 border-gold/35 shadow-[6px_6px_0_#000]">
       <div className="flex items-end justify-between gap-3 border-b border-white/10 bg-[radial-gradient(circle_at_85%_0%,rgba(212,180,90,0.12),transparent_45%)] px-4 py-3">
         <h2 className="font-display text-[8px] uppercase tracking-[0.18em] text-gold">{title}</h2>
-        <span className="font-mono text-[9px] text-muted">Hover or tap for player attributes</span>
+        <span className="font-mono text-[9px] text-muted">
+          {team ? `${team.clubName} ${team.displaySeason}` : title}
+        </span>
       </div>
       <ul className="grid gap-px bg-white/10 sm:grid-cols-2 lg:grid-cols-3">
         {list.map((player, index) => (
@@ -71,7 +73,7 @@ function StarProfile({ player, rank }: { player: StarPlayer; rank: number }) {
         </span>
         <span className="text-right">
           <strong className="block font-mono text-xl leading-none text-gold">{player.overall}</strong>
-          <small className="font-display text-[6px] tracking-[0.16em] text-muted">PEAK</small>
+          <small className="font-display text-[6px] tracking-[0.16em] text-muted">{player.nation}</small>
         </span>
       </div>
       <div className="mt-3 border-t border-white/10 pt-2 opacity-70 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">

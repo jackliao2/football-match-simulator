@@ -117,7 +117,9 @@ export function AiAnalysisResult({
             <p className="font-display text-[8px] uppercase tracking-[0.24em] text-gold">100 nights of {home.displaySeason}</p>
             <h3 className="mt-1 font-brand text-lg font-semibold tracking-wide text-text">{home.displaySeason} vs {away.displaySeason} evidence</h3>
           </div>
-          <p className="font-mono text-[10px] text-text/70">Same squads. A different bounce of the ball.</p>
+          <p className="font-mono text-[10px] text-text/70">
+            {home.displaySeason} and {away.displaySeason}. A different bounce of the ball.
+          </p>
         </div>
 
         <div className="mt-3 grid items-center gap-4 sm:grid-cols-[7rem_minmax(0,1fr)]">
