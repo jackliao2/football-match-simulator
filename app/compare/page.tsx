@@ -23,17 +23,17 @@ export const metadata: Metadata = pageMetadata({
 
 function CompareList({
   rows,
-  kicker,
 }: {
   rows: Array<{ pair: (typeof CLUB_COMPARES)[number]; left: NonNullable<ReturnType<typeof getClub>>; right: NonNullable<ReturnType<typeof getClub>> }>
-  kicker: string
 }) {
   return (
     <ul className="grid gap-2 sm:grid-cols-2">
-      {rows.map(({ pair }) => (
+      {rows.map(({ pair, left, right }) => (
         <li key={pair.slug}>
           <Link href={`/compare/${pair.slug}`} className="result-panel block p-4 no-underline hover:border-gold">
-            <span className="font-display text-[8px] uppercase tracking-[0.18em] text-gold">{kicker}</span>
+            <span className="font-display text-[8px] uppercase tracking-[0.18em] text-gold">
+              {left.name} vs {right.name}
+            </span>
             <span className="mt-2 block font-brand text-lg font-semibold text-text">
               {pair.verdictHeading}
             </span>
@@ -61,11 +61,11 @@ export default function CompareIndexPage() {
       <PageHeader kicker={COMPARE_HUB.kicker} title={COMPARE_HUB.h1} lead={COMPARE_HUB.lead} />
       <section className="grid gap-3">
         <h2 className="section-title">{COMPARE_HUB.nationHeading}</h2>
-        <CompareList rows={nations} kicker="Nation debate" />
+        <CompareList rows={nations} />
       </section>
       <section className="grid gap-3">
         <h2 className="section-title">{COMPARE_HUB.clubHeading}</h2>
-        <CompareList rows={clubs} kicker="Club debate" />
+        <CompareList rows={clubs} />
       </section>
     </div>
   )

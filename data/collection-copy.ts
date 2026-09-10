@@ -6,6 +6,8 @@ export const PRIME_HUB = {
   h1: "Barcelona's prime is 2010/11. United's is 2007/08.",
   lead: "Liverpool's stronger side is 2018/19, not Istanbul. Brazil's is 1970. Current squads sit on the page for comparison; they are never labelled a prime before the story is finished.",
   homeHeading: "Barcelona 2010/11. Liverpool 2018/19. United 07/08.",
+  standardKicker: "Barcelona 2010/11",
+  guideKicker: "United 2007/08",
 } as const
 
 export const HOME_PAGE = {
@@ -23,11 +25,14 @@ export const HOME_SECTIONS = {
   matchupsKicker: "Clásico of primes",
   matchupsTitle: "Barcelona 2010/11 vs Madrid 2016/17",
   matchupsLead: "The Clásico of primes first. Brazil 1970 vs Spain 2010 lives on the matchups page with the rest of the card.",
-  clubsKicker: "Clubs",
+  clubsKicker: "Guardiola’s Barça",
   clubsTitle: "Guardiola’s Barça, Madrid 2016/17, United’s treble",
-  nationsKicker: "Nations",
+  nationsKicker: "Brazil 1970",
   nationsTitle: "Brazil 1970, Maradona’s 86, Spain 2010",
+  howKicker: "Pick two seasons",
   howTitle: "Pick two seasons. Play one night. Test the argument.",
+  faqKicker: "2010/11 vs 2016/17",
+  argumentsKicker: "Clásico · Brazil–Argentina",
 } as const
 
 export const TEAMS_HUB = {
@@ -109,6 +114,9 @@ export const BEST_TEAM = {
   h1: "Barcelona 2010/11, Then Brazil 1970 and Sacchi's Milan",
   lead: "There is no neutral time machine. This ranking weighs dominance in context, tactical influence, quality across the XI and how convincingly the team answered the strongest opponents available.",
   homeCardTitle: "Barcelona 2010/11 is our pick for best team ever",
+  verdictKicker: "Barcelona 2010/11",
+  shortlistKicker: "Brazil 1970",
+  readingKicker: "Sacchi's Milan",
 } as const
 
 export const ABOUT_PAGE = {

@@ -95,7 +95,7 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
 
       <section className="result-panel overflow-hidden border-2 border-gold/40 shadow-[6px_6px_0_#000]">
         <div className="border-b border-white/10 bg-gold/[0.05] px-4 py-3 sm:px-5">
-          <p className="font-display text-[8px] uppercase tracking-[0.22em] text-gold">Editorial verdict</p>
+          <p className="font-display text-[8px] uppercase tracking-[0.22em] text-gold">{page.name}</p>
           <h2 className="mt-1 font-brand text-xl font-semibold tracking-wide text-text">{page.name}&apos;s prime: {page.pick}</h2>
         </div>
         <p className="max-w-4xl px-4 py-4 text-[15px] leading-7 text-text/90 sm:px-5">{page.verdict}</p>
@@ -103,7 +103,7 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
 
       {editorial ? (
         <section className="grid gap-3" aria-labelledby="prime-reasoning">
-          <div><p className="page-kicker">The reasoning</p><h2 id="prime-reasoning" className="section-title mt-1">Why {page.pick} — and why it is arguable</h2></div>
+          <div><p className="page-kicker">{page.name} {page.pick}</p><h2 id="prime-reasoning" className="section-title mt-1">Why {page.pick} — and why it is arguable</h2></div>
           <div className="grid gap-3 md:grid-cols-2">
             <article className="result-panel p-4 sm:p-5"><h3 className="font-brand text-lg font-semibold text-text">The case for {page.pick}</h3><p className="mt-3 text-sm leading-7 text-muted">{editorial.caseFor}</p></article>
             <article className="result-panel p-4 sm:p-5"><h3 className="font-brand text-lg font-semibold text-text">The strongest case against {page.pick}</h3><p className="mt-3 text-sm leading-7 text-muted">{editorial.counterCase}</p></article>
@@ -114,7 +114,7 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
       {editorial?.sections?.length ? (
         <section className="grid gap-4 border-y border-white/10 py-6" aria-labelledby="prime-deep-dive">
           <div className="max-w-3xl">
-            <p className="page-kicker">Deep dive</p>
+            <p className="page-kicker">{page.name} seasons</p>
             <h2 id="prime-deep-dive" className="section-title mt-1">The seasons behind {page.name}&apos;s prime</h2>
             <p className="mt-2 text-sm leading-7 text-muted">A {page.name} prime is a claim that needs a definition, evidence and a limit. These are the parts of the argument the short verdict cannot carry.</p>
           </div>

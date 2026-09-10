@@ -61,6 +61,7 @@ export type TeamPageCopy = {
   formationHeading: string
   simulateCta: string
   faqKicker: string
+  dossierKicker: string
 }
 
 export function teamH1(team: HistoricalTeam): string {
@@ -152,6 +153,7 @@ export function teamPageCopy(team: HistoricalTeam, opponentArg?: HistoricalTeam)
     formationHeading: `${team.manager}'s ${team.formation}`,
     simulateCta: `Simulate ${team.clubName} ${team.displaySeason}`,
     faqKicker: `${team.clubName} ${team.displaySeason}`,
+    dossierKicker: `${team.manager} · ${team.displaySeason}`,
   }
 }
 

@@ -36,13 +36,13 @@ export default function BestFootballTeamEverPage() {
     <PageHeader kicker={BEST_TEAM.kicker} title={BEST_TEAM.h1} lead={BEST_TEAM.lead} />
     <EditorialByline />
     <section className="editorial-verdict p-4 sm:p-5">
-      <p className="page-kicker">The verdict</p><h2 className="section-title mt-2">Barcelona 2010/11 is our pick</h2>
+      <p className="page-kicker">{BEST_TEAM.verdictKicker}</p><h2 className="section-title mt-2">Barcelona 2010/11 is our pick</h2>
       <div className="editorial-copy mt-3"><p><strong>Not because it won the most trophies in one season.</strong> Barcelona’s 2008/09 side did. We choose 2010/11 because its control survived against every type of opponent and because its best performance — the Champions League final against Manchester United — looked like a complete statement of an idea.</p><p>Brazil 1970 is the strongest national-team answer; AC Milan 1988/89 has the greatest tactical influence. Change the criterion and the winner can change. That is why every candidate below links to its real squad and into the simulator.</p></div>
     </section>
-    <section className="grid gap-4"><div><p className="page-kicker">The shortlist</p><h2 className="section-title mt-1">Six sides that still have a case if you change the test</h2></div>
+    <section className="grid gap-4"><div><p className="page-kicker">{BEST_TEAM.shortlistKicker}</p><h2 className="section-title mt-1">Six sides that still have a case if you change the test</h2></div>
       <div className="grid gap-4 lg:grid-cols-2">{picks.map(({ team, rank, label, argument }) => <article key={team.id} className="result-panel p-4"><p className="font-display text-[7px] tracking-[.18em] text-gold">{rank} · {label}</p><div className="mt-3"><TeamCard team={team as HistoricalTeam} showSquad={false} /></div><p className="mt-3 text-sm leading-6 text-muted">{argument}</p></article>)}</div>
     </section>
-    <section className="result-panel p-4 sm:p-5"><p className="page-kicker">How to read the list</p><h2 className="section-title mt-2">Greatest is not the same as unbeatable</h2><div className="editorial-copy mt-3"><p>A simulated result is one possible match, not proof that a modern side erases an older achievement. Ratings are era-relative. Expert AI adds a 100-match distribution when you want the wider pattern.</p><p><Link href="/simulate" className="text-gold">Choose any two candidates and simulate the argument →</Link></p></div></section>
+    <section className="result-panel p-4 sm:p-5"><p className="page-kicker">{BEST_TEAM.readingKicker}</p><h2 className="section-title mt-2">Greatest is not the same as unbeatable</h2><div className="editorial-copy mt-3"><p>A simulated result is one possible match, not proof that a modern side erases an older achievement. Ratings are era-relative. Expert AI adds a 100-match distribution when you want the wider pattern.</p><p><Link href="/simulate" className="text-gold">Choose any two candidates and simulate the argument →</Link></p></div></section>
     {picks[0] && picks[1] ? <QuickMatch home={picks[0].team as HistoricalTeam} away={picks[1].team as HistoricalTeam} /> : null}
   </div>
 }

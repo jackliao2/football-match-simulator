@@ -246,7 +246,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
       {editorial ? (
         <section className="grid gap-4 border-y border-white/10 py-6" aria-labelledby="season-dossier">
           <div className="max-w-3xl">
-            <p className="page-kicker">{team.displaySeason} dossier</p>
+            <p className="page-kicker">{copy.dossierKicker}</p>
             <h2 id="season-dossier" className="section-title mt-1">{copy.dossierHeading}</h2>
           </div>
           <div className="grid gap-3 md:grid-cols-2">

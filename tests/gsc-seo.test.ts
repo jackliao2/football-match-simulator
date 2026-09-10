@@ -358,6 +358,7 @@ describe("GSC landing pages", () => {
       expect(copy.description, team.id).not.toMatch(/Starting XI, .+ ratings in the simulator/)
       expect(copy.title, team.id).not.toMatch(/lineup and formation/i)
       expect(copy.faqKicker, team.id).not.toBe("FAQ")
+      expect(copy.dossierKicker, team.id).not.toMatch(/dossier$/i)
     }
   })
 
@@ -388,6 +389,16 @@ describe("GSC landing pages", () => {
     expect(ABOUT_PAGE.description).not.toMatch(/\bplayable\b/)
     expect(HOME_SECTIONS.matchupsKicker).not.toBe("Dream matches")
     expect(HOME_SECTIONS.matchupsKicker).toMatch(/Clásico|2010/)
+    expect(HOME_SECTIONS.clubsKicker).not.toBe("Clubs")
+    expect(HOME_SECTIONS.nationsKicker).not.toBe("Nations")
+    expect(HOME_SECTIONS.howKicker).not.toBe("Three steps")
+    expect(HOME_SECTIONS.faqKicker).not.toBe("The rules")
+    expect(HOME_SECTIONS.argumentsKicker).not.toBe("Big arguments")
+    expect(PRIME_HUB.standardKicker).not.toBe("Editorial standard")
+    expect(PRIME_HUB.guideKicker).not.toBe("How to use the dossiers")
+    expect(BEST_TEAM.verdictKicker).not.toBe("The verdict")
+    expect(BEST_TEAM.shortlistKicker).not.toBe("The shortlist")
+    expect(BEST_TEAM.readingKicker).not.toBe("How to read the list")
 
     expect(VS_HUB.h1).not.toBe("Dream matches")
     expect(VS_HUB.h1).toMatch(/2010\/11/)
@@ -474,6 +485,25 @@ describe("GSC landing pages", () => {
     ]) {
       expect(readFileSync(file, "utf8"), file).not.toMatch(/\bplayable\b/)
     }
+  })
+
+  it("drops factory section kickers from prime, best-team, home and compare chrome", () => {
+    expect(readFileSync("app/prime/[entity]/page.tsx", "utf8")).not.toMatch(
+      /The reasoning|Deep dive|Editorial verdict/,
+    )
+    expect(readFileSync("app/prime/page.tsx", "utf8")).not.toMatch(
+      /Editorial standard|How to use the dossiers/,
+    )
+    expect(readFileSync("app/best-football-team-ever/page.tsx", "utf8")).not.toMatch(
+      /The verdict|The shortlist|How to read the list/,
+    )
+    expect(readFileSync("app/page.tsx", "utf8")).not.toMatch(
+      /Three steps|The rules|Big arguments|Editorial ranking|Club comparison|Nation comparison/,
+    )
+    expect(readFileSync("app/compare/page.tsx", "utf8")).not.toMatch(/Nation debate|Club debate/)
+    expect(readFileSync("components/teams/HistoricalTeamView.tsx", "utf8")).not.toMatch(
+      /displaySeason\} dossier/,
+    )
   })
 
   it("names flagship sides on Spanish and Portuguese hubs instead of factory catalog labels", async () => {

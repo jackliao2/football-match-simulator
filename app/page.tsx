@@ -160,7 +160,7 @@ export default function HomePage() {
       </section>
 
       <section className="home-editorial-section">
-        <EditorialHeading kicker="Three steps" title={HOME_SECTIONS.howTitle} />
+        <EditorialHeading kicker={HOME_SECTIONS.howKicker} title={HOME_SECTIONS.howTitle} />
         <div className="home-how-grid">
           {HOW_STEPS.map(([step, title, copy]) => (
             <div key={step} className="home-how-card">
@@ -207,7 +207,7 @@ export default function HomePage() {
       </section>
 
       <section className="home-editorial-section">
-        <EditorialHeading kicker="The rules" title={HOME_PAGE.faqHeading} />
+        <EditorialHeading kicker={HOME_SECTIONS.faqKicker} title={HOME_PAGE.faqHeading} />
         <div className="home-faq-list">
           {FAQ.map(([question, answer]) => (
             <details key={question} className="home-faq-item group">
@@ -258,25 +258,25 @@ export default function HomePage() {
       </section>
 
       <section className="home-editorial-section">
-        <EditorialHeading kicker="Big arguments" title="Best team ever, Clásico, Brazil–Argentina" />
+        <EditorialHeading kicker={HOME_SECTIONS.argumentsKicker} title="Best team ever, Clásico, Brazil–Argentina" />
         <div className="home-prime-grid">
           <Link href="/best-football-team-ever" className="home-prime-card">
-            <span>Editorial ranking</span><h3>{BEST_TEAM.homeCardTitle}</h3>
+            <span>Barcelona 2010/11</span><h3>{BEST_TEAM.homeCardTitle}</h3>
             <p>Six historically great sides, one set of criteria and a clear answer — Barcelona 2010/11 first, then Brazil 1970 and Sacchi's Milan.</p>
             <b>Read the verdict →</b>
           </Link>
           <Link href="/compare/barcelona-vs-real-madrid" className="home-prime-card">
-            <span>Club comparison</span><h3>Real Madrid all-time; Barcelona at their modern peak</h3>
+            <span>Clásico</span><h3>Real Madrid all-time; Barcelona at their modern peak</h3>
             <p>Separate the all-time club argument from the prime-team matchup, then test the best versions.</p>
             <b>Compare the giants →</b>
           </Link>
           <Link href="/compare/brazil-vs-argentina" className="home-prime-card">
-            <span>Nation comparison</span><h3>Brazil as a footballing nation; Argentina when one player carried a tournament</h3>
+            <span>Brazil–Argentina</span><h3>Brazil as a footballing nation; Argentina when one player carried a tournament</h3>
             <p>Five stars against three, 1970 against 1986. The cabinets are not a tie; the prime teams are still a match.</p>
             <b>Open the argument →</b>
           </Link>
           <Link href="/compare/england-vs-germany" className="home-prime-card">
-            <span>Nation comparison</span><h3>Germany as a tournament nation; England in 1966</h3>
+            <span>England–Germany</span><h3>Germany as a tournament nation; England in 1966</h3>
             <p>Germany keep answering the tournament question. England have one undisputed answer, and it is 1966.</p>
             <b>Open the argument →</b>
           </Link>
