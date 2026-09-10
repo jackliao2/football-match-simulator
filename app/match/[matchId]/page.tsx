@@ -31,11 +31,11 @@ export async function generateMetadata({
   const title = `${home.clubName} ${home.displaySeason} ${match.score.home}–${match.score.away} ${away.clubName} ${away.displaySeason}`
   return {
     title,
-    description: `Simulated football match: ${title}. Seed ${parsed.seed}. Replay the result or choose another era matchup.`,
+    description: `${title}. Seed ${parsed.seed}. Replay the result or choose another era matchup.`,
     robots: { index: false, follow: true },
     openGraph: {
       title,
-      description: `Simulated match · seed ${parsed.seed}`,
+      description: `${home.displaySeason} vs ${away.displaySeason} · seed ${parsed.seed}`,
       url: absoluteUrl(`/match/${matchId}`),
     },
   }
@@ -62,7 +62,7 @@ export default async function MatchPage({ params }: PageProps<"/match/[matchId]"
             Simulator
           </Link>
           <span className="px-2 text-muted">/</span>
-          Simulated match
+          {home.displaySeason} vs {away.displaySeason}
         </p>
         <h1 className="page-title">
           {home.clubName} {home.displaySeason}
@@ -75,8 +75,8 @@ export default async function MatchPage({ params }: PageProps<"/match/[matchId]"
         <MatchReplay match={match} home={home} away={away} />
       </div>
       <div className="grid gap-6 lg:grid-cols-2">
-        <StarPlayers team={home} count={6} title={`${home.clubName} stars`} />
-        <StarPlayers team={away} count={6} title={`${away.clubName} stars`} />
+        <StarPlayers team={home} count={6} title={`${home.clubName} ${home.displaySeason}`} />
+        <StarPlayers team={away} count={6} title={`${away.clubName} ${away.displaySeason}`} />
       </div>
       <MatchActions home={home} away={away} match={match} />
       <div className="grid gap-6 lg:grid-cols-2">
@@ -90,7 +90,11 @@ export default async function MatchPage({ params }: PageProps<"/match/[matchId]"
           ))}
         </ul>
       ) : null}
-      <CommentaryPanel matchId={match.id} />
+      <CommentaryPanel
+        matchId={match.id}
+        kicker={`${home.clubName} vs ${away.clubName}`}
+        title={`${home.displaySeason} ${match.score.home}–${match.score.away} ${away.displaySeason}`}
+      />
       <div className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-sm">
         <Link href={teamPath(home)} className="text-gold hover:text-gold-2">
           {home.clubName} {home.displaySeason}
@@ -99,9 +103,13 @@ export default async function MatchPage({ params }: PageProps<"/match/[matchId]"
           {away.clubName} {away.displaySeason}
         </Link>
         {isPublishedMatchup(home.id, away.id) ? (
-          <Link href={vsPath(home.id, away.id)} className="text-muted hover:text-gold">Open the matchup card</Link>
+          <Link href={vsPath(home.id, away.id)} className="text-muted hover:text-gold">
+            Open {home.clubName} vs {away.clubName}
+          </Link>
         ) : (
-          <Link href={`/simulate?home=${home.id}&away=${away.id}`} className="text-muted hover:text-gold">Change matchup</Link>
+          <Link href={`/simulate?home=${home.id}&away=${away.id}`} className="text-muted hover:text-gold">
+            Pick another side vs {home.clubName} {home.displaySeason}
+          </Link>
         )}
       </div>
     </div>

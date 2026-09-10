@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { isCurrentSquad } from "@/lib/seo"
 import type { HistoricalTeam } from "@/types"
 
 export type EraOption = {
@@ -14,19 +13,16 @@ export function EraSelect({
   seasons,
   value,
   align = "left",
-  labels = { latest: "Latest squad", season: "Season" },
   onChange,
 }: {
   seasons: EraOption[]
   value: EraOption
   align?: "left" | "right"
-  labels?: { latest: string; season: string }
   onChange: (teamId: string) => void
 }) {
   const [open, setOpen] = useState(false)
   const root = useRef<HTMLDivElement>(null)
   const cups = value.team.trophies
-  const current = isCurrentSquad(value.team)
 
   useEffect(() => {
     function onDoc(event: MouseEvent) {
@@ -52,7 +48,7 @@ export function EraSelect({
         aria-expanded={open}
         onClick={() => setOpen((open) => !open)}
       >
-        <span className="era-select-kicker">{current ? labels.latest : labels.season}</span>
+        <span className="era-select-kicker">{value.team.manager}</span>
         <span className="era-select-year">{value.displaySeason}</span>
         <Cups trophies={cups} />
         <span className="era-select-caret" aria-hidden>
@@ -63,7 +59,6 @@ export function EraSelect({
         <ul className="era-select-menu" role="listbox">
           {seasons.map((season) => {
             const active = season.id === value.id
-            const now = isCurrentSquad(season.team)
             return (
               <li key={season.id}>
                 <button
@@ -77,9 +72,7 @@ export function EraSelect({
                   }}
                 >
                   <span className="era-select-item-year">{season.displaySeason}</span>
-                  <span className="era-select-item-meta">
-                    {now ? labels.latest : season.team.manager}
-                  </span>
+                  <span className="era-select-item-meta">{season.team.manager}</span>
                   <Cups trophies={season.team.trophies} />
                 </button>
               </li>

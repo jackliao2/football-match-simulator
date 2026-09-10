@@ -25,8 +25,10 @@ export function FilteredCatalog({
 }) {
   const [filter, setFilter] = useState(() => parseCatalogTrophy(mode, initialFilter))
   const filters: Filter[] = mode === "nations"
-    ? [{ id: "all", label: "All eras" }, { id: "world", label: "World Cup winners" }, { id: "euros", label: "Euro winners" }, { id: "copa", label: "Copa América winners" }, { id: "finalists", label: "Finalists" }]
-    : [{ id: "all", label: "All eras" }, { id: "europe", label: "European champions" }, { id: "league", label: "League champions" }, { id: "treble", label: "Treble winners" }]
+    ? [{ id: "all", label: "All national sides" }, { id: "world", label: "World Cup" }, { id: "euros", label: "Euros" }, { id: "copa", label: "Copa América" }, { id: "finalists", label: "Runners-up" }]
+    : [{ id: "all", label: "All club seasons" }, { id: "europe", label: "European Cup" }, { id: "league", label: "League titles" }, { id: "treble", label: "Trebles" }]
+  const countLabel = mode === "nations" ? "national sides" : "club seasons"
+  const filterLabel = mode === "nations" ? "Filter national sides" : "Filter club seasons"
 
   useEffect(() => {
     function onPop() {
@@ -48,9 +50,9 @@ export function FilteredCatalog({
   const count = expanded.flatMap((section) => section.orgs.flatMap((org) => org.teams)).filter(visible).length
 
   return <>
-    <div className="catalog-filters" role="group" aria-label="Filter squads by achievement">
+    <div className="catalog-filters" role="group" aria-label={filterLabel}>
       {filters.map((item) => <button key={item.id} type="button" aria-pressed={filter === item.id} className={filter === item.id ? "is-on" : ""} onClick={() => applyFilter(item.id)}>{item.label}</button>)}
-      <span>{count} squads</span>
+      <span>{count} {countLabel}</span>
     </div>
     {expanded.map((section) => {
       const orgs = section.orgs.map((org) => ({ ...org, teams: org.teams.filter(visible) })).filter((org) => org.teams.length)

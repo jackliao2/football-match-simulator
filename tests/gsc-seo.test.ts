@@ -546,6 +546,15 @@ describe("GSC landing pages", () => {
     expect(readFileSync("app/best-football-team-ever/page.tsx", "utf8")).not.toMatch(
       /Six sides that still have a case|Choose any two candidates/,
     )
+    expect(readFileSync("components/teams/FilteredCatalog.tsx", "utf8")).not.toMatch(/All eras/)
+    expect(readFileSync("components/simulator/EraSelect.tsx", "utf8")).not.toMatch(/Latest squad/)
+    expect(readFileSync("components/simulator/MatchSetup.tsx", "utf8")).not.toMatch(/Latest squad/)
+    expect(readFileSync("components/simulator/CommentaryPanel.tsx", "utf8")).not.toMatch(/kicker="Report"/)
+    expect(readFileSync("app/match/[matchId]/page.tsx", "utf8")).not.toMatch(/Simulated match/)
+    expect(readFileSync("app/search/page.tsx", "utf8")).not.toMatch(/Play \{entry\.displaySeason\}/)
+    expect(readFileSync("components/simulator/QuickMatch.tsx", "utf8")).not.toMatch(
+      /Play \$\{home\.displaySeason\}/,
+    )
   })
 
   it("names flagship sides on Spanish and Portuguese hubs instead of factory catalog labels", async () => {

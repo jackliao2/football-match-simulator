@@ -37,7 +37,17 @@ function LocalizedEditorial({ locale, section }: { locale: Locale; section: Loca
   const [editorialTitle, first, second] = SECTION_EDITORIAL[locale][section]
   const heading =
     section === "teams" ? copy.teams.title : section === "national-teams" ? copy.nations.title : editorialTitle
-  return <section className="result-panel p-4 sm:p-5"><h2 className="font-brand text-xl font-semibold text-text">{heading}</h2><div className="editorial-copy mt-3"><p>{first}</p><p>{second}</p></div></section>
+  const kicker = section === "teams" || section === "national-teams" ? editorialTitle : null
+  return (
+    <section className="result-panel p-4 sm:p-5">
+      {kicker ? <p className="page-kicker">{kicker}</p> : null}
+      <h2 className="font-brand text-xl font-semibold text-text">{heading}</h2>
+      <div className="editorial-copy mt-3">
+        <p>{first}</p>
+        <p>{second}</p>
+      </div>
+    </section>
+  )
 }
 
 export function LocalizedPage({ locale, section }: { locale: Locale; section?: LocalizedSection }) {

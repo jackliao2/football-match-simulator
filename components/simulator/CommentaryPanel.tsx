@@ -4,7 +4,15 @@ import { useState } from "react"
 import { ResultPanel } from "@/components/ui/ResultPanel"
 import { track } from "@/lib/analytics"
 
-export function CommentaryPanel({ matchId }: { matchId: string }) {
+export function CommentaryPanel({
+  matchId,
+  kicker,
+  title,
+}: {
+  matchId: string
+  kicker: string
+  title: string
+}) {
   const [report, setReport] = useState<string | null>(null)
   const [source, setSource] = useState<"ai" | "template" | null>(null)
   const [loading, setLoading] = useState(false)
@@ -39,8 +47,8 @@ export function CommentaryPanel({ matchId }: { matchId: string }) {
 
   return (
     <ResultPanel
-      kicker="Report"
-      title="Match report"
+      kicker={kicker}
+      title={title}
       aside={source === "ai" ? "LLM brief" : source === "template" ? "Local brief" : undefined}
     >
       <div className="grid gap-4 p-4 sm:p-5">
