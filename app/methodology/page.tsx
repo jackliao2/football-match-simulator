@@ -30,7 +30,7 @@ export default function MethodologyPage() {
       <section>
         <h2>1. A team means a named season</h2>
         <p>“Barcelona” is too vague for a historical simulation. The 2008/09 treble side, the 2010/11 Wembley side and the 2014/15 MSN side had different personnel and different ways of controlling a match. Every entry therefore belongs to a specific season or tournament cycle, with a manager, representative formation, starting XI and bench.</p>
-        <p>The XI is a best-fit representation of that campaign, not a claim that the same players started every fixture. Injuries, rotation and tactical changes are compressed into one playable version. Current squads are snapshots, not live feeds. The formation on the page is the one the engine uses for the shape matchup, not a caption.</p>
+        <p>The XI is a best-fit representation of that campaign, not a claim that the same players started every fixture. Injuries, rotation and tactical changes are compressed into one representative version. Current squads are snapshots, not live feeds. The formation on the page is the one the engine uses for the shape matchup, not a caption.</p>
       </section>
       <section>
         <h2>2. Ratings are era-relative</h2>

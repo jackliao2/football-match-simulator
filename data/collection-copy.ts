@@ -20,7 +20,7 @@ export const HOME_PAGE = {
 } as const
 
 export const HOME_SECTIONS = {
-  matchupsKicker: "Dream matches",
+  matchupsKicker: "Clásico of primes",
   matchupsTitle: "Barcelona 2010/11 vs Madrid 2016/17",
   matchupsLead: "The Clásico of primes first. Brazil 1970 vs Spain 2010 lives on the matchups page with the rest of the card.",
   clubsKicker: "Clubs",

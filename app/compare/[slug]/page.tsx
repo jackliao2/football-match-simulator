@@ -116,7 +116,7 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
         <p className="compare-answer">{pair.verdictHeading}</p>
       </PageHeader>
       <section className="editorial-verdict p-4 sm:p-5">
-        <p className="page-kicker">The call</p>
+        <p className="page-kicker">{pair.verdictHeading}</p>
         <h2 className="section-title mt-2">{pair.verdictHeading}</h2>
         <div className="editorial-copy mt-3">
           {pair.verdict.map((paragraph) => (
@@ -126,7 +126,9 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
       </section>
       <EditorialByline />
       <section>
-        <p className="page-kicker">Argument by category</p>
+        <p className="page-kicker">
+          {leftClub.name} vs {rightClub.name}
+        </p>
         <h2 className="section-title mt-2 mb-3">
           {leftClub.name} vs {rightClub.name} by category
         </h2>
@@ -147,7 +149,9 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
       </section>
       <section className="grid gap-3">
         <div>
-          <p className="page-kicker">Prime matchup</p>
+          <p className="page-kicker">
+            {left.manager} vs {right.manager}
+          </p>
           <h2 className="section-title mt-1">
             {left.clubName} {left.displaySeason} vs {right.clubName} {right.displaySeason}
           </h2>

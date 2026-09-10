@@ -154,22 +154,22 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
       {feature ? (
         <article className="grid gap-4" aria-labelledby="long-read-heading">
           <div>
-            <p className="page-kicker">The long read</p>
+            <p className="page-kicker">{copy.longReadKicker}</p>
             <h2 id="long-read-heading" className="section-title mt-1">{feature.title}</h2>
           </div>
           <div className="grid gap-3 lg:grid-cols-3">
             <section className="result-panel p-4 sm:p-5">
-              <p className="page-kicker">Why this game</p>
+              <p className="page-kicker">{copy.whyKicker}</p>
               <h3 className="mt-2 font-brand text-lg font-semibold text-text">{copy.contextHeading}</h3>
               <p className="mt-3 text-sm leading-7 text-muted">{feature.context}</p>
             </section>
             <section className="result-panel p-4 sm:p-5">
-              <p className="page-kicker">Tactical hinge</p>
+              <p className="page-kicker">{copy.hingeKicker}</p>
               <h3 className="mt-2 font-brand text-lg font-semibold text-text">{copy.hingeHeading}</h3>
               <p className="mt-3 text-sm leading-7 text-muted">{feature.hinge}</p>
             </section>
             <section className="result-panel p-4 sm:p-5">
-              <p className="page-kicker">Reading the game</p>
+              <p className="page-kicker">{copy.readingKicker}</p>
               <h3 className="mt-2 font-brand text-lg font-semibold text-text">{copy.readingHeading}</h3>
               <p className="mt-3 text-sm leading-7 text-muted">{feature.reading}</p>
             </section>
@@ -178,7 +178,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
       ) : null}
 
       <section className="result-panel p-4 sm:p-5" aria-labelledby="matchup-snapshot">
-        <p className="page-kicker">Rating snapshot</p>
+        <p className="page-kicker">{copy.snapshotKicker}</p>
         <h2 id="matchup-snapshot" className="section-title mt-2">{copy.snapshotHeading}</h2>
         <div className="comparison-table mt-3">
           <div className="comparison-row">
@@ -210,7 +210,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
 
       {feature ? (
         <section className="result-panel p-4 sm:p-5">
-          <p className="page-kicker">FAQ</p>
+          <p className="page-kicker">{copy.faqKicker}</p>
           <h2 className="section-title mt-1">{copy.faqHeading}</h2>
           <dl className="mt-3 grid gap-3">
             {faqs.map((item) => (
@@ -235,7 +235,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
 
       <section className="grid gap-3" aria-labelledby="replay-this-matchup">
         <div>
-          <p className="page-kicker">Your turn</p>
+          <p className="page-kicker">{copy.playKicker}</p>
           <h2 id="replay-this-matchup" className="section-title mt-1">
             {copy.playHeading}
           </h2>

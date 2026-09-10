@@ -27,7 +27,7 @@ export default function AboutPage() {
       </section>
       <section>
         <h2>Why this site exists</h2>
-        <p>Football arguments usually collapse into clips, trophy counts or the age of the person making the argument. LegendaryMatch gives the debate a playable form. Choose two named seasons — Barcelona 2010/11 against Madrid 2016/17, Brazil 1970 against Spain 2010 — inspect the actual squad choices and run one possible match. The result is not history rewritten; it is a transparent way to test the assumptions behind the argument.</p>
+        <p>Football arguments usually collapse into clips, trophy counts or the age of the person making the argument. LegendaryMatch gives the debate a named-season form. Choose two seasons — Barcelona 2010/11 against Madrid 2016/17, Brazil 1970 against Spain 2010 — inspect the actual squad choices and run one possible match. The result is not history rewritten; it is a transparent way to test the assumptions behind the argument.</p>
         <p>The catalogue is intentionally selective. It favours sides with a real football story: champions, tactical landmarks, cult teams and recent squads people genuinely want to put against the past. We would rather explain 100 teams properly than publish thousands of empty badge pages.</p>
       </section>
       <section>

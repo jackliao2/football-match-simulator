@@ -131,9 +131,9 @@ export default function PrivacyPage() {
         <h2>Squad data is not “your” data</h2>
         <p>
           Player names, clubs, seasons and ratings are football history plus our editorial numbers
-          for the simulator. They are not a personal profile of a visitor. If you are a player in
+          in this catalogue. They are not a personal profile of a visitor. If you are a player in
           the database and something is factually wrong, email the season and the mistake. We will
-          look. We do not claim a UEFA-grade statistical licence; we claim a playable XI.
+          look. We do not claim a UEFA-grade statistical licence; we claim a named XI.
         </p>
       </section>
 

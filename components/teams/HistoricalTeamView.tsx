@@ -306,7 +306,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
 
       {editorial ? (
         <section className="result-panel p-4 sm:p-5">
-          <p className="page-kicker">FAQ</p>
+          <p className="page-kicker">{copy.faqKicker}</p>
           <h2 className="section-title mt-1">{copy.faqHeading}</h2>
           <dl className="mt-3 grid gap-3">
             {faqs.map((item) => (

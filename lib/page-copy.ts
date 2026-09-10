@@ -60,6 +60,7 @@ export type TeamPageCopy = {
   honoursHeading: string
   formationHeading: string
   simulateCta: string
+  faqKicker: string
 }
 
 export function teamH1(team: HistoricalTeam): string {
@@ -150,6 +151,7 @@ export function teamPageCopy(team: HistoricalTeam, opponentArg?: HistoricalTeam)
     honoursHeading: `${team.clubName} ${team.displaySeason} honours`,
     formationHeading: `${team.manager}'s ${team.formation}`,
     simulateCta: `Simulate ${team.clubName} ${team.displaySeason}`,
+    faqKicker: `${team.clubName} ${team.displaySeason}`,
   }
 }
 
@@ -278,7 +280,7 @@ export function orgHubCopy(org: Club, sides: HistoricalTeam[]): OrgHubCopy {
   const nation = org.kind === "nation" || sides[0]?.kind === "nation"
   const title = custom?.title ?? `${org.name}: ${years.join(" · ")}`
   const lead = custom?.lead ?? sketches.join(" ")
-  const kicker = custom?.kicker ?? (nation ? "National sides" : "Club seasons")
+  const kicker = (title.split(":")[0] ?? custom?.kicker ?? (nation ? "National sides" : "Club seasons")).trim()
   const description = clip(
     custom?.description ??
       `${lead} ${
@@ -357,5 +359,12 @@ export function vsPageCopy(home: HistoricalTeam, away: HistoricalTeam, _runs: nu
     readingHeading: `A ${home.clubName} win versus a ${away.clubName} win`,
     faqHeading: `${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}`,
     playHeading: `${home.clubName} ${home.displaySeason} against ${away.clubName} ${away.displaySeason}`,
+    longReadKicker: `${home.clubName} ${home.displaySeason} vs ${away.clubName} ${away.displaySeason}`,
+    whyKicker: `${home.clubName} ${home.displaySeason}`,
+    hingeKicker: `${homeTag} against ${awayTag}`,
+    readingKicker: `${home.clubName} or ${away.clubName}`,
+    snapshotKicker: `${home.displaySeason} vs ${away.displaySeason}`,
+    faqKicker: `${home.clubName} vs ${away.clubName}`,
+    playKicker: `${home.manager} vs ${away.manager}`,
   }
 }

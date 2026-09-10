@@ -403,7 +403,7 @@ export const HUB_COPY: Record<string, HubCopy> = {
   england: {
     kicker: "World Cups",
     title: "England: 1966 at Wembley, a modelled 2026 cycle",
-    lead: "Ramsey's wingless wonders remain the only World Cup. 2026 is a modelled starting XI — Kane, Bellingham, Saka — not an official FIFA list. Later tournament pages sit noindex until they have a dossier.",
+    lead: "Ramsey's wingless wonders remain the only World Cup. 2026 is a modelled cycle — Kane, Bellingham, Saka — not an official FIFA list. Later tournament pages sit noindex until they have a dossier.",
     description:
       "England 1966 at Wembley remains the only World Cup. 2026 is a modelled XI — Kane, Bellingham, Saka — not an official FIFA list.",
   },

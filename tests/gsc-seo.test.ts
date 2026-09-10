@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest"
+import { readFileSync } from "node:fs"
 import nextConfig from "../next.config"
 import robots from "@/app/robots"
 import { CLUB_COMPARES, compareFaqs, compareSearchDescription, compareSeoTitle } from "@/data/compare"
@@ -257,6 +258,7 @@ describe("GSC landing pages", () => {
   it("gives every club and nation hub a unique written title", () => {
     const titles = new Set<string>()
     const descriptions = new Set<string>()
+    const kickers = new Set<string>()
     for (const org of [...clubs, ...nations]) {
       expect(HUB_COPY[org.id], org.id).toBeDefined()
       const copy = orgHubCopy(org, getTeamsByClub(org.id))
@@ -264,10 +266,15 @@ describe("GSC landing pages", () => {
       expect(copy.description.toLowerCase(), org.id).not.toMatch(
         /\bplayable\b|simulate them|simulate either|then simulate|lineups?, ratings|in the simulator/,
       )
+      expect(copy.kicker, org.id).not.toMatch(
+        /^(La Liga|Premier League|Serie A|Bundesliga|Ligue 1|World Cups)$/,
+      )
       expect(titles.has(copy.title), copy.title).toBe(false)
       expect(descriptions.has(copy.description), copy.description).toBe(false)
+      expect(kickers.has(copy.kicker), copy.kicker).toBe(false)
       titles.add(copy.title)
       descriptions.add(copy.description)
+      kickers.add(copy.kicker)
     }
   })
 
@@ -285,6 +292,13 @@ describe("GSC landing pages", () => {
       expect(copy.snapshotHeading, `${a}-vs-${b}`).not.toMatch(/on the model$/)
       expect(copy.contextHeading, `${a}-vs-${b}`).not.toMatch(/as a football idea$/)
       expect(copy.faqHeading, `${a}-vs-${b}`).not.toMatch(/— FAQ$/)
+      expect(copy.longReadKicker, `${a}-vs-${b}`).not.toBe("The long read")
+      expect(copy.whyKicker, `${a}-vs-${b}`).not.toBe("Why this game")
+      expect(copy.hingeKicker, `${a}-vs-${b}`).not.toBe("Tactical hinge")
+      expect(copy.readingKicker, `${a}-vs-${b}`).not.toBe("Reading the game")
+      expect(copy.snapshotKicker, `${a}-vs-${b}`).not.toBe("Rating snapshot")
+      expect(copy.faqKicker, `${a}-vs-${b}`).not.toBe("FAQ")
+      expect(copy.playKicker, `${a}-vs-${b}`).not.toBe("Your turn")
       expect(headings.has(copy.sectionHeading), copy.sectionHeading).toBe(false)
       headings.add(copy.sectionHeading)
       const feature = matchupFeature(home, away)
@@ -343,6 +357,7 @@ describe("GSC landing pages", () => {
       const copy = teamPageCopy(team)
       expect(copy.description, team.id).not.toMatch(/Starting XI, .+ ratings in the simulator/)
       expect(copy.title, team.id).not.toMatch(/lineup and formation/i)
+      expect(copy.faqKicker, team.id).not.toBe("FAQ")
     }
   })
 
@@ -370,6 +385,9 @@ describe("GSC landing pages", () => {
     expect(VS_HUB.title).not.toMatch(/You Can Play/)
     expect(BEST_TEAM.description).not.toMatch(/then simulate/)
     expect(ABOUT_PAGE.description).not.toMatch(/is playable/)
+    expect(ABOUT_PAGE.description).not.toMatch(/\bplayable\b/)
+    expect(HOME_SECTIONS.matchupsKicker).not.toBe("Dream matches")
+    expect(HOME_SECTIONS.matchupsKicker).toMatch(/Clásico|2010/)
 
     expect(VS_HUB.h1).not.toBe("Dream matches")
     expect(VS_HUB.h1).toMatch(/2010\/11/)
@@ -445,6 +463,17 @@ describe("GSC landing pages", () => {
     expect(NATIONS_HUB.title).not.toBe("National teams by tournament year")
     expect(NATIONS_HUB.h1).toMatch(/1970/)
     expect(NATIONS_HUB.kicker).toBe("World Cup sides")
+  })
+
+  it("drops playable from about, methodology, privacy and contact copy", () => {
+    for (const file of [
+      "app/about/page.tsx",
+      "app/methodology/page.tsx",
+      "app/privacy/page.tsx",
+      "app/contact/page.tsx",
+    ]) {
+      expect(readFileSync(file, "utf8"), file).not.toMatch(/\bplayable\b/)
+    }
   })
 
   it("names flagship sides on Spanish and Portuguese hubs instead of factory catalog labels", async () => {

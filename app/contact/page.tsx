@@ -77,7 +77,7 @@ export default function ContactPage() {
           <p>
             We will not raise your five-a-side to 99 overall. We will not build a private betting
             model, tip a real fixture, or walk someone through copying the engine. Dream-match
-            arguments are settled in the simulator, not by us picking a winner over email.
+            arguments are settled by the match engine, not by us picking a winner over email.
           </p>
           <p>
             Same scoreline twice means you reused the seed. That is a feature. If you want another
