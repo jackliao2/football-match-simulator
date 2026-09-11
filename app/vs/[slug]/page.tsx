@@ -241,7 +241,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
           </h2>
           <p className="mt-1 max-w-2xl text-sm leading-6 text-muted">
             {home.clubName} {home.displaySeason} and {away.clubName} {away.displaySeason} are already
-            selected. Run one seeded match, or ask Expert AI for a tactical verdict backed by 100
+            selected. Run one seeded match, or ask {home.clubName} AI for a tactical verdict backed by 100
             alternate nights.
           </p>
         </div>

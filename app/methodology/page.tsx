@@ -48,8 +48,8 @@ export default function MethodologyPage() {
         <p>This is more useful than presenting a single score as certainty, especially when elite teams are close. It is still a simulation, not a betting market, a forecast of a scheduled fixture or evidence that one era was objectively superior.</p>
       </section>
       <section>
-        <h2>5. Expert AI explains; it does not decide</h2>
-        <p>Expert AI Analysis receives the selected squads and structured model output, then writes a compact tactical interpretation. The language model cannot replace the score after seeing famous names. It can describe a key battle, identify likely scorers across repeated runs and explain why the engine leans one way.</p>
+        <h2>5. Barcelona AI explains Barça vs Madrid; it does not decide</h2>
+        <p>Barcelona AI receives the selected squads and structured model output, then writes a compact tactical interpretation. The language model cannot replace the score after seeing famous names. It can describe a key battle, identify likely scorers across repeated runs and explain why the engine leans one way.</p>
         <p>AI wording can occasionally be too confident or miss football context. Treat it as commentary on the model. Permanent squad pages and the written Barça vs Madrid introduction are maintained separately.</p>
       </section>
       <section>

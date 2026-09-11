@@ -84,7 +84,7 @@ export const SIMULATE_PAGE = {
     "Play Barcelona 2010/11 against Madrid 2016/17, or Brazil 1970 against Spain 2010. Named seasons, a simulated score, scorers, xG and 100-match probabilities. The engine writes the result; AI only explains it.",
   kicker: "Football match simulator",
   h1: "Play Barcelona 2010/11 against Madrid 2016/17",
-  lead: "Or Brazil 1970 against Spain 2010. Every side is a named season, not a slider. The match engine writes the score; Expert AI Analysis explains the matchup afterwards and never gets a vote.",
+  lead: "Or Brazil 1970 against Spain 2010. Every side is a named season, not a slider. The match engine writes the score; Barcelona AI explains Barça vs Madrid afterwards and never gets a vote.",
   guideKicker: "Guardiola vs Zidane",
   guideHeading: "The engine writes Barça vs Madrid. A chatbot does not.",
   faqHeading: "Barça 2010/11 vs Madrid 2016/17 — who would win, and what the score means",

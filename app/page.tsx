@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 const FAQ = [
   [
     "Is this also a soccer match simulator?",
-    "Yes. Football and soccer are the same sport here. Play Barcelona 2010/11 against Madrid 2016/17, or Brazil 1970 against Spain 2010, in this soccer match simulator — one game, or Expert AI Analysis for a 100-match spread.",
+    "Yes. Football and soccer are the same sport here. Play Barcelona 2010/11 against Madrid 2016/17, or Brazil 1970 against Spain 2010, in this soccer match simulator — one game, or Barcelona AI for a 100-match spread.",
   ],
   [
     "Is this predicting a real match?",
@@ -46,19 +46,19 @@ const FAQ = [
   ],
   [
     "Can I simulate a custom football match online?",
-    "Yes. Open the simulator and pick any two named seasons — Barcelona 2010/11 against Madrid 2016/17, Brazil 1970 against a club peak, or two current squads. Run it again for another plausible night, or use Expert AI Analysis for a 100-match probability read.",
+    "Yes. Open the simulator and pick any two named seasons — Barcelona 2010/11 against Madrid 2016/17, Brazil 1970 against a club peak, or two current squads. Run it again for another plausible night, or use the Barcelona 100-match probability read.",
   ],
   [
     "Is this a football match simulator with AI?",
-    "The score for Barça vs Madrid comes from the match engine — ratings, tactics and a seed — not from a chatbot picking a winner. Optional Expert AI Analysis then explains the 100-match probabilities.",
+    "The score for Barça vs Madrid comes from the match engine — ratings, tactics and a seed — not from a chatbot picking a winner. Optional Barcelona AI then explains the 100-match probabilities.",
   ],
   [
     "Why does the result change when I simulate again?",
-    "Guardiola’s 2010/11 side does not win every night against Zidane’s Madrid. Each new seed is another plausible game, so the score and scorers can change. Expert AI Analysis adds a fresh 100-match distribution.",
+    "Guardiola’s 2010/11 side does not win every night against Zidane’s Madrid. Each new seed is another plausible game, so the score and scorers can change. A Barcelona 100-match distribution is the wider pattern.",
   ],
   [
     "What does Expert AI Analysis do?",
-    "The engine scores Barcelona 2010/11 vs Madrid 2016/17 first. Expert AI then reads those squads, managers, shapes and the 100-match evidence. It does not secretly replace the simulated result.",
+    "The engine scores Barcelona 2010/11 vs Madrid 2016/17 first. Barcelona AI then reads those squads, managers, shapes and the 100-match evidence. It does not secretly replace the simulated result.",
   ],
   [
     "How do you rate players?",
@@ -77,7 +77,7 @@ const FAQ = [
 const HOW_STEPS = [
   ["01", "Pick Barça 2010/11 or Brazil 1970", "Every card is a named season with an XI — Guardiola’s Barça, Zidane’s Madrid, a World Cup side — not a badge with a slider."],
   ["02", "Play one night against Madrid 2016/17", "The engine combines those ratings and a seed into the score, xG, scorers and match events. Repeating the fixture is another plausible night."],
-  ["03", "Read the 100-match spread", "One 2–1 is one night. Expert AI Analysis explains Barça vs Madrid with a hundred alternate scores behind it, and never votes."],
+  ["03", "Read the 100-match spread", "One 2–1 is one night. Barcelona AI explains Barça vs Madrid with a hundred alternate scores behind it, and never votes."],
 ] as const
 
 export default function HomePage() {

@@ -27,11 +27,11 @@ export const metadata: Metadata = pageMetadata({
 const FAQ = [
   [
     "Can I simulate Barcelona 2010/11 against Real Madrid 2016/17?",
-    "Yes. Those two sides are named seasons in the catalogue. Pick them, run one match, or open Expert AI Analysis for a 100-match spread. The score comes from ratings, tactics and a seed — not a chatbot.",
+    "Yes. Those two sides are named seasons in the catalogue. Pick them, run one match, or open Barcelona AI for a 100-match spread. The score comes from ratings, tactics and a seed — not a chatbot.",
   ],
   [
     "Does AI decide the winner?",
-    "No. Expert AI Analysis reads the two squads and the 100-match evidence after the engine has already produced the numbers. It cannot vote.",
+    "No. Barcelona AI reads the two squads and the 100-match evidence after the engine has already produced the numbers. It cannot vote.",
   ],
   [
     "Is this predicting a real fixture?",
@@ -126,7 +126,7 @@ export default async function SimulatePage({
           <article className="result-panel p-4">
             <h3 className="font-brand text-lg font-semibold text-text">{SIMULATE_PAGE.cardSpread}</h3>
             <p className="mt-2 text-sm leading-7 text-muted">
-              A single result is one night. Expert AI Analysis adds a 100-match spread so a 3–1 does not get mistaken for a law of nature.
+              A single result is one night. A Barcelona 100-match spread keeps a 3–1 from being mistaken for a law of nature.
             </p>
           </article>
           <article className="result-panel p-4">

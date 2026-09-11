@@ -37,7 +37,7 @@ export default function AboutPage() {
       </section>
       <section>
         <h2>What is written by us and what AI does</h2>
-        <p>The team database, page structure, ratings framework, matchup selection and core simulation rules belong to the project. Expert AI Analysis is optional. When requested, a language model receives structured football information and turns it into a tactical report. It does not choose the score and it does not silently write the permanent historical pages.</p>
+        <p>The team database, page structure, ratings framework, matchup selection and core simulation rules belong to the project. Barcelona AI is optional. When requested, a language model receives the two named squads and turns them into a tactical report. It does not choose the score and it does not silently write the permanent historical pages.</p>
         <p>That distinction matters: the score engine remains reproducible from its seed, while AI prose can vary. The full separation is described on the <Link href="/methodology">methodology page</Link>.</p>
       </section>
       <section>

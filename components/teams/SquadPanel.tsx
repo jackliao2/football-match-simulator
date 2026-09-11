@@ -72,7 +72,7 @@ export function CompactSquad({
       </ul>
       {showBench && bench.length > 0 ? (
         <>
-          <p className="font-display text-[8px] uppercase tracking-[0.16em] text-muted">Bench</p>
+          <p className="font-display text-[8px] uppercase tracking-[0.16em] text-muted">{benchLabel}</p>
           <ul className="grid grid-cols-2 gap-x-3 gap-y-0.5">
             {bench.map((player) => (
               <MiniRow key={player.id} player={player} dim />
