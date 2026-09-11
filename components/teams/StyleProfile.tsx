@@ -2,16 +2,19 @@ import { RatingBar } from "@/components/ui/RatingBar"
 import { teamPageCopy } from "@/lib/page-copy"
 import type { HistoricalTeam } from "@/types"
 
-const AXES = [
-  { key: "possession", label: "Possession" },
-  { key: "pressing", label: "Pressing" },
-  { key: "tempo", label: "Tempo" },
-  { key: "counterAttack", label: "Counter" },
-  { key: "width", label: "Width" },
-  { key: "aerialThreat", label: "Aerial" },
-] as const
+function styleAxes(team: HistoricalTeam) {
+  return [
+    { key: "possession" as const, label: `${team.displaySeason} ball`, radar: "Ball" },
+    { key: "pressing" as const, label: `${team.clubName} press`, radar: "Prs" },
+    { key: "tempo" as const, label: `${team.clubName} tempo`, radar: "Tmp" },
+    { key: "counterAttack" as const, label: `${team.clubName} break`, radar: "Ctr" },
+    { key: "width" as const, label: `${team.clubName} width`, radar: "Wid" },
+    { key: "aerialThreat" as const, label: `${team.clubName} air`, radar: "Air" },
+  ]
+}
 
 export function StyleProfile({ team }: { team: HistoricalTeam }) {
+  const AXES = styleAxes(team)
   const values = AXES.map((axis) => team[axis.key])
   const points = values.map((value, index) => polar(value, index, values.length)).join(" ")
   const rings = [25, 50, 75, 100]
@@ -39,7 +42,7 @@ export function StyleProfile({ team }: { team: HistoricalTeam }) {
               <g key={axis.key}>
                 <line x1="60" y1="60" x2={edge.x} y2={edge.y} className="stroke-white/10" strokeWidth="0.6" />
                 <text x={label.x} y={label.y} className="fill-[color:var(--color-muted)]" fontSize="5" textAnchor="middle" dominantBaseline="middle">
-                  {axis.label.slice(0, 4)}
+                  {axis.radar}
                 </text>
               </g>
             )

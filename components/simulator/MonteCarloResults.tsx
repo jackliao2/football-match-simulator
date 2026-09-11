@@ -14,7 +14,7 @@ export function MonteCarloResults({ result }: { result: MonteCarloResult }) {
   )
   const lean =
     result.homeWinPct === result.awayWinPct
-      ? "Model lean: draw"
+      ? `Model lean: ${result.homeClub}–${result.awayClub} draw`
       : result.homeWinPct > result.awayWinPct
         ? `Model lean: ${result.homeClub}`
         : `Model lean: ${result.awayClub}`
@@ -32,12 +32,12 @@ export function MonteCarloResults({ result }: { result: MonteCarloResult }) {
           <p className="mt-1 font-mono text-[11px] text-text/70">{lean}</p>
         </div>
         <div className="shrink-0 text-right">
-          <p className="font-display text-[8px] uppercase tracking-[0.16em] text-gold">Signature score</p>
+          <p className="font-display text-[8px] uppercase tracking-[0.16em] text-gold">{result.homeClub} score</p>
           <p className="result-score mt-1 text-4xl leading-none sm:text-5xl">
             {result.mostCommonScore.replace("-", "–")}
           </p>
           <p className="mt-1 font-mono text-[9px] tabular-nums text-muted">
-            average goals {formatXg(result.avgHomeGoals)}–{formatXg(result.avgAwayGoals)}
+            {result.homeClub} goals {formatXg(result.avgHomeGoals)}–{formatXg(result.avgAwayGoals)}
           </p>
         </div>
       </header>
@@ -46,7 +46,7 @@ export function MonteCarloResults({ result }: { result: MonteCarloResult }) {
         <DistributionGrid home={result.homeWinPct} draw={result.drawPct} away={result.awayWinPct} />
         <div className="grid grid-cols-3 gap-2">
           <Pct value={result.homeWinPct} name={result.homeClub ?? result.homeTeam} tone="gold" />
-          <Pct value={result.drawPct} name="Draw" />
+          <Pct value={result.drawPct} name={`${result.homeClub} draw`} />
           <Pct value={result.awayWinPct} name={result.awayClub ?? result.awayTeam} tone="danger" />
         </div>
       </div>
@@ -73,13 +73,13 @@ export function MonteCarloResults({ result }: { result: MonteCarloResult }) {
           <h3 className="mb-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
             {result.homeClub} vs {result.awayClub} profile
           </h3>
-          <Split label="xG" home={formatXg(result.avgHomeXg ?? 0)} away={formatXg(result.avgAwayXg ?? 0)} homeN={result.avgHomeXg ?? 0} awayN={result.avgAwayXg ?? 0} />
-          <Split label="Shots" home={String(result.avgHomeShots ?? 0)} away={String(result.avgAwayShots ?? 0)} homeN={result.avgHomeShots ?? 0} awayN={result.avgAwayShots ?? 0} />
-          <Split label="Poss" home={`${result.avgHomePoss ?? 0}%`} away={`${result.avgAwayPoss ?? 0}%`} homeN={result.avgHomePoss ?? 0} awayN={result.avgAwayPoss ?? 0} />
-          <Split label="CS" home={`${result.homeCleanPct ?? 0}%`} away={`${result.awayCleanPct ?? 0}%`} homeN={result.homeCleanPct ?? 0} awayN={result.awayCleanPct ?? 0} />
+          <Split label={`${result.homeClub} xG`} home={formatXg(result.avgHomeXg ?? 0)} away={formatXg(result.avgAwayXg ?? 0)} homeN={result.avgHomeXg ?? 0} awayN={result.avgAwayXg ?? 0} />
+          <Split label={`${result.homeClub} shots`} home={String(result.avgHomeShots ?? 0)} away={String(result.avgAwayShots ?? 0)} homeN={result.avgHomeShots ?? 0} awayN={result.avgAwayShots ?? 0} />
+          <Split label={`${result.homeClub} ball`} home={`${result.avgHomePoss ?? 0}%`} away={`${result.avgAwayPoss ?? 0}%`} homeN={result.avgHomePoss ?? 0} awayN={result.avgAwayPoss ?? 0} />
+          <Split label={`${result.homeClub} CS`} home={`${result.homeCleanPct ?? 0}%`} away={`${result.awayCleanPct ?? 0}%`} homeN={result.homeCleanPct ?? 0} awayN={result.awayCleanPct ?? 0} />
           <div className="mt-2 grid grid-cols-2 gap-2">
-            <Chip label="BTTS" value={result.bttsPct ?? 0} />
-            <Chip label="Over 2.5" value={result.over25Pct ?? 0} />
+            <Chip label={`${result.homeClub} BTTS`} value={result.bttsPct ?? 0} />
+            <Chip label={`${result.homeClub} over 2.5`} value={result.over25Pct ?? 0} />
           </div>
         </section>
       </div>

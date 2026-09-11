@@ -183,16 +183,16 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
         <div className="comparison-table mt-3">
           <div className="comparison-row">
             <span>{home.clubName} {home.displaySeason}</span>
-            <b>Axis</b>
+            <b>{home.clubCode}–{away.clubCode}</b>
             <span>{away.clubName} {away.displaySeason}</span>
           </div>
           {[
-            ["Attack", home.attackRating, away.attackRating],
-            ["Midfield", home.midfieldRating, away.midfieldRating],
-            ["Defence", home.defenseRating, away.defenseRating],
-            ["Goalkeeping", home.goalkeeperRating, away.goalkeeperRating],
-            ["Possession", home.possession, away.possession],
-            ["Pressing", home.pressing, away.pressing],
+            [`${home.clubCode} attack`, home.attackRating, away.attackRating],
+            [`${home.clubCode} midfield`, home.midfieldRating, away.midfieldRating],
+            [`${home.clubCode} defence`, home.defenseRating, away.defenseRating],
+            [`${home.clubCode} keeper`, home.goalkeeperRating, away.goalkeeperRating],
+            [`${home.clubCode} ball`, home.possession, away.possession],
+            [`${home.clubCode} press`, home.pressing, away.pressing],
           ].map(([label, left, right]) => (
             <div key={String(label)} className="comparison-row">
               <span>{left}</span>

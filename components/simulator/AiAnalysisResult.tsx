@@ -147,9 +147,9 @@ export function AiAnalysisResult({
           <div>
             <p className="font-display text-[8px] uppercase tracking-[0.18em] text-muted">{home.displaySeason} fingerprint</p>
             <div className="mt-2 grid grid-cols-3 gap-px overflow-hidden border border-white/10 bg-white/10">
-              <Metric label="Avg goals" value={`${formatXg(sim.avgHomeGoals)}–${formatXg(sim.avgAwayGoals)}`} />
-              <Metric label="Avg xG" value={`${formatXg(sim.avgHomeXg ?? 0)}–${formatXg(sim.avgAwayXg ?? 0)}`} />
-              <Metric label="Possession" value={`${sim.avgHomePoss ?? 0}–${sim.avgAwayPoss ?? 0}%`} />
+              <Metric label={`${home.clubCode} goals`} value={`${formatXg(sim.avgHomeGoals)}–${formatXg(sim.avgAwayGoals)}`} />
+              <Metric label={`${home.clubCode} xG`} value={`${formatXg(sim.avgHomeXg ?? 0)}–${formatXg(sim.avgAwayXg ?? 0)}`} />
+              <Metric label={`${home.clubCode} ball`} value={`${sim.avgHomePoss ?? 0}–${sim.avgAwayPoss ?? 0}%`} />
             </div>
           </div>
         </div>
@@ -213,8 +213,8 @@ function Leaderboards({ sim, home, away }: { sim: PreMatchAnalysis["simulation"]
   ].sort((a, b) => b.value - a.value).slice(0, 5)
   return (
     <div className="mt-4 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2">
-      <Ranking title={`${home.clubName}–${away.clubName} scorers`} suffix="goals / 100" rows={scorers} />
-      <Ranking title={`${home.clubName}–${away.clubName} assists`} suffix="assists / 100" rows={assists} />
+      <Ranking title={`${home.clubName}–${away.clubName} scorers`} suffix={`${home.clubCode} goals / 100`} rows={scorers} />
+      <Ranking title={`${home.clubName}–${away.clubName} assists`} suffix={`${home.clubCode} assists / 100`} rows={assists} />
     </div>
   )
 }

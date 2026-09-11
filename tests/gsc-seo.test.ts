@@ -269,6 +269,10 @@ describe("GSC landing pages", () => {
       expect(copy.kicker, org.id).not.toMatch(
         /^(La Liga|Premier League|Serie A|Bundesliga|Ligue 1|World Cups)$/,
       )
+      expect(HUB_COPY[org.id].kicker, org.id).toBe(HUB_COPY[org.id].title.split(":")[0].trim())
+      expect(HUB_COPY[org.id].kicker, org.id).not.toMatch(
+        /^(La Liga|Premier League|Serie A|Bundesliga|Ligue 1|World Cups)$/,
+      )
       expect(titles.has(copy.title), copy.title).toBe(false)
       expect(descriptions.has(copy.description), copy.description).toBe(false)
       expect(kickers.has(copy.kicker), copy.kicker).toBe(false)
@@ -585,6 +589,14 @@ describe("GSC landing pages", () => {
     expect(readFileSync("components/simulator/SimulationPlay.tsx", "utf8")).not.toMatch(/Expert AI match lab/)
     expect(readFileSync("components/simulator/SimulationPlay.tsx", "utf8")).not.toMatch(/Distribution model/)
     expect(readFileSync("components/ui/AppError.tsx", "utf8")).not.toMatch(/Try this page again/)
+    expect(readFileSync("data/hub-copy.ts", "utf8")).not.toMatch(/kicker: "La Liga"/)
+    expect(readFileSync("components/simulator/AiAnalysisResult.tsx", "utf8")).not.toMatch(/Avg goals/)
+    expect(readFileSync("components/simulator/MatchStats.tsx", "utf8")).not.toMatch(/label="Possession"/)
+    expect(readFileSync("components/teams/StyleProfile.tsx", "utf8")).not.toMatch(/label: "Possession"/)
+    expect(readFileSync("app/vs/[slug]/page.tsx", "utf8")).not.toMatch(/<b>Axis<\/b>/)
+    expect(readFileSync("app/vs/[slug]/page.tsx", "utf8")).not.toMatch(/\["Attack"/)
+    expect(readFileSync("components/simulator/MonteCarloResults.tsx", "utf8")).not.toMatch(/Signature score/)
+    expect(readFileSync("components/simulator/MonteCarloResults.tsx", "utf8")).not.toMatch(/label="xG"/)
   })
 
   it("names flagship sides on Spanish and Portuguese hubs instead of factory catalog labels", async () => {

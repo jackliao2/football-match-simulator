@@ -282,7 +282,7 @@ export function orgHubCopy(org: Club, sides: HistoricalTeam[]): OrgHubCopy {
   const nation = org.kind === "nation" || sides[0]?.kind === "nation"
   const title = custom?.title ?? `${org.name}: ${years.join(" · ")}`
   const lead = custom?.lead ?? sketches.join(" ")
-  const kicker = (title.split(":")[0] ?? custom?.kicker ?? (nation ? "National sides" : "Club seasons")).trim()
+  const kicker = (custom?.kicker ?? title.split(":")[0] ?? (nation ? "National sides" : "Club seasons")).trim()
   const description = clip(
     custom?.description ??
       `${lead} ${
