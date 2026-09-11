@@ -90,6 +90,10 @@ function namedRailCopy(locale: Locale | undefined, home: NamedSide, away: NamedS
       analysisUnavailable: `IA ${home.clubName} no disponible`,
       resultAria: `Resultados ${pair}`,
       batchSecondary: `Probando otras noches de ${home.displaySeason}…`,
+      copy: `Copiar ${home.clubName}`,
+      copied: `Copiado ${home.clubName}`,
+      shared: `Compartido ${home.clubName}`,
+      daily: home.clubCode,
     }
   }
   if (locale === "pt-br") {
@@ -117,6 +121,10 @@ function namedRailCopy(locale: Locale | undefined, home: NamedSide, away: NamedS
       analysisUnavailable: `IA ${home.clubName} indisponível`,
       resultAria: `Resultados ${pair}`,
       batchSecondary: `Testando outras noites de ${home.displaySeason}…`,
+      copy: `Copiar ${home.clubName}`,
+      copied: `Copiado ${home.clubName}`,
+      shared: `Compartilhado ${home.clubName}`,
+      daily: home.clubCode,
     }
   }
   return {
@@ -143,6 +151,10 @@ function namedRailCopy(locale: Locale | undefined, home: NamedSide, away: NamedS
     analysisUnavailable: `${home.clubName} analysis unavailable`,
     resultAria: `${pair} results`,
     batchSecondary: `Testing ${home.displaySeason} nights…`,
+    copy: `Copy ${home.clubName}`,
+    copied: `Copied ${home.clubName}`,
+    shared: `Shared ${home.clubName}`,
+    daily: home.clubCode,
   }
 }
 
@@ -162,11 +174,11 @@ export function MatchSetup({
   restoreLast?: boolean
 }) {
   const ui = locale === "es" ? {
-    home: "Local", away: "Visitante", simulate: "Simular", daily: "Hoy", copy: "Copiar enlace", copied: "Copiado", shared: "Compartido", bench: "Suplentes",
+    home: "Local", away: "Visitante", simulate: "Simular", bench: "Suplentes",
   } : locale === "pt-br" ? {
-    home: "Casa", away: "Visitante", simulate: "Simular", daily: "Hoje", copy: "Copiar link", copied: "Copiado", shared: "Compartilhado", bench: "Banco",
+    home: "Casa", away: "Visitante", simulate: "Simular", bench: "Banco",
   } : {
-    home: "Home", away: "Away", simulate: "Simulate", daily: "Daily", copy: "Copy link", copied: "Copied", shared: "Shared", bench: "Bench",
+    home: "Home", away: "Away", simulate: "Simulate", bench: "Bench",
   }
   const byId = useMemo(() => new Map(catalog.map((entry) => [entry.id, entry])), [catalog])
   const homeDefault = (defaultHome ? byId.get(defaultHome) : undefined) ?? catalog[0]!
@@ -637,7 +649,7 @@ export function MatchSetup({
 
           <div className="faceoff-rail">
             <div className="faceoff-rail-inner">
-              <div className="faceoff-vs">VS</div>
+              <div className="faceoff-vs">{shownHome.clubCode}</div>
               <button type="button" onClick={swapSides} className="rail-swap" disabled={rolling}>
                 {rail.swap}
               </button>
@@ -668,7 +680,7 @@ export function MatchSetup({
               >
                 <span className="flex flex-col items-center gap-0.5">
                   <span>{analysisLoading ? rail.analysing : rail.expert}</span>
-                  <span className="font-mono text-[8px] normal-case tracking-normal opacity-70">{ui.daily} {aiRemaining}/{AI_DAILY_LIMIT}</span>
+                  <span className="font-mono text-[8px] normal-case tracking-normal opacity-70">{rail.daily} {aiRemaining}/{AI_DAILY_LIMIT}</span>
                 </span>
               </button>
               <button
@@ -788,7 +800,7 @@ export function MatchSetup({
                 {rail.back}
               </button>
               <button type="button" className="rail-btn rail-btn-inline" onClick={shareMatch}>
-                {shareStatus === "shared" ? ui.shared : shareStatus === "copied" ? ui.copied : ui.copy}
+                {shareStatus === "shared" ? rail.shared : shareStatus === "copied" ? rail.copied : rail.copy}
               </button>
               <button type="button" className="rail-btn rail-btn-ai rail-btn-inline" onClick={playNextDreamMatch}>
                 {rail.next}

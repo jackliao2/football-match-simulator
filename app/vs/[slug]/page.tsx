@@ -146,7 +146,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
         <div><p className="page-kicker">{home.displaySeason} vs {away.displaySeason}</p><h2 className="section-title mt-1">{copy.sectionHeading}</h2></div>
         <div className="matchup-editorial-facts">
           <span><b>{home.clubName}</b>{home.manager} · {home.formation} · {home.styleTags.slice(0, 2).join(" · ")}</span>
-          <i aria-hidden="true">VS</i>
+          <i aria-hidden="true">{home.clubCode}–{away.clubCode}</i>
           <span><b>{away.clubName}</b>{away.manager} · {away.formation} · {away.styleTags.slice(0, 2).join(" · ")}</span>
         </div>
       </section>

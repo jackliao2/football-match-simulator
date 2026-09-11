@@ -57,8 +57,8 @@ export function AiAnalysisResult({
     <section id="result-analysis" className="result-panel isolate overflow-hidden border-2 border-gold/50 shadow-[8px_8px_0_#000,0_0_0_1px_rgba(212,180,90,0.18)]">
       <header className="relative overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_50%_0%,rgba(212,180,90,0.15),transparent_50%)] px-4 py-4 sm:px-6">
         <div className="flex items-center justify-between gap-3">
-          <p className="font-display text-[8px] uppercase tracking-[0.28em] text-gold">{localBrief ? `${home.clubName} local brief` : "Expert AI Analysis"}</p>
-          <p className="font-display text-[8px] uppercase tracking-[0.2em] text-muted">{localBrief ? "Template fallback" : `${home.displaySeason} vs ${away.displaySeason}`}</p>
+          <p className="font-display text-[8px] uppercase tracking-[0.28em] text-gold">{localBrief ? `${home.clubName} local brief` : `${home.clubName} AI`}</p>
+          <p className="font-display text-[8px] uppercase tracking-[0.2em] text-muted">{localBrief ? `${home.clubName} template` : `${home.displaySeason} vs ${away.displaySeason}`}</p>
         </div>
         {localBrief ? (
           <p className="mt-2 text-center font-mono text-[10px] leading-4 text-muted">
@@ -72,7 +72,7 @@ export function AiAnalysisResult({
           <div className="text-center">
             <p className="font-display text-[7px] uppercase tracking-[0.18em] text-muted">{home.displaySeason} night</p>
             <p className="result-score mt-1 text-4xl leading-none sm:text-5xl">{score}</p>
-            <p className="mt-1 font-mono text-[9px] text-muted">most common scoreline for this 100-world lean</p>
+            <p className="mt-1 font-mono text-[9px] text-muted">{home.displaySeason} most common score</p>
           </div>
           <TeamMark team={away} away />
         </div>
@@ -167,7 +167,7 @@ export function AiAnalysisResult({
 
 function ForecastGoals({ match, home, away }: { match: PreMatchAnalysis["featuredMatch"]; home: HistoricalTeam; away: HistoricalTeam }) {
   if (match.scorers.length === 0) {
-    return <p className="mx-auto mt-3 max-w-xl text-center font-mono text-[10px] text-text/70">No scorer in this forecast · both goalkeepers hold the line</p>
+    return <p className="mx-auto mt-3 max-w-xl text-center font-mono text-[10px] text-text/70">No {home.clubName} scorer · both goalkeepers hold the line</p>
   }
   const homeGoals = match.scorers.filter((goal) => goal.team === "home")
   const awayGoals = match.scorers.filter((goal) => goal.team === "away")
@@ -197,7 +197,7 @@ function GoalColumn({ team, goals, away = false }: { team: string; goals: PreMat
             </li>
           ))}
         </ul>
-      ) : <p className="mt-1.5 font-mono text-[9px] text-muted">No goals</p>}
+      ) : <p className="mt-1.5 font-mono text-[9px] text-muted">No {team} goals</p>}
     </div>
   )
 }

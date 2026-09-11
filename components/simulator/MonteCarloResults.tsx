@@ -226,7 +226,7 @@ function Scorers({
   tone: "gold" | "danger"
 }) {
   if (rows.length === 0) {
-    return <p className="font-mono text-[11px] text-muted">No goals</p>
+    return <p className="font-mono text-[11px] text-muted">No {label ?? "named"} goals</p>
   }
   const bar = tone === "gold" ? "bg-gold" : "bg-danger"
   const num = tone === "gold" ? "text-gold" : "text-danger"

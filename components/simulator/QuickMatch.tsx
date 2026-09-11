@@ -121,7 +121,7 @@ export function QuickMatch({
         <div className="grid gap-3">
           <MatchResult match={match} home={home} away={away} />
           <button type="button" className="rail-btn rail-btn-inline justify-self-start" onClick={shareMatch}>
-            {shareStatus === "shared" ? "Shared" : shareStatus === "copied" ? "Copied" : "Copy link"}
+            {shareStatus === "shared" ? `Shared ${home.clubName}` : shareStatus === "copied" ? `Copied ${home.clubName}` : `Copy ${home.clubName}`}
           </button>
         </div>
       ) : null}

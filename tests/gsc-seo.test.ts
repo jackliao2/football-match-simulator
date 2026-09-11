@@ -597,6 +597,16 @@ describe("GSC landing pages", () => {
     expect(readFileSync("app/vs/[slug]/page.tsx", "utf8")).not.toMatch(/\["Attack"/)
     expect(readFileSync("components/simulator/MonteCarloResults.tsx", "utf8")).not.toMatch(/Signature score/)
     expect(readFileSync("components/simulator/MonteCarloResults.tsx", "utf8")).not.toMatch(/label="xG"/)
+    expect(readFileSync("components/simulator/MatchSetup.tsx", "utf8")).not.toMatch(/Copy link/)
+    expect(readFileSync("components/simulator/MatchSetup.tsx", "utf8")).not.toMatch(/faceoff-vs">VS</)
+    expect(readFileSync("components/simulator/SimulationPlay.tsx", "utf8")).not.toMatch(/ENGINE/)
+    expect(readFileSync("components/ui/MatchupRow.tsx", "utf8")).not.toMatch(/Who wins/)
+    expect(readFileSync("components/ui/MatchupRow.tsx", "utf8")).not.toMatch(/>VS</)
+    expect(readFileSync("app/vs/[slug]/page.tsx", "utf8")).not.toMatch(/>VS</)
+    expect(readFileSync("components/simulator/AiAnalysisResult.tsx", "utf8")).not.toMatch(/Template fallback/)
+    expect(readFileSync("components/simulator/AiAnalysisResult.tsx", "utf8")).not.toMatch(/most common scoreline/)
+    expect(readFileSync("components/simulator/QuickMatch.tsx", "utf8")).not.toMatch(/Copy link/)
+    expect(readFileSync("components/simulator/MatchResult.tsx", "utf8")).not.toMatch(/>No goals</)
   })
 
   it("names flagship sides on Spanish and Portuguese hubs instead of factory catalog labels", async () => {

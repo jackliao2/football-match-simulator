@@ -22,9 +22,9 @@ export function MatchupRow({
     >
       <MatchupSide team={home} />
       <div className="matchup-vs" aria-hidden="true">
-        <span className="matchup-vs-kicker">Who wins</span>
-        <span className="matchup-vs-mark">VS</span>
-        <span className="matchup-vs-cta">Simulate</span>
+        <span className="matchup-vs-kicker">{home.displaySeason}</span>
+        <span className="matchup-vs-mark">{home.clubCode}</span>
+        <span className="matchup-vs-cta">Play {home.clubCode}</span>
       </div>
       <MatchupSide team={away} away />
     </Link>

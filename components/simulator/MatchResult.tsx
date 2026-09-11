@@ -19,7 +19,7 @@ export function MatchResult({
       ? `${home.clubName} win`
       : match.score.away > match.score.home
         ? `${away.clubName} win`
-        : "Draw"
+        : `${home.clubName}–${away.clubName} draw`
 
   return (
     <ResultPanel kicker={`${home.clubName} vs ${away.clubName}`} aside={`Seed ${match.seed}`}>
@@ -43,7 +43,7 @@ export function MatchResult({
         <div className="grid gap-1 border-t border-white/10 px-3 py-2 font-mono text-[12px] leading-5 sm:grid-cols-2 sm:px-4">
           <ol>
             {homeGoals.length === 0 ? (
-              <li className="text-muted">No goals</li>
+              <li className="text-muted">No {home.clubName} goals</li>
             ) : (
               homeGoals.map((goal) => (
                 <li key={`h-${goal.minute}-${goal.player}`}>
@@ -55,7 +55,7 @@ export function MatchResult({
           </ol>
           <ol className="sm:text-right">
             {awayGoals.length === 0 ? (
-              <li className="text-muted">No goals</li>
+              <li className="text-muted">No {away.clubName} goals</li>
             ) : (
               awayGoals.map((goal) => (
                 <li key={`a-${goal.minute}-${goal.player}`}>
@@ -67,7 +67,7 @@ export function MatchResult({
           </ol>
         </div>
       ) : (
-        <p className="border-t border-white/10 px-3 py-2 font-mono text-[12px] text-muted">No goals</p>
+        <p className="border-t border-white/10 px-3 py-2 font-mono text-[12px] text-muted">No {home.clubName} goals</p>
       )}
     </ResultPanel>
   )

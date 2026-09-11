@@ -49,7 +49,7 @@ export function MatchActions({
           Simulate {home.clubName} again
         </button>
         <button type="button" className="rail-btn" onClick={shareMatch}>
-          {shareStatus === "shared" ? "Shared" : shareStatus === "copied" ? "Copied" : `Share ${home.clubName} vs ${away.clubName}`}
+          {shareStatus === "shared" ? `Shared ${home.clubName}` : shareStatus === "copied" ? `Copied ${home.clubName}` : `Share ${home.clubName} vs ${away.clubName}`}
         </button>
       </div>
       <button
