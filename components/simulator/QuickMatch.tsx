@@ -97,7 +97,7 @@ export function QuickMatch({
           {play?.kind === "match" ? "Playing…" : `Play ${home.clubName} ${home.displaySeason}`}
         </button>
         <button type="button" className="rail-btn rail-btn-inline" disabled={Boolean(play)} onClick={runHundred}>
-          {play?.kind === "batch" || play?.kind === "batch-running" ? `Running ${BATCH_RUNS} ${home.clubCode}…` : `${BATCH_RUNS} ${home.clubCode} nights`}
+          {play?.kind === "batch" || play?.kind === "batch-running" ? `Running ${BATCH_RUNS} ${home.clubName}…` : `${BATCH_RUNS} ${home.clubName} nights`}
         </button>
         <Link href={`/simulate?home=${home.id}&away=${away.id}`} className="rail-btn rail-btn-inline">
           Pick another side vs {home.clubName} {home.displaySeason}

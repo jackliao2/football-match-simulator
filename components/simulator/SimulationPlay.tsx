@@ -58,7 +58,7 @@ export function SimulationStage({
       <header className="simulation-stage-head">
         <span>{label}</span>
         <span className={ai ? "text-[#9ee7ff]" : "text-muted"}>
-          {ai ? `${home.clubCode} AI` : mode === "batch" ? `${home.clubCode} 100` : `${home.clubCode} NIGHT`}
+          {ai ? `${home.clubName} AI` : mode === "batch" ? `${home.displaySeason} 100` : `${home.displaySeason} night`}
         </span>
       </header>
 
