@@ -579,6 +579,10 @@ describe("GSC landing pages", () => {
     expect(readFileSync("components/ui/AppError.tsx", "utf8")).not.toMatch(/Something broke/)
     expect(readFileSync("components/ui/AppError.tsx", "utf8")).not.toMatch(/Try this page again/)
     expect(readFileSync("components/ui/AppError.tsx", "utf8")).not.toMatch(/vs Madrid 2016\/17 failed to load/)
+    expect(readFileSync("components/ui/AppError.tsx", "utf8")).toMatch(/location\.reload/)
+    expect(readFileSync("components/ui/AppError.tsx", "utf8")).toMatch(/location\.assign\("\/"\)/)
+    expect(readFileSync("components/ui/AppError.tsx", "utf8")).not.toMatch(/from "next\/link"/)
+    expect(readFileSync("next.config.ts", "utf8")).not.toMatch(/stale-while-revalidate=86400/)
     expect(readFileSync("components/simulator/AiAnalysisResult.tsx", "utf8")).not.toMatch(/Same squads/)
     expect(readFileSync("components/simulator/MatchSetup.tsx", "utf8")).not.toMatch(/Random matchup/)
     expect(readFileSync("components/simulator/MatchSetup.tsx", "utf8")).not.toMatch(/Roll Barça vs Madrid/)
@@ -732,7 +736,12 @@ describe("GSC landing pages", () => {
     const all = headers.find((rule) => rule.source === "/(.*)")
     expect(all?.headers.some((item) => item.key === "Strict-Transport-Security")).toBe(true)
     const homepage = headers.find((rule) => rule.source === "/")
-    expect(homepage?.headers.some((item) => item.key === "CDN-Cache-Control")).toBe(true)
+    expect(homepage?.headers).toEqual(
+      expect.arrayContaining([
+        { key: "Cache-Control", value: "public, max-age=0, must-revalidate" },
+        { key: "CDN-Cache-Control", value: "public, max-age=300" },
+      ]),
+    )
     const search = headers.find((rule) => rule.source === "/search")
     expect(search?.headers.some((item) => item.key === "CDN-Cache-Control")).toBe(true)
     const simulate = headers.find((rule) => rule.source === "/simulate")

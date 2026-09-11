@@ -86,7 +86,7 @@ export function QuickMatch({
     <section className="grid gap-3">
       <div>
         <p className="page-kicker">
-          {home.manager}'s {home.displaySeason} against {away.manager}'s {away.displaySeason}
+          {`${home.manager}'s ${home.displaySeason} against ${away.manager}'s ${away.displaySeason}`}
         </p>
         <h2 className="section-title mt-1">
           {home.clubName} {home.displaySeason} vs {away.clubName} {away.displaySeason}

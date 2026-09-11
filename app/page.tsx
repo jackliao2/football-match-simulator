@@ -262,7 +262,7 @@ export default function HomePage() {
         <div className="home-prime-grid">
           <Link href="/best-football-team-ever" className="home-prime-card">
             <span>Barcelona 2010/11</span><h3>{BEST_TEAM.homeCardTitle}</h3>
-            <p>Six historically great sides, one set of criteria and a clear answer — Barcelona 2010/11 first, then Brazil 1970 and Sacchi's Milan.</p>
+            <p>{`Six historically great sides, one set of criteria and a clear answer — Barcelona 2010/11 first, then Brazil 1970 and Sacchi's Milan.`}</p>
             <b>Read the verdict →</b>
           </Link>
           <Link href="/compare/barcelona-vs-real-madrid" className="home-prime-card">

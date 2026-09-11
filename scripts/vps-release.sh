@@ -24,11 +24,26 @@ git reset --hard origin/main
 NEXT="$(git rev-parse --short HEAD)"
 echo "Release ${PREV} -> ${NEXT}"
 
+KEEP=/var/lib/legendarymatch/next-static
+install -d -m 0755 "${KEEP}"
+# Copy hashes that are still being served before `next build` wipes `.next`.
+if [[ -d .next/standalone/.next/static ]]; then
+  cp -a .next/standalone/.next/static/. "${KEEP}/"
+fi
+
 npm ci
 npm run build
 cp -a public .next/standalone/
-install -d -m 0755 .next/standalone/.next
-cp -a .next/static .next/standalone/.next/
+install -d -m 0755 .next/standalone/.next/static
+# Hashed chunks from the previous build must stay on disk: Cloudflare can still
+# serve HTML that points at them for a few minutes after this restart.
+if [[ -n "$(find "${KEEP}" -mindepth 1 -print -quit 2>/dev/null)" ]]; then
+  cp -a "${KEEP}/." .next/standalone/.next/static/
+fi
+cp -a .next/static/. .next/standalone/.next/static/
+cp -a .next/static/. "${KEEP}/"
+find "${KEEP}" -type f -mtime +14 -delete
+find "${KEEP}" -type d -empty -delete 2>/dev/null || true
 chown -R legendarymatch:legendarymatch .next/standalone
 chmod 0755 /srv/apps/legendarymatch
 systemctl restart legendarymatch
