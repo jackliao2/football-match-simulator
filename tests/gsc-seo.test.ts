@@ -618,6 +618,8 @@ describe("GSC landing pages", () => {
     expect(readFileSync("components/ui/MatchupRow.tsx", "utf8")).not.toMatch(/^\s+ATK <strong>/m)
     expect(readFileSync("components/ui/OvrStamp.tsx", "utf8")).not.toMatch(/>OVR</)
     expect(readFileSync("lib/page-copy.ts", "utf8")).not.toMatch(/as we rate it — ATK /)
+    expect(readFileSync("components/teams/TeamRatings.tsx", "utf8")).not.toMatch(/label="Attack"/)
+    expect(readFileSync("components/teams/TeamRatings.tsx", "utf8")).not.toMatch(/label="Overall"/)
   })
 
   it("names flagship sides on Spanish and Portuguese hubs instead of factory catalog labels", async () => {

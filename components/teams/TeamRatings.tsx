@@ -10,12 +10,12 @@ export function TeamRatings({ team }: { team: HistoricalTeam }) {
         {copy.ratingsHeading}
       </h2>
       <div className="grid gap-1 px-3 py-2">
-        <RatingBar label="Attack" value={team.attackRating} />
-        <RatingBar label="Midfield" value={team.midfieldRating} />
-        <RatingBar label="Defence" value={team.defenseRating} />
-        <RatingBar label="Goalkeeping" value={team.goalkeeperRating} />
-        <RatingBar label="Chemistry" value={team.chemistryRating} />
-        <RatingBar label="Overall" value={team.overallRating} />
+        <RatingBar label={`${team.displaySeason} attack`} value={team.attackRating} />
+        <RatingBar label={`${team.displaySeason} midfield`} value={team.midfieldRating} />
+        <RatingBar label={`${team.displaySeason} defence`} value={team.defenseRating} />
+        <RatingBar label={`${team.displaySeason} keeper`} value={team.goalkeeperRating} />
+        <RatingBar label={`${team.displaySeason} chemistry`} value={team.chemistryRating} />
+        <RatingBar label={`${team.displaySeason} overall`} value={team.overallRating} />
       </div>
     </section>
   )

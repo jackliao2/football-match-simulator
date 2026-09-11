@@ -278,7 +278,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
         <div className="flex flex-wrap gap-1.5 p-3">
           {team.styleTags.map((tag) => (
             <span key={tag} className="border border-white/15 px-2 py-1 font-mono text-[11px] text-muted">
-              {tag}
+              {team.clubCode} {tag}
             </span>
           ))}
         </div>
