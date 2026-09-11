@@ -31,6 +31,7 @@ if [[ -d .next/standalone/.next/static ]]; then
   cp -a .next/standalone/.next/static/. "${KEEP}/"
 fi
 
+systemctl stop legendarymatch
 npm ci
 npm run build
 cp -a public .next/standalone/
@@ -46,7 +47,7 @@ find "${KEEP}" -type f -mtime +14 -delete
 find "${KEEP}" -type d -empty -delete 2>/dev/null || true
 chown -R legendarymatch:legendarymatch .next/standalone
 chmod 0755 /srv/apps/legendarymatch
-systemctl restart legendarymatch
+systemctl start legendarymatch
 systemctl is-active legendarymatch nginx
 
 echo "Rollback if needed: git reset --hard ${PREV} && re-run the build/copy/restart steps in docs/VPS_DEPLOYMENT.md"
