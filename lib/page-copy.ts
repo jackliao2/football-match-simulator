@@ -105,7 +105,7 @@ export function teamPageCopy(team: HistoricalTeam, opponentArg?: HistoricalTeam)
     silver
       ? `${firstSentence(team.summary)} Silverware that season: ${silver}.`
       : firstSentence(team.summary),
-    `${team.clubName} ${team.displaySeason} as we rate it — ATK ${team.attackRating}, MID ${team.midfieldRating}, DEF ${team.defenseRating}.`,
+    `${team.clubName} ${team.displaySeason} as we rate it — ${team.clubCode} ATK ${team.attackRating}, ${team.clubCode} MID ${team.midfieldRating}, ${team.clubCode} DEF ${team.defenseRating}.`,
     feat ? `${feat}. ${firstSentence(team.summary)}` : team.summary,
     current
       ? `${firstSentence(team.summary)} This is the newest season in this database, not a live roster.`

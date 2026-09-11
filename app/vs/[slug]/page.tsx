@@ -268,7 +268,7 @@ function VsSquadCard({ team, away = false }: { team: HistoricalTeam; away?: bool
           <span className="mt-0.5 block font-mono text-xs text-gold">{team.displaySeason}</span>
           <span className="mt-1 block truncate font-mono text-[10px] text-muted">{team.manager} · {team.formation}</span>
         </span>
-        <OvrStamp value={team.overallRating} size="md" align={away ? "left" : "right"} />
+        <OvrStamp value={team.overallRating} size="md" align={away ? "left" : "right"} label={team.clubCode} />
       </Link>
       <div className="border-t border-line px-2 py-2">
         <FaceOffSquad squad={teamSquad(team)} xiLabel={`${team.clubName} ${team.displaySeason} XI`} benchLabel={`${team.clubName} ${team.displaySeason} bench`} />

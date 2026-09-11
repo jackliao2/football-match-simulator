@@ -1776,8 +1776,8 @@ a.result-panel:hover {
   color: var(--color-gold);
   font-family: var(--font-display), ui-monospace, monospace;
   font-size: 1.35rem;
-  letter-spacing: 0.42em;
-  text-indent: 0.42em;
+  letter-spacing: 0.08em;
+  text-indent: 0;
 }
 
 .faceoff-vs::before,
@@ -2041,8 +2041,8 @@ a.result-panel:hover {
     width: 100%;
     gap: 0.45rem;
     font-size: 0.95rem;
-    letter-spacing: 0.28em;
-    text-indent: 0.28em;
+    letter-spacing: 0.06em;
+    text-indent: 0;
   }
 
   .faceoff-vs::before,

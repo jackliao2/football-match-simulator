@@ -50,19 +50,21 @@ function MatchupSide({ team, away = false }: { team: HistoricalTeam; away?: bool
         {stars ? <div className="matchup-stars">{stars}</div> : null}
         <div className="matchup-lines">
           <span>
-            ATK <strong>{team.attackRating}</strong>
+            {team.clubCode} ATK <strong>{team.attackRating}</strong>
           </span>
           <span>
-            MID <strong>{team.midfieldRating}</strong>
+            {team.clubCode} MID <strong>{team.midfieldRating}</strong>
           </span>
           <span>
-            DEF <strong>{team.defenseRating}</strong>
+            {team.clubCode} DEF <strong>{team.defenseRating}</strong>
           </span>
         </div>
         {tags.length > 0 ? (
           <div className="matchup-tags">
             {tags.map((tag) => (
-              <span key={tag}>{tag}</span>
+              <span key={tag}>
+                {team.clubCode} {tag}
+              </span>
             ))}
           </div>
         ) : null}
@@ -74,7 +76,7 @@ function MatchupSide({ team, away = false }: { team: HistoricalTeam; away?: bool
       </div>
       <div className="matchup-ovr">
         <strong>{team.overallRating}</strong>
-        <span>OVR</span>
+        <span>{team.clubCode}</span>
       </div>
     </div>
   )

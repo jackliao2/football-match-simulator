@@ -19,8 +19,8 @@ export function SquadPanel({
   return (
     <div className="overflow-hidden border-2 border-line bg-ink/50">
       <div className="flex items-center justify-between border-b-2 border-line bg-panel-2 px-3 py-2">
-        <span className="font-display text-[9px] uppercase tracking-[0.16em] text-gold">Squad</span>
-        <span className="font-mono text-xs text-gold">OVR {teamOvr}</span>
+        <span className="font-display text-[9px] uppercase tracking-[0.16em] text-gold">{xiLabel}</span>
+        <span className="font-mono text-xs text-gold">{xiLabel} {teamOvr}</span>
       </div>
       <div className="squad-scroll max-h-[22rem] overflow-y-auto overflow-x-visible">
         <p className="sticky top-0 z-10 bg-panel px-3 py-1.5 font-display text-[8px] uppercase tracking-[0.14em] text-muted">

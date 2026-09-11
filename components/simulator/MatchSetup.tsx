@@ -975,7 +975,7 @@ function TeamColumn({
               {team.formation}
             </span>
           </span>
-          <OvrStamp value={team.overallRating} size="sm" align={away ? "left" : "right"} />
+          <OvrStamp value={team.overallRating} size="sm" align={away ? "left" : "right"} label={team.clubCode} />
         </button>
       </div>
 

@@ -29,11 +29,11 @@ export function TeamCard({ team, showSquad = true }: { team: HistoricalTeam; sho
             </div>
           ) : null}
         </div>
-        <OvrStamp value={team.overallRating} size="md" />
+        <OvrStamp value={team.overallRating} size="md" label={team.clubCode} />
       </div>
       {showSquad ? <div className="mt-3"><CompactSquad squad={teamSquad(team)} showBench={false} xiLabel={`${team.clubName} ${team.displaySeason} XI`} /></div> : (
         <div className="mt-3 flex flex-wrap gap-1.5 font-mono text-[9px] uppercase tracking-wide text-muted">
-          {team.styleTags.slice(0, 3).map((tag) => <span key={tag} className="border border-line px-1.5 py-1">{tag}</span>)}
+          {team.styleTags.slice(0, 3).map((tag) => <span key={tag} className="border border-line px-1.5 py-1">{team.clubCode} {tag}</span>)}
         </div>
       )}
     </Link>

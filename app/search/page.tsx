@@ -95,7 +95,7 @@ function SearchHit({
             {entry.displaySeason} · {entry.manager}
           </span>
         </span>
-        <OvrStamp value={entry.overallRating} size="sm" />
+        <OvrStamp value={entry.overallRating} size="sm" label={entry.clubCode} />
       </Link>
       <Link href={`/simulate?home=${encodeURIComponent(entry.id)}`} className="search-hit-play">
         Play {entry.clubCode} {entry.displaySeason}

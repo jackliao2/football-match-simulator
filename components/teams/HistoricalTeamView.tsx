@@ -226,7 +226,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
             </div>
             {editorial ? <EditorialByline /> : null}
           </div>
-          <OvrStamp value={team.overallRating} size="xl" />
+          <OvrStamp value={team.overallRating} size="xl" label={team.clubCode} />
         </div>
         <div className="team-essay">
           {yearNote ? <p className="search-year-note">{yearNote}</p> : null}

@@ -39,10 +39,10 @@ export default async function NationOpenGraphImage({
         </div>
         {team ? (
           <div style={{ display: "flex", gap: 28, marginTop: 40, fontSize: 22, color: "#d4b45a" }}>
-            <span>{`ATK ${team.attackRating}`}</span>
-            <span>{`MID ${team.midfieldRating}`}</span>
-            <span>{`DEF ${team.defenseRating}`}</span>
-            <span>{`OVR ${team.overallRating}`}</span>
+            <span>{`${team.clubCode} ATK ${team.attackRating}`}</span>
+            <span>{`${team.clubCode} MID ${team.midfieldRating}`}</span>
+            <span>{`${team.clubCode} DEF ${team.defenseRating}`}</span>
+            <span>{`${team.clubCode} ${team.overallRating}`}</span>
           </div>
         ) : null}
       </div>

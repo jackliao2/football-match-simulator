@@ -88,7 +88,7 @@ function ResultTeam({
         <div className="font-mono text-sm text-gold">{team.displaySeason}</div>
         <div className="font-mono text-xs text-muted">{team.manager}</div>
       </div>
-      <OvrStamp value={team.overallRating} size="md" align={align === "right" ? "left" : "right"} />
+      <OvrStamp value={team.overallRating} size="md" align={align === "right" ? "left" : "right"} label={team.clubCode} />
     </div>
   )
 }
