@@ -1,27 +1,32 @@
 "use client"
 
+import { useEffect } from "react"
 import Link from "next/link"
 
 export function AppError({
+  error,
   reset,
 }: {
   error: Error & { digest?: string }
   reset: () => void
 }) {
+  useEffect(() => {
+    console.error(error)
+  }, [error])
+
   return (
     <div className="grid gap-4 py-10">
       <p className="page-kicker">LegendaryMatch</p>
-      <h1 className="page-title">Barcelona 2010/11 vs Madrid 2016/17 failed to load</h1>
+      <h1 className="page-title">This page did not finish loading</h1>
       <p className="page-lead">
-        The named-season simulator is still here. Reload Barcelona vs Madrid, or go back to Barcelona 2010/11 vs Madrid
-        2016/17 on the homepage.
+        Barcelona 2010/11 vs Madrid 2016/17 is still on the homepage. Reload this page, or go back there.
       </p>
       <div className="flex flex-wrap gap-2">
         <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={reset}>
-          Reload Barcelona vs Madrid
+          Reload this page
         </button>
         <Link href="/" className="rail-btn rail-btn-inline">
-          Barcelona vs Madrid
+          Barcelona 2010/11 vs Madrid 2016/17
         </Link>
       </div>
     </div>

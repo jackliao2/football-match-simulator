@@ -577,6 +577,8 @@ describe("GSC landing pages", () => {
       /Hover or tap for player attributes|Stars · OVR/,
     )
     expect(readFileSync("components/ui/AppError.tsx", "utf8")).not.toMatch(/Something broke/)
+    expect(readFileSync("components/ui/AppError.tsx", "utf8")).not.toMatch(/Try this page again/)
+    expect(readFileSync("components/ui/AppError.tsx", "utf8")).not.toMatch(/vs Madrid 2016\/17 failed to load/)
     expect(readFileSync("components/simulator/AiAnalysisResult.tsx", "utf8")).not.toMatch(/Same squads/)
     expect(readFileSync("components/simulator/MatchSetup.tsx", "utf8")).not.toMatch(/Random matchup/)
     expect(readFileSync("components/simulator/MatchSetup.tsx", "utf8")).not.toMatch(/Change matchup/)
@@ -588,7 +590,6 @@ describe("GSC landing pages", () => {
     expect(readFileSync("components/simulator/SimulationPlay.tsx", "utf8")).not.toMatch(/Live match simulation/)
     expect(readFileSync("components/simulator/SimulationPlay.tsx", "utf8")).not.toMatch(/Expert AI match lab/)
     expect(readFileSync("components/simulator/SimulationPlay.tsx", "utf8")).not.toMatch(/Distribution model/)
-    expect(readFileSync("components/ui/AppError.tsx", "utf8")).not.toMatch(/Try this page again/)
     expect(readFileSync("data/hub-copy.ts", "utf8")).not.toMatch(/kicker: "La Liga"/)
     expect(readFileSync("components/simulator/AiAnalysisResult.tsx", "utf8")).not.toMatch(/Avg goals/)
     expect(readFileSync("components/simulator/MatchStats.tsx", "utf8")).not.toMatch(/label="Possession"/)
