@@ -104,10 +104,10 @@ export function AiAnalysisResult({
           <p className="font-mono text-[9px] text-muted">{home.formation} against {away.formation}</p>
         </div>
         <div className="mt-3 grid gap-px overflow-hidden border border-white/10 bg-white/10 md:grid-cols-2">
-          <DossierCard number="01" label={`${home.displaySeason} opening`} text={copy.openingPhase} />
-          <DossierCard number="02" label={`${home.clubName} vs ${away.clubName}`} text={copy.keyDuel} />
-          <DossierCard number="03" label={`${home.manager}'s move`} text={copy.coachingMove} />
-          <DossierCard number="04" label={`${away.displaySeason} chaos`} text={copy.chaosFactor} />
+          <DossierCard number={home.displaySeason} label={`${home.displaySeason} opening`} text={copy.openingPhase} />
+          <DossierCard number={`${home.clubCode}–${away.clubCode}`} label={`${home.clubName} vs ${away.clubName}`} text={copy.keyDuel} />
+          <DossierCard number={home.clubCode} label={`${home.manager}'s move`} text={copy.coachingMove} />
+          <DossierCard number={away.displaySeason} label={`${away.displaySeason} chaos`} text={copy.chaosFactor} />
         </div>
       </section>
 

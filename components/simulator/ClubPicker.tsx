@@ -121,6 +121,7 @@ export function ClubPicker({
 
   const groups = tab === "clubs" ? clubGroups : nationGroups
   const empty = groups.length === 0
+  const current = byId.get(currentId)
 
   return (
     <div
@@ -165,7 +166,7 @@ export function ClubPicker({
             aria-label="Find Barcelona, Madrid or Brazil"
           />
           <button type="button" className="picker-close" onClick={onClose}>
-            Close
+            Keep {current?.clubName ?? "Barcelona"}
           </button>
         </div>
         <div className="picker-body">
@@ -194,7 +195,7 @@ export function ClubPicker({
                         <strong>{item.overallRating}</strong>
                         <small>{meta?.city ?? meta?.code ?? item.clubName}</small>
                       </span>
-                      {active ? <span className="picker-selected">{meta?.city ?? item.clubName}</span> : null}
+                      {active ? <span className="picker-selected">Playing {meta?.code ?? item.clubName}</span> : null}
                     </button>
                   )
                 })}

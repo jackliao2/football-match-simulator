@@ -46,10 +46,10 @@ export function MatchActions({
     <div className="grid gap-4">
       <div className="grid gap-3 sm:grid-cols-2">
         <button type="button" className="rail-btn rail-btn-primary" onClick={simulateAgain}>
-          Simulate again
+          Simulate {home.clubName} again
         </button>
         <button type="button" className="rail-btn" onClick={shareMatch}>
-          {shareStatus === "shared" ? "Shared" : shareStatus === "copied" ? "Copied" : "Share match"}
+          {shareStatus === "shared" ? "Shared" : shareStatus === "copied" ? "Copied" : `Share ${home.clubName} vs ${away.clubName}`}
         </button>
       </div>
       <button
@@ -57,7 +57,7 @@ export function MatchActions({
         className="rail-swap"
         onClick={() => router.push(`/match/${buildMatchId(away.id, home.id, createSeed())}`)}
       >
-        Reverse fixture
+        Reverse {away.clubName} first
       </button>
     </div>
   )

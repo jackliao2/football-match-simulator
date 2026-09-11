@@ -60,6 +60,92 @@ function changeClubLabel(locale: Locale | undefined, clubName: string) {
   return `Change ${clubName} ▾`
 }
 
+type NamedSide = { clubName: string; clubCode: string; displaySeason: string }
+
+function namedRailCopy(locale: Locale | undefined, home: NamedSide, away: NamedSide) {
+  const pair = `${home.clubName} vs ${away.clubName}`
+  const codes = `${home.clubCode} / ${away.clubCode}`
+  if (locale === "es") {
+    return {
+      swap: `Cambiar ${codes}`,
+      different: `Elige otro rival, no dos ${home.clubName}.`,
+      playing: `Jugando ${home.clubName}…`,
+      expert: `IA ${home.clubName}`,
+      analysing: `Analizando ${home.clubName}…`,
+      simulateAgain: `Simular ${home.clubName} de nuevo`,
+      back: `Cambiar ${pair}`,
+      expertAgain: `IA ${home.clubName} otra vez`,
+      next: "Siguiente Barça vs Madrid",
+      dream: "Barça vs Madrid al azar",
+      dreaming: "Eligiendo Barça vs Madrid…",
+      separateAi: `Pronóstico independiente de 100 partidos. Tu ${home.clubName} anterior sigue en Resultado ${home.clubName}.`,
+      matchTab: `Resultado ${home.clubName}`,
+      aiTab: `IA ${home.clubName}`,
+      batchTab: `${BATCH_RUNS} noches ${home.clubCode}`,
+      hundred: `${BATCH_RUNS} noches ${home.clubCode}`,
+      hundredPlaying: `Calculando ${BATCH_RUNS} ${home.clubCode}…`,
+      quotaUsed: `Cupo de ${home.clubName} agotado`,
+      quotaBody: `Has usado los 10 análisis IA gratis de ${home.clubName}. El cupo se reinicia a medianoche. Sigue pudiendo simular y correr ${BATCH_RUNS} partidos gratis.`,
+      lastMatches: `Tus noches de ${home.clubName}`,
+      analysisUnavailable: `IA ${home.clubName} no disponible`,
+      resultAria: `Resultados ${pair}`,
+      batchSecondary: `Probando otras noches de ${home.displaySeason}…`,
+    }
+  }
+  if (locale === "pt-br") {
+    return {
+      swap: `Trocar ${codes}`,
+      different: `Escolha outro rival, não dois ${home.clubName}.`,
+      playing: `Jogando ${home.clubName}…`,
+      expert: `IA ${home.clubName}`,
+      analysing: `Analisando ${home.clubName}…`,
+      simulateAgain: `Simular ${home.clubName} de novo`,
+      back: `Trocar ${pair}`,
+      expertAgain: `IA ${home.clubName} de novo`,
+      next: "Próximo Barça vs Madrid",
+      dream: "Sortear Barça vs Madrid",
+      dreaming: "Sorteando Barça vs Madrid…",
+      separateAi: `Previsão independente de 100 partidas. Seu ${home.clubName} anterior continua em Placar ${home.clubName}.`,
+      matchTab: `Placar ${home.clubName}`,
+      aiTab: `IA ${home.clubName}`,
+      batchTab: `${BATCH_RUNS} noites ${home.clubCode}`,
+      hundred: `${BATCH_RUNS} noites ${home.clubCode}`,
+      hundredPlaying: `Calculando ${BATCH_RUNS} ${home.clubCode}…`,
+      quotaUsed: `Cota do ${home.clubName} esgotada`,
+      quotaBody: `Você usou as 10 análises de IA grátis de ${home.clubName}. A cota zera à meia-noite. Ainda pode simular e rodar ${BATCH_RUNS} jogos de graça.`,
+      lastMatches: `Suas noites do ${home.clubName}`,
+      analysisUnavailable: `IA ${home.clubName} indisponível`,
+      resultAria: `Resultados ${pair}`,
+      batchSecondary: `Testando outras noites de ${home.displaySeason}…`,
+    }
+  }
+  return {
+    swap: `Swap ${codes}`,
+    different: `Pick two sides other than ${home.clubName}.`,
+    playing: `Playing ${home.clubName}…`,
+    expert: `${home.clubName} AI`,
+    analysing: `Analysing ${home.clubName}…`,
+    simulateAgain: `Simulate ${home.clubName} again`,
+    back: `Change ${pair}`,
+    expertAgain: `${home.clubName} AI again`,
+    next: "Next Barça vs Madrid",
+    dream: "Roll Barça vs Madrid",
+    dreaming: "Rolling Barça vs Madrid…",
+    separateAi: `A separate 100-match forecast. Your previous ${home.clubName} night remains under ${home.clubName} result.`,
+    matchTab: `${home.clubName} result`,
+    aiTab: `${home.clubName} AI`,
+    batchTab: `${BATCH_RUNS} ${home.clubCode} nights`,
+    hundred: `${BATCH_RUNS} ${home.clubCode} nights`,
+    hundredPlaying: `Running ${BATCH_RUNS} ${home.clubCode}…`,
+    quotaUsed: `${home.clubName} quota used`,
+    quotaBody: `You have used today’s 10 free ${home.clubName} AI analyses. Your quota resets at midnight. You can still simulate matches and run ${BATCH_RUNS}-match probabilities for free.`,
+    lastMatches: `Your ${home.clubName} nights`,
+    analysisUnavailable: `${home.clubName} analysis unavailable`,
+    resultAria: `${pair} results`,
+    batchSecondary: `Testing ${home.displaySeason} nights…`,
+  }
+}
+
 export function MatchSetup({
   catalog,
   initialSquads,
@@ -76,11 +162,11 @@ export function MatchSetup({
   restoreLast?: boolean
 }) {
   const ui = locale === "es" ? {
-    home: "Local", away: "Visitante", legendary: "Leyendas", now: "Recientes", swap: "Cambiar", different: "Elige dos equipos distintos.", simulate: "Simular", playing: "Jugando…", expert: "Análisis experto IA", analysing: "Analizando…", daily: "Hoy", simulateAgain: "Simular de nuevo", back: "Cambiar duelo", copy: "Copiar enlace", copied: "Copiado", shared: "Compartido", expertAgain: "Repetir análisis IA", next: "Siguiente duelo soñado", bench: "Suplentes", dream: "Duelo al azar", dreaming: "Eligiendo…", separateAi: "Pronóstico independiente de 100 partidos. Tu partido anterior sigue disponible en la pestaña Match result.", matchTab: "Resultado", aiTab: "IA experta", batchTab: `${BATCH_RUNS} partidos`, hundred: `${BATCH_RUNS} partidos`, hundredPlaying: `Calculando ${BATCH_RUNS}…`, quotaUsed: "Cupo diario agotado", quotaBody: `Has usado los 10 análisis IA gratis de hoy. El cupo se reinicia a medianoche. Sigue pudiendo simular y correr ${BATCH_RUNS} partidos gratis.`, lastMatches: "Tus últimos partidos",
+    home: "Local", away: "Visitante", simulate: "Simular", daily: "Hoy", copy: "Copiar enlace", copied: "Copiado", shared: "Compartido", bench: "Suplentes",
   } : locale === "pt-br" ? {
-    home: "Casa", away: "Visitante", legendary: "Lendas", now: "Recentes", swap: "Trocar", different: "Escolha dois times diferentes.", simulate: "Simular", playing: "Jogando…", expert: "Análise especializada IA", analysing: "Analisando…", daily: "Hoje", simulateAgain: "Simular novamente", back: "Trocar confronto", copy: "Copiar link", copied: "Copiado", shared: "Compartilhado", expertAgain: "Repetir análise IA", next: "Próximo jogo dos sonhos", bench: "Banco", dream: "Sortear duelo", dreaming: "Sorteando…", separateAi: "Previsão independente de 100 partidas. Seu jogo anterior continua disponível na aba Match result.", matchTab: "Resultado", aiTab: "IA expert", batchTab: `${BATCH_RUNS} jogos`, hundred: `${BATCH_RUNS} jogos`, hundredPlaying: `Calculando ${BATCH_RUNS}…`, quotaUsed: "Cota diária esgotada", quotaBody: `Você usou as 10 análises de IA grátis de hoje. A cota zera à meia-noite. Ainda pode simular e rodar ${BATCH_RUNS} jogos de graça.`, lastMatches: "Suas últimas partidas",
+    home: "Casa", away: "Visitante", simulate: "Simular", daily: "Hoje", copy: "Copiar link", copied: "Copiado", shared: "Compartilhado", bench: "Banco",
   } : {
-    home: "Home", away: "Away", legendary: "Legendary", now: "Recent", swap: "Swap", different: "Pick two different teams.", simulate: "Simulate", playing: "Playing…", expert: "Expert AI Analysis", analysing: "Analysing…", daily: "Daily", simulateAgain: "Simulate again", back: "Change matchup", copy: "Copy link", copied: "Copied", shared: "Shared", expertAgain: "Expert AI again", next: "Next dream match", bench: "Bench", dream: "Random matchup", dreaming: "Picking…", separateAi: "A separate 100-match forecast. Your previous match remains available under Match result.", matchTab: "Match result", aiTab: "Expert AI", batchTab: `${BATCH_RUNS} matches`, hundred: `${BATCH_RUNS} matches`, hundredPlaying: `Running ${BATCH_RUNS}…`, quotaUsed: "Daily free quota used", quotaBody: `You have used today’s 10 free AI analyses. Your quota resets at midnight. You can still simulate matches and run ${BATCH_RUNS}-match probabilities for free.`, lastMatches: "Your last matches",
+    home: "Home", away: "Away", simulate: "Simulate", daily: "Daily", copy: "Copy link", copied: "Copied", shared: "Shared", bench: "Bench",
   }
   const byId = useMemo(() => new Map(catalog.map((entry) => [entry.id, entry])), [catalog])
   const homeDefault = (defaultHome ? byId.get(defaultHome) : undefined) ?? catalog[0]!
@@ -259,6 +345,7 @@ export function MatchSetup({
   const aiRemaining = Math.max(0, AI_DAILY_LIMIT - aiUsesToday)
   const shownHome = reel?.home ?? home
   const shownAway = reel?.away ?? away
+  const rail = namedRailCopy(locale, shownHome, shownAway)
   const homeSquad = useMemo(() => teamSquad(shownHome.team), [shownHome.team])
   const awaySquad = useMemo(() => teamSquad(shownAway.team), [shownAway.team])
 
@@ -402,7 +489,7 @@ export function MatchSetup({
     setPlay(null)
     if (aiRemaining <= 0) {
       setAnalysis(null)
-      setAnalysisError(ui.quotaBody)
+      setAnalysisError(rail.quotaBody)
       showResults("analysis")
       return
     }
@@ -552,10 +639,10 @@ export function MatchSetup({
             <div className="faceoff-rail-inner">
               <div className="faceoff-vs">VS</div>
               <button type="button" onClick={swapSides} className="rail-swap" disabled={rolling}>
-                {ui.swap}
+                {rail.swap}
               </button>
               {sameTeam ? (
-                <p className="text-center font-mono text-[11px] leading-4 text-danger">{ui.different}</p>
+                <p className="text-center font-mono text-[11px] leading-4 text-danger">{rail.different}</p>
               ) : null}
               <button
                 type="button"
@@ -563,7 +650,7 @@ export function MatchSetup({
                 className="rail-btn rail-btn-primary"
                 onClick={simulateOnce}
               >
-                {play?.kind === "match" ? ui.playing : ui.simulate}
+                {play?.kind === "match" ? rail.playing : ui.simulate}
               </button>
               <button
                 type="button"
@@ -571,7 +658,7 @@ export function MatchSetup({
                 className="rail-btn"
                 onClick={runHundred}
               >
-                {play?.kind === "batch" || play?.kind === "batch-running" ? ui.hundredPlaying : ui.hundred}
+                {play?.kind === "batch" || play?.kind === "batch-running" ? rail.hundredPlaying : rail.hundred}
               </button>
               <button
                 type="button"
@@ -580,7 +667,7 @@ export function MatchSetup({
                 onClick={runAnalysis}
               >
                 <span className="flex flex-col items-center gap-0.5">
-                  <span>{analysisLoading ? ui.analysing : ui.expert}</span>
+                  <span>{analysisLoading ? rail.analysing : rail.expert}</span>
                   <span className="font-mono text-[8px] normal-case tracking-normal opacity-70">{ui.daily} {aiRemaining}/{AI_DAILY_LIMIT}</span>
                 </span>
               </button>
@@ -609,7 +696,7 @@ export function MatchSetup({
                   <rect x="4" y="10" width="2" height="2" fill="currentColor" />
                   <rect x="10" y="10" width="2" height="2" fill="currentColor" />
                 </svg>
-                <span>{rolling ? ui.dreaming : ui.dream}</span>
+                <span>{rolling ? rail.dreaming : rail.dream}</span>
               </button>
             </div>
           </div>
@@ -633,7 +720,7 @@ export function MatchSetup({
 
       {history.length > 0 ? (
         <div className="mt-3 flex flex-wrap items-center gap-2">
-          <p className="font-display text-[8px] uppercase tracking-[0.16em] text-muted">{ui.lastMatches}</p>
+          <p className="font-display text-[8px] uppercase tracking-[0.16em] text-muted">{rail.lastMatches}</p>
           {history.slice(0, 5).map((item) => (
             <button
               key={item.id}
@@ -650,10 +737,10 @@ export function MatchSetup({
       {play || match || batch || analysis || analysisLoading || analysisError ? (
       <div ref={resultRef} className="mt-6 mb-10 grid scroll-mt-20 gap-4">
         {!play && [match, batch, analysis || analysisLoading || analysisError].filter(Boolean).length > 1 ? (
-          <div className="inline-flex w-fit overflow-hidden border border-white/15 bg-black/25 p-1" role="tablist" aria-label="Result view">
-            {match ? <button type="button" role="tab" aria-selected={resultMode === "match"} onClick={() => showResults("match")} className={`px-3 py-2 font-display text-[8px] uppercase tracking-[0.14em] ${resultMode === "match" ? "bg-gold text-ink" : "text-muted hover:text-text"}`}>{ui.matchTab}</button> : null}
-            {batch ? <button type="button" role="tab" aria-selected={resultMode === "batch"} onClick={() => showResults("batch")} className={`px-3 py-2 font-display text-[8px] uppercase tracking-[0.14em] ${resultMode === "batch" ? "bg-gold text-ink" : "text-muted hover:text-text"}`}>{ui.batchTab}</button> : null}
-            {analysis || analysisLoading || analysisError ? <button type="button" role="tab" aria-selected={resultMode === "analysis"} onClick={() => showResults("analysis")} className={`px-3 py-2 font-display text-[8px] uppercase tracking-[0.14em] ${resultMode === "analysis" ? "bg-gold text-ink" : "text-muted hover:text-text"}`}>{ui.aiTab}</button> : null}
+          <div className="inline-flex w-fit overflow-hidden border border-white/15 bg-black/25 p-1" role="tablist" aria-label={rail.resultAria}>
+            {match ? <button type="button" role="tab" aria-selected={resultMode === "match"} onClick={() => showResults("match")} className={`px-3 py-2 font-display text-[8px] uppercase tracking-[0.14em] ${resultMode === "match" ? "bg-gold text-ink" : "text-muted hover:text-text"}`}>{rail.matchTab}</button> : null}
+            {batch ? <button type="button" role="tab" aria-selected={resultMode === "batch"} onClick={() => showResults("batch")} className={`px-3 py-2 font-display text-[8px] uppercase tracking-[0.14em] ${resultMode === "batch" ? "bg-gold text-ink" : "text-muted hover:text-text"}`}>{rail.batchTab}</button> : null}
+            {analysis || analysisLoading || analysisError ? <button type="button" role="tab" aria-selected={resultMode === "analysis"} onClick={() => showResults("analysis")} className={`px-3 py-2 font-display text-[8px] uppercase tracking-[0.14em] ${resultMode === "analysis" ? "bg-gold text-ink" : "text-muted hover:text-text"}`}>{rail.aiTab}</button> : null}
           </div>
         ) : null}
         {play?.kind === "match" ? (
@@ -674,7 +761,7 @@ export function MatchSetup({
               away={away.team}
               progress={(play.done / Math.max(1, play.total)) * 100}
               primary={`${play.done}/${play.total}`}
-              secondary="Testing alternate nights, tactics and scoring patterns…"
+              secondary={rail.batchSecondary}
             />
           </div>
         ) : play?.kind === "batch" ? (
@@ -692,19 +779,19 @@ export function MatchSetup({
             <MatchResult match={match} home={home.team} away={away.team} />
             <div className="flex flex-wrap gap-2">
               <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={simulateOnce}>
-                {ui.simulateAgain}
+                {rail.simulateAgain}
               </button>
               <button type="button" className="rail-btn rail-btn-inline" onClick={runHundred}>
-                {ui.hundred}
+                {rail.hundred}
               </button>
               <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>
-                {ui.back}
+                {rail.back}
               </button>
               <button type="button" className="rail-btn rail-btn-inline" onClick={shareMatch}>
                 {shareStatus === "shared" ? ui.shared : shareStatus === "copied" ? ui.copied : ui.copy}
               </button>
               <button type="button" className="rail-btn rail-btn-ai rail-btn-inline" onClick={playNextDreamMatch}>
-                {ui.next}
+                {rail.next}
               </button>
             </div>
             <div className="grid gap-4 lg:grid-cols-2">
@@ -717,21 +804,21 @@ export function MatchSetup({
             <MonteCarloResults result={batch} />
             <div className="flex flex-wrap gap-2">
               <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={simulateOnce}>{ui.simulate}</button>
-              <button type="button" className="rail-btn rail-btn-inline" onClick={runHundred}>{ui.hundred}</button>
-              <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>{ui.back}</button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={runHundred}>{rail.hundred}</button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>{rail.back}</button>
             </div>
           </div>
         ) : null}
 
         {resultMode === "analysis" && analysisError ? (
           <section id="result-analysis" className="result-panel border-2 border-gold/40 px-5 py-6 shadow-[8px_8px_0_#000]">
-            <p className="font-display text-[8px] uppercase tracking-[0.24em] text-gold">{ui.expert}</p>
-            <h2 className="mt-2 font-brand text-xl font-semibold text-text">{aiRemaining <= 0 ? ui.quotaUsed : "Analysis unavailable"}</h2>
+            <p className="font-display text-[8px] uppercase tracking-[0.24em] text-gold">{rail.expert}</p>
+            <h2 className="mt-2 font-brand text-xl font-semibold text-text">{aiRemaining <= 0 ? rail.quotaUsed : rail.analysisUnavailable}</h2>
             <p className="mt-2 font-mono text-sm leading-6 text-text/80">{analysisError}</p>
             <div className="mt-4 flex flex-wrap gap-2">
               <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={simulateOnce}>{ui.simulate}</button>
-              <button type="button" className="rail-btn rail-btn-inline" onClick={runHundred}>{ui.hundred}</button>
-              <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>{ui.back}</button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={runHundred}>{rail.hundred}</button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>{rail.back}</button>
             </div>
           </section>
         ) : null}
@@ -740,14 +827,14 @@ export function MatchSetup({
           <AiAnalysisLoading home={home.team} away={away.team} />
         ) : resultMode === "analysis" && analysis ? (
           <div className="grid gap-3">
-            {match ? <p className="border-l-2 border-gold/60 px-3 font-mono text-[10px] leading-5 text-muted">{ui.separateAi}</p> : null}
+            {match ? <p className="border-l-2 border-gold/60 px-3 font-mono text-[10px] leading-5 text-muted">{rail.separateAi}</p> : null}
             <AiAnalysisResult analysis={analysis} home={home.team} away={away.team} source={analysisSource ?? undefined} />
             <div className="flex flex-wrap gap-2">
               <button type="button" className="rail-btn rail-btn-primary rail-btn-inline" onClick={simulateOnce}>{ui.simulate}</button>
-              <button type="button" className="rail-btn rail-btn-inline" onClick={runHundred}>{ui.hundred}</button>
-              <button type="button" className="rail-btn rail-btn-ai rail-btn-inline" onClick={runAnalysis}>{ui.expertAgain} · {aiRemaining}/{AI_DAILY_LIMIT}</button>
-              <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>{ui.back}</button>
-              <button type="button" className="rail-btn rail-btn-inline" onClick={playNextDreamMatch}>{ui.next}</button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={runHundred}>{rail.hundred}</button>
+              <button type="button" className="rail-btn rail-btn-ai rail-btn-inline" onClick={runAnalysis}>{rail.expertAgain} · {aiRemaining}/{AI_DAILY_LIMIT}</button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={scrollToSetup}>{rail.back}</button>
+              <button type="button" className="rail-btn rail-btn-inline" onClick={playNextDreamMatch}>{rail.next}</button>
             </div>
           </div>
         ) : null}

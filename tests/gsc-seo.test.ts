@@ -574,6 +574,17 @@ describe("GSC landing pages", () => {
     )
     expect(readFileSync("components/ui/AppError.tsx", "utf8")).not.toMatch(/Something broke/)
     expect(readFileSync("components/simulator/AiAnalysisResult.tsx", "utf8")).not.toMatch(/Same squads/)
+    expect(readFileSync("components/simulator/MatchSetup.tsx", "utf8")).not.toMatch(/Random matchup/)
+    expect(readFileSync("components/simulator/MatchSetup.tsx", "utf8")).not.toMatch(/Change matchup/)
+    expect(readFileSync("components/simulator/MatchSetup.tsx", "utf8")).not.toMatch(/Your last matches/)
+    expect(readFileSync("components/simulator/MatchSetup.tsx", "utf8")).not.toMatch(/swap: "Swap"/)
+    expect(readFileSync("components/simulator/ClubPicker.tsx", "utf8")).not.toMatch(/>Close</)
+    expect(readFileSync("components/simulator/AiAnalysisResult.tsx", "utf8")).not.toMatch(/number="01"/)
+    expect(readFileSync("components/simulator/MatchActions.tsx", "utf8")).not.toMatch(/>Simulate again</)
+    expect(readFileSync("components/simulator/SimulationPlay.tsx", "utf8")).not.toMatch(/Live match simulation/)
+    expect(readFileSync("components/simulator/SimulationPlay.tsx", "utf8")).not.toMatch(/Expert AI match lab/)
+    expect(readFileSync("components/simulator/SimulationPlay.tsx", "utf8")).not.toMatch(/Distribution model/)
+    expect(readFileSync("components/ui/AppError.tsx", "utf8")).not.toMatch(/Try this page again/)
   })
 
   it("names flagship sides on Spanish and Portuguese hubs instead of factory catalog labels", async () => {

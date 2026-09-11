@@ -97,7 +97,7 @@ export function QuickMatch({
           {play?.kind === "match" ? "Playing…" : `Play ${home.clubName} ${home.displaySeason}`}
         </button>
         <button type="button" className="rail-btn rail-btn-inline" disabled={Boolean(play)} onClick={runHundred}>
-          {play?.kind === "batch" || play?.kind === "batch-running" ? `Running ${BATCH_RUNS}…` : `${BATCH_RUNS} matches`}
+          {play?.kind === "batch" || play?.kind === "batch-running" ? `Running ${BATCH_RUNS} ${home.clubCode}…` : `${BATCH_RUNS} ${home.clubCode} nights`}
         </button>
         <Link href={`/simulate?home=${home.id}&away=${away.id}`} className="rail-btn rail-btn-inline">
           Pick another side vs {home.clubName} {home.displaySeason}
@@ -112,7 +112,7 @@ export function QuickMatch({
           away={away}
           progress={(play.done / Math.max(1, play.total)) * 100}
           primary={`${play.done}/${play.total}`}
-          secondary="Testing alternate nights, tactics and scoring patterns…"
+          secondary={`Testing ${home.displaySeason} nights…`}
         />
       ) : play?.kind === "batch" ? (
         <SimulationPlay kind="batch" home={home} away={away} batch={play.batch} onDone={finishPlay} />

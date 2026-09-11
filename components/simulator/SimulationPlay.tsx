@@ -44,7 +44,11 @@ export function SimulationStage({
   secondary: string
 }) {
   const ai = mode === "ai"
-  const label = ai ? "Expert AI match lab" : mode === "batch" ? "Distribution model" : "Live match simulation"
+  const label = ai
+    ? `${home.clubName} AI lab`
+    : mode === "batch"
+      ? `100 ${home.clubName} nights`
+      : `${home.clubName} vs ${away.clubName}`
   return (
     <section
       className={`simulation-stage ${ai ? "simulation-stage-ai" : ""}`}
@@ -53,7 +57,7 @@ export function SimulationStage({
     >
       <header className="simulation-stage-head">
         <span>{label}</span>
-        <span className={ai ? "text-[#9ee7ff]" : "text-muted"}>{ai ? "AI EXPERT ONLINE" : "MATCH ENGINE"}</span>
+        <span className={ai ? "text-[#9ee7ff]" : "text-muted"}>{ai ? `${home.clubCode} AI` : `${home.clubCode} ENGINE`}</span>
       </header>
 
       <div className="simulation-stage-body">
@@ -94,7 +98,7 @@ function MatchPlay({
   const [minute, setMinute] = useState(0)
   const [homeGoals, setHomeGoals] = useState(0)
   const [awayGoals, setAwayGoals] = useState(0)
-  const [line, setLine] = useState("Kick-off")
+  const [line, setLine] = useState(`${home.clubName} kick-off`)
 
   const done = useRef(onDone)
 
@@ -166,7 +170,7 @@ function BatchPlay({
     return () => window.clearInterval(id)
   }, [batch])
 
-  return <SimulationStage mode="batch" home={home} away={away} progress={(done / batch.runs) * 100} primary={`${line}  ·  ${done}/${batch.runs}`} secondary="Testing alternate nights, tactics and scoring patterns…" />
+  return <SimulationStage mode="batch" home={home} away={away} progress={(done / batch.runs) * 100} primary={`${line}  ·  ${done}/${batch.runs}`} secondary={`Testing ${home.displaySeason} nights…`} />
 }
 
 function SideMark({ team, flip }: { team: HistoricalTeam; flip?: boolean }) {
