@@ -20,7 +20,7 @@ import { track } from "@/lib/analytics"
 import { absoluteUrl } from "@/lib/site"
 import { copyOrShare, matchShareCopy } from "@/lib/share"
 import { createSeed } from "@/lib/match-id"
-import { loadLastMatchup, loadMatchHistory, pushMatchHistory, saveLastMatchup, type StoredMatch } from "@/lib/play-memory"
+import { clearMatchHistory, loadLastMatchup, loadMatchHistory, pushMatchHistory, saveLastMatchup, type StoredMatch } from "@/lib/play-memory"
 import { BATCH_RUNS, simulateManyAsync, simulateMatch } from "@/lib/simulation"
 import type { PreMatchAnalysis } from "@/lib/ai/analysis"
 import { teamSquad, type SquadMember } from "@/lib/stars"
@@ -64,12 +64,11 @@ type NamedSide = { clubName: string; displaySeason: string }
 
 function namedRailCopy(locale: Locale | undefined, home: NamedSide, away: NamedSide) {
   const pair = `${home.clubName} vs ${away.clubName}`
-  const sides = `${home.clubName} / ${away.clubName}`
   if (locale === "es") {
     return {
-      swap: `Cambiar ${sides}`,
-      different: `Elige otro rival, no dos ${home.clubName}.`,
-      playing: `Jugando ${home.clubName}…`,
+      swap: "Cambiar",
+      different: "Elige dos equipos distintos.",
+      playing: "Jugando…",
       expert: "Análisis experto IA",
       analysing: "Analizando…",
       simulateAgain: `Simular ${home.clubName} de nuevo`,
@@ -81,12 +80,13 @@ function namedRailCopy(locale: Locale | undefined, home: NamedSide, away: NamedS
       separateAi: `Pronóstico independiente de 100 partidos. Tu ${home.clubName} anterior sigue en Resultado ${home.clubName}.`,
       matchTab: `Resultado ${home.clubName}`,
       aiTab: `IA ${home.clubName}`,
-      batchTab: `${BATCH_RUNS} noches ${home.clubName}`,
-      hundred: `${BATCH_RUNS} noches ${home.clubName}`,
-      hundredPlaying: `Calculando ${BATCH_RUNS} ${home.clubName}…`,
+      batchTab: `${BATCH_RUNS} partidos`,
+      hundred: `${BATCH_RUNS} partidos`,
+      hundredPlaying: `Calculando ${BATCH_RUNS}…`,
       quotaUsed: `Cupo de ${home.clubName} agotado`,
       quotaBody: `Has usado los 10 análisis IA gratis de ${home.clubName}. El cupo se reinicia a medianoche. Sigue pudiendo simular y correr ${BATCH_RUNS} partidos gratis.`,
-      lastMatches: `Tus noches de ${home.clubName}`,
+      lastMatches: "Tus últimos partidos",
+      clearHistory: "Borrar",
       analysisUnavailable: `IA ${home.clubName} no disponible`,
       resultAria: `Resultados ${pair}`,
       batchSecondary: `Probando otras noches de ${home.displaySeason}…`,
@@ -98,9 +98,9 @@ function namedRailCopy(locale: Locale | undefined, home: NamedSide, away: NamedS
   }
   if (locale === "pt-br") {
     return {
-      swap: `Trocar ${sides}`,
-      different: `Escolha outro rival, não dois ${home.clubName}.`,
-      playing: `Jogando ${home.clubName}…`,
+      swap: "Trocar",
+      different: "Escolha dois times diferentes.",
+      playing: "Jogando…",
       expert: "Análise especializada IA",
       analysing: "Analisando…",
       simulateAgain: `Simular ${home.clubName} de novo`,
@@ -112,12 +112,13 @@ function namedRailCopy(locale: Locale | undefined, home: NamedSide, away: NamedS
       separateAi: `Previsão independente de 100 partidas. Seu ${home.clubName} anterior continua em Placar ${home.clubName}.`,
       matchTab: `Placar ${home.clubName}`,
       aiTab: `IA ${home.clubName}`,
-      batchTab: `${BATCH_RUNS} noites ${home.clubName}`,
-      hundred: `${BATCH_RUNS} noites ${home.clubName}`,
-      hundredPlaying: `Calculando ${BATCH_RUNS} ${home.clubName}…`,
+      batchTab: `${BATCH_RUNS} jogos`,
+      hundred: `${BATCH_RUNS} jogos`,
+      hundredPlaying: `Calculando ${BATCH_RUNS}…`,
       quotaUsed: `Cota do ${home.clubName} esgotada`,
       quotaBody: `Você usou as 10 análises de IA grátis de ${home.clubName}. A cota zera à meia-noite. Ainda pode simular e rodar ${BATCH_RUNS} jogos de graça.`,
-      lastMatches: `Suas noites do ${home.clubName}`,
+      lastMatches: "Suas últimas partidas",
+      clearHistory: "Limpar",
       analysisUnavailable: `IA ${home.clubName} indisponível`,
       resultAria: `Resultados ${pair}`,
       batchSecondary: `Testando outras noites de ${home.displaySeason}…`,
@@ -128,9 +129,9 @@ function namedRailCopy(locale: Locale | undefined, home: NamedSide, away: NamedS
     }
   }
   return {
-    swap: `Swap ${sides}`,
-    different: `Pick two sides other than ${home.clubName}.`,
-    playing: `Playing ${home.clubName}…`,
+    swap: "Swap",
+    different: "Pick two different teams.",
+    playing: "Playing…",
     expert: "Expert AI Analysis",
     analysing: "Analysing…",
     simulateAgain: `Simulate ${home.clubName} again`,
@@ -142,12 +143,13 @@ function namedRailCopy(locale: Locale | undefined, home: NamedSide, away: NamedS
     separateAi: `A separate 100-match forecast. Your previous ${home.clubName} night remains under ${home.clubName} result.`,
     matchTab: `${home.clubName} result`,
     aiTab: `${home.clubName} AI`,
-    batchTab: `${BATCH_RUNS} ${home.clubName} nights`,
-    hundred: `${BATCH_RUNS} ${home.clubName} nights`,
-    hundredPlaying: `Running ${BATCH_RUNS} ${home.clubName}…`,
+    batchTab: `${BATCH_RUNS} matches`,
+    hundred: `${BATCH_RUNS} matches`,
+    hundredPlaying: `Running ${BATCH_RUNS}…`,
     quotaUsed: `${home.clubName} quota used`,
     quotaBody: `You have used today’s 10 free ${home.clubName} AI analyses. Your quota resets at midnight. You can still simulate matches and run ${BATCH_RUNS}-match probabilities for free.`,
-    lastMatches: `Your ${home.clubName} nights`,
+    lastMatches: "Your last matches",
+    clearHistory: "Clear",
     analysisUnavailable: `${home.clubName} analysis unavailable`,
     resultAria: `${pair} results`,
     batchSecondary: `Testing ${home.displaySeason} nights…`,
@@ -649,7 +651,7 @@ export function MatchSetup({
 
           <div className="faceoff-rail">
             <div className="faceoff-rail-inner">
-              <div className="faceoff-vs">{shownHome.clubName}</div>
+              <div className="faceoff-vs">VS</div>
               <button type="button" onClick={swapSides} className="rail-swap" disabled={rolling}>
                 {rail.swap}
               </button>
@@ -733,6 +735,16 @@ export function MatchSetup({
       {history.length > 0 ? (
         <div className="mt-3 flex flex-wrap items-center gap-2">
           <p className="font-display text-[8px] uppercase tracking-[0.16em] text-muted">{rail.lastMatches}</p>
+          <button
+            type="button"
+            className="border border-white/15 bg-black/20 px-2 py-1 font-display text-[8px] uppercase tracking-[0.16em] text-muted hover:border-gold hover:text-gold"
+            onClick={() => {
+              clearMatchHistory()
+              setHistory([])
+            }}
+          >
+            {rail.clearHistory}
+          </button>
           {history.slice(0, 5).map((item) => (
             <button
               key={item.id}

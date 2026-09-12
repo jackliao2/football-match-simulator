@@ -58,3 +58,11 @@ export function pushMatchHistory(item: StoredMatch) {
     /* ignore quota / private mode */
   }
 }
+
+export function clearMatchHistory() {
+  try {
+    window.localStorage.removeItem(HISTORY_KEY)
+  } catch {
+    /* ignore quota / private mode */
+  }
+}
