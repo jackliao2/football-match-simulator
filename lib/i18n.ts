@@ -50,8 +50,8 @@ export const LOCALIZED_COPY = {
     howTitle: "Elige dos temporadas. Juega una noche. Pon a prueba el debate.",
     how: [
       ["01", "Elige Barça 2010/11 o Brasil 1970", "Cada carta es una temporada con once — el Barça de Guardiola, el Madrid de Zidane, una campeona del mundo — no un escudo con un deslizador."],
-      ["02", "Juega una noche contra Madrid 2016/17", "El motor combina esas valoraciones y una semilla para generar marcador, xG, goleadores y eventos. Repetir el duelo es otra noche posible."],
-      ["03", "Lee las cien repeticiones", "Un 2–1 es una noche. El análisis experto explica Barça contra Madrid con cien marcadores detrás, y no vota."],
+      ["02", "Juega una noche", "El motor combina esas valoraciones y una semilla para generar marcador, xG, goleadores y eventos. Repetir el duelo es otra noche posible."],
+      ["03", "Lee las cien repeticiones", "Un 2–1 es una noche. Cien marcadores alternativos son el patrón más amplio, y la lectura opcional de IA no vota."],
     ],
     aboutTitle: "Un simulador para que Barça 2010/11 juegue contra Madrid 2016/17",
     aboutBody: "LegendaryMatch no reescribe el 27 de mayo ni pronostica apuestas. Convierte temporadas concretas —Barça 2010/11, Madrid 2016/17, Brasil 1970— en duelos que se pueden repetir y comparar.",
@@ -92,8 +92,8 @@ export const LOCALIZED_COPY = {
     howTitle: "Escolha duas temporadas. Jogue uma noite. Teste o argumento.",
     how: [
       ["01", "Escolha Barça 2010/11 ou Brasil 1970", "Cada carta é uma temporada com onze — o Barça de Guardiola, o Madrid de Zidane, uma campeã mundial — não um escudo com um controle."],
-      ["02", "Jogue uma noite contra Madrid 2016/17", "O motor combina aquelas notas e uma semente no placar, xG, gols e eventos. Repetir o duelo é outra noite possível."],
-      ["03", "Leia as cem repetições", "Um 2–1 é uma noite. A análise especializada explica Barça contra Madrid com cem placares atrás, e não vota."],
+      ["02", "Jogue uma noite", "O motor combina aquelas notas e uma semente no placar, xG, gols e eventos. Repetir o duelo é outra noite possível."],
+      ["03", "Leia as cem repetições", "Um 2–1 é uma noite. Cem placares alternativos são o padrão mais amplo, e a leitura opcional de IA não vota."],
     ],
     aboutTitle: "Um simulador para o Barça 2010/11 jogar contra o Madrid 2016/17",
     aboutBody: "LegendaryMatch não reescreve 27 de maio nem prevê apostas. Transforma temporadas concretas —Barça 2010/11, Madrid 2016/17, Brasil 1970— em duelos que se pode repetir e comparar.",

@@ -18,21 +18,21 @@ export const HOME_PAGE = {
   tagline: ["Barcelona 2010/11", "Madrid 2016/17", "One simulated night"],
   ogLine: "Barcelona 2010/11 vs Madrid 2016/17. Brazil 1970 vs Spain 2010.",
   ogSub: "Football match simulator · Named historical squads",
-  faqHeading: "Barça 2010/11, Brazil 1970, and the questions people type",
+  faqHeading: "Questions people type",
 } as const
 
 export const HOME_SECTIONS = {
-  matchupsKicker: "Clásico of primes",
+  matchupsKicker: "Dream matches",
   matchupsTitle: "Barcelona 2010/11 vs Madrid 2016/17",
-  matchupsLead: "The Clásico of primes first. Brazil 1970 vs Spain 2010 lives on the matchups page with the rest of the card.",
-  clubsKicker: "Guardiola’s Barça",
+  matchupsLead: "The flagship pairing first. Brazil 1970 vs Spain 2010 and the rest of the card live on the matchups page.",
+  clubsKicker: "Legendary clubs",
   clubsTitle: "Guardiola’s Barça, Madrid 2016/17, United’s treble",
-  nationsKicker: "Brazil 1970",
+  nationsKicker: "Legendary nations",
   nationsTitle: "Brazil 1970, Maradona’s 86, Spain 2010",
-  howKicker: "Pick two seasons",
+  howKicker: "How it works",
   howTitle: "Pick two seasons. Play one night. Test the argument.",
-  faqKicker: "2010/11 vs 2016/17",
-  argumentsKicker: "Clásico · Brazil–Argentina",
+  faqKicker: "FAQ",
+  argumentsKicker: "Who is better?",
   argumentsTitle: "Best team ever, Clásico, Brazil–Argentina",
 } as const
 
