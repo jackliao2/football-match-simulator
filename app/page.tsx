@@ -115,11 +115,12 @@ export default function HomePage() {
           }}
         />
         <p className="home-hero-kicker">{HOME_PAGE.kicker}</p>
-        <h1 className="home-hero-title">
+        <div className="home-hero-title">
           <span className="home-hero-legendary">Legendary</span>
           <span className="home-hero-rule" aria-hidden="true" />
           <span className="home-hero-match">Match</span>
-        </h1>
+        </div>
+        <h1 className="home-hero-h1">{HOME_PAGE.h1}</h1>
         <p className="home-hero-tagline">
           {HOME_PAGE.tagline.map((line, index) => (
             <span key={line} className="contents">

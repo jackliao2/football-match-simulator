@@ -420,7 +420,7 @@ describe("GSC landing pages", () => {
     expect(COMPARE_HUB.clubHeading).not.toBe("Clubs")
 
     expect(ABOUT_PAGE.h1).toMatch(/2010\/11/)
-    expect(ABOUT_PAGE.title).toMatch(/2010\/11/)
+    expect(ABOUT_PAGE.title).toContain(SITE.name)
     expect(ABOUT_PAGE.kicker).toBe("Jack")
     expect(ABOUT_PAGE.kicker).not.toBe("The project")
 
@@ -436,7 +436,7 @@ describe("GSC landing pages", () => {
 
     expect(SIMULATE_PAGE.h1).not.toBe("Simulate any two squads")
     expect(SIMULATE_PAGE.h1).toMatch(/2010\/11/)
-    expect(SIMULATE_PAGE.title).toMatch(/2010\/11/)
+    expect(SIMULATE_PAGE.title).toMatch(/^Simulate a Football Match/)
     expect(SIMULATE_PAGE.kicker).toBe("Football match simulator")
     expect(SIMULATE_PAGE.guideHeading).not.toMatch(/not a chatbot picking a winner/)
     expect(VS_HUB.crumb).not.toBe("Dreams")
@@ -451,7 +451,7 @@ describe("GSC landing pages", () => {
     expect(SIMULATE_PAGE.faqHeading).toMatch(/2010\/11/)
     expect(SIMULATE_PAGE.faqHeading).not.toMatch(/simulator questions/)
 
-    expect(METHODOLOGY_PAGE.title).toMatch(/2010\/11/)
+    expect(METHODOLOGY_PAGE.title).toMatch(/Match Engine/)
     expect(METHODOLOGY_PAGE.h1).toMatch(/2010\/11/)
     expect(METHODOLOGY_PAGE.kicker).toBe("400 nights")
     expect(METHODOLOGY_PAGE.kicker).not.toBe("How it works")
@@ -473,12 +473,13 @@ describe("GSC landing pages", () => {
     expect(VS_HUB.clubHeading).toMatch(/Guardiola|Sacchi|Zidane/)
     expect(VS_HUB.nationHeading).toMatch(/1970/)
 
-    expect(HOME_PAGE.title).not.toMatch(/Football & Soccer Match Simulator/)
-    expect(HOME_PAGE.title).toMatch(/2010\/11/)
+    expect(HOME_PAGE.title).toMatch(/Football & Soccer Match Simulator/)
+    expect(HOME_PAGE.title).toContain(SITE.name)
+    expect(HOME_PAGE.h1).toMatch(/^Football Match Simulator/)
     expect(HOME_PAGE.tagline).not.toContain("Pick a team")
     expect(HOME_PAGE.tagline.join(" ")).toMatch(/2010\/11/)
     expect(HOME_PAGE.faqHeading).not.toBe("Football match simulator FAQ")
-    expect(HOME_PAGE.kicker).toBe("Football match simulator")
+    expect(HOME_PAGE.kicker).not.toMatch(/Football Match Simulator/i)
     expect(SITE.tagline).not.toMatch(/Pick a team/)
     expect(SITE.tagline).toMatch(/2010\/11/)
 
@@ -492,6 +493,28 @@ describe("GSC landing pages", () => {
     expect(NATIONS_HUB.h1).toMatch(/1970/)
     expect(NATIONS_HUB.kicker).toMatch(/1970|1986|2010/)
     expect(NATIONS_HUB.kicker).not.toBe("World Cup sides")
+  })
+
+  it("stops the hub titles cannibalising each other on one flagship matchup", () => {
+    const hubs = {
+      home: HOME_PAGE.title,
+      simulate: SIMULATE_PAGE.title,
+      vs: VS_HUB.title,
+      compare: COMPARE_HUB.title,
+      prime: PRIME_HUB.title,
+      teams: TEAMS_HUB.title,
+      nations: NATIONS_HUB.title,
+      search: SEARCH_PAGE.title,
+      bestTeam: BEST_TEAM.title,
+      about: ABOUT_PAGE.title,
+      methodology: METHODOLOGY_PAGE.title,
+    }
+    const flagship = Object.entries(hubs).filter(([, title]) =>
+      /Barcelona 2010\/11 vs Madrid 2016\/17/i.test(title),
+    )
+    expect(flagship.map(([name]) => name)).toEqual([])
+    const titles = Object.values(hubs)
+    expect(new Set(titles).size).toBe(titles.length)
   })
 
   it("drops playable from about, methodology, privacy and contact copy", () => {

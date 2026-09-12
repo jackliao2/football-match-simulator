@@ -218,6 +218,16 @@ button {
   text-shadow: 0 0 32px rgba(212, 180, 90, 0.32);
 }
 
+.home-hero-h1 {
+  font-family: var(--font-brand), "Cinzel", Palatino, "Times New Roman", serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+  text-wrap: balance;
+  color: var(--color-text);
+}
+
 .home-hero-tagline {
   display: flex;
   flex-wrap: wrap;
@@ -263,6 +273,10 @@ button {
     font-size: 2.35rem;
     letter-spacing: 0.38em;
     text-indent: 0.38em;
+  }
+
+  .home-hero-h1 {
+    font-size: 15px;
   }
 
   .home-hero-tagline {

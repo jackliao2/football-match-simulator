@@ -11,10 +11,11 @@ export const PRIME_HUB = {
 } as const
 
 export const HOME_PAGE = {
-  title: "LegendaryMatch — Play Barcelona 2010/11 vs Madrid 2016/17",
+  title: "Football & Soccer Match Simulator — LegendaryMatch",
   description:
     "Online football and soccer match simulator. Play Barcelona 2010/11 against Madrid 2016/17, or Brazil 1970 against Spain 2010 — score, scorers, xG and 100-match win probabilities. The engine writes the result.",
-  kicker: "Football match simulator",
+  kicker: "Historical what-if football",
+  h1: "Football Match Simulator — Play Any Two Legendary Seasons",
   tagline: ["Barcelona 2010/11", "Madrid 2016/17", "One simulated night"],
   ogLine: "Barcelona 2010/11 vs Madrid 2016/17. Brazil 1970 vs Spain 2010.",
   ogSub: "Football match simulator · Named historical squads",
@@ -53,7 +54,7 @@ export const NATIONS_HUB = {
 } as const
 
 export const VS_HUB = {
-  title: "Barcelona 2010/11 vs Madrid 2016/17 — Dream Matches, Named Seasons",
+  title: "Who Would Win? Dream Matchups from Brazil 1970 to Madrid 2016/17",
   description:
     "Barcelona 2010/11 vs Madrid 2016/17, Brazil 1970 vs Spain 2010, United 1999 vs Barça. Simulated scores and who-would-win percentages, not archive results.",
   kicker: "Dream matches",
@@ -79,7 +80,7 @@ export const COMPARE_HUB = {
 } as const
 
 export const SIMULATE_PAGE = {
-  title: "Football Match Simulator: Barcelona 2010/11 vs Madrid 2016/17",
+  title: "Simulate a Football Match: Pick Two Seasons, Get a Score",
   description:
     "Play Barcelona 2010/11 against Madrid 2016/17, or Brazil 1970 against Spain 2010. Named seasons, a simulated score, scorers, xG and 100-match probabilities. The engine writes the result; AI only explains it.",
   kicker: "Football match simulator",
@@ -94,7 +95,7 @@ export const SIMULATE_PAGE = {
 } as const
 
 export const METHODOLOGY_PAGE = {
-  title: "How Barcelona 2010/11 vs Madrid 2016/17 is scored",
+  title: "How the Match Engine Scores a Simulated Football Match",
   description:
     "How LegendaryMatch rates named seasons, prices chances, and scores Barcelona 2010/11 against Madrid 2016/17 across 400 runs. The engine writes the result; AI only explains it.",
   kicker: "400 nights",
@@ -125,7 +126,7 @@ export const BEST_TEAM = {
 } as const
 
 export const ABOUT_PAGE = {
-  title: "About LegendaryMatch — Barcelona 2010/11 vs Madrid 2016/17",
+  title: "About LegendaryMatch — Who Rates the Squads and Why",
   description:
     "Who writes LegendaryMatch, why Barcelona 2010/11 vs Madrid 2016/17 is the worked example, what is editorial judgement and how to report a squad error.",
   kicker: "Jack",
