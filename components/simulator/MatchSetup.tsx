@@ -70,11 +70,11 @@ function namedRailCopy(locale: Locale | undefined, home: NamedSide, away: NamedS
       swap: `Cambiar ${sides}`,
       different: `Elige otro rival, no dos ${home.clubName}.`,
       playing: `Jugando ${home.clubName}…`,
-      expert: `IA ${home.clubName}`,
-      analysing: `Analizando ${home.clubName}…`,
+      expert: "Análisis experto IA",
+      analysing: "Analizando…",
       simulateAgain: `Simular ${home.clubName} de nuevo`,
       back: `Cambiar ${pair}`,
-      expertAgain: `IA ${home.clubName} otra vez`,
+      expertAgain: "Repetir análisis IA",
       next: `Siguiente noche, no ${pair}`,
       dream: "Duelo al azar",
       dreaming: "Eligiendo…",
@@ -93,7 +93,7 @@ function namedRailCopy(locale: Locale | undefined, home: NamedSide, away: NamedS
       copy: `Copiar ${home.clubName}`,
       copied: `Copiado ${home.clubName}`,
       shared: `Compartido ${home.clubName}`,
-      daily: home.displaySeason,
+      daily: "Hoy",
     }
   }
   if (locale === "pt-br") {
@@ -101,11 +101,11 @@ function namedRailCopy(locale: Locale | undefined, home: NamedSide, away: NamedS
       swap: `Trocar ${sides}`,
       different: `Escolha outro rival, não dois ${home.clubName}.`,
       playing: `Jogando ${home.clubName}…`,
-      expert: `IA ${home.clubName}`,
-      analysing: `Analisando ${home.clubName}…`,
+      expert: "Análise especializada IA",
+      analysing: "Analisando…",
       simulateAgain: `Simular ${home.clubName} de novo`,
       back: `Trocar ${pair}`,
-      expertAgain: `IA ${home.clubName} de novo`,
+      expertAgain: "Repetir análise IA",
       next: `Próxima noite, não ${pair}`,
       dream: "Sortear duelo",
       dreaming: "Sorteando…",
@@ -124,18 +124,18 @@ function namedRailCopy(locale: Locale | undefined, home: NamedSide, away: NamedS
       copy: `Copiar ${home.clubName}`,
       copied: `Copiado ${home.clubName}`,
       shared: `Compartilhado ${home.clubName}`,
-      daily: home.displaySeason,
+      daily: "Hoje",
     }
   }
   return {
     swap: `Swap ${sides}`,
     different: `Pick two sides other than ${home.clubName}.`,
     playing: `Playing ${home.clubName}…`,
-    expert: `${home.clubName} AI`,
-    analysing: `Analysing ${home.clubName}…`,
+    expert: "Expert AI Analysis",
+    analysing: "Analysing…",
     simulateAgain: `Simulate ${home.clubName} again`,
     back: `Change ${pair}`,
-    expertAgain: `${home.clubName} AI again`,
+    expertAgain: "Expert AI again",
     next: `Next night, not ${pair}`,
     dream: "Random matchup",
     dreaming: "Rolling…",
@@ -154,7 +154,7 @@ function namedRailCopy(locale: Locale | undefined, home: NamedSide, away: NamedS
     copy: `Copy ${home.clubName}`,
     copied: `Copied ${home.clubName}`,
     shared: `Shared ${home.clubName}`,
-    daily: home.displaySeason,
+    daily: "Daily",
   }
 }
 
