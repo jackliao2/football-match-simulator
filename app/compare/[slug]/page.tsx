@@ -10,6 +10,7 @@ import { getPrimeEntity } from "@/data/prime"
 import { vsPath } from "@/data/matchups"
 import { getTeam } from "@/data/teams"
 import { firstSentence } from "@/lib/page-copy"
+import { teamPath } from "@/lib/paths"
 import { pageMetadata } from "@/lib/seo"
 import { SITE, absoluteUrl } from "@/lib/site"
 import { EditorialByline, personSchema } from "@/components/ui/EditorialByline"
@@ -122,7 +123,20 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
           {pair.verdict.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
+          {pair.historicalNotes?.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
         </div>
+        {pair.sources ? (
+          <p className="mt-4 text-xs leading-6 text-muted">
+            Historical records: {pair.sources.map((source, index) => (
+              <span key={source.url}>
+                {index > 0 ? " · " : ""}
+                <a href={source.url} className="text-gold hover:text-gold-2">{source.label}</a>
+              </span>
+            ))}
+          </p>
+        ) : null}
       </section>
       <EditorialByline />
       <section>
@@ -157,6 +171,11 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
           </h2>
         </div>
         <MatchupRow href={vsPath(left.id, right.id)} home={left} away={right} />
+        <p className="text-sm leading-6 text-muted">
+          Check the named-season squads: <Link href={teamPath(left)} className="text-gold hover:text-gold-2">{leftPeak} lineup</Link>
+          {" · "}
+          <Link href={teamPath(right)} className="text-gold hover:text-gold-2">{rightPeak} lineup</Link>
+        </p>
       </section>
       <QuickMatch home={left} away={right} />
       {leftPrime || rightPrime ? (

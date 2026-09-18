@@ -63,9 +63,9 @@ export const chelsea200405: HistoricalTeam = makeTeam({
   styleTags: ["Low Block", "Set Pieces", "Counter Attack", "Defensive Steel", "Late Goals"],
   summary:
     "Mourinho's first Chelsea. Čech, Terry and Carvalho as the wall, Makelele as the screen, Lampard arriving late, Drogba and Robben as the threat.",
-  seoTitle: "Chelsea 04/05 Squad — Mourinho, Makelele, First Title",
+  seoTitle: "Chelsea 2004/05 Squad & Lineup (04/05)",
   seoDescription:
-    "Mourinho's first Chelsea 2004/05: Čech, Terry and Carvalho as the wall, Makelele as the screen. Ninety-five points — not the 2012 Munich side.",
+    "Chelsea's 2004/05 squad, 4-3-3 lineup and key players under José Mourinho. See the XI behind 95 Premier League points and just 15 goals conceded.",
 })
 
 export const chelsea201112: HistoricalTeam = makeTeam({

@@ -1,7 +1,7 @@
 import type { TeamEditorial } from "@/data/team-editorial"
 
-function d(intro: string, sections: TeamEditorial["sections"]): TeamEditorial {
-  return { intro, sections }
+function d(intro: string, sections: TeamEditorial["sections"], sources?: TeamEditorial["sources"]): TeamEditorial {
+  return { intro, sections, sources }
 }
 
 export const CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
@@ -326,13 +326,20 @@ export const CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
     ],
   ),
   "chelsea-2004-05": d(
-    "Mourinho’s first Chelsea. The 2004/05 title was won with a defence that conceded 15 league goals, Makelele as a named job, and Drogba still becoming Drogba. It is the Premier League’s great anti-romance: a new owner, a new coach, a machine.",
+    "Mourinho’s first Chelsea won the 2004/05 Premier League with 95 points and only 15 goals conceded. This page shows a representative 4-3-3 from that title season, the wider squad, and why Makélélé, Lampard, Duff and Robben mattered as much as the back four.",
     [
       {
         heading: "The 15-goal defence",
         paragraphs: [
-          "Cech, Carvalho, Terry, Gallas and a midfield screen of Makelele with Lampard arriving. They took 95 points. They did not win the Champions League — Liverpool ended that in the semi-final — which is why this page is a league monument rather than a European one.",
-          "Robben and Duff stretched the sides. Cole arrived mid-project. The football was direct when it needed to be and patient when the opponent sat. It was never ornamental.",
+          "Čech behind Terry and Carvalho was the centre of the defence. Paulo Ferreira played at right-back; Wayne Bridge and William Gallas were left-side options. Makélélé screened the back four while Lampard arrived from midfield. Chelsea took 95 league points and kept 25 clean sheets.",
+          "This is the first-title side, not Chelsea's 2011/12 Champions League winners. Liverpool ended its 2004/05 European run in the semi-final, while the league season established a defensive record that still defines the team.",
+        ],
+      },
+      {
+        heading: "The representative 4-3-3 lineup",
+        paragraphs: [
+          "Our model XI places Duff, Drogba and Robben across the front, Lampard and Tiago ahead of Makélélé, then Bridge, Terry, Carvalho and Ferreira in front of Čech. That is a representative season lineup for the simulator, not a claim that Mourinho started the same eleven every match.",
+          "Joe Cole and Eiður Guðjohnsen are in the wider squad and were important alternatives in attack; Gallas could change the left side of the defence. Use the XI and bench below to see exactly which version this model simulates.",
         ],
       },
       {
@@ -342,6 +349,10 @@ export const CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
           "The 2011/12 Champions League winners are a different Chelsea: older, more chaotic, more European. This page is the first-title machine.",
         ],
       },
+    ],
+    [
+      { label: "Premier League: Chelsea's 2004/05 records", url: "https://www.premierleague.com/en/news/2737934" },
+      { label: "Chelsea FC: 2004/05 title season", url: "https://www.chelseafc.com/en/news/article/chelsea-in-the-premier-league" },
     ],
   ),
   "ajax-1994-95": d(

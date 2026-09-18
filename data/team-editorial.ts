@@ -6,6 +6,7 @@ import { NATION_TEAM_EDITORIAL } from "@/data/team-editorial-nations"
 export type TeamEditorial = {
   intro: string
   sections: Array<{ heading: string; paragraphs: string[] }>
+  sources?: Array<{ label: string; url: string }>
 }
 
 const TEAM_EDITORIAL: Record<string, TeamEditorial> = {

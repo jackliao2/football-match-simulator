@@ -58,6 +58,7 @@ describe("GSC landing pages", () => {
     expect(informalSeason(team)).toBe("04/05")
     expect(keys).toEqual(expect.arrayContaining(["chelsea 04 05", "chelsea 04/05 squad", "chelsea fc 2004 squad"]))
     const copy = teamPageCopy(team)
+    expect(copy.title).toContain("Chelsea 2004/05 Squad")
     expect(copy.title.toLowerCase()).toContain("04/05")
     expect(copy.h1).toBe(copy.title)
     expect(copy.h1.toLowerCase()).toContain("squad")
@@ -92,22 +93,27 @@ describe("GSC landing pages", () => {
     expect(milan.title).toMatch(/Sacchi|2010|Europe/)
     expect(milan.title).not.toMatch(/Which Is Better/)
     expect(milan.seoTitle).toMatch(/Sacchi|2010/)
-    expect(compareSearchDescription(milan)).toMatch(/^Milan across European history/)
-    expect(compareSearchDescription(milan)).toMatch(/AC Milan 1988\/89/)
+    expect(milan.seoTitle).toContain("Inter Milan")
+    expect(compareSearchDescription(milan)).toMatch(/^AC Milan's European legacy/)
+    expect(compareSearchDescription(milan)).toMatch(/2009\/10 treble/)
   })
 
   it("gives the Clasico comparison a result-oriented search snippet", () => {
     const clasico = CLUB_COMPARES.find((pair) => pair.slug === "barcelona-vs-real-madrid")!
     expect(clasico.seoTitle).toMatch(/2010\/11|All-Time/)
-    expect(compareSearchDescription(clasico)).toMatch(/^Real Madrid all-time/)
-    expect(compareSearchDescription(clasico)).toMatch(/our answer is Real Madrid/)
+    expect(compareSearchDescription(clasico)).toMatch(/^Real Madrid lead the all-time club case/)
+    expect(compareSearchDescription(clasico)).toMatch(/Barcelona 2010\/11/)
   })
 
   it("answers who-is-better in every compare snippet and FAQ", () => {
     const titles = new Set<string>()
     for (const pair of CLUB_COMPARES) {
       const snippet = compareSearchDescription(pair)
-      expect(snippet.startsWith(pair.verdictHeading), pair.slug).toBe(true)
+      if (pair.searchDescription) {
+        expect(snippet, pair.slug).toBe(pair.searchDescription)
+      } else {
+        expect(snippet.startsWith(pair.verdictHeading), pair.slug).toBe(true)
+      }
       const faqs = compareFaqs(pair, "Left", "Right", "Left peak", "Right peak")
       expect(faqs[0]?.q).toMatch(/Who is better/)
       expect(faqs[0]?.a).toContain(pair.verdictHeading)

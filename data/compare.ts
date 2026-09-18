@@ -7,6 +7,9 @@ export type ClubCompare = {
   rightPeakId: string
   title: string
   seoTitle?: string
+  searchDescription?: string
+  historicalNotes?: string[]
+  sources?: Array<{ label: string; url: string }>
   description: string
   keywords: string[]
   lead: string
@@ -42,7 +45,9 @@ export const CLUB_COMPARES: ClubCompare[] = [
     leftPeakId: "barcelona-2010-11",
     rightPeakId: "real-madrid-2016-17",
     title: "Real Madrid all-time; Barcelona at their modern peak",
-    seoTitle: "Barcelona vs Real Madrid: All-Time vs 2010/11 Peak",
+    seoTitle: "Barcelona vs Real Madrid: All-Time Verdict & Prime Teams",
+    searchDescription:
+      "Real Madrid lead the all-time club case; Barcelona 2010/11 is our single-season pick. Compare the 2011 and 2017 squads, tactics and honours.",
     description:
       "Real Madrid lead the all-time European case; Barcelona 2010/11 reached the higher modern peak. Compare their history, greatest teams and prime matchup.",
     keywords: keywords("Barcelona", "Real Madrid", [
@@ -54,6 +59,14 @@ export const CLUB_COMPARES: ClubCompare[] = [
     verdict: [
       "If “better” means the greater club across history, our answer is Real Madrid. Their European record spans generations rather than one dynasty, and the club repeatedly rebuilt winning teams around different stars and tactical identities.",
       "If it means the best single version of either club, we choose Barcelona 2010/11. Guardiola’s side controlled territory and possession with a clarity that influenced the sport beyond its own trophy cabinet.",
+    ],
+    historicalNotes: [
+      "Barcelona 2010/11 beat Manchester United 3–1 at Wembley, with Pedro, Messi and Villa scoring. That is the single-season side chosen here, not a claim that every Barcelona era outranks Madrid.",
+      "Real Madrid 2016/17 beat Juventus 4–1 in Cardiff and became the first club to retain the Champions League title. Ronaldo scored twice in that final; the squad's depth is why this is our Madrid representative.",
+    ],
+    sources: [
+      { label: "UEFA: Barcelona's 2011 final", url: "https://www.uefa.com/uefachampionsleague/news/0250-0c50f8161545-f1d22c5e52ca-1000--barcelona-crowned-as-messi-and-villa-see-off-united/" },
+      { label: "UEFA: Real Madrid's 2017 final", url: "https://www.uefa.com/uefachampionsleague/news/0250-0c5117c008df-de0901ea6dae-1000/" },
     ],
     rows: [
       ["European longevity", "All-time", "Football identity"],
@@ -253,7 +266,9 @@ export const CLUB_COMPARES: ClubCompare[] = [
     leftPeakId: "ac-milan-1988-89",
     rightPeakId: "inter-milan-2009-10",
     title: "Milan across European history; Inter in 2010",
-    seoTitle: "AC Milan vs Inter: Sacchi History vs 2010 Treble",
+    seoTitle: "AC Milan vs Inter Milan: History & 2010 Treble",
+    searchDescription:
+      "AC Milan's European legacy faces Inter Milan's 2009/10 treble. Compare Sacchi's 1988/89 XI with Mourinho's 2009/10 side and read our verdict.",
     description:
       "AC Milan lead the all-time European case; Inter’s 2009/10 treble is the stronger modern peak. Compare their history, trophies and greatest teams.",
     keywords: keywords("AC Milan", "Inter Milan", [
@@ -268,6 +283,14 @@ export const CLUB_COMPARES: ClubCompare[] = [
     verdict: [
       "AC Milan 1988/89 is one of the most influential club sides ever built. Baresi, the Dutch trio and Sacchi’s press changed how elite teams defended space.",
       "Inter’s 2009/10 treble is the counter: a Champions League won the hard way, plus Serie A and the Coppa. The derby of primes is not a history lecture — it is a matchup.",
+    ],
+    historicalNotes: [
+      "Sacchi's AC Milan beat Steaua Bucureşti 4–0 in the 1989 European Cup final, with Gullit and Van Basten scoring twice each. That 1988/89 team is the historic Milan peak modelled here.",
+      "Mourinho's Inter completed the 2009/10 league, domestic cup and Champions League treble by defeating Bayern in Madrid. The treble is Inter's strongest single-season answer to Milan's longer European record.",
+    ],
+    sources: [
+      { label: "UEFA: Milan's 1989 European Cup", url: "https://www.uefa.com/uefachampionsleague/news/0252-0cda61ca82aa-10643d9167f1-1000/" },
+      { label: "UEFA: Inter's 2010 treble", url: "https://www.uefa.com/uefachampionsleague/news/0250-0c50f4b42c3a-0fbc1831ccbe-1000--inter-join-exclusive-treble-club/" },
     ],
     rows: [
       ["Sacchi influence", "All-time idea", "2010 treble"],
@@ -759,6 +782,7 @@ export function compareParamSlugs(): string[] {
 }
 
 export function compareSearchDescription(pair: ClubCompare): string {
+  if (pair.searchDescription) return pair.searchDescription
   const first = pair.verdict[0].trim()
   const sentence = first.match(/^[^.!?]+[.!?]/)?.[0] ?? first
   return `${pair.verdictHeading}. ${sentence}`.slice(0, 280)

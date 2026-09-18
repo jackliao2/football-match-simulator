@@ -262,7 +262,25 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
               </article>
             ))}
           </div>
+          {editorial.sources ? (
+            <p className="text-xs leading-6 text-muted">
+              Historical records: {editorial.sources.map((source, index) => (
+                <span key={source.url}>
+                  {index > 0 ? " · " : ""}
+                  <a href={source.url} className="text-gold hover:text-gold-2">{source.label}</a>
+                </span>
+              ))}
+            </p>
+          ) : null}
         </section>
+      ) : null}
+
+      {team.id === "chelsea-2004-05" ? (
+        <p className="text-sm leading-6 text-muted">
+          Put this season in context: <Link href="/compare/arsenal-vs-chelsea" className="text-gold hover:text-gold-2">Chelsea 2004/05 vs Arsenal&apos;s Invincibles</Link>
+          {" · "}
+          <Link href="/teams/chelsea/2011-12" className="text-gold hover:text-gold-2">Chelsea&apos;s 2011/12 Champions League squad</Link>
+        </p>
       ) : null}
 
       <StarPlayers team={team} count={6} title={copy.starsHeading} />
