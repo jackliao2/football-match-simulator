@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest"
+import { SEARCH_LANDING_EVIDENCE, LANDING_REVIEW_DATE } from "@/data/search-landing-evidence"
 import { readFileSync } from "node:fs"
 import nextConfig from "../next.config"
 import robots from "@/app/robots"
@@ -803,8 +804,29 @@ describe("GSC landing pages", () => {
     const compare = routes.find((route) => route.url.endsWith("/compare/barcelona-vs-real-madrid"))
     expect(search?.lastModified).toBe(SITE.contentUpdatedIso)
     expect(privacy?.lastModified).toBe(SITE.legalUpdatedIso)
-    expect(compare?.lastModified).toBe(SITE.contentUpdatedIso)
+    expect(compare?.lastModified).toBe(LANDING_REVIEW_DATE)
     expect(SITE.contentUpdatedIso > SITE.legalUpdatedIso).toBe(true)
     expect(SITE.contentUpdated).toMatch(/September 2026/)
+  })
+
+  it("publishes revised landing pages once with fresh dates and indexable team metadata", async () => {
+    const { default: sitemap } = await import("@/app/sitemap")
+    const { teamMetadata } = await import("@/lib/seo")
+    const { teamPath } = await import("@/lib/paths")
+    const routes = sitemap()
+    expect(new Set(routes.map((route) => route.url)).size).toBe(routes.length)
+    for (const path of Object.keys(SEARCH_LANDING_EVIDENCE)) {
+      const matches = routes.filter((route) => new URL(route.url).pathname === path)
+      expect(matches, path).toHaveLength(1)
+      expect(matches[0].lastModified, path).toBe(LANDING_REVIEW_DATE)
+      const team = teams.find((item) => teamPath(item) === path)
+      if (team) {
+        expect(teamMetadata(team).robots).toEqual({ index: true, follow: true })
+        expect(teamMetadata(team).alternates?.canonical).toBe(path)
+      }
+    }
+    for (const team of teams.filter((item) => !isIndexableTeamPage(item.id))) {
+      expect(routes.some((route) => new URL(route.url).pathname === teamPath(team))).toBe(false)
+    }
   })
 })

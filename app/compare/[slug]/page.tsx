@@ -3,6 +3,8 @@ import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
 import { MatchupRow } from "@/components/ui/MatchupRow"
 import { QuickMatch } from "@/components/simulator/QuickMatch"
+import { LandingEvidence } from "@/components/ui/LandingEvidence"
+import { SEARCH_LANDING_EVIDENCE, LANDING_REVIEW_DATE, LANDING_REVIEW_LABEL } from "@/data/search-landing-evidence"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { compareFaqs, compareParamSlugs, compareSearchDescription, compareSeoTitle, resolveClubCompare } from "@/data/compare"
 import { getClub } from "@/data/clubs"
@@ -56,6 +58,7 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
   const leftPeak = `${left.clubName} ${left.displaySeason}`
   const rightPeak = `${right.clubName} ${right.displaySeason}`
   const faqs = compareFaqs(pair, leftClub.name, rightClub.name, leftPeak, rightPeak)
+  const evidence = SEARCH_LANDING_EVIDENCE[`/compare/${pair.slug}`]
 
   return (
     <div className="grid gap-6">
@@ -71,7 +74,7 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
             author: personSchema(),
             publisher: { "@type": "Organization", name: SITE.name, url: absoluteUrl("/") },
             datePublished: SITE.legalUpdatedIso,
-            dateModified: SITE.contentUpdatedIso,
+            dateModified: evidence ? LANDING_REVIEW_DATE : SITE.contentUpdatedIso,
             about: [leftClub.name, rightClub.name],
           }),
         }}
@@ -113,21 +116,18 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
         title={pair.verdictHeading}
         lead={pair.lead}
         crumbs={[{ href: "/compare", label: "Compare" }]}
-      >
-        <p className="compare-answer">{pair.verdictHeading}</p>
-      </PageHeader>
+      />
       <section className="editorial-verdict p-4 sm:p-5">
-        <p className="page-kicker">{pair.verdictHeading}</p>
-        <h2 className="section-title mt-2">{pair.verdictHeading}</h2>
+        <h2 className="section-title">Why we reach this verdict</h2>
         <div className="editorial-copy mt-3">
           {pair.verdict.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
-          {pair.historicalNotes?.map((paragraph) => (
+          {!evidence && pair.historicalNotes?.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
         </div>
-        {pair.sources ? (
+        {!evidence && pair.sources ? (
           <p className="mt-4 text-xs leading-6 text-muted">
             Historical records: {pair.sources.map((source, index) => (
               <span key={source.url}>
@@ -138,7 +138,8 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
           </p>
         ) : null}
       </section>
-      <EditorialByline />
+      <EditorialByline date={evidence ? LANDING_REVIEW_LABEL : SITE.contentUpdated} dateTime={evidence ? LANDING_REVIEW_DATE : SITE.contentUpdatedIso} />
+      {evidence ? <LandingEvidence evidence={evidence} /> : null}
       <section>
         <p className="page-kicker">
           {leftClub.name} vs {rightClub.name}

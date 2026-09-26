@@ -163,7 +163,7 @@ export const NATION_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
       {
         heading: "Against 1998, against 2002 Brazil",
         paragraphs: [
-          "2018 should look faster and more repeatable across many simulations. 1998 should look more like a midfield concert when Zidane is found. Against Brazil 2002 the shared 3-4-3-ish width of Cafu/Roberto Carlos versus Pavard/Hernández is the interesting geometry, not a generic ‘who has better attackers’ shout.",
+          "Against France 1998, the interesting contrast is Mbappé's running against Zidane's influence between the lines. Against Brazil 2002, compare Cafu and Roberto Carlos as wing-backs with Pavard and Hernández as full-backs in a back four. Those are different defensive structures, not a shared formation. Any preference between these sides is a modelled comparison, not a historical result.",
         ],
       },
     ],

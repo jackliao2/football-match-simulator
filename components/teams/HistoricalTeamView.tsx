@@ -1,6 +1,8 @@
 import Link from "next/link"
 import { MonteCarloResults } from "@/components/simulator/MonteCarloResults"
 import { QuickMatch } from "@/components/simulator/QuickMatch"
+import { LandingEvidence } from "@/components/ui/LandingEvidence"
+import { SEARCH_LANDING_EVIDENCE, LANDING_REVIEW_DATE, LANDING_REVIEW_LABEL } from "@/data/search-landing-evidence"
 import { TrackOnMount } from "@/components/TrackOnMount"
 import { Formation } from "@/components/teams/Formation"
 import { SquadList } from "@/components/teams/SquadList"
@@ -46,7 +48,7 @@ export const SEARCH_YEAR_NOTES: Record<string, string> = {
   "manchester-city-2022-23": "City 2023 treble searches mean Guardiola's 2022/23 squad with Haaland, Rodri and Stones stepping into midfield.",
   "manchester-city-2017-18": "City 2018 squad searches usually mean the 100-point 2017/18 Premier League winners.",
   "chelsea-2004-05":
-    "Chelsea 04/05, Chelsea 04 05, Chelsea 2004 squad and Chelsea 2004/05 lineup searches all mean Mourinho's first title side — not the 2012 Champions League winners.",
+    "Chelsea 04/05 is Mourinho's 2004/05 Premier League title-winning side. Chelsea's 2012 Champions League winners belong to a different season.",
   "chelsea-2011-12":
     "Chelsea 11/12, Chelsea 2012 Champions League and Munich 2012 searches mean Di Matteo's knockout side — not Mourinho's 2004/05 title winners.",
   "everton-1984-85":
@@ -116,6 +118,9 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
   const popular = relatedMatchups(team, 4)
   const copy = teamPageCopy(team, opponent)
   const editorial = getTeamEditorial(team.id)
+  const evidence = SEARCH_LANDING_EVIDENCE[teamPath(team)]
+  const updatedIso = evidence ? LANDING_REVIEW_DATE : SITE.contentUpdatedIso
+  const updatedLabel = evidence ? LANDING_REVIEW_LABEL : SITE.contentUpdated
   const indexLabel = team.kind === "nation" ? "National teams" : "Teams"
   const orgHref = orgPath(team.kind, team.clubId)
   const orgIndexHref = orgIndexPath(team.kind)
@@ -175,7 +180,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
               description: copy.description,
               url: absoluteUrl(teamPath(team)),
               datePublished: SITE.legalUpdatedIso,
-              dateModified: SITE.contentUpdatedIso,
+              dateModified: updatedIso,
               author: personSchema(),
               publisher: { "@type": "Organization", name: SITE.name, url: absoluteUrl("/") },
             }),
@@ -224,7 +229,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
             <div className="mt-2">
               <TrophyBadges trophies={team.trophies} />
             </div>
-            {editorial ? <EditorialByline /> : null}
+            {editorial ? <EditorialByline date={updatedLabel} dateTime={updatedIso} /> : null}
           </div>
           <OvrStamp value={team.overallRating} size="xl" label={team.clubCode} />
         </div>
@@ -233,7 +238,13 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
           <p>{team.summary}</p>
           {editorial ? <p>{editorial.intro}</p> : copy.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
         </div>
-        {opponent ? (
+        {evidence ? (
+          <nav aria-label="On this team page" className="flex flex-wrap gap-4 text-sm text-gold">
+            <a href="#squad">Squad and formation</a>
+            <a href="#season-dossier">Season and tactics</a>
+            <a href="#play-match">Simulate this team</a>
+          </nav>
+        ) : opponent ? (
           <QuickMatch home={team} away={opponent} />
         ) : (
           <Link href={`/simulate?home=${team.id}&away=${opponentId}`} className="rail-btn rail-btn-primary rail-btn-inline">
@@ -241,7 +252,16 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
           </Link>
         )}
       </header>
-      {model ? <MonteCarloResults result={model} /> : null}
+      {evidence ? (
+        <>
+          <section id="squad" className="grid scroll-mt-20 gap-4" aria-label="Model squad and formation">
+            <p className="text-sm leading-7 text-muted">{evidence.scope}</p>
+            <SquadList team={team} />
+            <Formation team={team} />
+          </section>
+          <LandingEvidence evidence={evidence} showScope={false} />
+        </>
+      ) : model ? <MonteCarloResults result={model} /> : null}
 
       {editorial ? (
         <section className="grid gap-4 border-y border-white/10 py-6" aria-labelledby="season-dossier">
@@ -284,8 +304,16 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
       ) : null}
 
       <StarPlayers team={team} count={6} title={copy.starsHeading} />
-      <Formation team={team} />
-      <SquadList team={team} />
+      {!evidence ? <Formation team={team} /> : null}
+      {!evidence ? <SquadList team={team} /> : null}
+      {evidence ? (
+        <section id="play-match" className="grid scroll-mt-20 gap-4" aria-label="Simulate this historical team">
+          <h2 className="section-title">Play a hypothetical matchup</h2>
+          <p className="text-sm leading-7 text-muted">The results below come from our simulator. They are separate from the historical season record above.</p>
+          {opponent ? <QuickMatch home={team} away={opponent} /> : <Link href={`/simulate?home=${team.id}`} className="text-gold">Choose an opponent</Link>}
+          {model ? <MonteCarloResults result={model} /> : null}
+        </section>
+      ) : null}
       <TeamRatings team={team} />
       <StyleProfile team={team} />
 

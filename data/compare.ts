@@ -69,10 +69,10 @@ export const CLUB_COMPARES: ClubCompare[] = [
       { label: "UEFA: Real Madrid's 2017 final", url: "https://www.uefa.com/uefachampionsleague/news/0250-0c5117c008df-de0901ea6dae-1000/" },
     ],
     rows: [
-      ["European longevity", "All-time", "Football identity"],
-      ["2016/17 depth", "Prime squad", "2010/11 control"],
-      ["Ronaldo in knockout ties", "Decider", "Messi between the lines"],
-      ["Multiple winning cycles", "Legacy", "Greater tactical influence"],
+      ["2010/11", "Selected season", "2016/17"],
+      ["3–1 vs Manchester United", "European final", "4–1 vs Juventus"],
+      ["Messi between the lines", "Attacking focus", "Ronaldo attacking the box"],
+      ["Xavi, Iniesta and Busquets", "Midfield", "Modrić, Kroos and Casemiro"],
     ],
   },
   {
@@ -85,17 +85,17 @@ export const CLUB_COMPARES: ClubCompare[] = [
     description:
       "Manchester United or Liverpool: English football’s defining rivalry. United 2007/08 against Klopp’s 2018/19 Liverpool — two primes, not one shirt colour.",
     keywords: keywords("Manchester United", "Liverpool"),
-    lead: "United have the larger modern trophy haul and the Ferguson era as a complete dynasty. Liverpool’s European nights and Klopp peak still win a different argument.",
+    lead: "Our United case centres on the Ferguson era; our Liverpool case centres on European success. For the on-pitch comparison, we use United 2007/08 and Liverpool 2018/19 rather than mixing players from different decades.",
     verdictHeading: "United across the modern era; Liverpool on the biggest nights",
     verdict: [
       "If the question is the greater English club from the 1990s onward, Manchester United have the stronger case: league dominance, a Champions League win in Moscow, and a squad that mixed stars without a soft unit.",
       "Liverpool’s answer is European gravitas and the 2018/19 side that pressed as a team. Istanbul 2005 still sits in a different category from domestic consistency. Simulate the peaks rather than collapsing both clubs into one number.",
     ],
     rows: [
-      ["Ferguson dynasty", "Modern era", "European nights"],
-      ["2007/08 balance", "Prime squad", "2018/19 press"],
+      ["2007/08", "Selected season", "2018/19"],
+      ["1–1 vs Chelsea; won on penalties", "European final", "2–0 vs Tottenham"],
       ["Ronaldo–Rooney–Tevez", "Attack", "Salah–Mané–Firmino"],
-      ["League titles", "Trophy case", "Champions League folklore"],
+      ["Movement across the front three", "Tactical emphasis", "Pressing and full-back width"],
     ],
   },
   {
@@ -293,10 +293,10 @@ export const CLUB_COMPARES: ClubCompare[] = [
       { label: "UEFA: Inter's 2010 treble", url: "https://www.uefa.com/uefachampionsleague/news/0250-0c50f4b42c3a-0fbc1831ccbe-1000--inter-join-exclusive-treble-club/" },
     ],
     rows: [
-      ["Sacchi influence", "All-time idea", "2010 treble"],
-      ["1988/89 XI", "Prime squad", "Mourinho 2009/10"],
-      ["Van Basten", "Star", "Milito and Sneijder"],
-      ["More European Cups", "Cabinet", "Unique modern treble"],
+      ["1988/89", "Selected season", "2009/10"],
+      ["4–0 vs Steaua", "European final", "2–0 vs Bayern"],
+      ["Gullit and Van Basten", "Final scorers", "Milito"],
+      ["Coordinated press and defensive line", "Tactical emphasis", "Compact defence and transitions"],
     ],
   },
   {
@@ -386,10 +386,10 @@ export const CLUB_COMPARES: ClubCompare[] = [
       "Atlético 2013/14 won La Liga with a block and a counter that made bigger squads look impatient. That is the version worth simulating against Madrid’s 2013/14 side — the actual neighbours of that season.",
     ],
     rows: [
-      ["European Cups", "All-time", "2014 league title"],
-      ["La Décima", "Prime squad", "Simeone’s block"],
-      ["Ronaldo", "Star", "Costa and Godín"],
-      ["Bernabéu nights", "Stage", "Wanda-era steel"],
+      ["2013/14", "Selected season", "2013/14"],
+      ["Champions League", "Season distinction", "La Liga"],
+      ["4–1 after extra time", "2014 European final", "1–1 after 90 minutes"],
+      ["Ronaldo, Benzema and Bale", "Attacking focus", "Costa and transitions"],
     ],
   },
   {

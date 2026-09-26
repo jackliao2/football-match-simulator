@@ -339,7 +339,7 @@ export const CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
         heading: "The representative 4-3-3 lineup",
         paragraphs: [
           "Our model XI places Duff, Drogba and Robben across the front, Lampard and Tiago ahead of Makélélé, then Bridge, Terry, Carvalho and Ferreira in front of Čech. That is a representative season lineup for the simulator, not a claim that Mourinho started the same eleven every match.",
-          "Joe Cole and Eiður Guðjohnsen are in the wider squad and were important alternatives in attack; Gallas could change the left side of the defence. Use the XI and bench below to see exactly which version this model simulates.",
+          "Joe Cole and Eiður Guðjohnsen are in the wider squad and were important alternatives in attack; Gallas could change the left side of the defence. The XI and bench on this page show exactly which version this model simulates.",
         ],
       },
       {
