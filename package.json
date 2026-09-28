@@ -12,6 +12,7 @@
     "test": "vitest run",
     "check": "npm run lint && npm run typecheck && npm run test",
     "launch:check": "node scripts/check-launch-readiness.mjs",
+    "indexability:check": "node scripts/audit-indexability.mjs",
     "indexnow:submit": "node scripts/submit-indexnow.mjs"
   },
   "dependencies": {

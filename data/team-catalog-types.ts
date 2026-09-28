@@ -1,4 +1,5 @@
 import type { HistoricalTeam, TeamKind, Trophy } from "@/types"
+import { isCurrentTeamEra } from "@/lib/season-status"
 
 export type TeamCatalogEntry = {
   id: string
@@ -19,7 +20,7 @@ export type TeamCatalogEntry = {
 }
 
 export function isCurrentEntry(entry: Pick<TeamCatalogEntry, "kind" | "eraYear">) {
-  return entry.kind === "nation" ? entry.eraYear >= 2026 : entry.eraYear >= 2025
+  return isCurrentTeamEra(entry)
 }
 
 export function catalogStub(entry: TeamCatalogEntry): HistoricalTeam {

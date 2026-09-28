@@ -5,6 +5,7 @@ import { teamPageCopy } from "@/lib/page-copy"
 import { teamPath } from "@/lib/paths"
 import { SITE, absoluteUrl } from "@/lib/site"
 import type { HistoricalTeam } from "@/types"
+import { isCurrentTeamEra } from "@/lib/season-status"
 
 export const CLUB_ALIASES: Record<string, string[]> = {
   barcelona: ["barcelona", "barca", "fc barcelona"],
@@ -214,7 +215,7 @@ export function clubHubKeywords(name: string, clubId: string, teams: HistoricalT
 }
 
 export function isCurrentSquad(team: HistoricalTeam): boolean {
-  return team.kind === "nation" ? team.eraYear >= 2026 : team.eraYear >= 2025
+  return isCurrentTeamEra(team)
 }
 
 export function modelledCurrentSquadNote(team: HistoricalTeam): string {

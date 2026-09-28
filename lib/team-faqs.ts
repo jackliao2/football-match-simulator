@@ -28,6 +28,7 @@ export function teamFaqs(
   const stars = nameList(team)
   const hook = firstSentence(editorial?.intro ?? team.summary)
   const current = isCurrentSquad(team)
+  const modelled = team.seoDescription.toLowerCase().includes("modelled")
   const shortSeason = informalSeason(team)
   const faqs: TeamFaq[] = []
 
@@ -39,7 +40,9 @@ export function teamFaqs(
   } else {
     faqs.push({
       q: `What was the ${team.clubName} ${team.displaySeason} squad?`,
-      a: `${hook} ${stars} are the names people mean for ${team.clubName} ${team.displaySeason}.`,
+      a: modelled
+        ? `This page preserves a modelled ${team.displaySeason} snapshot rather than an official registration list. ${hook} ${stars} are the leading names in this version.`
+        : `${hook} ${stars} are the names people mean for ${team.clubName} ${team.displaySeason}.`,
     })
   }
 

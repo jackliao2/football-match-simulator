@@ -45,7 +45,7 @@ export default function PrimeIndexPage() {
         <h2 className="section-title mt-2">Barcelona 2010/11 is not the highest OVR</h2>
         <div className="editorial-copy mt-3">
           <p>These pages separate three ideas that are often mixed together: the greatest achievement, the strongest single team and the season that best expressed an identity. Manchester United 1998/99 own the greater trophy story; the 2007/08 side may still be the more complete XI. Both arguments belong on the page.</p>
-          <p>Each verdict considers performance in its own era, quality across the squad, tactical influence and how convincingly the team handled elite opposition. Current squads appear for comparison but are never labelled a prime before their story is complete.</p>
+          <p>Each verdict considers performance in its own era, quality across the squad, tactical influence and how convincingly the team handled elite opposition. Recent modelled squads appear for comparison but are never labelled a prime before their story is complete.</p>
         </div>
       </section>
       <div className="grid gap-3 sm:grid-cols-2">

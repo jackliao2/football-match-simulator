@@ -46,7 +46,7 @@ const FAQ = [
   ],
   [
     "Can I simulate a custom football match online?",
-    "Yes. Open the simulator and pick any two named seasons — a club peak, a World Cup side, or two current squads. Run it again for another plausible night, or use a 100-match probability read.",
+    "Yes. Open the simulator and pick any two named seasons — a club peak, a World Cup side, or two recent squads. Run it again for another plausible night, or use a 100-match probability read.",
   ],
   [
     "Is this a football match simulator with AI?",

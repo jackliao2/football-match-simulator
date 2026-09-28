@@ -3,6 +3,7 @@ import { FEATURED_MATCHUPS, allVsPairs, defaultOpponent } from "@/data/matchups"
 import { getTeam, teams } from "@/data/teams"
 import { teamStars } from "@/lib/stars"
 import type { Club, ClubLeague, HistoricalTeam, NationRegion } from "@/types"
+import { isCurrentTeamEra } from "@/lib/season-status"
 import { matchupEditorial, matchupFeature } from "@/data/vs-editorial"
 
 export function copySlot(id: string, modulo: number): number {
@@ -15,7 +16,7 @@ export function copySlot(id: string, modulo: number): number {
 }
 
 export function isCurrentSquad(team: HistoricalTeam): boolean {
-  return team.kind === "nation" ? team.eraYear >= 2026 : team.eraYear >= 2025
+  return isCurrentTeamEra(team)
 }
 
 export function firstSentence(text: string): string {

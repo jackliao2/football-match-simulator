@@ -29,7 +29,7 @@ export const primeEntities: PrimeEntity[] = [
       {
         teamId: "barcelona-2025-26",
         argument:
-          "Not a claimed prime — the current squad. Yamal, Pedri and Flick, so you can put 2025/26 next to the treble years.",
+          "Not a claimed prime — a modelled 2025/26 squad. Yamal, Pedri and Flick sit next to the completed treble seasons for comparison.",
       },
     ],
   },
@@ -57,7 +57,7 @@ export const primeEntities: PrimeEntity[] = [
       {
         teamId: "real-madrid-2025-26",
         argument:
-          "The current squad. Mbappé, Vinícius and Bellingham next to La Décima and 2016/17 — not a claimed prime.",
+          "A modelled 2025/26 squad. Mbappé, Vinícius and Bellingham sit next to La Décima and 2016/17 — not a claimed prime.",
       },
     ],
   },
@@ -84,7 +84,7 @@ export const primeEntities: PrimeEntity[] = [
       },
       {
         teamId: "manchester-united-2025-26",
-        argument: "Amorim's current rebuild. Not a prime — the 2025/26 squad you can throw at 1999 and 2008.",
+        argument: "Amorim's modelled 2025/26 rebuild. Not a prime — a named-season squad you can put against 1999 and 2008.",
       },
     ],
   },
@@ -173,7 +173,7 @@ export const primeEntities: PrimeEntity[] = [
       },
       {
         teamId: "argentina-2026",
-        argument: "Scaloni's current squad. Still Messi's idea — 2026 next to 1986 and Qatar, not a claimed prime.",
+        argument: "Scaloni's modelled 2026 cycle. Still Messi's idea — placed next to 1986 and Qatar, not claimed as a completed prime.",
       },
     ],
   },

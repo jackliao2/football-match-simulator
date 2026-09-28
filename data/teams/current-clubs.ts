@@ -122,7 +122,7 @@ export const realMadrid202526: HistoricalTeam = makeTeam({
     "Alonso's 2025/26 Real Madrid. Mbappé through the middle, Vinícius on the left, Bellingham arriving, and a front line built to settle arguments.",
   seoTitle: "Real Madrid 2025/26 Squad — Modelled Alonso XI, Mbappé",
   seoDescription:
-    "Alonso's modelled 2025/26 Madrid: Mbappé through the middle, Vinícius on the left, Bellingham arriving. A modelled current-season snapshot, not an official club list.",
+    "Alonso's modelled 2025/26 Madrid: Mbappé through the middle, Vinícius on the left, Bellingham arriving. A named-season simulation squad, not an official club list.",
 })
 
 export const manchesterUnited202526: HistoricalTeam = makeTeam({

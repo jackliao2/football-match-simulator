@@ -19,6 +19,7 @@ import { informalSeason, isCurrentSquad, modelledCurrentSquadNote, squadKeywords
 import { teamFaqs } from "@/lib/team-faqs"
 import { SEARCH_YEAR_NOTES } from "@/components/teams/HistoricalTeamView"
 import { getSiteUrl, SITE } from "@/lib/site"
+import { isCurrentTeamEra } from "@/lib/season-status"
 
 describe("GSC landing pages", () => {
   it("keeps match permalinks out of robots crawl budget", () => {
@@ -185,11 +186,17 @@ describe("GSC landing pages", () => {
     }
   })
 
-  it("labels modelled current squads as modelled", () => {
+  it("rolls current-squad labels forward with the calendar", () => {
     const club = getTeam("arsenal-2025-26")!
     const nation = getTeam("brazil-2026")!
-    expect(isCurrentSquad(club)).toBe(true)
-    expect(isCurrentSquad(nation)).toBe(true)
+    const beforeClubRollover = new Date("2026-06-30T12:00:00Z")
+    const afterTournament = new Date("2026-09-28T12:00:00Z")
+    expect(isCurrentTeamEra(club, beforeClubRollover)).toBe(true)
+    expect(isCurrentTeamEra(club, afterTournament)).toBe(false)
+    expect(isCurrentTeamEra(nation, beforeClubRollover)).toBe(true)
+    expect(isCurrentTeamEra(nation, afterTournament)).toBe(false)
+    expect(isCurrentSquad(club)).toBe(false)
+    expect(isCurrentSquad(nation)).toBe(false)
     expect(modelledCurrentSquadNote(club)).toMatch(/modelled current-season/)
     expect(modelledCurrentSquadNote(nation)).toMatch(/modelled tournament-cycle/)
     expect(modelledCurrentSquadNote(getTeam("england-2026")!)).toMatch(/modelled/)
@@ -321,11 +328,11 @@ describe("GSC landing pages", () => {
     }
   })
 
-  it("writes current-squad FAQs as modelled, not official lineups", () => {
+  it("treats completed modelled seasons as named-season dossiers", () => {
     const faqs = teamFaqs(getTeam("barcelona-2025-26")!, { runs: 100 })
-    expect(faqs[0]?.q).toMatch(/official/)
+    expect(faqs[0]?.q).toBe("What was the Barcelona 2025/26 squad?")
     expect(faqs[0]?.a).toMatch(/modelled/i)
-    expect(faqs[0]?.a).not.toMatch(/highest-rated names in this/)
+    expect(faqs[0]?.q).not.toMatch(/official/)
     expect(faqs.some((item) => item.q.startsWith("How do I play"))).toBe(false)
   })
 

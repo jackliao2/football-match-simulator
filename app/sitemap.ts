@@ -8,6 +8,7 @@ import { clubs, nations } from "@/data/clubs"
 import { teams } from "@/data/teams"
 import { teamPath } from "@/lib/paths"
 import { SITE, absoluteUrl } from "@/lib/site"
+import { isCurrentTeamEra } from "@/lib/season-status"
 import { LOCALES, languageAlternates, localizedPath, type Locale } from "@/lib/i18n"
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -72,7 +73,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }))
 
   const teamRoutes = teams.filter((team) => isIndexableTeamPage(team.id)).map((team) => {
-    const current = team.kind === "nation" ? team.eraYear >= 2026 : team.eraYear >= 2025
+    const current = isCurrentTeamEra(team)
     return {
       url: absoluteUrl(teamPath(team)),
       changeFrequency: current ? ("weekly" as const) : ("monthly" as const),
