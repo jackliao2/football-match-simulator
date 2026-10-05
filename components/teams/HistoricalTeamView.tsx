@@ -2,6 +2,8 @@ import Link from "next/link"
 import { MonteCarloResults } from "@/components/simulator/MonteCarloResults"
 import { QuickMatch } from "@/components/simulator/QuickMatch"
 import { LandingEvidence } from "@/components/ui/LandingEvidence"
+import { CLUB_COMPARES } from "@/data/compare"
+import { SEARCH_REVIEW_PATHS, SEARCH_REVIEW_DATE, SEARCH_REVIEW_LABEL } from "@/data/search-review"
 import { SEARCH_LANDING_EVIDENCE, LANDING_REVIEW_DATE, LANDING_REVIEW_LABEL } from "@/data/search-landing-evidence"
 import { TrackOnMount } from "@/components/TrackOnMount"
 import { Formation } from "@/components/teams/Formation"
@@ -119,8 +121,10 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
   const copy = teamPageCopy(team, opponent)
   const editorial = getTeamEditorial(team.id)
   const evidence = SEARCH_LANDING_EVIDENCE[teamPath(team)]
-  const updatedIso = evidence ? LANDING_REVIEW_DATE : SITE.contentUpdatedIso
-  const updatedLabel = evidence ? LANDING_REVIEW_LABEL : SITE.contentUpdated
+  const reviewed = SEARCH_REVIEW_PATHS.has(teamPath(team))
+  const updatedIso = reviewed ? SEARCH_REVIEW_DATE : evidence ? LANDING_REVIEW_DATE : SITE.contentUpdatedIso
+  const updatedLabel = reviewed ? SEARCH_REVIEW_LABEL : evidence ? LANDING_REVIEW_LABEL : SITE.contentUpdated
+  const comparisons = CLUB_COMPARES.filter((pair) => pair.leftPeakId === team.id || pair.rightPeakId === team.id).slice(0, 3)
   const indexLabel = team.kind === "nation" ? "National teams" : "Teams"
   const orgHref = orgPath(team.kind, team.clubId)
   const orgIndexHref = orgIndexPath(team.kind)
@@ -255,6 +259,13 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
       {evidence ? (
         <>
           <section id="squad" className="grid scroll-mt-20 gap-4" aria-label="Model squad and formation">
+            {team.id === "chelsea-2004-05" ? (
+              <div className="result-panel p-4">
+                <h2 className="section-title">Chelsea 04/05 lineup at a glance</h2>
+                <p className="mt-3 text-sm leading-7 text-text">José Mourinho · 4-3-3 · Premier League and League Cup winners.</p>
+                <p className="mt-2 text-sm leading-7 text-muted">Our representative XI: {team.startingXI.map((id) => team.players.find((player) => player.id === id)?.name).join(", ")}. Gallas, Joe Cole and Guðjohnsen are alternative selections; rotation and injuries changed the actual lineup across the season.</p>
+              </div>
+            ) : null}
             <p className="text-sm leading-7 text-muted">{evidence.scope}</p>
             <SquadList team={team} />
             <Formation team={team} />
@@ -316,6 +327,14 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
       ) : null}
       <TeamRatings team={team} />
       <StyleProfile team={team} />
+      {comparisons.length > 0 ? (
+        <nav className="result-panel p-4" aria-label="Related team comparisons">
+          <h2 className="section-title">Compare this team&apos;s era</h2>
+          <ul className="mt-3 grid gap-3 text-sm text-gold">
+            {comparisons.map((pair) => <li key={pair.slug}><Link href={`/compare/${pair.slug}`}>{getTeam(pair.leftPeakId)?.clubName} vs {getTeam(pair.rightPeakId)?.clubName}: {getTeam(pair.leftPeakId)?.displaySeason} and {getTeam(pair.rightPeakId)?.displaySeason}</Link></li>)}
+          </ul>
+        </nav>
+      ) : null}
 
       <section className="result-panel">
         <h2 className="border-b border-white/10 px-3 py-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">

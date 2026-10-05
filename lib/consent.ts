@@ -4,8 +4,10 @@ export type ConsentChoice = "granted" | "denied"
 
 export function readConsent(): ConsentChoice | null {
   if (typeof window === "undefined") return null
-  const saved = window.localStorage.getItem(CONSENT_KEY)
-  return saved === "granted" || saved === "denied" ? saved : null
+  try {
+    const saved = window.localStorage.getItem(CONSENT_KEY)
+    return saved === "granted" || saved === "denied" ? saved : null
+  } catch { return null }
 }
 
 export function consentSignals(value: ConsentChoice) {

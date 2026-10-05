@@ -8,6 +8,7 @@ export type ClubCompare = {
   title: string
   seoTitle?: string
   searchDescription?: string
+  criteria?: Array<{ label: string; answer: string }>
   historicalNotes?: string[]
   sources?: Array<{ label: string; url: string }>
   description: string
@@ -82,6 +83,13 @@ export const CLUB_COMPARES: ClubCompare[] = [
     leftPeakId: "manchester-united-2007-08",
     rightPeakId: "liverpool-2018-19",
     title: "United across the modern era; Liverpool on the biggest nights",
+    seoTitle: "Man United vs Liverpool: History & Peak Teams",
+    searchDescription: "Compare Manchester United's Ferguson-era dominance with Liverpool's European case, then explore the 2007/08 and 2018/19 squads and tactics.",
+    criteria: [
+      { label: "Which club is better historically?", answer: "The criterion matters. Our United case focuses on Ferguson-era domestic dominance; our Liverpool case focuses on European success. This page does not rank current form or provide a live trophy count." },
+      { label: "Which peak teams are compared?", answer: "United 2007/08 and Liverpool 2018/19: Ronaldo, Rooney and Tévez against Salah, Mané and Firmino. Both selected sides won the Champions League; the tactical comparison asks how United's attacking movement meets Liverpool's press." },
+      { label: "Who wins a match between them?", answer: "The simulator tests those two named squads under one model. Its result is a hypothetical matchup, separate from the historical club comparison." },
+    ],
     description:
       "Manchester United or Liverpool: English football’s defining rivalry. United 2007/08 against Klopp’s 2018/19 Liverpool — two primes, not one shirt colour.",
     keywords: keywords("Manchester United", "Liverpool"),
@@ -266,9 +274,14 @@ export const CLUB_COMPARES: ClubCompare[] = [
     leftPeakId: "ac-milan-1988-89",
     rightPeakId: "inter-milan-2009-10",
     title: "Milan across European history; Inter in 2010",
-    seoTitle: "AC Milan vs Inter Milan: History & 2010 Treble",
+    seoTitle: "AC Milan vs Inter Milan: Who Is Better? History & 2010",
     searchDescription:
       "AC Milan's European legacy faces Inter Milan's 2009/10 treble. Compare Sacchi's 1988/89 XI with Mourinho's 2009/10 side and read our verdict.",
+    criteria: [
+      { label: "Which club has the stronger European case?", answer: "Our historical European verdict favours AC Milan. That judgment concerns European legacy, rather than today's form or every domestic competition." },
+      { label: "Which season has the broader trophy achievement?", answer: "Inter 2009/10 won the league, domestic cup and Champions League treble. Milan 1988/89 is selected for Sacchi's European Cup-winning team and tactical influence. Those are different reasons to choose a peak." },
+      { label: "Who wins the peak matchup?", answer: "Compare Milan 1988/89 with Inter 2009/10 below, then simulate them. A simulated score does not settle which club is greater across its entire history." },
+    ],
     description:
       "AC Milan lead the all-time European case; Inter’s 2009/10 treble is the stronger modern peak. Compare their history, trophies and greatest teams.",
     keywords: keywords("AC Milan", "Inter Milan", [

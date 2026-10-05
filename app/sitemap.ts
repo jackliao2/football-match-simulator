@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next"
 import { SEARCH_LANDING_EVIDENCE, LANDING_REVIEW_DATE } from "@/data/search-landing-evidence"
+import { SEARCH_REVIEW_PATHS, SEARCH_REVIEW_DATE } from "@/data/search-review"
 import { allVsPairs } from "@/data/matchups"
 import { CLUB_COMPARES } from "@/data/compare"
 import { primeEntities } from "@/data/prime"
@@ -112,7 +113,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...primeRoutes,
     ...vsRoutes,
     ...compareRoutes,
-  ].map((route) => SEARCH_LANDING_EVIDENCE[new URL(route.url).pathname]
-    ? { ...route, lastModified: LANDING_REVIEW_DATE }
-    : route)
+  ].map((route) => {
+    const path = new URL(route.url).pathname
+    return SEARCH_REVIEW_PATHS.has(path)
+      ? { ...route, lastModified: SEARCH_REVIEW_DATE }
+      : SEARCH_LANDING_EVIDENCE[path] ? { ...route, lastModified: LANDING_REVIEW_DATE } : route
+  })
 }

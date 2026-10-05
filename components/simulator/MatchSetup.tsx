@@ -427,6 +427,7 @@ export function MatchSetup({
   async function runHundred() {
     if (sameTeam || play || analysisLoading || !squadsReady) return
     track("simulate_100", { home: home.id, away: away.id, runs: BATCH_RUNS })
+    track("simulator_started", { home: home.id, away: away.id, source: "setup", mode: "batch" })
     setAnalysis(null)
     setAnalysisError(null)
     setAnalysisLoading(false)

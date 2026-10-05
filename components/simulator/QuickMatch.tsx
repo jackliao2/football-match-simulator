@@ -39,6 +39,7 @@ export function QuickMatch({
   async function runHundred() {
     if (play) return
     track("simulate_100", { home: home.id, away: away.id, source: "quick", runs: BATCH_RUNS })
+    track("simulator_started", { home: home.id, away: away.id, source: "quick", mode: "batch" })
     setPlay({ kind: "batch-running", done: 0, total: BATCH_RUNS })
     const next = await simulateManyAsync(
       home,

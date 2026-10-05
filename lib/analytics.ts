@@ -1,4 +1,5 @@
 import { readConsent } from "@/lib/consent"
+import { searchVisit } from "@/lib/search-attribution"
 
 export type AnalyticsEvent =
   | "team_page_view"
@@ -18,6 +19,8 @@ export type AnalyticsEvent =
   | "ai_analysis_failed"
   | "language_changed"
   | "analytics_consent_updated"
+  | "organic_search_landing_view"
+  | "organic_search_simulator_started"
 
 type AnalyticsPayload = Record<string, string | number | boolean | null | undefined>
 
@@ -38,10 +41,23 @@ export function track(event: AnalyticsEvent, payload: AnalyticsPayload = {}): vo
   if (typeof window === "undefined") return
   if (readConsent() !== "granted") return
 
-  const cleaned: Record<string, unknown> = { event }
+  const cleaned: Record<string, unknown> = { event, page_path: window.location.pathname }
   for (const [key, value] of Object.entries(payload)) {
     if (value !== undefined) cleaned[key] = value
   }
 
   ensureGtag()("event", event, cleaned)
+  if (event === "simulator_started") {
+    const attribution = searchVisit("conversion")
+    if (attribution) {
+      ensureGtag()("event", "organic_search_simulator_started", {
+        ...cleaned, ...attribution, event: "organic_search_simulator_started",
+      })
+    }
+  }
+}
+
+export function trackSearchLanding(): void {
+  const attribution = searchVisit("view")
+  if (attribution) track("organic_search_landing_view", attribution)
 }

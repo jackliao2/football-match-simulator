@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest"
 import { SEARCH_LANDING_EVIDENCE, LANDING_REVIEW_DATE } from "@/data/search-landing-evidence"
+import { SEARCH_REVIEW_PATHS, SEARCH_REVIEW_DATE } from "@/data/search-review"
 import { readFileSync } from "node:fs"
 import nextConfig from "../next.config"
 import robots from "@/app/robots"
@@ -825,7 +826,7 @@ describe("GSC landing pages", () => {
     for (const path of Object.keys(SEARCH_LANDING_EVIDENCE)) {
       const matches = routes.filter((route) => new URL(route.url).pathname === path)
       expect(matches, path).toHaveLength(1)
-      expect(matches[0].lastModified, path).toBe(LANDING_REVIEW_DATE)
+      expect(matches[0].lastModified, path).toBe(SEARCH_REVIEW_PATHS.has(path) ? SEARCH_REVIEW_DATE : LANDING_REVIEW_DATE)
       const team = teams.find((item) => teamPath(item) === path)
       if (team) {
         expect(teamMetadata(team).robots).toEqual({ index: true, follow: true })

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { CONSENT_KEY, consentSignals, readConsent, type ConsentChoice } from "@/lib/consent"
 import { ensureGtag, track } from "@/lib/analytics"
+import { clearSearchVisit } from "@/lib/search-attribution"
 
 function updateConsent(value: ConsentChoice) {
   ensureGtag()("consent", "update", consentSignals(value))
@@ -12,7 +13,10 @@ export function AnalyticsConsent() {
   const [visible, setVisible] = useState(false)
   useEffect(() => {
     const saved = readConsent()
-    if (saved) updateConsent(saved)
+    if (saved) {
+      updateConsent(saved)
+      if (saved === "denied") clearSearchVisit()
+    }
     else {
       const timer = window.setTimeout(() => setVisible(true), 0)
       return () => window.clearTimeout(timer)
@@ -22,6 +26,8 @@ export function AnalyticsConsent() {
   function choose(value: ConsentChoice) {
     window.localStorage.setItem(CONSENT_KEY, value)
     updateConsent(value)
+    if (value === "denied") clearSearchVisit()
+    window.dispatchEvent(new Event("legendarymatch:consent"))
     setVisible(false)
     if (value === "granted") track("analytics_consent_updated", { analytics_storage: value })
   }

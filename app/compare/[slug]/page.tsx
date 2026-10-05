@@ -16,6 +16,7 @@ import { teamPath } from "@/lib/paths"
 import { pageMetadata } from "@/lib/seo"
 import { SITE, absoluteUrl } from "@/lib/site"
 import { EditorialByline, personSchema } from "@/components/ui/EditorialByline"
+import { SEARCH_REVIEW_PATHS, SEARCH_REVIEW_DATE, SEARCH_REVIEW_LABEL } from "@/data/search-review"
 
 export const dynamicParams = false
 
@@ -59,6 +60,9 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
   const rightPeak = `${right.clubName} ${right.displaySeason}`
   const faqs = compareFaqs(pair, leftClub.name, rightClub.name, leftPeak, rightPeak)
   const evidence = SEARCH_LANDING_EVIDENCE[`/compare/${pair.slug}`]
+  const reviewed = SEARCH_REVIEW_PATHS.has(`/compare/${pair.slug}`)
+  const updatedDate = reviewed ? SEARCH_REVIEW_DATE : evidence ? LANDING_REVIEW_DATE : SITE.contentUpdatedIso
+  const updatedLabel = reviewed ? SEARCH_REVIEW_LABEL : evidence ? LANDING_REVIEW_LABEL : SITE.contentUpdated
 
   return (
     <div className="grid gap-6">
@@ -74,7 +78,7 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
             author: personSchema(),
             publisher: { "@type": "Organization", name: SITE.name, url: absoluteUrl("/") },
             datePublished: SITE.legalUpdatedIso,
-            dateModified: evidence ? LANDING_REVIEW_DATE : SITE.contentUpdatedIso,
+            dateModified: updatedDate,
             about: [leftClub.name, rightClub.name],
           }),
         }}
@@ -117,6 +121,19 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
         lead={pair.lead}
         crumbs={[{ href: "/compare", label: "Compare" }]}
       />
+      {pair.criteria ? (
+        <section className="grid gap-3" aria-labelledby="comparison-answer">
+          <h2 id="comparison-answer" className="section-title">Which is better? Choose the comparison</h2>
+          <div className="grid gap-3 md:grid-cols-3">
+            {pair.criteria.map((criterion) => (
+              <article key={criterion.label} className="result-panel p-4">
+                <h3 className="font-brand text-lg font-semibold text-text">{criterion.label}</h3>
+                <p className="mt-3 text-sm leading-7 text-muted">{criterion.answer}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
       <section className="editorial-verdict p-4 sm:p-5">
         <h2 className="section-title">Why we reach this verdict</h2>
         <div className="editorial-copy mt-3">
@@ -138,7 +155,7 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
           </p>
         ) : null}
       </section>
-      <EditorialByline date={evidence ? LANDING_REVIEW_LABEL : SITE.contentUpdated} dateTime={evidence ? LANDING_REVIEW_DATE : SITE.contentUpdatedIso} />
+      <EditorialByline date={updatedLabel} dateTime={updatedDate} />
       {evidence ? <LandingEvidence evidence={evidence} /> : null}
       <section>
         <p className="page-kicker">
