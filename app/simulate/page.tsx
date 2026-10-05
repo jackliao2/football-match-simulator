@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { AI_FORECAST_RUNS, BATCH_RUNS } from "@/lib/simulation-settings"
 import { MatchSetupGate } from "@/components/simulator/MatchSetupGate"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { SIMULATE_PAGE } from "@/data/collection-copy"
@@ -27,11 +28,11 @@ export const metadata: Metadata = pageMetadata({
 const FAQ = [
   [
     "Can I simulate Barcelona 2010/11 against Real Madrid 2016/17?",
-    "Yes. Those two sides are named seasons in the catalogue. Pick them, run one match, or open Barcelona AI for a 100-match spread. The score comes from ratings, tactics and a seed — not a chatbot.",
+    `Yes. Pick those named seasons and run one match or a ${BATCH_RUNS}-match batch. Optional Barcelona AI explains a separate ${AI_FORECAST_RUNS}-match forecast. Ratings, tactics and a seed determine the scores.`,
   ],
   [
     "Does AI decide the winner?",
-    "No. Barcelona AI reads the two squads and the 100-match evidence after the engine has already produced the numbers. It cannot vote.",
+    `No. Barcelona AI explains the engine's separate ${AI_FORECAST_RUNS}-match forecast. It does not replace your single result or ${BATCH_RUNS}-match batch and cannot choose the winner.`,
   ],
   [
     "Is this predicting a real fixture?",
@@ -126,7 +127,7 @@ export default async function SimulatePage({
           <article className="result-panel p-4">
             <h3 className="font-brand text-lg font-semibold text-text">{SIMULATE_PAGE.cardSpread}</h3>
             <p className="mt-2 text-sm leading-7 text-muted">
-              A single result is one night. A Barcelona 100-match spread keeps a 3–1 from being mistaken for a law of nature.
+              A single result is one night. A {BATCH_RUNS}-match spread keeps a 3–1 from being mistaken for a law of nature.
             </p>
           </article>
           <article className="result-panel p-4">

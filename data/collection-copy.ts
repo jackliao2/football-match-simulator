@@ -1,10 +1,12 @@
+import { BATCH_RUNS } from "@/lib/simulation-settings"
+
 export const PRIME_HUB = {
   title: "Club Primes: Barcelona 2010/11, United 2007/08, Liverpool 2018/19",
   description:
     "When was Barcelona's prime? 2010/11. United's? Moscow 2008. Liverpool's? Klopp 2018/19. Each dossier names the pick and the famous counter-season.",
   kicker: "When was their prime?",
   h1: "Barcelona's prime is 2010/11. United's is 2007/08.",
-  lead: "Liverpool's stronger side is 2018/19, not Istanbul. Brazil's is 1970. Current squads sit on the page for comparison; they are never labelled a prime before the story is finished.",
+  lead: "Liverpool's stronger side is 2018/19, not Istanbul. Brazil's is 1970. Recent modelled season snapshots sit alongside completed historical peaks for comparison; they are not live rosters or claimed primes.",
   homeHeading: "Barcelona 2010/11. Liverpool 2018/19. United 07/08.",
   standardKicker: "Barcelona 2010/11",
   guideKicker: "United 2007/08",
@@ -13,7 +15,7 @@ export const PRIME_HUB = {
 export const HOME_PAGE = {
   title: "Football & Soccer Match Simulator — LegendaryMatch",
   description:
-    "Online football and soccer match simulator. Play Barcelona 2010/11 against Madrid 2016/17, or Brazil 1970 against Spain 2010 — score, scorers, xG and 100-match win probabilities. The engine writes the result.",
+    `Online football and soccer match simulator. Play Barcelona 2010/11 against Madrid 2016/17, or Brazil 1970 against Spain 2010 — score, scorers, xG and ${BATCH_RUNS}-match win probabilities.`,
   kicker: "Historical what-if football",
   h1: "Football Match Simulator — Play Any Two Legendary Seasons",
   tagline: ["Barcelona 2010/11", "Madrid 2016/17", "One simulated night"],
@@ -82,7 +84,7 @@ export const COMPARE_HUB = {
 export const SIMULATE_PAGE = {
   title: "Simulate a Football Match: Pick Two Seasons, Get a Score",
   description:
-    "Play Barcelona 2010/11 against Madrid 2016/17, or Brazil 1970 against Spain 2010. Named seasons, a simulated score, scorers, xG and 100-match probabilities. The engine writes the result; AI only explains it.",
+    `Play Barcelona 2010/11 against Madrid 2016/17, or Brazil 1970 against Spain 2010. Scores, scorers, xG and ${BATCH_RUNS}-match probabilities from named-season squads.`,
   kicker: "Football match simulator",
   h1: "Play Barcelona 2010/11 against Madrid 2016/17",
   lead: "Or Brazil 1970 against Spain 2010. Every side is a named season, not a slider. The match engine writes the score; Barcelona AI explains Barça vs Madrid afterwards and never gets a vote.",

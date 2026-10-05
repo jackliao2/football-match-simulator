@@ -2,6 +2,7 @@ import { CLUB_TEAM_EDITORIAL } from "@/data/team-editorial-clubs"
 import { EXPANDED_CLUB_TEAM_EDITORIAL, EXPANDED_NATION_TEAM_EDITORIAL } from "@/data/team-editorial-expand"
 import { MORE_CLUB_TEAM_EDITORIAL, MORE_NATION_TEAM_EDITORIAL } from "@/data/team-editorial-more"
 import { NATION_TEAM_EDITORIAL } from "@/data/team-editorial-nations"
+import { EDITORIAL_SOURCES } from "@/data/editorial-sources"
 
 export type TeamEditorial = {
   intro: string
@@ -19,7 +20,9 @@ const TEAM_EDITORIAL: Record<string, TeamEditorial> = {
 }
 
 export function getTeamEditorial(teamId: string): TeamEditorial | undefined {
-  return TEAM_EDITORIAL[teamId]
+  const editorial = TEAM_EDITORIAL[teamId]
+  if (!editorial) return undefined
+  return { ...editorial, sources: editorial.sources ?? EDITORIAL_SOURCES[teamId] }
 }
 
 export function isIndexableTeamPage(teamId: string): boolean {

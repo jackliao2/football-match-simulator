@@ -63,10 +63,10 @@ export const realMadrid201314: HistoricalTeam = makeTeam({
   ],
   styleTags: ["Counter Attack", "BBC Front Three", "Wide Forwards", "Direct Transition", "Set-Piece Threat"],
   summary:
-    "Ancelotti's La Décima side. Ronaldo, Bale and Benzema on the break, Di María everywhere, and Ramos arriving in extra time.",
-  seoTitle: "Real Madrid 2013/14 Squad — La Décima, Ramos Extra Time",
+    "Ancelotti's La Décima side. Ronaldo, Bale and Benzema on the break, Di María everywhere, and Ramos equalising in the 93rd minute before extra time.",
+  seoTitle: "Real Madrid 2013/14 Squad — La Décima",
   seoDescription:
-    "Real Madrid 2013/14 squad: Ancelotti's Décima. Ronaldo, Bale, Benzema, Ramos in extra time against Atlético — not Zidane's three-in-a-row.",
+    "Real Madrid 2013/14 squad: Ancelotti's La Décima winners. Ronaldo, Bale, Benzema and Ramos's 93rd-minute equaliser before the 4–1 final win.",
 })
 
 export const realMadrid201617: HistoricalTeam = makeTeam({

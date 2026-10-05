@@ -15,6 +15,7 @@ import { TeamCardCarousel } from "@/components/ui/TeamCardCarousel"
 import { SITE, absoluteUrl } from "@/lib/site"
 import type { HistoricalTeam } from "@/types"
 import type { Metadata } from "next"
+import { AI_FORECAST_RUNS, BATCH_RUNS } from "@/lib/simulation-settings"
 import { languageAlternates } from "@/lib/i18n"
 
 const HOME_DESCRIPTION = HOME_PAGE.description
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
 const FAQ = [
   [
     "Is this also a soccer match simulator?",
-    "Yes. Football and soccer are the same sport here. Pick two named seasons, play one game, or open a 100-match probability read.",
+    `Yes. Football and soccer are the same sport here. Pick two named seasons, play one game, or open a ${BATCH_RUNS}-match probability read.`,
   ],
   [
     "Is this predicting a real match?",
@@ -46,19 +47,19 @@ const FAQ = [
   ],
   [
     "Can I simulate a custom football match online?",
-    "Yes. Open the simulator and pick any two named seasons — a club peak, a World Cup side, or two recent squads. Run it again for another plausible night, or use a 100-match probability read.",
+    `Yes. Open the simulator and pick any two named seasons — a club peak, a World Cup side, or two recent squads. Run it again for another plausible night, or use a ${BATCH_RUNS}-match probability read.`,
   ],
   [
     "Is this a football match simulator with AI?",
-    "The score comes from the match engine — ratings, tactics and a seed — not from a chatbot picking a winner. Optional analysis then explains the 100-match probabilities.",
+    `The engine writes the scores. Run ${BATCH_RUNS} matches to inspect the distribution, or request optional AI analysis of a separate ${AI_FORECAST_RUNS}-match forecast. The chatbot does not decide the winner.`,
   ],
   [
     "Why does the result change when I simulate again?",
-    "Each new seed is another plausible game, so the score and scorers can change. A 100-match distribution is the wider pattern, not a law of nature.",
+    `Each new seed is another plausible game, so the score and scorers can change. A ${BATCH_RUNS}-match distribution is the wider pattern, not a law of nature.`,
   ],
   [
     "What does Expert AI Analysis do?",
-    "The engine scores the selected sides first. The optional analysis then reads those squads, managers, shapes and the 100-match evidence. It does not secretly replace the simulated result.",
+    `It explains a separate ${AI_FORECAST_RUNS}-match engine forecast for the selected squads, managers and shapes. Your single-match result and ${BATCH_RUNS}-match batch remain separate; the AI does not replace either.`,
   ],
   [
     "How do you rate players?",
@@ -77,7 +78,7 @@ const FAQ = [
 const HOW_STEPS = [
   ["01", "Pick two seasons", "Every card is a named season with an XI — Guardiola’s Barça, Zidane’s Madrid, a World Cup side — not a badge with a slider."],
   ["02", "Play one night", "The engine combines those ratings and a seed into the score, xG, scorers and match events. Repeating the fixture is another plausible night."],
-  ["03", "Read the 100-match spread", "One 2–1 is one night. A hundred alternate scores is the wider pattern, and the optional AI read never votes."],
+  ["03", `Read the ${BATCH_RUNS}-match spread`, `One 2–1 is one night. ${BATCH_RUNS} alternate scores is the wider pattern, and the optional AI read never votes.`],
 ] as const
 
 export default function HomePage() {

@@ -22,6 +22,7 @@ import { copyOrShare, matchShareCopy } from "@/lib/share"
 import { createSeed } from "@/lib/match-id"
 import { clearMatchHistory, loadLastMatchup, loadMatchHistory, pushMatchHistory, saveLastMatchup, type StoredMatch } from "@/lib/play-memory"
 import { BATCH_RUNS, simulateManyAsync, simulateMatch } from "@/lib/simulation"
+import { AI_FORECAST_RUNS } from "@/lib/simulation-settings"
 import type { PreMatchAnalysis } from "@/lib/ai/analysis"
 import { teamSquad, type SquadMember } from "@/lib/stars"
 import type { HistoricalTeam, MonteCarloResult, SimulatedMatch, TeamKind } from "@/types"
@@ -77,7 +78,7 @@ function namedRailCopy(locale: Locale | undefined, home: NamedSide, away: NamedS
       next: `Siguiente noche, no ${pair}`,
       dream: "Duelo al azar",
       dreaming: "Eligiendo…",
-      separateAi: `Pronóstico independiente de 100 partidos. Tu ${home.clubName} anterior sigue en Resultado ${home.clubName}.`,
+      separateAi: `Pronóstico independiente de ${AI_FORECAST_RUNS} partidos. Tu ${home.clubName} anterior sigue en Resultado ${home.clubName}.`,
       matchTab: `Resultado ${home.clubName}`,
       aiTab: `IA ${home.clubName}`,
       batchTab: `${BATCH_RUNS} partidos`,
@@ -109,7 +110,7 @@ function namedRailCopy(locale: Locale | undefined, home: NamedSide, away: NamedS
       next: `Próxima noite, não ${pair}`,
       dream: "Sortear duelo",
       dreaming: "Sorteando…",
-      separateAi: `Previsão independente de 100 partidas. Seu ${home.clubName} anterior continua em Placar ${home.clubName}.`,
+      separateAi: `Previsão independente de ${AI_FORECAST_RUNS} partidas. Seu ${home.clubName} anterior continua em Placar ${home.clubName}.`,
       matchTab: `Placar ${home.clubName}`,
       aiTab: `IA ${home.clubName}`,
       batchTab: `${BATCH_RUNS} jogos`,
@@ -140,7 +141,7 @@ function namedRailCopy(locale: Locale | undefined, home: NamedSide, away: NamedS
     next: `Next night, not ${pair}`,
     dream: "Random matchup",
     dreaming: "Rolling…",
-    separateAi: `A separate 100-match forecast. Your previous ${home.clubName} night remains under ${home.clubName} result.`,
+    separateAi: `A separate ${AI_FORECAST_RUNS}-match forecast. Your previous ${home.clubName} night remains under ${home.clubName} result.`,
     matchTab: `${home.clubName} result`,
     aiTab: `${home.clubName} AI`,
     batchTab: `${BATCH_RUNS} matches`,

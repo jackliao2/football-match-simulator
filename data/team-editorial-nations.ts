@@ -79,12 +79,12 @@ export const NATION_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
     ],
   ),
   "argentina-1986": d(
-    "Maradona’s Mexico. Bilardo’s 1986 Argentina were not a beautiful midfield lecture; they were a 3-5-2 built to get the ball to the best player in the world and to survive without him when he needed a rest. They won the World Cup, and two of the five goals against England still structure every argument about him.",
+    "Maradona’s Mexico. Bilardo’s 1986 Argentina were not a beautiful midfield lecture; they were a 3-5-2 built to get the ball to the best player in the world and to survive without him when he needed a rest. They won the World Cup. Maradona scored five goals in the tournament, including the two against England that still structure every argument about him.",
     [
       {
         heading: "The tournament shape",
         paragraphs: [
-          "Brown, Cuciuffo and Ruggeri at the back; Olarticoechea and the overlapping side; Batista sitting; Burruchaga arriving; Valdano finishing. Maradona scored or made almost everything that mattered. The 2–1 against West Germany in the final — Brown, Valdano, then Burruchaga after Rummenigge and Völler had equalised — is a complete match, not a one-man show.",
+          "Brown, Cuciuffo and Ruggeri at the back; Olarticoechea and the overlapping side; Batista sitting; Burruchaga arriving; Valdano finishing. Maradona scored or made almost everything that mattered. The 3–2 against West Germany in the final — Brown, Valdano, then Burruchaga after Rummenigge and Völler had equalised — is a complete match, not a one-man show.",
           "The England quarter-final is the memory: a handball and a dribble. The Belgium semi-final was two more Maradona goals. The squad around him was better than the joke version of history allows.",
         ],
       },
@@ -97,12 +97,12 @@ export const NATION_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
     ],
   ),
   "argentina-2022": d(
-    "Scaloni’s Qatar. Messi’s last World Cup became a final that went to penalties against France after a 2–2 that felt like two different matches taped together. The squad behind him — Fernández, De Paul, Mac Allister, Álvarez, Di María in the final — is why this is a team page, not a farewell tour.",
+    "Scaloni’s Qatar. Messi’s 2022 World Cup triumph ended in a final that went to penalties against France: 2–2 after regulation time, 3–3 after extra time. The squad behind him — Fernández, De Paul, Mac Allister, Álvarez, Di María in the final — is why this is a team page, not only an individual story.",
     [
       {
         heading: "From the Saudi shock to Lusail",
         paragraphs: [
-          "They lost the opening game to Saudi Arabia, then won a World Cup. That sequence is the personality: fragile for a night, then stubborn for a month. The Netherlands quarter-final went to penalties. Croatia in the semi-final was a 3–0 professional job. The final was chaos after Mbappé’s hat-trick forced extra time.",
+          "They lost the opening game to Saudi Arabia, then won a World Cup. That sequence is the personality: fragile for a night, then stubborn for a month. The Netherlands quarter-final went to penalties. Croatia in the semi-final was a 3–0 professional job. Mbappé’s first two final goals forced extra time; Messi scored again before Mbappé completed his hat-trick in the 118th minute, taking the 3–3 match to a shootout.",
           "Romero and Otamendi were a heavy centre-back pairing. Molina and Acuña / Tagliafico gave the sides. Dibu Martínez’s shootout work is part of the trophy, not a footnote.",
         ],
       },
@@ -121,7 +121,7 @@ export const NATION_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
         heading: "Winning ugly with a beautiful method",
         paragraphs: [
           "They lost the opening game to Switzerland, then went through Portugal, Paraguay, Germany and the Netherlands by 1–0s. Iniesta’s extra-time winner in Johannesburg is the image. The method was the midfield: recover, circulate, wait until a full-back jumped.",
-          "Casillas, Puyol, Piqué, Ramos and Capdevila were a defence that conceded almost nothing in the knockout rounds. Villa finished the chances that the midfield finally created. Torres started the final and was not the point of the team.",
+          "Casillas, Puyol, Piqué, Ramos and Capdevila were a defence that conceded nothing in the knockout rounds. Villa finished the chances that the midfield finally created. In the final, Pedro and Villa started alongside Spain’s midfield creators; Torres came on during extra time.",
         ],
       },
       {
@@ -192,8 +192,8 @@ export const NATION_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
       {
         heading: "The 7–1 is not the whole team",
         paragraphs: [
-          "They also had to beat Algeria in extra time and France in a quarter-final that was 1–0 and tense. The Brazil semi-final was a collapse of a host, not a template you should expect in a simulator against a competent opponent. Neuer’s sweeper-keeping against Algeria is as characteristic as the four first-half goals in Belo Horizonte.",
-          "Lahms as a right-back/midfielder, Howedes at left-back in the final, Klose as the record scorer coming off the bench. It was a squad with answers.",
+          "They also had to beat Algeria in extra time and France in a quarter-final that was 1–0 and tense. The Brazil semi-final was a collapse of a host, not a template you should expect in a simulator against a competent opponent. Neuer’s sweeper-keeping against Algeria is as characteristic as the five first-half goals in Belo Horizonte.",
+          "Lahm could play right-back or midfield, Höwedes played left-back in the final, and Klose started both the semi-final and final after earlier substitute appearances. It was a squad with answers.",
         ],
       },
       {
@@ -210,7 +210,7 @@ export const NATION_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
       {
         heading: "A final that was ugly on purpose",
         paragraphs: [
-          "Argentina had Maradona and two red cards. Germany had control and a set-piece. The 1–0 is not a showcase; it is a tournament-winning personality. The 4–1 against Yugoslavia and the 1–0 against England on penalties in the semi-final are the rest of the picture.",
+          "Argentina had Maradona and two red cards. Germany had control and a late penalty. The 1–0 final is not a showcase; it is a tournament-winning personality. The 4–1 against Yugoslavia and the England semi-final — 1–1 after extra time, then 4–3 on penalties — are the rest of the picture.",
           "This is a different German idea from 2014: fewer positional tricks, more duels, more Matthäus carrying the ball through the middle of the pitch.",
         ],
       },

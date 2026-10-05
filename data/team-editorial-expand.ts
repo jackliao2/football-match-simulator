@@ -87,7 +87,7 @@ export const EXPANDED_CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
       {
         heading: "Westfalen, then Wembley",
         paragraphs: [
-          "4–1 against Madrid at home, with Lewandowski taking the night personally, is the signature. The return in the Bernabéu was a 0–2 that still went through. At Wembley Mandžukić scored, Gündoğan equalised from the spot, Robben finished in the 89th minute. Götze, already sold to Bayern, was an unused extra-time ghost.",
+          "4–1 against Madrid at home, with Lewandowski taking the night personally, is the signature. The 0–2 return at the Bernabéu still left Dortmund through on aggregate. At Wembley Mandžukić scored, Gündoğan equalised from the spot and Robben finished in the 89th minute. Götze, whose move to Bayern had been announced, missed the final with a hamstring injury. There was no extra time.",
           "Błaszczykowski, Piszczek, Schmelzer and a Bender–Gündoğan double pivot that could hunt for ninety minutes. Weidenfeller was not Neuer; the press was supposed to make that irrelevant. Sometimes it did. In London it did not.",
         ],
       },
@@ -177,13 +177,13 @@ export const EXPANDED_CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
     ],
   ),
   "ajax-2018-19": d(
-    "Ten Hag’s 2018/19 Ajax knocked Real Madrid out 4–1 at the Bernabéu, took a domestic double, and then lost a Champions League semi-final in extra time after Lucas Moura’s hat-trick in Amsterdam. De Ligt, De Jong, Ziyech, Tadić: an academy night that belonged in the 1990s except it happened in front of phones.",
+    "Ten Hag’s 2018/19 Ajax won 4–1 at the Bernabéu to eliminate Real Madrid, took a domestic double, and then lost a Champions League semi-final on away goals after Lucas Moura completed his hat-trick in second-half stoppage time in Amsterdam. De Ligt, De Jong, Ziyech, Tadić: an academy night that belonged in the 1990s except it happened in front of phones.",
     [
       {
         heading: "Madrid, then the slip",
         paragraphs: [
           "The 4–1 in Spain was Ziyech, Tadić and a defence that played out under Bale and Benzema without panic. Onana’s passing, Blind as a centre-back who could start attacks, Mazraoui and Tagliafico as the width. Van de Beek arrived in the box like a striker. They beat Juventus in the quarter-final too.",
-          "The semi-final first leg was 1–0 in London. The return was 2–3 after extra time: Van de Beek, De Ligt, then three from Lucas. They were seconds from a final and then they were not. That is the whole European story.",
+          "Van de Beek scored in the 1–0 first-leg win in London. In Amsterdam, De Ligt and Ziyech put Ajax 2–0 ahead before Lucas scored three, completing the 3–2 Tottenham win in stoppage time. The aggregate score was 3–3 and Spurs advanced on away goals; no extra time was played. Ajax were seconds from a final and then they were not.",
         ],
       },
       {
@@ -196,13 +196,13 @@ export const EXPANDED_CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
     ],
   ),
   "tottenham-2018-19": d(
-    "Pochettino’s 2018/19 Tottenham reached a Champions League final without winning a trophy. Ajax were beaten in extra time in Amsterdam; Liverpool were waiting in Madrid. Kane was not fit to start the final. Lucas Moura, who had scored the hat-trick that got them there, started instead. It is a cup run, and a great one. It is not a league champion in a later kit.",
+    "Pochettino’s 2018/19 Tottenham reached a Champions League final without winning a trophy. Lucas Moura’s stoppage-time winner completed his hat-trick against Ajax in Amsterdam; Liverpool were waiting in Madrid. Kane returned from injury to start the final, while Lucas began on the bench and came on in the second half. It is a great cup run, not a league champion in a later kit.",
     [
       {
         heading: "Amsterdam, then the Wanda",
         paragraphs: [
-          "1–0 down from the first leg, 2–3 after extra time in the second: Lucas at 55, 59 and 96 minutes. Eriksen still had the switch of play. Son ran the channels. Sissoko and Winks were the legs that made a 4-2-3-1 possible when the press had to become a block. Lloris kept the nights alive long enough for the forwards.",
-          "The final was 0–2. Salah from the spot, Origi later. Kane on the bench until it was gone. Treating Madrid as proof this was Spurs’ strongest league XI is how you lose the 2016/17 86-point argument on purpose.",
+          "Spurs lost the first leg 1–0, then won the second 3–2 with Lucas scoring at 55, 59 and 90+6 minutes. The 3–3 aggregate score sent Tottenham through on away goals, without extra time. Eriksen supplied the switch of play, Son ran the channels and Lloris kept the nights alive long enough for the forwards.",
+          "The final was 0–2: Salah from the spot, Origi later. Kane started alongside Son; Lucas replaced Winks in the second half. Reaching Madrid does not by itself prove this was Spurs’ strongest league XI. The 2016/17 side’s 86-point campaign is a different case.",
         ],
       },
       {
@@ -300,7 +300,7 @@ export const EXPANDED_NATION_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
         heading: "Pasadena, after Romário’s tournament",
         paragraphs: [
           "They beat the United States in the last sixteen, Netherlands 3–2 in the quarter-final, Sweden in the semi-final. Romário’s finishing was the difference in matches that refused to become 1970. Jorginho and Branco as full-backs; Mauro Silva next to Dunga; Mazinho in a midfield that hunted more than it embroidered. Raí started the tournament; the closer was the striker.",
-          "The final was a chess match against Baresi and Maldini. Extra time solved nothing. Baresi missed the first Italy penalty. Massaro scored; then Baggio put the last one over. Brazil were world champions again. Nobody called it pretty. Everybody called it done.",
+          "The final was a chess match against Baresi and Maldini. Extra time solved nothing. Baresi missed Italy’s first penalty; Taffarel saved Massaro’s attempt; Baggio put the last one over. Brazil won the shootout 3–2 and were world champions again. Nobody called it pretty. Everybody called it done.",
         ],
       },
       {
@@ -318,7 +318,7 @@ export const EXPANDED_NATION_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
       {
         heading: "Wembley, after a month of nerve",
         paragraphs: [
-          "They opened the tournament by putting Switzerland and Turkey away, then survived a knockout path through Austria, Belgium and Spain. Chiesa’s extra-time strike against Spain is the other signature besides the final. Spinazzola was lost to injury along the way. Immobile was the league closer who became a tournament runner. Insigne still had the left-foot finish.",
+          "They opened the tournament by putting Switzerland and Turkey away, then survived a knockout path through Austria, Belgium and Spain. Chiesa scored in extra time against Austria and in the 60th minute against Spain; the latter semi-final was decided on penalties. Spinazzola was lost to injury along the way. Immobile was the league closer who became a tournament runner. Insigne still had the left-foot finish.",
           "Chiellini and Bonucci were the old wall in a younger side. Di Lorenzo and Emerson were the full-backs. Locatelli had the group-stage night. The unbeaten run into the tournament was a club-side habit wearing Italy shirts.",
         ],
       },

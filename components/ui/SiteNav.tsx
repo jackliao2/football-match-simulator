@@ -8,7 +8,7 @@ const links = [
   { href: "/simulate", label: "Simulate", localize: true },
   { href: "/teams", label: "Teams", localize: true },
   { href: "/national-teams", label: "Nations", localize: true },
-  { href: "/search", label: "Search", localize: true },
+  { href: "/search", label: "Search", localize: false },
   { href: "/compare", label: "Compare", localize: false },
   { href: "/vs", label: VS_HUB.crumb, localize: true },
   { href: "/prime", label: "Prime", localize: false },

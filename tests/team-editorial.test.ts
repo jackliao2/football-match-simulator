@@ -4,6 +4,16 @@ import { editorialTeamIds, getTeamEditorial, isIndexableTeamPage } from "@/data/
 import { getTeam } from "@/data/teams"
 
 describe("season dossiers", () => {
+  it("keeps Inter's 1988/89 champions separate from Klinsmann's later arrival", () => {
+    const team = getTeam("inter-milan-1988-89")!
+    expect(team.players.some((player) => /Klinsmann/.test(player.name))).toBe(false)
+    expect(team.startingXI).toContain("ramon-diaz")
+    expect(team.startingXI).toContain("aldo-serena")
+    expect(new Set(team.startingXI).size).toBe(11)
+    expect(team.startingXI.every((id) => team.players.some((player) => player.id === id))).toBe(true)
+    expect(getTeamEditorial(team.id)?.sources?.some((source) => source.url.startsWith("https://www.inter.it/"))).toBe(true)
+  })
+
   it("covers every featured dream-match team with a substantial hand-written dossier", () => {
     const ids = new Set(FEATURED_MATCHUPS.flat())
     for (const id of ids) {

@@ -105,6 +105,11 @@ const nextConfig: NextConfig = {
         destination: "https://legendarymatch.com/:path*",
         permanent: true,
       },
+      ...["es", "pt-br"].map((locale) => ({
+        source: `/${locale}/search`,
+        destination: "/search",
+        permanent: true,
+      })),
       ...NATION_IDS.flatMap((id) => [
       {
         source: `/teams/${id}`,

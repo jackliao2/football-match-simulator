@@ -803,7 +803,7 @@ export function compareSearchDescription(pair: ClubCompare): string {
 
 export function compareSeoTitle(pair: ClubCompare, leftName: string, rightName: string): string {
   if (pair.seoTitle?.trim()) return pair.seoTitle.trim()
-  return `${leftName} vs ${rightName}: ${pair.verdictHeading}`
+  return `${leftName} vs ${rightName}: Who Is Better?`
 }
 
 export function compareFaqs(

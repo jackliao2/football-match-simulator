@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { notFound, redirect } from "next/navigation"
+import { notFound, permanentRedirect } from "next/navigation"
 import { MatchupRow } from "@/components/ui/MatchupRow"
 import { QuickMatch } from "@/components/simulator/QuickMatch"
 import { LandingEvidence } from "@/components/ui/LandingEvidence"
@@ -46,7 +46,7 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
   const { slug } = await params
   const pair = resolveClubCompare(slug)
   if (!pair) notFound()
-  if (slug !== pair.slug) redirect(`/compare/${pair.slug}`)
+  if (slug !== pair.slug) permanentRedirect(`/compare/${pair.slug}`)
 
   const leftClub = getClub(pair.leftClubId)
   const rightClub = getClub(pair.rightClubId)

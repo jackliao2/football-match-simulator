@@ -48,7 +48,7 @@ export const primeEntities: PrimeEntity[] = [
     candidates: [
       {
         teamId: "real-madrid-2013-14",
-        argument: "La Décima. BBC on the break, Di María everywhere, Ramos in extra time.",
+        argument: "La Décima. BBC on the break, Di María everywhere, Ramos equalising in the 93rd minute before extra time.",
       },
       {
         teamId: "real-madrid-2016-17",
@@ -95,7 +95,7 @@ export const primeEntities: PrimeEntity[] = [
     title: "Messi's Prime as a Team Player Is 2010/11",
     pick: "2010/11",
     description:
-      "Search demand around Messi's prime usually points at Barcelona. These three sides are the main candidates in this database.",
+      "False-nine control in 2010/11 or the MSN attack in 2014/15? Compare Messi's roles at Barcelona, with the scoring peak of 2011/12 explained separately.",
     seoTitle: "Messi's Prime: False Nine 2010/11, Not MSN",
     seoDescription:
       "Messi's prime as a team player is Barcelona 2010/11, the false-nine season. 2014/15 MSN is the counter; 2008/09 is the breakout.",
@@ -146,7 +146,7 @@ export const primeEntities: PrimeEntity[] = [
       },
       {
         teamId: "brazil-2026",
-        argument: "Ancelotti's current side. Vinícius and Rodrygo against Pelé, Romário and the three R's.",
+        argument: "A modelled 2026-cycle snapshot under Ancelotti, not an official tournament list. Vinícius and Rodrygo alongside Brazil's completed historical peaks.",
       },
     ],
   },

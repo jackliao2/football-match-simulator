@@ -30,7 +30,7 @@ import { SITE, absoluteUrl } from "@/lib/site"
 import type { HistoricalTeam } from "@/types"
 
 export const SEARCH_YEAR_NOTES: Record<string, string> = {
-  "real-madrid-2016-17": "Often searched as the Real Madrid 2017 squad, this is Zidane's full 2016/17 team: Ronaldo, Modrić, Kroos, Ramos and the supporting players around the fourth European Cup.",
+  "real-madrid-2016-17": "Real Madrid 2017 refers here to Zidane's 2016/17 league and Champions League winners: Ronaldo, Modrić, Kroos, Ramos and their supporting squad. It was Madrid's twelfth European Cup.",
   "real-madrid-2013-14": "Real Madrid 2014 squad searches usually mean this 2013/14 La Décima side rather than a later Zidane team.",
   "barcelona-2014-15": "Often searched as the Barcelona 2015 squad or 2015 Barça team, this is Luis Enrique's complete 2014/15 treble-winning group.",
   "barcelona-2008-09": "The Barcelona 2009 squad search usually means this 2008/09 treble side: Messi, Xavi, Iniesta and the supporting cast around Guardiola's first European Cup.",
@@ -44,7 +44,7 @@ export const SEARCH_YEAR_NOTES: Record<string, string> = {
   "ac-milan-2006-07": "Often searched as the AC Milan 2007 squad, this is Ancelotti's complete 2006/07 Champions League-winning group around the Athens night.",
   "ac-milan-1988-89": "Milan 1989 or Sacchi Milan searches land here: the 1988/89 European Cup side with Baresi, Rijkaard, Gullit and Van Basten.",
   "inter-milan-2009-10": "Inter 2010 treble searches point to Mourinho's 2009/10 squad, not a later Inter side with a similar badge.",
-  "inter-milan-1988-89": "Inter 1989 squad searches usually mean the record Serie A winners with Matthäus, Klinsmann and Brehme.",
+  "inter-milan-1988-89": "Inter 1989 means the record Serie A winners with Matthäus, Brehme, Serena and Ramón Díaz. Klinsmann joined for 1989/90 and is not part of this squad.",
   "bayern-munich-2012-13": "Bayern 2013 treble searches mean Heynckes' 2012/13 team — the complete squad, not only the Wembley final XI.",
   "bayern-munich-2019-20": "Bayern 2020 sextuple searches point to Flick's 2019/20 side after he replaced Kovac mid-season.",
   "manchester-city-2022-23": "City 2023 treble searches mean Guardiola's 2022/23 squad with Haaland, Rodri and Stones stepping into midfield.",

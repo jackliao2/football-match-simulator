@@ -122,7 +122,7 @@ export const CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
       {
         heading: "Lisbon, and the league they did not win",
         paragraphs: [
-          "Atlético took the title. Madrid took the Champions League the hard way: a 4–1 first-leg hole against Dortmund repaired in the Bernabéu, then a 1–0 extra-time win over Atlético after Ramos equalised in the 93rd minute. That sequence is the personality of the team: they could look beaten and still have a route.",
+          "Atlético won La Liga. Madrid won the Champions League after beating Dortmund 3–2 on aggregate in the quarter-final and Bayern 5–0 on aggregate in the semi-final. In Lisbon, Ramos equalised in the 93rd minute of regulation-time stoppage time; Bale, Marcelo and Ronaldo then made the final score 4–1 after extra time. Those are the 2013/14 results, not Madrid’s defeat to Dortmund a year earlier.",
           "Ronaldo’s 17 Champions League goals that season remain the scoring headline. Bale’s Copa del Rey winner against Barcelona was the domestic signature. The XI was not a possession machine; it was a vertical machine with enough midfield quality not to drown.",
         ],
       },
@@ -205,7 +205,7 @@ export const CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
       {
         heading: "What a simulation should not do",
         paragraphs: [
-          "It should not replay 3–0 down as destiny. The model has no script for miracles. Across many runs this Liverpool are underdogs against the 2007 Milan side they beat, and underdogs against almost every other team in the dream-match card. That is historically honest.",
+          "It should not replay 3–0 down as destiny. The model has no script for miracles. This Liverpool are rated below Milan 2006/07 and most of the elite sides in the dream-match card. Liverpool beat Milan in the 2005 final; Milan won the 2007 rematch 2–1. A simulation between those named-season squads is a separate hypothetical match.",
           "Use them when the argument is nerve, organisation and a world-class 8. Use 2018/19 when the argument is Liverpool as a complete attacking machine.",
         ],
       },
@@ -236,7 +236,7 @@ export const CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
       {
         heading: "The European Cup, and the idea",
         paragraphs: [
-          "They won the 1989 final 4–0 against Steaua in Barcelona — Gullit and Van Basten scoring two each — after a semi-final against Real Madrid that still gets shown in coaching courses. The 5–0 second leg in the Bernabéu was the statement that Italian defending had learned to attack space as a group.",
+          "They won the 1989 final 4–0 against Steaua in Barcelona — Gullit and Van Basten scoring two each — after a semi-final against Real Madrid that still gets shown in coaching courses. The 5–0 second leg at San Siro, after a 1–1 draw at the Bernabéu, was the statement that Italian defending had learned to attack space as a group.",
           "The league was more complicated: Napoli and then others kept Serie A from being a procession. Sacchi’s method was never only about winning every winter Saturday. It was about making the pitch smaller than the opponent wanted it to be.",
         ],
       },
@@ -250,7 +250,7 @@ export const CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
     ],
   ),
   "ac-milan-2006-07": d(
-    "Ancelotti’s Athens winners. Kaká at his most unplayable, a midmund of Pirlo, Gattuso and Seedorf that could play any tempo, and a defence of Nesta, Maldini and a young Bonera/Kaladze rotation that still had authority. They beat Liverpool in the final three years after Istanbul.",
+    "Ancelotti’s Athens winners. Kaká at his most unplayable, a midfield of Pirlo, Gattuso and Seedorf that could play any tempo, and a defence of Nesta, Maldini and a Bonera/Kaladze rotation that still had authority. They beat Liverpool in the final two years after Istanbul.",
     [
       {
         heading: "Revenge, and a league they did not dominate",
@@ -275,7 +275,7 @@ export const CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
         heading: "The Camp Nou night",
         paragraphs: [
           "Ten men for most of the second leg, a 3–1 first-leg lead, and a 1–0 defeat that still sent Inter through. That tie is why this team belongs next to Guardiola’s Barcelona in the dream-match list. The final in Madrid was a 2–0 against Bayern: Milito twice, professional, almost calm.",
-          "They also won Serie A and the Coppa. Zanetti, Lucio, Samuel and Maicon were a heavy back line. Cambiasso and Motta sat. Eto’o tracked like a midfielder. Pandev and Pizarro rotated a thin bench by modern super-club standards.",
+          "They also won Serie A and the Coppa Italia. Zanetti, Lúcio, Samuel and Maicon gave the side defensive experience. Cambiasso screened midfield, while Eto’o and Pandev worked back from wide positions. Stanković and Balotelli offered different options from a squad less deep than some modern super-clubs.",
         ],
       },
       {

@@ -30,7 +30,7 @@ export const MORE_CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
       {
         heading: "Manchester, without Nedvěd",
         paragraphs: [
-          "The final against Milan was 0–0. Shevchenko missed in the shootout; so did others. Nedvěd had picked up a yellow in the semi-final against Madrid and sat in a suit. The league underneath it was a two-striker 4-4-2 that could wait and then run: Camoranesi and Zambrotta as the width, Davids and Tacchinardi as the bite.",
+          "The final against Milan was 0–0 after extra time. Shevchenko scored the decisive penalty as Milan won the shootout 3–2. Nedvěd had picked up a yellow in the semi-final against Madrid and was suspended. The league underneath it was a two-striker 4-4-2 that could wait and then run: Camoranesi and Zambrotta as the width, Davids and Tacchinardi as the bite.",
           "Buffon was already the last line of a decade. Thuram at right-back was a centre-back who could also overlap. Treat this as the 2016/17 3-5-2 in an earlier kit and the simulation will lie.",
         ],
       },
@@ -44,12 +44,12 @@ export const MORE_CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
     ],
   ),
   "inter-milan-1988-89": d(
-    "Trapattoni’s 1988/89 Inter took a record Serie A title with Matthäus as the engine, Brehme as the left foot, Klinsmann as the finish, and Bergomi organising a defence that still looked like Inter. It is not Mourinho’s treble. It is the German spine in Milan, and the year the Nerazzurri actually finished in front of both neighbours.",
+    "Trapattoni’s 1988/89 Inter took a record Serie A title with Matthäus as the engine, Brehme as the left foot, Serena and Ramón Díaz in attack, and Bergomi organising a defence that still looked like Inter. Klinsmann joined for the following season. This is the record Scudetto side, not Mourinho’s treble.",
     [
       {
         heading: "The record winter",
         paragraphs: [
-          "58 points in an 18-team, two-points-for-a-win league. Zenga in goal. Ferri and Bergomi. Berti running. Serena as the Italian closer next to Klinsmann. Matthäus took the first pass and the second ball and, when needed, the shot from the edge of the box.",
+          "58 points in an 18-team, two-points-for-a-win league. Zenga in goal. Ferri and Bergomi. Berti running. Serena finished alongside Ramón Díaz. Matthäus took the first pass and the second ball and, when needed, the shot from the edge of the box.",
           "They were not a European Cup side that year. They were a league machine in a country that still treated the Scudetto as the main argument. That is why the page exists.",
         ],
       },
@@ -68,7 +68,7 @@ export const MORE_CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
       {
         heading: "Domestic procession, European wound",
         paragraphs: [
-          "Neymar had arrived the summer before. Mbappé exploded. Cavani still finished. Verratti and Motta kept the ball when the stars wanted it back. Alves overlapped. Areola was not a Galáctico; the distances in front of him were supposed to make that irrelevant. In the Champions League Madrid won both legs, 2–1 and 2–1.",
+          "Neymar had arrived the summer before. Mbappé exploded. Cavani still finished. Verratti and Motta kept the ball when the stars wanted it back. Alves overlapped. Areola was not a Galáctico; the distances in front of him were supposed to make that irrelevant. In the Champions League Madrid won the first leg 3–1 and the second 2–1, going through 5–2 on aggregate.",
           "Chemistry is the honest rating: lower than the payroll. Three forwards who could each decide a match do not automatically become a knockout organism.",
         ],
       },

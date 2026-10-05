@@ -1,6 +1,7 @@
 import type { HistoricalTeam, Player, SimulatedMatch } from "@/types"
 import { createCommentaryProvider } from "@/lib/ai/provider"
 import { simulateMany } from "@/lib/simulation"
+import { AI_FORECAST_RUNS } from "@/lib/simulation-settings"
 import { starters } from "@/lib/simulation/ratings"
 import type { MonteCarloResult } from "@/types"
 
@@ -606,7 +607,7 @@ export async function generatePreMatchAnalysis(
   options: { skipProvider?: boolean } = {},
 ): Promise<{ analysis: PreMatchAnalysis; source: "ai" | "template" }> {
   const requestSeed = `ai-analysis:${home.id}:${away.id}:${crypto.randomUUID()}`
-  const { matches, ...simulation } = simulateMany(home, away, 100, `${requestSeed}:alternates`, {
+  const { matches, ...simulation } = simulateMany(home, away, AI_FORECAST_RUNS, `${requestSeed}:alternates`, {
     retainMatches: true,
   })
   const featuredMatch = representativeNight(matches, simulation)

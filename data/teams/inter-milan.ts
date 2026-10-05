@@ -91,12 +91,12 @@ export const interMilan198889: HistoricalTeam = makeTeam({
   width: 76,
   aerialThreat: 80,
   startingXI: [
-    "jurgen-klinsmann",
+    "ramon-diaz",
     "aldo-serena",
     "andreas-brehme",
     "lothar-matthaus",
     "nicola-berti",
-    "ramon-diaz",
+    "alessandro-bianchi",
     "giuseppe-baresi",
     "riccardo-ferri",
     "giuseppe-bergomi",
@@ -112,9 +112,8 @@ export const interMilan198889: HistoricalTeam = makeTeam({
     pl("Andreas Brehme", "BREHME", "LM", 86, { attack: 84, chanceCreation: 84 }),
     pl("Nicola Berti", "BERTI", "CM", 82, { physical: 86 }),
     pl("Lothar Matthäus", "MATTHAUS", "CM", 92, { passing: 90, attack: 88, defending: 84, physical: 90 }),
-    pl("Ramón Díaz", "DIAZ", "RM", 82, { attack: 84, finishing: 82 }),
+    pl("Ramón Díaz", "DIAZ", "ST", 82, { attack: 84, finishing: 82 }),
     pl("Aldo Serena", "SERENA", "ST", 82, { finishing: 84, physical: 84 }),
-    pl("Jürgen Klinsmann", "KLINSMANN", "ST", 86, { finishing: 88, attack: 86 }),
     pl("Alessandro Bianchi", "BIANCHI", "RM", 76),
     pl("Pietro Fanna", "FANNA", "RW", 74),
     pl("Corrado Verdelli", "VERDELLI", "CB", 74),
@@ -125,13 +124,13 @@ export const interMilan198889: HistoricalTeam = makeTeam({
   ],
   achievements: [
     "Serie A champions — record points in the 18-team era",
-    "Matthäus, Brehme and Klinsmann as the German spine",
+    "Matthäus and Brehme, with Serena and Ramón Díaz in attack",
     "Trapattoni's Inter, finally in front of Milan and Juve",
   ],
   styleTags: ["Box-to-Box", "Two Strikers", "Set Pieces", "Defensive Steel", "Star Midfield"],
   summary:
-    "Trapattoni's 1988/89 Inter. Matthäus as the engine, Zenga as the wall, Klinsmann as the finish, and a scudetto that still looks like the German Inter.",
-  seoTitle: "Inter 1988/89 Squad — Matthäus, Klinsmann, Record Title",
+    "Trapattoni's 1988/89 Inter. Matthäus as the engine, Zenga as the wall, Serena and Ramón Díaz in attack. Klinsmann joined for the following season.",
+  seoTitle: "Inter 1988/89 Squad — Matthäus, Serena, Record Title",
   seoDescription:
-    "Inter Milan 1988/89 squad: Trapattoni's record Scudetto. Matthäus, Klinsmann, Brehme — not Mourinho's later treble.",
+    "Inter Milan 1988/89 squad: Trapattoni's record Scudetto. Matthäus, Brehme, Serena and Ramón Díaz; Klinsmann arrived the following season.",
 })

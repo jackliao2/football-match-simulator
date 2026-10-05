@@ -7,6 +7,8 @@ import { PageHeader } from "@/components/ui/PageHeader"
 import { getPrimeEntity, primeEntities } from "@/data/prime"
 import { getPrimeEditorial } from "@/data/prime-editorial"
 import { getTeam } from "@/data/teams"
+import { getTeamEditorial } from "@/data/team-editorial"
+import { SEARCH_REVIEW_PATHS, SEARCH_REVIEW_DATE, SEARCH_REVIEW_LABEL } from "@/data/search-review"
 import { isPublishedMatchup, vsPath } from "@/data/matchups"
 import { teamPath } from "@/lib/paths"
 import { SITE, absoluteUrl } from "@/lib/site"
@@ -61,6 +63,8 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
   const related = primeEntities.filter((item) => item.slug !== page.slug).slice(0, 4)
   const pageUrl = absoluteUrl(`/prime/${page.slug}`)
   const editorial = getPrimeEditorial(page.slug)
+  const reviewed = SEARCH_REVIEW_PATHS.has(`/prime/${page.slug}`)
+  const sources = [...new Map(candidates.flatMap(({ team }) => getTeamEditorial(team.id)?.sources ?? []).map((source) => [source.url, source])).values()]
 
   return (
     <div className="grid gap-6">
@@ -74,7 +78,7 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
         author: personSchema(),
         publisher: { "@type": "Organization", name: SITE.name, url: absoluteUrl("/") },
         datePublished: SITE.legalUpdatedIso,
-        dateModified: SITE.contentUpdatedIso,
+        dateModified: reviewed ? SEARCH_REVIEW_DATE : SITE.contentUpdatedIso,
         about: { "@type": page.kind === "player" ? "Person" : "SportsTeam", name: page.name },
       }) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -91,7 +95,7 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
         lead={page.description}
         crumbs={[{ href: "/prime", label: "Prime" }]}
       />
-      <EditorialByline />
+      <EditorialByline date={reviewed ? SEARCH_REVIEW_LABEL : SITE.contentUpdated} dateTime={reviewed ? SEARCH_REVIEW_DATE : SITE.contentUpdatedIso} />
 
       <section className="result-panel overflow-hidden border-2 border-gold/40 shadow-[6px_6px_0_#000]">
         <div className="border-b border-white/10 bg-gold/[0.05] px-4 py-3 sm:px-5">
@@ -132,6 +136,14 @@ export default async function PrimePage({ params }: PageProps<"/prime/[entity]">
             ))}
           </div>
         </section>
+      ) : null}
+
+      {sources.length > 0 ? (
+        <p className="text-xs leading-6 text-muted">
+          Historical records for the candidate seasons: {sources.map((source, index) => (
+            <span key={source.url}>{index > 0 ? " · " : ""}<a href={source.url} className="text-gold hover:text-gold-2">{source.label}</a></span>
+          ))}. Our prime selection and simulator ratings remain editorial judgments.
+        </p>
       ) : null}
 
       <div className="grid gap-4">

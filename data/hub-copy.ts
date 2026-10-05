@@ -136,7 +136,7 @@ export const HUB_COPY: Record<string, HubCopy> = {
   "inter-milan": {
     kicker: "Inter Milan squads",
     title: "Inter Milan squads: the record scudetto and the treble",
-    lead: "1988/89 was Trapattoni's Matthäus–Klinsmann–Brehme title. 2009/10 was Mourinho winning Europe the hard way. The derby of Inter primes is not one decade.",
+    lead: "1988/89 was Trapattoni's record title: Matthäus and Brehme, with Serena and Ramón Díaz in attack. Klinsmann arrived for 1989/90. 2009/10 was Mourinho winning Europe the hard way. These are different Inter peaks.",
     description:
       "Inter 1988/89 is Trapattoni's record scudetto. 2009/10 is Mourinho's treble. The derby of Inter primes is not one decade.",
   },

@@ -150,7 +150,7 @@ function topAssistsFromMap(map: Map<string, number>, limit: number) {
     .map(([player, assists]) => ({ player, assists }))
 }
 
-export const BATCH_RUNS = 1000
+export { BATCH_RUNS } from "@/lib/simulation-settings"
 const ASYNC_CHUNK = 40
 
 type BatchAcc = {

@@ -6,13 +6,14 @@ import { SimulationStage } from "@/components/simulator/SimulationPlay"
 import { formatXg } from "@/lib/format"
 import type { PreMatchAnalysis } from "@/lib/ai/analysis"
 import type { HistoricalTeam } from "@/types"
+import { AI_FORECAST_RUNS } from "@/lib/simulation-settings"
 
 export function AiAnalysisLoading({ home, away }: { home: HistoricalTeam; away: HistoricalTeam }) {
   const [progress, setProgress] = useState(6)
   const phases = [
     `Reading ${home.clubName} ${home.displaySeason}…`,
     `Mapping ${home.manager} against ${away.manager}…`,
-    `Comparing 100 nights of ${home.displaySeason} vs ${away.displaySeason}…`,
+    `Comparing ${AI_FORECAST_RUNS} nights of ${home.displaySeason} vs ${away.displaySeason}…`,
     `Writing the ${home.clubName} vs ${away.clubName} verdict…`,
   ]
 
@@ -62,7 +63,7 @@ export function AiAnalysisResult({
         </div>
         {localBrief ? (
           <p className="mt-2 text-center font-mono text-[10px] leading-4 text-muted">
-            The 100-match numbers below still come from the engine. This write-up is the local template, not the live model.
+            The {sim.runs}-match numbers below still come from the engine. This write-up is the local template, not the live model.
           </p>
         ) : null}
         <h2 className="mx-auto mt-2 max-w-3xl text-center font-brand text-lg leading-snug font-semibold tracking-wide text-text sm:text-2xl">{copy.headline}</h2>
