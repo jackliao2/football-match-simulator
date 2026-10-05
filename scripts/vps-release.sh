@@ -31,8 +31,9 @@ if [[ -d .next/standalone/.next/static ]]; then
   cp -a .next/standalone/.next/static/. "${KEEP}/"
 fi
 
-systemctl stop legendarymatch
 npm ci
+npm run security:check
+systemctl stop legendarymatch
 npm run build
 cp -a public .next/standalone/
 install -d -m 0755 .next/standalone/.next/static

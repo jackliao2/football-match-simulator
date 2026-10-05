@@ -11,12 +11,13 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "check": "npm run lint && npm run typecheck && npm run test",
+    "security:check": "npm audit --omit=dev --audit-level=high --registry=https://registry.npmjs.org",
     "launch:check": "node scripts/check-launch-readiness.mjs",
     "indexability:check": "node scripts/audit-indexability.mjs",
     "indexnow:submit": "node scripts/submit-indexnow.mjs"
   },
   "dependencies": {
-    "next": "16.3.1",
+    "next": "16.3.8",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },
@@ -26,7 +27,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.3.1",
+    "eslint-config-next": "16.3.8",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.11"
