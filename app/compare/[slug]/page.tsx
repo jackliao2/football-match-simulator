@@ -4,6 +4,8 @@ import { notFound, permanentRedirect } from "next/navigation"
 import { MatchupRow } from "@/components/ui/MatchupRow"
 import { QuickMatch } from "@/components/simulator/QuickMatch"
 import { LandingEvidence } from "@/components/ui/LandingEvidence"
+import { HistoricalRecord } from "@/components/ui/HistoricalRecord"
+import { SEARCH_PRIORITY_RECORDS, PRIORITY_REVIEW_DATE, PRIORITY_REVIEW_LABEL } from "@/data/search-priority"
 import { SEARCH_LANDING_EVIDENCE, LANDING_REVIEW_DATE, LANDING_REVIEW_LABEL } from "@/data/search-landing-evidence"
 import { PageHeader } from "@/components/ui/PageHeader"
 import { compareFaqs, compareParamSlugs, compareSearchDescription, compareSeoTitle, resolveClubCompare } from "@/data/compare"
@@ -58,11 +60,12 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
   const rightPrime = getPrimeEntity(pair.rightClubId)
   const leftPeak = `${left.clubName} ${left.displaySeason}`
   const rightPeak = `${right.clubName} ${right.displaySeason}`
-  const faqs = compareFaqs(pair, leftClub.name, rightClub.name, leftPeak, rightPeak)
+  const historicalRecord = SEARCH_PRIORITY_RECORDS[`/compare/${pair.slug}`]
+  const faqs = [...(historicalRecord?.faqs ?? []), ...compareFaqs(pair, leftClub.name, rightClub.name, leftPeak, rightPeak)]
   const evidence = SEARCH_LANDING_EVIDENCE[`/compare/${pair.slug}`]
   const reviewed = SEARCH_REVIEW_PATHS.has(`/compare/${pair.slug}`)
-  const updatedDate = reviewed ? SEARCH_REVIEW_DATE : evidence ? LANDING_REVIEW_DATE : SITE.contentUpdatedIso
-  const updatedLabel = reviewed ? SEARCH_REVIEW_LABEL : evidence ? LANDING_REVIEW_LABEL : SITE.contentUpdated
+  const updatedDate = historicalRecord ? PRIORITY_REVIEW_DATE : reviewed ? SEARCH_REVIEW_DATE : evidence ? LANDING_REVIEW_DATE : SITE.contentUpdatedIso
+  const updatedLabel = historicalRecord ? PRIORITY_REVIEW_LABEL : reviewed ? SEARCH_REVIEW_LABEL : evidence ? LANDING_REVIEW_LABEL : SITE.contentUpdated
 
   return (
     <div className="grid gap-6">
@@ -117,10 +120,11 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
       />
       <PageHeader
         kicker={`Who is better, ${leftClub.name} or ${rightClub.name}?`}
-        title={pair.verdictHeading}
+        title={historicalRecord ? `${leftClub.name} vs ${rightClub.name}: who is better?` : pair.verdictHeading}
         lead={pair.lead}
         crumbs={[{ href: "/compare", label: "Compare" }]}
       />
+      {historicalRecord ? <HistoricalRecord record={historicalRecord} /> : null}
       {pair.criteria ? (
         <section className="grid gap-3" aria-labelledby="comparison-answer">
           <h2 id="comparison-answer" className="section-title">Which is better? Choose the comparison</h2>

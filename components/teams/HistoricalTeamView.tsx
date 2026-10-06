@@ -2,6 +2,8 @@ import Link from "next/link"
 import { MonteCarloResults } from "@/components/simulator/MonteCarloResults"
 import { QuickMatch } from "@/components/simulator/QuickMatch"
 import { LandingEvidence } from "@/components/ui/LandingEvidence"
+import { HistoricalRecord } from "@/components/ui/HistoricalRecord"
+import { SEARCH_PRIORITY_RECORDS, PRIORITY_REVIEW_DATE, PRIORITY_REVIEW_LABEL } from "@/data/search-priority"
 import { CLUB_COMPARES } from "@/data/compare"
 import { SEARCH_REVIEW_PATHS, SEARCH_REVIEW_DATE, SEARCH_REVIEW_LABEL } from "@/data/search-review"
 import { SEARCH_LANDING_EVIDENCE, LANDING_REVIEW_DATE, LANDING_REVIEW_LABEL } from "@/data/search-landing-evidence"
@@ -75,14 +77,14 @@ export const SEARCH_YEAR_NOTES: Record<string, string> = {
   "argentina-1986": "Argentina 1986 World Cup squad searches mean Bilardo's Mexico winners built around Maradona.",
   "argentina-2022": "Argentina 2022 World Cup squad searches mean Scaloni's Qatar winners, not the 1986 side.",
   "france-1998": "France 1998 World Cup squad searches mean Jacquet's home-tournament winners.",
-  "france-2018": "France 2018 World Cup squad searches mean Deschamps' Russia winners with Mbappé, Kanté and Griezmann.",
+  "france-2018": "France won the 2018 World Cup under Didier Deschamps. The complete tournament squad and final XI are listed before the selected players used by the simulator.",
   "spain-2010": "Spain 2010 World Cup squad searches mean Del Bosque's tiki-taka winners, not the later Euro sides alone.",
   "germany-2014": "Germany 2014 World Cup squad searches mean Löw's Brazil-tournament winners.",
   "germany-1990": "Germany 1990 World Cup squad searches mean Beckenbauer's West Germany winners.",
   "italy-2006": "Italy 2006 World Cup squad searches mean Lippi's Berlin winners, not a later Azzurri cycle.",
   "netherlands-1974": "Netherlands 1974 World Cup squad searches mean Michels' Total Football side, not the 1988 Euros winners.",
   "netherlands-1988":
-    "1988 Netherlands squad, 1988 Holland team and 1988 Hollanda kadrosu searches mean Van Basten's Euros winners, not the 1974 World Cup side.",
+    "The Netherlands — also known as Holland — won Euro 1988 under Rinus Michels. The final XI below is the team that beat the Soviet Union 2–0 in Munich.",
   "england-2026":
     "England squad 2026, England 2026 national team and England World Cup 2026 players searches land here: a modelled 2026-cycle dataset around Kane, Bellingham and Saka, not an official FIFA list.",
   "england-1966": "England 1966 World Cup squad searches mean Ramsey's home winners rather than a later tournament XI.",
@@ -121,9 +123,10 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
   const copy = teamPageCopy(team, opponent)
   const editorial = getTeamEditorial(team.id)
   const evidence = SEARCH_LANDING_EVIDENCE[teamPath(team)]
+  const historicalRecord = SEARCH_PRIORITY_RECORDS[teamPath(team)]
   const reviewed = SEARCH_REVIEW_PATHS.has(teamPath(team))
-  const updatedIso = reviewed ? SEARCH_REVIEW_DATE : evidence ? LANDING_REVIEW_DATE : SITE.contentUpdatedIso
-  const updatedLabel = reviewed ? SEARCH_REVIEW_LABEL : evidence ? LANDING_REVIEW_LABEL : SITE.contentUpdated
+  const updatedIso = historicalRecord ? PRIORITY_REVIEW_DATE : reviewed ? SEARCH_REVIEW_DATE : evidence ? LANDING_REVIEW_DATE : SITE.contentUpdatedIso
+  const updatedLabel = historicalRecord ? PRIORITY_REVIEW_LABEL : reviewed ? SEARCH_REVIEW_LABEL : evidence ? LANDING_REVIEW_LABEL : SITE.contentUpdated
   const comparisons = CLUB_COMPARES.filter((pair) => pair.leftPeakId === team.id || pair.rightPeakId === team.id).slice(0, 3)
   const indexLabel = team.kind === "nation" ? "National teams" : "Teams"
   const orgHref = orgPath(team.kind, team.clubId)
@@ -131,7 +134,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
   const TEAM_RUNS = 100
   const model = opponent ? cachedMatchupModel(team, opponent, TEAM_RUNS, `team:${team.id}`) : null
   const yearNote = SEARCH_YEAR_NOTES[team.id] ?? (isCurrentSquad(team) ? modelledCurrentSquadNote(team) : undefined)
-  const faqs = teamFaqs(team, { opponent, model, editorial, runs: TEAM_RUNS })
+  const faqs = [...(historicalRecord?.faqs ?? []), ...teamFaqs(team, { opponent, model, editorial, runs: TEAM_RUNS })]
 
   return (
     <div className="grid gap-6">
@@ -244,6 +247,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
         </div>
         {evidence ? (
           <nav aria-label="On this team page" className="flex flex-wrap gap-4 text-sm text-gold">
+            {historicalRecord ? <a href="#historical-record">Historical record</a> : null}
             <a href="#squad">Squad and formation</a>
             <a href="#season-dossier">Season and tactics</a>
             <a href="#play-match">Simulate this team</a>
@@ -256,9 +260,11 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
           </Link>
         )}
       </header>
+      {historicalRecord ? <HistoricalRecord record={historicalRecord} /> : null}
       {evidence ? (
         <>
           <section id="squad" className="grid scroll-mt-20 gap-4" aria-label="Model squad and formation">
+            {historicalRecord ? <h2 className="section-title">Selected playable squad and formation</h2> : null}
             {team.id === "chelsea-2004-05" ? (
               <div className="result-panel p-4">
                 <h2 className="section-title">Chelsea 04/05 lineup at a glance</h2>

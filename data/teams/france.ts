@@ -135,9 +135,9 @@ export const france2018: HistoricalTeam = makeTeam({
   styleTags: ["Vertical Counter", "Athletic Midfield", "Mbappé Transition", "Deep Block", "Set Pieces"],
   summary:
     "Deschamps' 2018 France. Kanté and Pogba as the engine, Griezmann between the lines, Mbappé destroying teams on the break.",
-  seoTitle: "France 2018 World Cup Squad — Mbappé, Kanté, Griezmann",
+  seoTitle: "France 2018 World Cup Squad: All 23 Players & Final XI",
   seoDescription:
-    "France 2018 World Cup squad: Deschamps winning as manager. Mbappé in open field, Kanté, Griezmann — a transition champion, not 1998.",
+    "France's complete 23-player 2018 World Cup squad, shirt numbers and final starting XI. See Deschamps' tactics and the team that beat Croatia 4–2.",
 })
 
 export const france1984: HistoricalTeam = makeTeam({

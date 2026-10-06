@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest"
 import { SEARCH_LANDING_EVIDENCE, LANDING_REVIEW_DATE } from "@/data/search-landing-evidence"
 import { SEARCH_REVIEW_PATHS, SEARCH_REVIEW_DATE } from "@/data/search-review"
+import { SEARCH_PRIORITY_RECORDS, PRIORITY_REVIEW_DATE } from "@/data/search-priority"
 import { readFileSync } from "node:fs"
 import nextConfig from "../next.config"
 import robots from "@/app/robots"
@@ -812,7 +813,7 @@ describe("GSC landing pages", () => {
     const compare = routes.find((route) => route.url.endsWith("/compare/barcelona-vs-real-madrid"))
     expect(search?.lastModified).toBe(SITE.contentUpdatedIso)
     expect(privacy?.lastModified).toBe(SITE.legalUpdatedIso)
-    expect(compare?.lastModified).toBe(LANDING_REVIEW_DATE)
+    expect(compare?.lastModified).toBe(PRIORITY_REVIEW_DATE)
     expect(SITE.contentUpdatedIso > SITE.legalUpdatedIso).toBe(true)
     expect(SITE.contentUpdated).toMatch(/September 2026/)
   })
@@ -826,7 +827,7 @@ describe("GSC landing pages", () => {
     for (const path of Object.keys(SEARCH_LANDING_EVIDENCE)) {
       const matches = routes.filter((route) => new URL(route.url).pathname === path)
       expect(matches, path).toHaveLength(1)
-      expect(matches[0].lastModified, path).toBe(SEARCH_REVIEW_PATHS.has(path) ? SEARCH_REVIEW_DATE : LANDING_REVIEW_DATE)
+      expect(matches[0].lastModified, path).toBe(SEARCH_PRIORITY_RECORDS[path] ? PRIORITY_REVIEW_DATE : SEARCH_REVIEW_PATHS.has(path) ? SEARCH_REVIEW_DATE : LANDING_REVIEW_DATE)
       const team = teams.find((item) => teamPath(item) === path)
       if (team) {
         expect(teamMetadata(team).robots).toEqual({ index: true, follow: true })

@@ -56,6 +56,11 @@ export const CLUB_COMPARES: ClubCompare[] = [
       "barcelona or real madrid which is better",
     ]),
     lead: "The answer changes with the question. Real Madrid owns the stronger all-time European case. Barcelona’s best modern side reached the higher tactical peak. Here is the distinction before we send their prime teams into the simulator.",
+    criteria: [
+      { label: "Who leads the European record?", answer: "Real Madrid: 15 European Cup / Champions League titles to Barcelona's five. The comparison includes both names of the competition, checked on 6 October 2026." },
+      { label: "Which single-season team do we prefer?", answer: "Our editorial pick is Barcelona 2010/11 for its midfield control and Messi's false-nine role. Madrid 2016/17 are the alternative for finishing, depth and the ability to vary their attacks." },
+      { label: "Who is stronger today?", answer: "Historical titles cannot decide current form. That question requires recent results, available players and a specific fixture; the matchup below uses the 2011 and 2017 teams." },
+    ],
     verdictHeading: "Real Madrid all-time; Barcelona at their modern peak",
     verdict: [
       "If “better” means the greater club across history, our answer is Real Madrid. Their European record spans generations rather than one dynasty, and the club repeatedly rebuilt winning teams around different stars and tactical identities.",
@@ -84,19 +89,19 @@ export const CLUB_COMPARES: ClubCompare[] = [
     rightPeakId: "liverpool-2018-19",
     title: "United across the modern era; Liverpool on the biggest nights",
     seoTitle: "Man United vs Liverpool: History & Peak Teams",
-    searchDescription: "Compare Manchester United's Ferguson-era dominance with Liverpool's European case, then explore the 2007/08 and 2018/19 squads and tactics.",
+    searchDescription: "United and Liverpool have 20 league titles each; Liverpool lead European Cups 6–3. Compare the honours, then United 2007/08 and Liverpool 2018/19.",
     criteria: [
-      { label: "Which club is better historically?", answer: "The criterion matters. Our United case focuses on Ferguson-era domestic dominance; our Liverpool case focuses on European success. This page does not rank current form or provide a live trophy count." },
+      { label: "Which club is better historically?", answer: "They are level on 20 English top-flight league titles; Liverpool lead European Cups six to three, checked on 6 October 2026. United's Ferguson-era dominance is a separate era-specific argument." },
       { label: "Which peak teams are compared?", answer: "United 2007/08 and Liverpool 2018/19: Ronaldo, Rooney and Tévez against Salah, Mané and Firmino. Both selected sides won the Champions League; the tactical comparison asks how United's attacking movement meets Liverpool's press." },
       { label: "Who wins a match between them?", answer: "The simulator tests those two named squads under one model. Its result is a hypothetical matchup, separate from the historical club comparison." },
     ],
     description:
       "Manchester United or Liverpool: English football’s defining rivalry. United 2007/08 against Klopp’s 2018/19 Liverpool — two primes, not one shirt colour.",
     keywords: keywords("Manchester United", "Liverpool"),
-    lead: "Our United case centres on the Ferguson era; our Liverpool case centres on European success. For the on-pitch comparison, we use United 2007/08 and Liverpool 2018/19 rather than mixing players from different decades.",
+    lead: "United and Liverpool are level on 20 English league titles. Liverpool lead European Cups six to three. Our on-pitch comparison uses United 2007/08 and Liverpool 2018/19, two Champions League winners with different attacking strengths.",
     verdictHeading: "United across the modern era; Liverpool on the biggest nights",
     verdict: [
-      "If the question is the greater English club from the 1990s onward, Manchester United have the stronger case: league dominance, a Champions League win in Moscow, and a squad that mixed stars without a soft unit.",
+      "Across the full league record, the clubs are tied on 20 titles; in the European Cup and Champions League, Liverpool lead six to three. United's stronger argument is specifically Ferguson-era league dominance, not an undisputed lead in every measure of club history.",
       "Liverpool’s answer is European gravitas and the 2018/19 side that pressed as a team. Istanbul 2005 still sits in a different category from domestic consistency. Simulate the peaks rather than collapsing both clubs into one number.",
     ],
     rows: [
@@ -278,7 +283,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
     searchDescription:
       "AC Milan's European legacy faces Inter Milan's 2009/10 treble. Compare Sacchi's 1988/89 XI with Mourinho's 2009/10 side and read our verdict.",
     criteria: [
-      { label: "Which club has the stronger European case?", answer: "Our historical European verdict favours AC Milan. That judgment concerns European legacy, rather than today's form or every domestic competition." },
+      { label: "Which club has the stronger European case?", answer: "AC Milan have seven European Cup / Champions League titles to Inter's three, checked on 6 October 2026. That supports Milan's European case, but does not measure every domestic competition or today's form." },
       { label: "Which season has the broader trophy achievement?", answer: "Inter 2009/10 won the league, domestic cup and Champions League treble. Milan 1988/89 is selected for Sacchi's European Cup-winning team and tactical influence. Those are different reasons to choose a peak." },
       { label: "Who wins the peak matchup?", answer: "Compare Milan 1988/89 with Inter 2009/10 below, then simulate them. A simulated score does not settle which club is greater across its entire history." },
     ],
@@ -291,7 +296,7 @@ export const CLUB_COMPARES: ClubCompare[] = [
       "milan or inter which is better",
       "derby della madonnina",
     ]),
-    lead: "Milan have the deeper European identity. Inter 2009/10 is the modern treble that still stands up in any Milan debate.",
+    lead: "Milan lead European Cup / Champions League wins seven to three. Inter 2009/10 won the league, domestic cup and Champions League treble. The club record and a season's achievements provide different answers to who is better.",
     verdictHeading: "Milan across European history; Inter in 2010",
     verdict: [
       "AC Milan 1988/89 is one of the most influential club sides ever built. Baresi, the Dutch trio and Sacchi’s press changed how elite teams defended space.",

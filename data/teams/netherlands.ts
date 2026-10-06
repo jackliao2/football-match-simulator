@@ -130,9 +130,9 @@ export const netherlands1988: HistoricalTeam = makeTeam({
   styleTags: ["Total Football", "Star Forwards", "Technical Midfield", "High Press", "Individual Brilliance"],
   summary:
     "Michels' 1988 Netherlands. Gullit as captain, Van Basten as the finish, Rijkaard as the screen — the one Dutch side that actually lifted the thing.",
-  seoTitle: "Netherlands 1988 Euros Squad — Van Basten, Gullit, the Trophy",
+  seoTitle: "Netherlands 1988 Euro Squad: Final XI & Formation",
   seoDescription:
-    "Netherlands 1988 Euros squad: the only Dutch side to turn the talent into a major trophy. Van Basten's volley, Gullit — not 1974.",
+    "Netherlands Euro 1988 squad and final starting XI: Gullit, Van Basten, Koeman and Rijkaard. See the 2–0 final win, Michels' tactics and selected players.",
 })
 
 export const netherlands2010: HistoricalTeam = makeTeam({
