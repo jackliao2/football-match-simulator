@@ -17,6 +17,8 @@ Six pages already receive impressions but provide incomplete answers to some of 
 
 Historical sources are linked next to each table: Premier League, UEFA, FIFA, FFF and the clubs' official honours pages. Trophy figures were checked on 6 October 2026 and are dated snapshots, not live totals. France's complete historical roster is separate from the engine's smaller selected squad. No engine or player ratings change.
 
+FIFA's old squad-list host returned 522. The link now uses an accessible archived copy of FIFA's original PDF, explicitly labelled as such; the FFF final report independently confirms all 23 names. The release security gate also identified GHSA-68fv-2mgg-jv7q: the lockfile updates only `source-map-js` from 1.2.1 to the patched 1.2.2, without changing direct dependencies or bypassing the audit.
+
 ## SEO and presentation
 
 - France and Netherlands metadata now describe the added information.

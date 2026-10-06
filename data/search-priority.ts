@@ -72,7 +72,7 @@ export const SEARCH_PRIORITY_RECORDS: Record<string, SearchPriorityRecord> = {
       ["23", "Alphonse Areola", "Goalkeeper"],
     ],
     note: "Final starters: Lloris; Pavard, Varane, Umtiti, Hernandez; Kanté, Pogba; Mbappé, Griezmann, Matuidi; Giroud. The complete historical list above is separate from the smaller playable squad and our estimated ratings below.",
-    sources: [{ label: "FIFA: official Russia 2018 squad lists (PDF)", url: "https://www.fifadata.com/document/fwc/2018/pdf/FWC_2018_SQUADLISTS.pdf" }, { label: "FFF: France–Croatia final teamsheet", url: "https://www.fff.fr/selection/matchs/1266-france-croatie.html" }],
+    sources: [{ label: "FIFA: Russia 2018 squad lists (PDF, archived copy)", url: "https://media-files.abidjan.net/document/docs/Liste-des-joueurs.pdf#page=11" }, { label: "FFF: France–Croatia final teamsheet", url: "https://www.fff.fr/selection/matchs/1266-france-croatie.html" }],
     faqs: [
       { q: "Who was in France's 2018 World Cup squad?", a: "France's 23-player squad comprised three goalkeepers, eight defenders, five midfielders and seven forwards in FIFA's registration categories. Lloris captained Deschamps' team, with Griezmann, Mbappé, Pogba and Kanté among its leading players. The complete numbered list is shown above." },
       { q: "Who started for France in the 2018 World Cup final?", a: "Lloris; Pavard, Varane, Umtiti, Hernandez; Kanté, Pogba; Mbappé, Griezmann, Matuidi; Giroud. France beat Croatia 4–2. Nzonzi, Tolisso and Fekir came on as substitutes." },
