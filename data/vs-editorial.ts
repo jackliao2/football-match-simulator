@@ -27,7 +27,7 @@ const EDITORIAL: Record<string, string> = {
   "france-1984|netherlands-1988": "Platini's European champions meet the only Dutch side to turn their talent into a major trophy. France own the denser creative midfield, while Gullit and Van Basten give the Netherlands more power close to goal.",
   "france-2018|italy-2006": "Italy's veteran defensive craft faces France's younger transition power. Cannavaro and Buffon can keep the box quiet, but Mbappé makes every Italian advance a decision about how much space to risk.",
   "england-1966|germany-1990": "Two world champions built on defensive authority and midfield leadership. England have home-era attacking combinations around Charlton; Germany bring a more modern sweeper system and Matthäus driving through the centre.",
-  "france-1998|senegal-2002": "The World Cup holders against the side that beat them on the opening night in Seoul. France still have Thuram, Desailly and Zidane; Senegal have Diouf, Fadiga and the goal that made Papa Bouba Diop a national name. It is a rematch of a result that already happened, not a hypothetical between strangers.",
+  "france-1998|senegal-2002": "France's 1998 champions face Senegal's 2002 quarter-finalists in a hypothetical cross-era matchup. Senegal's real 1–0 win came against France in 2002, when Zidane was injured. This comparison instead uses Jacquet's 1998 selection, with Zidane available to face Diouf, Fadiga and Papa Bouba Diop.",
   "croatia-2018|france-2018": "The Moscow final, replayed as a squad-versus-squad rather than a recap. France have Mbappé in open field and a midfield that can protect a lead; Croatia have Modrić, Rakitić and a path of extra-time matches already in their legs before the first whistle of this version.",
   "everton-1984-85|liverpool-2004-05": "Two Merseyside European nights that do not belong in the same sentence. Kendall's Everton won a league and a Cup Winners' Cup in daylight; Benítez's Liverpool won a Champions League from 3–0 down after dark. Direct play and Sheedy's left foot against Gerrard dragging a cup run.",
   "bayern-munich-2012-13|chelsea-2011-12": "The Munich final's two clubs, a year apart in the catalogue and a universe apart as teams. Chelsea parked, headed and won a shootout in Bayern's stadium; Heynckes' treble side spent the next season proving they were much more than that night's losers.",
@@ -38,6 +38,7 @@ export type MatchupFeature = {
   context: string
   hinge: string
   reading: string
+  sources?: Array<{ label: string; url: string }>
 }
 
 const FEATURES: Record<string, MatchupFeature> = {
@@ -198,10 +199,11 @@ const FEATURES: Record<string, MatchupFeature> = {
     reading: "Germany should have the structural advantage in width and the cleaner method for carrying possession forward. England retain a strong box presence and several routes from midfield into shooting positions. Historical home advantage is not added to the ratings here; this is the teams on a neutral imagined pitch.",
   },
   "france-1998|senegal-2002": {
-    title: "The opening-night result, without pretending it was a fluke or a law",
-    context: "France arrived in 2002 as holders with a midfield still built around Zidane and a defence that had been among the hardest in the world four years earlier. Senegal arrived as first-time World Cup players under Bruno Metsu, with Diouf and Fadiga forcing the game toward Barthez before Papa Bouba Diop scored the only goal in Seoul. This page is that fixture as a football match, not a morality play about complacent champions.",
-    hinge: "France need Zidane to receive in front of Cissé rather than with his back to Fadiga. If Thuram and Desailly can step into the first ball, Diouf's runs become isolated. Senegal need the second ball after a long throw or a broken clearance — that is how the 2002 goal arrived — and they need Coly and Daf to survive Henry if France start playing through the left.",
-    reading: "A Senegal win should look like 2002: one set-piece or a scramble, then a block that holds. A France win should look like the holders remembering they can pass through a press. Do not model this as a 3–0 either way. The historical night was 1–0 and tight; the simulator should be allowed to find that score again without treating it as destiny.",
+    title: "France's 1998 champions against Senegal's 2002 breakthrough",
+    context: "This is a hypothetical meeting between Jacquet's 1998 World Cup winners and Metsu's 2002 quarter-finalists. The famous opening match in Seoul took place on 31 May 2002 against France's 2002 team, when Zidane was injured and did not play. Senegal won 1–0 through Papa Bouba Diop. The French selection on this page comes from four years earlier, so that result supplies context rather than a previous meeting between these exact squads.",
+    hinge: "Zidane's availability changes the midfield problem. Cissé and his teammates must limit the space in which he can turn while preserving an outlet toward Diouf and Fadiga. France need their full-backs to balance support for the attack with cover against Senegal's wide runs. In the actual 2002 match, Diouf broke down the left and delivered a low cross for Diop's goal. That open-play attack illustrates the threat Senegal can carry here.",
+    reading: "France's model has a route to control through its experienced defence and Zidane's passing. Senegal can threaten by moving the ball wide quickly and supporting Diouf's runs with midfield arrivals. The historical 1–0 score does not prescribe a score for this comparison: France's 1998 squad and Senegal's 2002 squad never played this fixture. Read the percentages as outcomes from the selected model teams, with the historical upset kept separate.",
+    sources: [{ label: "FIFA: Senegal's 2002 win, Zidane's absence and Diouf's assist", url: "https://inside.fifa.com/news/diouf-interview-senegal-france-2002-fifa-world-cup" }],
   },
   "croatia-2018|france-2018": {
     title: "The final they actually played, with the extra-time tax left in",

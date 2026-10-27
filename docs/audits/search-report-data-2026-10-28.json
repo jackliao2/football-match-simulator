@@ -1,0 +1,477 @@
+{
+  "analysis_date": "2026-10-28",
+  "sources": {
+    "google_coverage": "legendarymatch.com-Coverage-2026-10-28.zip",
+    "google_performance": "legendarymatch.com-Performance-on-Search-2026-10-28.zip",
+    "bing_daily": "legendarymatch.com_SearchPerformanceOverview_All_10_27_2026.csv",
+    "bing_keywords": "legendarymatch.com_KeywordReport_10_27_2026.csv",
+    "platform_confirmation": "User confirmed in chat on 2026-10-28 that the two standalone CSV files are Bing exports."
+  },
+  "source_freshness": {
+    "google_performance_latest_date": "2026-10-25",
+    "google_coverage_latest_date": "2026-10-23",
+    "gsc_coverage_2026_10_05_snapshot_last_date": "2026-09-21",
+    "bing_daily_latest_date": "2026-10-24"
+  },
+  "google_periods": [
+    {
+      "start": "2026-09-26",
+      "end": "2026-10-10",
+      "days": 15,
+      "clicks": 26,
+      "impressions": 1216,
+      "daily_impressions": 81.0667,
+      "ctr_percent": 2.1382,
+      "impression_weighted_position": 11.0258
+    },
+    {
+      "start": "2026-10-11",
+      "end": "2026-10-25",
+      "days": 15,
+      "clicks": 1,
+      "impressions": 30,
+      "daily_impressions": 2.0,
+      "ctr_percent": 3.3333,
+      "impression_weighted_position": 25.44
+    },
+    {
+      "start": "2026-10-04",
+      "end": "2026-10-10",
+      "days": 7,
+      "clicks": 12,
+      "impressions": 530,
+      "daily_impressions": 75.7143,
+      "ctr_percent": 2.2642,
+      "impression_weighted_position": 11.7455
+    },
+    {
+      "start": "2026-10-11",
+      "end": "2026-10-17",
+      "days": 7,
+      "clicks": 1,
+      "impressions": 12,
+      "daily_impressions": 1.7143,
+      "ctr_percent": 8.3333,
+      "impression_weighted_position": 24.5917
+    },
+    {
+      "start": "2026-10-18",
+      "end": "2026-10-24",
+      "days": 7,
+      "clicks": 0,
+      "impressions": 17,
+      "daily_impressions": 2.4286,
+      "ctr_percent": 0.0,
+      "impression_weighted_position": 22.8294
+    },
+    {
+      "start": "2026-10-01",
+      "end": "2026-10-10",
+      "days": 10,
+      "clicks": 17,
+      "impressions": 798,
+      "daily_impressions": 79.8,
+      "ctr_percent": 2.1303,
+      "impression_weighted_position": 11.8061
+    },
+    {
+      "start": "2026-10-11",
+      "end": "2026-10-20",
+      "days": 10,
+      "clicks": 1,
+      "impressions": 18,
+      "daily_impressions": 1.8,
+      "ctr_percent": 5.5556,
+      "impression_weighted_position": 28.6778
+    }
+  ],
+  "google_drop_15_day_comparison": {
+    "impression_change_percent": -97.5329,
+    "click_change_percent": -96.1538,
+    "break_date": "2026-10-11"
+  },
+  "google_daily_near_break": [
+    {
+      "Date": "2026-10-01",
+      "Clicks": "2",
+      "Impressions": "97",
+      "CTR": "2.06%",
+      "Position": "8.4"
+    },
+    {
+      "Date": "2026-10-02",
+      "Clicks": "3",
+      "Impressions": "96",
+      "CTR": "3.12%",
+      "Position": "10.9"
+    },
+    {
+      "Date": "2026-10-03",
+      "Clicks": "0",
+      "Impressions": "75",
+      "CTR": "0%",
+      "Position": "17.8"
+    },
+    {
+      "Date": "2026-10-04",
+      "Clicks": "2",
+      "Impressions": "81",
+      "CTR": "2.47%",
+      "Position": "10"
+    },
+    {
+      "Date": "2026-10-05",
+      "Clicks": "1",
+      "Impressions": "78",
+      "CTR": "1.28%",
+      "Position": "13.1"
+    },
+    {
+      "Date": "2026-10-06",
+      "Clicks": "1",
+      "Impressions": "61",
+      "CTR": "1.64%",
+      "Position": "10.9"
+    },
+    {
+      "Date": "2026-10-07",
+      "Clicks": "1",
+      "Impressions": "75",
+      "CTR": "1.33%",
+      "Position": "9.7"
+    },
+    {
+      "Date": "2026-10-08",
+      "Clicks": "1",
+      "Impressions": "56",
+      "CTR": "1.79%",
+      "Position": "11.4"
+    },
+    {
+      "Date": "2026-10-09",
+      "Clicks": "2",
+      "Impressions": "88",
+      "CTR": "2.27%",
+      "Position": "13.3"
+    },
+    {
+      "Date": "2026-10-10",
+      "Clicks": "4",
+      "Impressions": "91",
+      "CTR": "4.4%",
+      "Position": "13.1"
+    },
+    {
+      "Date": "2026-10-11",
+      "Clicks": "1",
+      "Impressions": "2",
+      "CTR": "50%",
+      "Position": "3"
+    },
+    {
+      "Date": "2026-10-12",
+      "Clicks": "0",
+      "Impressions": "1",
+      "CTR": "0%",
+      "Position": "1"
+    },
+    {
+      "Date": "2026-10-13",
+      "Clicks": "0",
+      "Impressions": "1",
+      "CTR": "0%",
+      "Position": "62"
+    },
+    {
+      "Date": "2026-10-14",
+      "Clicks": "0",
+      "Impressions": "1",
+      "CTR": "0%",
+      "Position": "89"
+    },
+    {
+      "Date": "2026-10-15",
+      "Clicks": "0",
+      "Impressions": "2",
+      "CTR": "0%",
+      "Position": "7.5"
+    },
+    {
+      "Date": "2026-10-16",
+      "Clicks": "0",
+      "Impressions": "2",
+      "CTR": "0%",
+      "Position": "7.5"
+    },
+    {
+      "Date": "2026-10-17",
+      "Clicks": "0",
+      "Impressions": "3",
+      "CTR": "0%",
+      "Position": "35.7"
+    },
+    {
+      "Date": "2026-10-18",
+      "Clicks": "0",
+      "Impressions": "1",
+      "CTR": "0%",
+      "Position": "99"
+    },
+    {
+      "Date": "2026-10-19",
+      "Clicks": "0",
+      "Impressions": "3",
+      "CTR": "0%",
+      "Position": "36.7"
+    },
+    {
+      "Date": "2026-10-20",
+      "Clicks": "0",
+      "Impressions": "2",
+      "CTR": "0%",
+      "Position": "6"
+    },
+    {
+      "Date": "2026-10-21",
+      "Clicks": "0",
+      "Impressions": "0",
+      "CTR": "",
+      "Position": ""
+    },
+    {
+      "Date": "2026-10-22",
+      "Clicks": "0",
+      "Impressions": "2",
+      "CTR": "0%",
+      "Position": "7"
+    },
+    {
+      "Date": "2026-10-23",
+      "Clicks": "0",
+      "Impressions": "8",
+      "CTR": "0%",
+      "Position": "19"
+    },
+    {
+      "Date": "2026-10-24",
+      "Clicks": "0",
+      "Impressions": "1",
+      "CTR": "0%",
+      "Position": "1"
+    },
+    {
+      "Date": "2026-10-25",
+      "Clicks": "0",
+      "Impressions": "1",
+      "CTR": "0%",
+      "Position": "80"
+    }
+  ],
+  "coverage_selected_dates": [
+    {
+      "Date": "2026-09-19",
+      "Not indexed": "178",
+      "Indexed": "144",
+      "Impressions": "97"
+    },
+    {
+      "Date": "2026-09-22",
+      "Not indexed": "175",
+      "Indexed": "155",
+      "Impressions": "112"
+    },
+    {
+      "Date": "2026-10-04",
+      "Not indexed": "175",
+      "Indexed": "155",
+      "Impressions": "81"
+    },
+    {
+      "Date": "2026-10-05",
+      "Not indexed": "179",
+      "Indexed": "151",
+      "Impressions": "78"
+    },
+    {
+      "Date": "2026-10-10",
+      "Not indexed": "185",
+      "Indexed": "145",
+      "Impressions": "91"
+    },
+    {
+      "Date": "2026-10-11",
+      "Not indexed": "185",
+      "Indexed": "145",
+      "Impressions": "2"
+    },
+    {
+      "Date": "2026-10-13",
+      "Not indexed": "201",
+      "Indexed": "131",
+      "Impressions": "1"
+    },
+    {
+      "Date": "2026-10-17",
+      "Not indexed": "202",
+      "Indexed": "130",
+      "Impressions": "3"
+    },
+    {
+      "Date": "2026-10-20",
+      "Not indexed": "204",
+      "Indexed": "129",
+      "Impressions": "2"
+    },
+    {
+      "Date": "2026-10-23",
+      "Not indexed": "204",
+      "Indexed": "129",
+      "Impressions": "8"
+    }
+  ],
+  "coverage_index_peak_to_latest": {
+    "peak_indexed": 155,
+    "latest_indexed": 129,
+    "change_pages": -26,
+    "change_percent": -16.7742
+  },
+  "coverage_reasons_vs_2026_09_26_export": [
+    {
+      "reason": "Excluded by ‘noindex’ tag",
+      "prior_pages": 36,
+      "latest_pages": 59,
+      "change_pages": 23
+    },
+    {
+      "reason": "Alternate page with proper canonical tag",
+      "prior_pages": 25,
+      "latest_pages": 31,
+      "change_pages": 6
+    },
+    {
+      "reason": "Page with redirect",
+      "prior_pages": 3,
+      "latest_pages": 3,
+      "change_pages": 0
+    },
+    {
+      "reason": "Not found (404)",
+      "prior_pages": 1,
+      "latest_pages": 1,
+      "change_pages": 0
+    },
+    {
+      "reason": "Discovered - currently not indexed",
+      "prior_pages": 102,
+      "latest_pages": 88,
+      "change_pages": -14
+    },
+    {
+      "reason": "Crawled - currently not indexed",
+      "prior_pages": 11,
+      "latest_pages": 22,
+      "change_pages": 11
+    }
+  ],
+  "limitations": [
+    "The owner confirmed Manual Actions and Security Issues are clear. The supplied ZIPs do not contain Crawl Stats or URL Inspection results; algorithmic ranking changes and Googlebot-specific failures remain possible.",
+    "Google page and query breakdowns cover the full selected range, not pre/post October 11. Cannot reliably name the pages or queries that lost visibility after the break.",
+    "Google page totals (57 clicks, 3011 impressions) differ from property Chart/Devices totals (55 clicks, 2953 impressions); use Chart for site totals and avoid reconciling page aggregation by summing it.",
+    "Latest indexed count is 129, down 16.8% from peak 155. This is far smaller than the 97.5% impression decline. Partial index loss alone does not establish cause.",
+    "Coverage reason label Critical issues includes intentional exclusions such as noindex, canonical alternatives, and redirects; not every excluded URL should be indexed.",
+    "Old October 5 Coverage export is stale and exactly matches September 26 coverage through September 21; use actual row dates, not export dates.",
+    "Average position after collapse is based on only 30 impressions and a different query mix; do not treat it as a stable sitewide rank estimate.",
+    "Bing figures are independently confirmed as Bing exports and must not be combined with Google Search Console figures."
+  ],
+  "bing_periods": [
+    {
+      "start": "2026-09-27",
+      "end": "2026-10-10",
+      "days": 14,
+      "clicks": 3,
+      "impressions": 143,
+      "daily_impressions": 10.2143,
+      "ctr_percent": 2.0979,
+      "impression_weighted_position": null
+    },
+    {
+      "start": "2026-10-11",
+      "end": "2026-10-24",
+      "days": 14,
+      "clicks": 6,
+      "impressions": 398,
+      "daily_impressions": 28.4286,
+      "ctr_percent": 1.5075,
+      "impression_weighted_position": null
+    },
+    {
+      "start": "2026-10-01",
+      "end": "2026-10-10",
+      "days": 10,
+      "clicks": 1,
+      "impressions": 120,
+      "daily_impressions": 12.0,
+      "ctr_percent": 0.8333,
+      "impression_weighted_position": null
+    },
+    {
+      "start": "2026-10-11",
+      "end": "2026-10-20",
+      "days": 10,
+      "clicks": 5,
+      "impressions": 186,
+      "daily_impressions": 18.6,
+      "ctr_percent": 2.6882,
+      "impression_weighted_position": null
+    },
+    {
+      "start": "2026-10-21",
+      "end": "2026-10-24",
+      "days": 4,
+      "clicks": 1,
+      "impressions": 212,
+      "daily_impressions": 53.0,
+      "ctr_percent": 0.4717,
+      "impression_weighted_position": null
+    }
+  ],
+  "bing_totals": {
+    "daily_clicks": 10,
+    "daily_impressions": 615,
+    "reported_keyword_rows": 242,
+    "reported_keyword_clicks": 10,
+    "reported_keyword_impressions": 457
+  },
+  "confirmed_user_facts": {
+    "confirmed_in_chat_date": "2026-10-28",
+    "google_manual_actions": "No issues reported, as confirmed by the site owner; not independently inspected through an authenticated session.",
+    "google_security_issues": "No issues reported, as confirmed by the site owner; not independently inspected through an authenticated session.",
+    "standalone_csv_platform": "Bing Webmaster Tools"
+  },
+  "technical_baseline": {
+    "production_revision": "fe855ce",
+    "deployment_date": "2026-10-06",
+    "sitemap_urls_checked": 232,
+    "sitemap_indexability_check": "All 232 returned HTTP 200, expected canonical and no noindex; 0 orphan URLs in baseline audit.",
+    "service_observation": "Service currently active since 2026-10-06 with NRestarts=0. This observation is not a complete availability history.",
+    "journal_observation": "October 10-12 journal review found two invalid server action scanner requests; this is not evidence of an outage.",
+    "access_log_limitations": "Oldest retained access log starts October 13, after the break. Inherited shared default log format does not isolate hostname, so shared request contents were not inspected.",
+    "googlebot_status": "Authenticated URL Inspection, Crawl Stats and verified Googlebot-specific access diagnosis remain needed. Googlebot-specific failures are not conclusively excluded.",
+    "linked_dossier_source_coverage_before_this_release": {
+      "sourced_dossiers": 21,
+      "total_dossiers": 70
+    }
+  },
+  "public_reference_sources": {
+    "google_spam_policies": "https://developers.google.com/search/docs/essentials/spam-policies#scaled-content",
+    "google_helpful_content": "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
+    "google_noindex": "https://developers.google.com/search/docs/crawling-indexing/block-indexing",
+    "september_2026_spam_update": "https://status.search.google.com/incidents/XhUDXP7A67iHCD2kmbVu"
+  },
+  "algorithm_update_context": {
+    "official_start_date_us_pacific": "2026-09-24",
+    "official_end_date_us_pacific": "2026-10-08",
+    "site_break_date_gsc": "2026-10-11",
+    "assessment": "Close in time; correlation is not proof that this update caused the site decline."
+  }
+}

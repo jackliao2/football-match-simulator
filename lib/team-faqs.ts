@@ -1,7 +1,7 @@
 import type { TeamEditorial } from "@/data/team-editorial"
 import { matchupFeature, writtenMatchupEditorial } from "@/data/vs-editorial"
 import { firstSentence } from "@/lib/page-copy"
-import { informalSeason, isCurrentSquad, modelledCurrentSquadNote } from "@/lib/seo"
+import { isCurrentSquad, modelledCurrentSquadNote } from "@/lib/seo"
 import { teamStars } from "@/lib/stars"
 import type { HistoricalTeam, MonteCarloResult } from "@/types"
 
@@ -29,7 +29,6 @@ export function teamFaqs(
   const hook = firstSentence(editorial?.intro ?? team.summary)
   const current = isCurrentSquad(team)
   const modelled = team.seoDescription.toLowerCase().includes("modelled")
-  const shortSeason = informalSeason(team)
   const faqs: TeamFaq[] = []
 
   if (current) {
@@ -42,14 +41,7 @@ export function teamFaqs(
       q: `What was the ${team.clubName} ${team.displaySeason} squad?`,
       a: modelled
         ? `This page preserves a modelled ${team.displaySeason} snapshot rather than an official registration list. ${hook} ${stars} are the leading names in this version.`
-        : `${hook} ${stars} are the names people mean for ${team.clubName} ${team.displaySeason}.`,
-    })
-  }
-
-  if (shortSeason && !current) {
-    faqs.push({
-      q: `Is this the ${team.clubName} ${shortSeason} squad?`,
-      a: `Yes — ${team.clubName} ${shortSeason} searches usually mean this ${team.displaySeason} side: ${stars} under ${team.manager}, not a later rebuild.`,
+        : `${hook} The simulator includes ${team.players.length} selected players, including ${stars}. This selection is not a complete registration list.`,
     })
   }
 
@@ -64,8 +56,6 @@ export function teamFaqs(
     })
   }
 
-  const trophy = team.trophies[0]?.label
-  const feat = team.achievements[0]
   if (current) {
     faqs.push({
       q: `Who starts for ${team.clubName} ${team.displaySeason} in the simulator?`,
@@ -73,8 +63,8 @@ export function teamFaqs(
     })
   } else {
     faqs.push({
-      q: `What formation did ${team.clubName} ${team.displaySeason} play?`,
-      a: `${team.manager} used a ${team.formation}. ${feat ? `${feat}. ` : ""}${trophy ? `${trophy} that season. ` : ""}${stars} as the spine of that ${team.displaySeason} side.`,
+      q: `Which formation represents ${team.clubName} ${team.displaySeason} in the simulator?`,
+      a: `We use a representative ${team.formation} with ${stars}. It is a modelling choice for this season; actual lineups varied by match, availability and opponent.`,
     })
   }
 

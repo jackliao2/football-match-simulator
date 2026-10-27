@@ -47,6 +47,10 @@ export function SquadList({ team }: { team: HistoricalTeam }) {
 
   return (
     <div className="grid gap-4 lg:grid-cols-2">
+      <p className="text-sm leading-7 text-muted lg:col-span-2">
+        The simulator uses {team.players.length} selected players and a representative XI for {team.clubName} {team.displaySeason}.
+        {" "}This is a playable selection, not a complete registration list or a confirmed match lineup. Ratings are our estimates.
+      </p>
       <section className="result-panel">
         <h2 className="border-b border-white/10 px-3 py-2 font-display text-[8px] uppercase tracking-[0.18em] text-gold">
           {copy.xiHeading}

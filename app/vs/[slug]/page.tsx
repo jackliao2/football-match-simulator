@@ -13,6 +13,7 @@ import { allVsPairs, isPublishedMatchup, vsSimulationRuns } from "@/data/matchup
 import { getTeam } from "@/data/teams"
 import { matchupFeature } from "@/data/vs-editorial"
 import { VS_HUB } from "@/data/collection-copy"
+import { MATCHUP_PAGE_UPDATES } from "@/data/content-updates"
 import { canonicalVsSlug, parseVsSlug } from "@/lib/match-id"
 import { vsPageCopy } from "@/lib/page-copy"
 import { teamPath } from "@/lib/paths"
@@ -87,6 +88,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
   const copy = vsPageCopy(home, away, VS_RUNS)
   const feature = matchupFeature(home, away)
   const faqs = vsFaqs(home, away, model, VS_RUNS)
+  const contentUpdate = MATCHUP_PAGE_UPDATES[`/vs/${canonical}`]
 
   return (
     <div className="grid gap-6">
@@ -101,7 +103,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
             description: copy.description,
             author: personSchema(),
             datePublished: SITE.legalUpdatedIso,
-            dateModified: SITE.contentUpdatedIso,
+            dateModified: contentUpdate?.iso ?? SITE.contentUpdatedIso,
           }),
         }}
       />
@@ -140,7 +142,7 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
         lead={copy.lead}
         crumbs={[{ href: "/vs", label: VS_HUB.crumb }]}
       />
-      {feature ? <EditorialByline /> : null}
+      {feature ? <EditorialByline date={contentUpdate?.label} dateTime={contentUpdate?.iso} /> : null}
 
       <section className="matchup-editorial">
         <div><p className="page-kicker">{home.displaySeason} vs {away.displaySeason}</p><h2 className="section-title mt-1">{copy.sectionHeading}</h2></div>
@@ -174,6 +176,16 @@ export default async function VsPage({ params }: PageProps<"/vs/[slug]">) {
               <p className="mt-3 text-sm leading-7 text-muted">{feature.reading}</p>
             </section>
           </div>
+          {feature.sources?.length ? (
+            <p className="text-xs leading-6 text-muted">
+              Historical context: {feature.sources.map((source, index) => (
+                <span key={source.url}>
+                  {index > 0 ? " · " : ""}
+                  <a href={source.url} className="text-gold hover:text-gold-2">{source.label}</a>
+                </span>
+              ))}
+            </p>
+          ) : null}
         </article>
       ) : null}
 

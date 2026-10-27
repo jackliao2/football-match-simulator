@@ -68,3 +68,24 @@ console.log(`Indexability audit passed for ${urls.length} sitemap URLs on ${site
 const orphans = [...incoming].filter(([, sources]) => sources.size === 0).map(([url]) => url)
 console.log(`Pages with no inbound links from other sitemap pages: ${orphans.length}.`)
 if (orphans.length) console.log(JSON.stringify(orphans, null, 2))
+
+// Check the other side of the policy too: utility pages stay usable and expose noindex.
+const excludedPaths = [
+  "/search",
+  "/search?q=barcelona",
+  "/search?q=&q=barcelona",
+  "/teams/barcelona/2025-26",
+  "/match/barcelona-2008-09-vs-real-madrid-2016-17-a71d92",
+]
+for (const path of excludedPaths) {
+  const url = new URL(path, site)
+  if (urls.includes(`${site}${url.pathname}`)) throw new Error(`Excluded path is in the sitemap: ${path}`)
+  url.searchParams.set("indexability-audit", "1")
+  const response = await auditFetch(url)
+  const html = await response.text()
+  const robots = html.match(/<meta name="robots" content="([^"]+)/)?.[1] || ""
+  if (response.status !== 200 || !/noindex/i.test(`${robots} ${response.headers.get("x-robots-tag") || ""}`)) {
+    throw new Error(`Expected usable noindex page: ${path} (HTTP ${response.status}, robots ${robots})`)
+  }
+}
+console.log(`Exclusion audit passed for ${excludedPaths.length} utility and model pages.`)

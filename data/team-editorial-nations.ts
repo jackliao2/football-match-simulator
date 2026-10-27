@@ -1,7 +1,7 @@
 import type { TeamEditorial } from "@/data/team-editorial"
 
-function d(intro: string, sections: TeamEditorial["sections"]): TeamEditorial {
-  return { intro, sections }
+function d(intro: string, sections: TeamEditorial["sections"], sources?: TeamEditorial["sources"]): TeamEditorial {
+  return { intro, sections, sources }
 }
 
 export const NATION_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
@@ -338,7 +338,7 @@ export const NATION_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
       {
         heading: "The long way to Luzhniki",
         paragraphs: [
-          "They beat Argentina 3–0 in the group and still had to go through Denmark and Russia on penalties, then England in extra time in the semi-final. Perišić equalised; Mandžukić won it. By the final the legs were going. An own goal, Perišić’s strike, then Pogba and Mbappé pulled France clear before Mandžukić’s late reply. Modrić still left Russia with the Golden Ball and, months later, the Ballon d’Or.",
+          "They beat Argentina 3–0 in the group and still had to go through Denmark and Russia on penalties, then England in extra time in the semi-final. Perišić equalised; Mandžukić won it. By the final the legs were going. Mandžukić’s own goal and Perišić’s equaliser made it 1–1. Griezmann’s penalty restored France’s lead before half-time, then Pogba and Mbappé scored before Mandžukić’s reply. Modrić still left Russia with the Golden Ball and, months later, the Ballon d’Or.",
           "A squad of four million people does not get a pass for losing a final. It does get credit for surviving a knockout path that would have ended most tournament sides a round earlier. Brozović screened; Rebić ran channels; Vida and Lovren headed everything. The midfield was the team.",
         ],
       },
@@ -350,6 +350,7 @@ export const NATION_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
         ],
       },
     ],
+    [{"label":"FIFA: 2018 final report, scorers and line-ups","url":"https://inside.fifa.com/tournaments/mens/worldcup/2018russia/news/worldcupathome-france-croatia-russia-2018-3072767"}],
   ),
   "hungary-1954": d(
     "The Mighty Magyars. Hungary 1954 arrived at the World Cup in Switzerland as the best team in the world, beat West Germany 8–3 in the group, and then lost the final 3–2 to the same opponent. Puskás, Hidegkuti, Kocsis and a 3-2-3-2 that confused man-marking are the reason they are still in every serious all-time conversation.",

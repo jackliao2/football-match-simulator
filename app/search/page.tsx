@@ -20,7 +20,8 @@ export async function generateMetadata({
     description: SEARCH_PAGE.description,
     path: query ? `/search?q=${encodeURIComponent(query)}` : "/search",
   })
-  if (query) meta.robots = { index: false, follow: true }
+  // Internal search is a navigation tool, including its empty and repeated-q forms.
+  meta.robots = { index: false, follow: true }
   return meta
 }
 

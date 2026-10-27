@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next"
 import { SEARCH_LANDING_EVIDENCE, LANDING_REVIEW_DATE } from "@/data/search-landing-evidence"
 import { SEARCH_REVIEW_PATHS, SEARCH_REVIEW_DATE } from "@/data/search-review"
 import { SEARCH_PRIORITY_RECORDS, PRIORITY_REVIEW_DATE } from "@/data/search-priority"
+import { ABOUT_PAGE_UPDATED_ISO, MATCHUP_PAGE_UPDATES, SQUAD_PAGE_UPDATED_ISO } from "@/data/content-updates"
 import { allVsPairs } from "@/data/matchups"
 import { CLUB_COMPARES } from "@/data/compare"
 import { primeEntities } from "@/data/prime"
@@ -29,7 +30,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: absoluteUrl("/vs"), changeFrequency: "weekly", priority: 0.7, lastModified: contentDate },
     { url: absoluteUrl("/best-football-team-ever"), changeFrequency: "monthly", priority: 0.8, lastModified: contentDate },
     { url: absoluteUrl("/compare"), changeFrequency: "monthly", priority: 0.7, lastModified: contentDate },
-    { url: absoluteUrl("/search"), changeFrequency: "weekly", priority: 0.6, lastModified: contentDate },
     { url: absoluteUrl("/terms"), changeFrequency: "yearly", priority: 0.3, lastModified: legalDate },
     { url: absoluteUrl("/privacy"), changeFrequency: "yearly", priority: 0.3, lastModified: legalDate },
     { url: absoluteUrl("/contact"), changeFrequency: "yearly", priority: 0.3, lastModified: legalDate },
@@ -104,6 +104,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: pair.slug === "barcelona-vs-real-madrid" ? 0.8 : 0.6,
     lastModified: contentDate,
   }))
+  const teamPageUrls = new Set(teamRoutes.map((route) => route.url))
 
   return [
     ...staticRoutes,
@@ -116,6 +117,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...compareRoutes,
   ].map((route) => {
     const path = new URL(route.url).pathname
+    if (teamPageUrls.has(route.url)) return { ...route, lastModified: SQUAD_PAGE_UPDATED_ISO }
+    if (path === "/about") return { ...route, lastModified: ABOUT_PAGE_UPDATED_ISO }
+    if (MATCHUP_PAGE_UPDATES[path]) return { ...route, lastModified: MATCHUP_PAGE_UPDATES[path].iso }
     return SEARCH_PRIORITY_RECORDS[path]
       ? { ...route, lastModified: PRIORITY_REVIEW_DATE }
       : SEARCH_REVIEW_PATHS.has(path)

@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest"
 import { SEARCH_LANDING_EVIDENCE, LANDING_REVIEW_DATE } from "@/data/search-landing-evidence"
 import { SEARCH_REVIEW_PATHS, SEARCH_REVIEW_DATE } from "@/data/search-review"
 import { SEARCH_PRIORITY_RECORDS, PRIORITY_REVIEW_DATE } from "@/data/search-priority"
+import { ABOUT_PAGE_UPDATED_ISO, SQUAD_PAGE_UPDATED_ISO } from "@/data/content-updates"
 import { readFileSync } from "node:fs"
 import nextConfig from "../next.config"
 import robots from "@/app/robots"
@@ -24,10 +25,37 @@ import { getSiteUrl, SITE } from "@/lib/site"
 import { isCurrentTeamEra } from "@/lib/season-status"
 
 describe("GSC landing pages", () => {
-  it("keeps match permalinks out of robots crawl budget", () => {
+  it("lets crawlers read noindex on valid, unknown and malformed match replays", async () => {
     const policy = robots()
     const rules = Array.isArray(policy.rules) ? policy.rules[0] : policy.rules
-    expect(rules?.disallow).toEqual(expect.arrayContaining(["/api/", "/match/"]))
+    expect(rules?.disallow).toContain("/api/")
+    expect(rules?.disallow).not.toContain("/match/")
+    const { generateMetadata } = await import("@/app/match/[matchId]/page")
+    for (const matchId of [
+      "barcelona-2008-09-vs-real-madrid-2016-17-a71d92",
+      "missing-team-vs-real-madrid-2016-17-a71d92",
+      "missing-separator",
+    ]) {
+      const metadata = await generateMetadata({ params: Promise.resolve({ matchId }), searchParams: Promise.resolve({}) })
+      expect(metadata.robots, matchId).toEqual({ index: false, follow: true })
+    }
+  })
+
+  it("keeps every internal search variant crawlable and noindex", async () => {
+    const { generateMetadata } = await import("@/app/search/page")
+    for (const searchParams of [
+      {},
+      { q: "" },
+      { q: "   " },
+      { q: "barcelona" },
+      { q: ["barcelona", "madrid"] },
+    ]) {
+      const metadata = await generateMetadata({ searchParams: Promise.resolve(searchParams), params: Promise.resolve({}) })
+      expect(metadata.robots, JSON.stringify(searchParams)).toEqual({ index: false, follow: true })
+    }
+    const policy = robots()
+    const rules = Array.isArray(policy.rules) ? policy.rules : [policy.rules]
+    for (const rule of rules) expect(rule.disallow).not.toContain("/search")
   })
 
   it("slows SEO crawlers without changing the default robots rule", () => {
@@ -39,7 +67,8 @@ describe("GSC landing pages", () => {
     )
     expect(seo?.userAgent).toEqual(expect.arrayContaining(["SemrushBot", "AhrefsBot", "MJ12bot", "DotBot"]))
     expect(seo?.crawlDelay).toBe(10)
-    expect(seo?.disallow).toEqual(expect.arrayContaining(["/api/", "/match/"]))
+    expect(seo?.disallow).toContain("/api/")
+    expect(seo?.disallow).not.toContain("/match/")
     expect(seo?.disallow).not.toEqual(expect.arrayContaining(["/simulate"]))
   })
 
@@ -804,15 +833,18 @@ describe("GSC landing pages", () => {
     expect(site.potentialAction?.target?.urlTemplate).toBe("https://legendarymatch.com/search?q={search_term_string}")
   })
 
-  it("lists /search in the sitemap and stamps content pages with a later date than legal pages", async () => {
+  it("omits internal search and match replays from the sitemap and preserves editorial dates", async () => {
     const { default: sitemap } = await import("@/app/sitemap")
     const { SITE } = await import("@/lib/site")
     const routes = sitemap()
-    const search = routes.find((route) => route.url.endsWith("/search"))
+    const search = routes.find((route) => new URL(route.url).pathname === "/search")
     const privacy = routes.find((route) => route.url.endsWith("/privacy"))
+    const about = routes.find((route) => route.url.endsWith("/about"))
     const compare = routes.find((route) => route.url.endsWith("/compare/barcelona-vs-real-madrid"))
-    expect(search?.lastModified).toBe(SITE.contentUpdatedIso)
+    expect(search).toBeUndefined()
+    expect(routes.some((route) => new URL(route.url).pathname.startsWith("/match/"))).toBe(false)
     expect(privacy?.lastModified).toBe(SITE.legalUpdatedIso)
+    expect(about?.lastModified).toBe(ABOUT_PAGE_UPDATED_ISO)
     expect(compare?.lastModified).toBe(PRIORITY_REVIEW_DATE)
     expect(SITE.contentUpdatedIso > SITE.legalUpdatedIso).toBe(true)
     expect(SITE.contentUpdated).toMatch(/September 2026/)
@@ -827,8 +859,8 @@ describe("GSC landing pages", () => {
     for (const path of Object.keys(SEARCH_LANDING_EVIDENCE)) {
       const matches = routes.filter((route) => new URL(route.url).pathname === path)
       expect(matches, path).toHaveLength(1)
-      expect(matches[0].lastModified, path).toBe(SEARCH_PRIORITY_RECORDS[path] ? PRIORITY_REVIEW_DATE : SEARCH_REVIEW_PATHS.has(path) ? SEARCH_REVIEW_DATE : LANDING_REVIEW_DATE)
       const team = teams.find((item) => teamPath(item) === path)
+      expect(matches[0].lastModified, path).toBe(team ? SQUAD_PAGE_UPDATED_ISO : SEARCH_PRIORITY_RECORDS[path] ? PRIORITY_REVIEW_DATE : SEARCH_REVIEW_PATHS.has(path) ? SEARCH_REVIEW_DATE : LANDING_REVIEW_DATE)
       if (team) {
         expect(teamMetadata(team).robots).toEqual({ index: true, follow: true })
         expect(teamMetadata(team).alternates?.canonical).toBe(path)
@@ -836,6 +868,9 @@ describe("GSC landing pages", () => {
     }
     for (const team of teams.filter((item) => !isIndexableTeamPage(item.id))) {
       expect(routes.some((route) => new URL(route.url).pathname === teamPath(team))).toBe(false)
+    }
+    for (const team of teams.filter((item) => isIndexableTeamPage(item.id))) {
+      expect(routes.find((route) => new URL(route.url).pathname === teamPath(team))?.lastModified, team.id).toBe(SQUAD_PAGE_UPDATED_ISO)
     }
   })
 })

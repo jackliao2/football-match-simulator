@@ -7,12 +7,13 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/match/"],
+        // Match replays must be crawlable so search engines can read their noindex.
+        disallow: ["/api/"],
       },
       {
         userAgent: ["SemrushBot", "AhrefsBot", "MJ12bot", "DotBot"],
         allow: "/",
-        disallow: ["/api/", "/match/"],
+        disallow: ["/api/"],
         crawlDelay: 10,
       },
     ],

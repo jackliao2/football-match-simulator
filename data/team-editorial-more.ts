@@ -1,7 +1,7 @@
 import type { TeamEditorial } from "@/data/team-editorial"
 
-function d(intro: string, sections: TeamEditorial["sections"]): TeamEditorial {
-  return { intro, sections }
+function d(intro: string, sections: TeamEditorial["sections"], sources?: TeamEditorial["sources"]): TeamEditorial {
+  return { intro, sections, sources }
 }
 
 export const MORE_CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
@@ -11,7 +11,7 @@ export const MORE_CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
       {
         heading: "The first Double, with new edges",
         paragraphs: [
-          "Overmars scored the title-clinching goal against Everton. The FA Cup final against Newcastle was 2–0: Overmars again, Anelka. Wright was still around; Anelka took the shirt. Petit arrived from France and immediately looked like a Premier League midfielder who had been waiting for the pitch to catch up.",
+          "Arsenal sealed the league title with a 4–0 win over Everton at Highbury; Adams scored the final goal. The FA Cup final against Newcastle was 2–0: Overmars again, Anelka. Wright was still around; Anelka took the shirt. Petit arrived from France and immediately looked like a Premier League midfielder who had been waiting for the pitch to catch up.",
           "Seaman, Dixon, Adams, Keown, Winterburn: the defensive spine was already Highbury. Wenger did not invent that. He added a press, a diet, and a left-sided break that English full-backs had not trained for.",
         ],
       },
@@ -23,6 +23,7 @@ export const MORE_CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
         ],
       },
     ],
+    [{"label":"Premier League: 1997/98 season review and title-clinching win","url":"https://www.premierleague.com/en/news/59009"}],
   ),
   "juventus-2002-03": d(
     "Lippi’s 2002/03 Juventus had Buffon, Thuram, Nedvěd in a Ballon d’Or year, Del Piero and Trezeguet as the finish. They won Serie A and then lost a Champions League final on penalties at Old Trafford after Nedvěd was suspended. It is still the Juventus page a lot of older arguments actually mean.",
@@ -114,10 +115,11 @@ export const MORE_CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
         heading: "Against other English Europe",
         paragraphs: [
           "On this site they sit near Forest 1979/80: two Midlands clubs that won the cup without being the strongest league on earth. In a simulation Villa should look stubborn, aerial and happy at 1–0. They should not look like a Pep possession side in claret. If they win, Withe and Cowans should be the reasons.",
-          "Liverpool 2004/05 is the other English European fairy tale in the catalogue. Villa’s is earlier, tighter, and still a header in Rotterdam.",
+          "Liverpool 2004/05 is the other English European fairy tale in the catalogue. Villa’s is earlier and tighter, settled by Withe’s close-range finish from Morley’s cross in Rotterdam.",
         ],
       },
     ],
+    [{"label":"UEFA: Withe’s winning goal in the 1982 final","url":"https://www.uefa.com/uefachampionsleague/news/0254-0d7b1e154752-f2cfb521c62d-1000/"}],
   ),
   "benfica-1961-62": d(
     "Guttmann’s Benfica retained the European Cup in Amsterdam, 5–3 against Real Madrid. Eusébio as the thunder, Coluna as the brain, Águas as the closer, and a Portuguese side that beat the club which had owned the competition. Then Guttmann left after a contract fight and the curse story began. The night in Amsterdam is still real.",

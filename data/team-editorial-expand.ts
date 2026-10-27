@@ -1,7 +1,7 @@
 import type { TeamEditorial } from "@/data/team-editorial"
 
-function d(intro: string, sections: TeamEditorial["sections"]): TeamEditorial {
-  return { intro, sections }
+function d(intro: string, sections: TeamEditorial["sections"], sources?: TeamEditorial["sources"]): TeamEditorial {
+  return { intro, sections, sources }
 }
 
 export const EXPANDED_CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
@@ -11,7 +11,7 @@ export const EXPANDED_CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
       {
         heading: "Lisbon, not a slow build",
         paragraphs: [
-          "The Champions League knockout round was a single-site tournament. Chelsea were beaten 4–1, Barcelona 8–2, Lyon 3–0, PSG 1–0. Coman’s header in the final is the clip; Gnabry, Müller and a Lewandowski season of 55 goals in all competitions are the mechanism. Davies turned the left flank into a footrace nobody in that bubble wanted.",
+          "Bayern completed their round-of-16 tie against Chelsea with a 4–1 win in Munich, going through 7–1 on aggregate. The competition then moved to Lisbon for single-match quarter-finals, semi-finals and the final. Bayern beat Barcelona 8–2, Lyon 3–0 and PSG 1–0. Coman’s header decided the final; Gnabry, Müller and Lewandowski’s 55-goal club season explain the wider attacking threat.",
           "Kimmich and Goretzka gave the press a first line that actually recovered the ball. Thiago still had the pause when a game needed to breathe. Treat this as a control side in the 2010/11 Barcelona sense and the simulation will lie. They should look like a team that wins the ball and immediately occupies the box.",
         ],
       },
@@ -23,14 +23,15 @@ export const EXPANDED_CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
         ],
       },
     ],
+    [{"label":"Bayern: 2019/20 Champions League results","url":"https://fcbayern.com/de/club/erfolge/champions-league/champions-league-sieger-2020"},{"label":"UEFA: Bayern–Chelsea round-of-16 second-leg statistics","url":"https://www.uefa.com/newsfiles/UCL/2020/2027132_SPS.pdf"}],
   ),
   "juventus-2016-17": d(
-    "Allegri’s 2016/17 Juventus won a sixth straight Scudetto, the Coppa, and then ran into the Madrid of Ronaldo and Casemiro in Cardiff. The 3-5-2 with Buffon and the BBC behind Higuaín and Dybala is the last Juventus side on this catalogue that still feels like a European finalist rather than a domestic habit. They have no older indexed page. This is the one.",
+    "Allegri’s 2016/17 Juventus won a sixth straight Scudetto and the Coppa Italia before losing the Champions League final to Real Madrid in Cardiff. Buffon, Barzagli, Bonucci and Chiellini supplied the defensive experience behind an attack built around Higuaín and Dybala. The simulator represents them in a 3-5-2; Allegri also used a back four and a 4-2-3-1 during the campaign.",
     [
       {
         heading: "Cardiff, after a domestic machine",
         paragraphs: [
-          "Mandžukić headed them in front in the final. Ronaldo answered, then Casemiro from distance, then Ronaldo again. 1–4 is the score that memory keeps. The league season underneath it was 91 points and a defence that still had Barzagli, Bonucci and Chiellini in the same back three, with Alves and Alex Sandro as the width.",
+          "Ronaldo opened the scoring in the final before Mandžukić equalised with an overhead kick. The teams went into half-time at 1–1. Casemiro and Ronaldo put Madrid ahead after the break, and Asensio completed a 4–1 win. Juventus had won the league with 91 points, but the Cardiff result exposed how difficult it was to contain Madrid once the match opened up.",
           "Higuaín had arrived from Napoli as the closer. Dybala was the invention between the lines. Pjanić took the first pass; Khedira ran through the second ball. It is a side that wants to be compact and then vertical, not a possession lecture.",
         ],
       },
@@ -42,6 +43,7 @@ export const EXPANDED_CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
         ],
       },
     ],
+    [{"label":"UEFA: 2017 final report and scoring sequence","url":"https://www.uefa.com/uefachampionsleague/news/0250-0c5117c008df-de0901ea6dae-1000--majestic-real-madrid-win-champions-league-in-cardiff/"},{"label":"UEFA: Juventus’s title-clinching team selection","url":"https://www.uefa.com/uefachampionsleague/news/0239-0e970d41bcbb-e757b456ac10-1000/"}],
   ),
   "atletico-madrid-2013-14": d(
     "Simeone’s 2013/14 Atlético stole a Liga title from Madrid and Barcelona, then lost a Champions League final in extra time after Ramos headed in at 93 minutes. Courtois, Godín, Costa, Gabi, Koke: a 4-4-2 that treated the ball as a thing you won back, not a thing you admired. First league since 1996. First European final of the Simeone era.",
@@ -63,12 +65,12 @@ export const EXPANDED_CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
     ],
   ),
   "porto-2003-04": d(
-    "Mourinho’s Porto won the 2004 Champions League without a galaxy. Deco ran the tempo, Carvalho organised the back four, Derlei and McCarthy finished, and Manchester United were beaten at Old Trafford with Costinha’s header. The final in Gelsenkirchen was 3–0 against Monaco. It is the last European Cup that still looks like a scouting department beating a payroll.",
+    "Mourinho’s Porto won the 2004 Champions League with Deco directing midfield, Carvalho organising the defence and Derlei and McCarthy among the forwards. Costinha’s late equaliser at Old Trafford eliminated Manchester United on aggregate. Porto went on to beat Monaco 3–0 in the Gelsenkirchen final, a year after winning the UEFA Cup.",
     [
       {
         heading: "The nights that made the method",
         paragraphs: [
-          "United in the last sixteen is the origin of the Mourinho myth in England: a 1–1 first leg, then Costinha at the Stretford End. Lyon in the quarter-final, Deportivo in the semi. In the final Carlos Alberto, Deco and Alenichev scored; Vítor Baía was rarely the story because the distances in front of him were correct.",
+          "Porto beat United 2–1 in the first leg, then drew 1–1 at Old Trafford to advance 3–2 on aggregate. Costinha scored the late equaliser from a rebound after Tim Howard saved McCarthy’s free-kick. Porto then eliminated Lyon and Deportivo. Carlos Alberto, Deco and Alenichev scored against Monaco in the final.",
           "Maniche, Costinha and a 4-3-1-2 that could become a block without a meeting. Ferreira and Valente as full-backs who defended first. Chemistry is the point of the rating: this XI had already won the UEFA Cup the year before and knew the idea.",
         ],
       },
@@ -80,6 +82,7 @@ export const EXPANDED_CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
         ],
       },
     ],
+    [{"label":"UEFA: Costinha’s equaliser and Porto’s aggregate win","url":"https://www.uefa.com/uefachampionsleague/news/019b-0e6acce00da4-812948cb2ff3-1000--costinha-turns-tables-on-united/"}],
   ),
   "borussia-dortmund-2012-13": d(
     "Klopp’s 2012/13 Dortmund pressed Europe until Wembley. Lewandowski scored four against Real Madrid in the semi-final first leg; Reus and Götze occupied the pockets; Hummels passed out of the first pressure. They lost the final 2–1 to the Bayern they had been chasing all spring. It is a peak without the trophy. That is why it is here.",
@@ -132,11 +135,12 @@ export const EXPANDED_CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
       {
         heading: "Two City primes",
         paragraphs: [
-          "On this site 2022/23 is the complete English treble. 2017/18 is the first time Guardiola’s positional play looked solved in the Premier League without Haaland. In simulations this XI should look like a chance factory with slightly more human defending than the treble team. Against Liverpool 2018/19 — the pairing already in the catalogue — the clash is the one Europe actually staged a year later, with the league-season version of City.",
+          "On this site 2022/23 is the English treble side. The 2017/18 selection represents Guardiola’s 100-point Premier League season before Haaland’s arrival. Its Liverpool 2018/19 pairing compares different campaigns. Liverpool actually eliminated City in the 2017/18 Champions League quarter-finals; that tie should not be described as a meeting of these two exact season selections.",
           "Delph at left-back is the honesty in the XI. Kompany was still there. The idea was already bigger than the personnel at the back.",
         ],
       },
     ],
+    [{"label":"UEFA: 2017/18 Champions League results","url":"https://www.uefa.com/uefachampionsleague/news/0252-0d047f2e3b30-2ef67bde4bc4-1000--all-the-2017-18-champions-league-results/"}],
   ),
   "nottingham-forest-1979-80": d(
     "Clough’s Forest retained the European Cup in Madrid. Shilton as the wall, Robertson as the supply from the left, Francis as the finish, and a provincial club that made defending a European title look like a habit. The 1–0 against Hamburg was a John Robertson goal. The miracle was that it looked ordinary.",

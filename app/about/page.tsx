@@ -3,6 +3,7 @@ import Link from "next/link"
 import { LegalDoc } from "@/components/ui/LegalDoc"
 import { EditorialByline, personSchema } from "@/components/ui/EditorialByline"
 import { ABOUT_PAGE } from "@/data/collection-copy"
+import { ABOUT_PAGE_UPDATED_ISO } from "@/data/content-updates"
 import { pageMetadata } from "@/lib/seo"
 import { SITE, absoluteUrl } from "@/lib/site"
 
@@ -18,17 +19,17 @@ export default function AboutPage() {
       "@context": "https://schema.org", "@type": "AboutPage", name: ABOUT_PAGE.h1, url: absoluteUrl("/about"),
       mainEntity: { "@type": "Organization", name: SITE.name, url: absoluteUrl("/"), email: SITE.email, founder: personSchema() },
     }) }} />
-    <LegalDoc kicker={ABOUT_PAGE.kicker} title={ABOUT_PAGE.h1} lead={ABOUT_PAGE.lead} updated={SITE.legalUpdated}>
-      <EditorialByline date={SITE.legalUpdated} dateTime={SITE.legalUpdatedIso} />
+    <LegalDoc kicker={ABOUT_PAGE.kicker} title={ABOUT_PAGE.h1} lead={ABOUT_PAGE.lead} updated="28 October 2026">
+      <EditorialByline date="28 October 2026" dateTime={ABOUT_PAGE_UPDATED_ISO} />
       <section>
-        <h2>Who writes this</h2>
-        <p>{SITE.editorName} edits LegendaryMatch: the squad catalogue, the ratings arguments, the Barcelona 2010/11 vs Madrid 2016/17 long reads and the methodology. It is a named independent project, not an anonymous template farm. Corrections and disagreements go to the same inbox as legal mail: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
-        <p>The voice on the pages is editorial on purpose. A season dossier is a claim about how a team played, not a generated caption on a ratings card. If a paragraph is wrong, it has an author who can change it.</p>
+        <h2>Who maintains the project</h2>
+        <p>LegendaryMatch is an independent football simulation project maintained by {SITE.editorName}. The catalogue presents selected squads, tactical interpretations and model ratings. Corrections and questions can be sent to <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+        <p>Historical results, editorial opinions and simulated outcomes serve different purposes. Source links support the historical records identified on a page; they do not certify our ratings or establish which team would win an imagined match.</p>
       </section>
       <section>
         <h2>Why this site exists</h2>
         <p>Football arguments usually collapse into clips, trophy counts or the age of the person making the argument. LegendaryMatch gives the debate a named-season form. Choose two seasons — Barcelona 2010/11 against Madrid 2016/17, Brazil 1970 against Spain 2010 — inspect the actual squad choices and run one possible match. The result is not history rewritten; it is a transparent way to test the assumptions behind the argument.</p>
-        <p>The catalogue is intentionally selective. It favours sides with a real football story: champions, tactical landmarks, cult teams and recent squads people genuinely want to put against the past. We would rather explain 100 teams properly than publish thousands of empty badge pages.</p>
+        <p>The catalogue is selective. It includes champions, tactical landmarks, notable cup runs and recent modelled squads. The player lists are the selections available to the simulator; unless a separate sourced historical roster is labelled as complete, they are not complete registration lists.</p>
       </section>
       <section>
         <h2>Independent, fan-made and editorial</h2>
@@ -36,9 +37,9 @@ export default function AboutPage() {
         <p>Squad selection, formations, tactical labels and ratings involve editorial judgement. A season rarely has one permanent starting eleven, and players cannot be reduced perfectly to a number. The site shows its choices so readers can disagree with something specific instead of treating the model as an unnamed authority.</p>
       </section>
       <section>
-        <h2>What is written by us and what AI does</h2>
-        <p>The team database, page structure, ratings framework, matchup selection and core simulation rules belong to the project. Barcelona AI is optional. When requested, a language model receives the two named squads and turns them into a tactical report. It does not choose the score and it does not silently write the permanent historical pages.</p>
-        <p>That distinction matters: the score engine remains reproducible from its seed, while AI prose can vary. The full separation is described on the <Link href="/methodology">methodology page</Link>.</p>
+        <h2>AI assistance and historical sources</h2>
+        <p>The project uses AI assistance for development and content revision. AI-assisted text can contain errors, so a published paragraph should not be treated as independently verified research. Historical records need evidence from the relevant competition, club or federation; tactical interpretations and cross-era ratings remain the project&apos;s judgements.</p>
+        <p>The optional AI match report is generated on request from the selected squads and structured model output. The score engine remains reproducible from its seed, while the report wording can vary. The <Link href="/methodology">methodology page</Link> explains the simulation assumptions and limitations.</p>
       </section>
       <section>
         <h2>Corrections are part of the work</h2>
