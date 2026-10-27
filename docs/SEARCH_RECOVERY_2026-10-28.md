@@ -66,3 +66,9 @@ Coverage 排除原因与 9/26 导出相比：`noindex` 36→59，canonical 替�
 `npm run check` 通过：104 项测试，lint 无错误（两条原有未使用变量警告），类型检查通过。生产构建成功，生成 365 个静态输出。渲染 HTML 抽查六个球队页，确认阵容在模拟前、两个区块各出现一次、选人范围说明与修改日期正确；About 的 AI 说明和法国–塞内加尔的 FIFA 链接、史实更正也通过。
 
 生产发布后运行 `npm run indexability:check`：检查全部 231 个 sitemap URL 的 HTTP 状态、canonical 和索引指令，并检查五种工具/模型页面可用且保留 noindex；另对同一组内容做线上 HTML 验证。公开页面实际变更日期与 sitemap 同步，仅更新球队详情、About 及这一个 VS 页面，未刷新无关页面日期。技术检查通过只代表可抓取与索引指令符合设计，不代表 Google 已重新抓取、收录或恢复排名。
+
+## 发布安全门与框架补丁
+
+首次生产发布在 `security:check` 阶段被拦下，发生在停止现有应用服务之前。原 Next.js 16.3.8 命中官方披露的图像优化远程代码执行问题 [GHSA-2464-fhr4-w9xw](https://github.com/vercel/next.js/security/advisories/GHSA-2464-fhr4-w9xw)、Cache Components 远程代码执行问题 [GHSA-673q-mjm6-r5xr](https://github.com/vercel/next.js/security/advisories/GHSA-673q-mjm6-r5xr)，以及 Server Actions 拒绝服务问题 [GHSA-p3m5-59mp-jv5r](https://github.com/vercel/next.js/security/advisories/GHSA-p3m5-59mp-jv5r)。本轮因此增加配套的 `next`、`eslint-config-next` 16.4.3 安全升级，重新执行依赖审计、类型检查、测试和生产构建后再发布。此项是解除发布阻断的安全修复；未发现证据证明这些漏洞已被利用或导致 10/11 搜索下跌。
+
+升级后再次通过 104 项测试、lint、类型检查和生产构建；`npm run security:check` 的生产依赖审计报告为 0 个漏洞。随包升级文档未发现本站需要额外 API 迁移。首次发布被拦截后，VPS 服务和源站 HTTP 200 均已确认保持正常。
