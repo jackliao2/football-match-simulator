@@ -39,7 +39,7 @@ export const SEARCH_YEAR_NOTES: Record<string, string> = {
   "tottenham-2016-17": "Tottenham finished the 2016/17 league season with 86 points. Their Champions League final run belongs to 2018/19.",
   "tottenham-2018-19": "This is Tottenham's 2018/19 Champions League finalist season, distinct from the 86-point 2016/17 league side.",
   "france-2018": "The sourced historical record below lists France's complete 2018 tournament squad and final XI separately from the smaller squad selected for this simulator.",
-  "netherlands-1988": "This is the Netherlands' Euro 1988 team. The final XI below is a historical teamsheet; the simulator uses its own selected squad.",
+  "netherlands-1988": "The historical table lists the Netherlands' Euro 1988 squad and identifies the final starters. The simulator uses its own selected squad.",
   "england-2026": "This is a modelled 2026-cycle dataset, not an official FIFA tournament squad or a record of England's 2026 World Cup results.",
 }
 
@@ -60,7 +60,7 @@ export function HistoricalTeamView({ team }: { team: HistoricalTeam }) {
   const TEAM_RUNS = 100
   const model = opponent ? cachedMatchupModel(team, opponent, TEAM_RUNS, `team:${team.id}`) : null
   const yearNote = SEARCH_YEAR_NOTES[team.id] ?? (isCurrentSquad(team) ? modelledCurrentSquadNote(team) : undefined)
-  const faqs = [...(historicalRecord?.faqs ?? []), ...teamFaqs(team, { opponent, model, editorial, runs: TEAM_RUNS })]
+  const faqs = historicalRecord?.faqs ?? teamFaqs(team, { opponent, model, editorial, runs: TEAM_RUNS })
 
   return (
     <div className="grid gap-6">

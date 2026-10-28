@@ -61,7 +61,7 @@ export default async function ClubComparePage({ params }: PageProps<"/compare/[s
   const leftPeak = `${left.clubName} ${left.displaySeason}`
   const rightPeak = `${right.clubName} ${right.displaySeason}`
   const historicalRecord = SEARCH_PRIORITY_RECORDS[`/compare/${pair.slug}`]
-  const faqs = [...(historicalRecord?.faqs ?? []), ...compareFaqs(pair, leftClub.name, rightClub.name, leftPeak, rightPeak)]
+  const faqs = historicalRecord?.faqs ?? compareFaqs(pair, leftClub.name, rightClub.name, leftPeak, rightPeak)
   const evidence = SEARCH_LANDING_EVIDENCE[`/compare/${pair.slug}`]
   const reviewed = SEARCH_REVIEW_PATHS.has(`/compare/${pair.slug}`)
   const updatedDate = historicalRecord ? PRIORITY_REVIEW_DATE : reviewed ? SEARCH_REVIEW_DATE : evidence ? LANDING_REVIEW_DATE : SITE.contentUpdatedIso

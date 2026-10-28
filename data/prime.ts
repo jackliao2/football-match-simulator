@@ -37,27 +37,27 @@ export const primeEntities: PrimeEntity[] = [
     slug: "real-madrid",
     name: "Real Madrid",
     kind: "club",
-    title: "Real Madrid's Prime Is Zidane's 2016/17, Not La Décima",
+    title: "Real Madrid's Prime: Our Case for Zidane's 2016/17",
     pick: "2016/17",
     description:
-      "Décima in 2014, or the 2016/17 side that won the league and retained the Champions League? Both are in the database.",
-    seoTitle: "Real Madrid Prime: 2016/17, Not Only La Décima",
+      "Compare La Décima in 2013/14 with Zidane's 2016/17 league-and-Europe double. Our historical verdict is separate from the 2025/26 simulation comparator.",
+    seoTitle: "Real Madrid Prime: 2016/17 vs La Décima 2013/14",
     seoDescription:
-      "Real Madrid's prime here is Zidane 2016/17 — league plus a retained Champions League — not only La Décima. 2013/14 is the emotional counter.",
-    verdict: "Our pick is 2016/17. La Décima carried the greater emotional weight, but Zidane's later side paired Ronaldo's knockout scoring with the Casemiro–Kroos–Modrić midfield, won La Liga and became the first team to retain the modern Champions League.",
+      "Our Real Madrid peak pick is 2016/17: 93 league points and a retained Champions League. Compare the evidence with La Décima and the limits of our model.",
+    verdict: "Our pick between the completed historical candidates here is 2016/17. Zidane's side won La Liga with 93 points and became the first team to retain the title in the Champions League era. We prefer its Casemiro–Kroos–Modrić midfield balance for a hypothetical match; 2013/14 remains the alternative for a different attacking profile. This is an editorial preference, not an all-era ranking established by trophy counts.",
     candidates: [
       {
         teamId: "real-madrid-2013-14",
-        argument: "La Décima. BBC on the break, Di María everywhere, Ramos equalising in the 93rd minute before extra time.",
+        argument: "Champions League and Copa del Rey winners. Ramos's stoppage-time equaliser forced extra time before the 4–1 final win over Atlético; Ronaldo, Benzema, Bale and Di María give our model its transition threat.",
       },
       {
         teamId: "real-madrid-2016-17",
-        argument: "Zidane's complete side. League and Europe, Casemiro-Kroos-Modrić, Ronaldo still scoring.",
+        argument: "La Liga champions with 93 points and 4–1 winners against Juventus in Cardiff. This was the second consecutive European title, with Isco joining Casemiro, Kroos, Modrić, Benzema and Ronaldo in the final XI.",
       },
       {
         teamId: "real-madrid-2025-26",
         argument:
-          "A modelled 2025/26 squad. Mbappé, Vinícius and Bellingham sit next to La Décima and 2016/17 — not a claimed prime.",
+          "A selected 2025/26 simulation comparator, labelled for the Xabi Alonso period that began the league season. Its XI and ratings are model choices; this is not an official or current squad list and is not a historical prime pick.",
       },
     ],
   },

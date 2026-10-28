@@ -119,8 +119,6 @@ export const netherlands1988: HistoricalTeam = makeTeam({
     pl("John Bosman", "BOSMAN", "ST", 76),
     pl("Wilbert Suvrijn", "SUVRIJN", "CB", 74),
     pl("Joop Hiele", "HIELE", "GK", 74),
-    pl("Henk Fraser", "FRASER", "CB", 74),
-    pl("Pieter Huistra", "HUISTRA", "LW", 72),
   ],
   achievements: [
     "UEFA European Championship winners",
@@ -129,10 +127,10 @@ export const netherlands1988: HistoricalTeam = makeTeam({
   ],
   styleTags: ["Total Football", "Star Forwards", "Technical Midfield", "High Press", "Individual Brilliance"],
   summary:
-    "Michels' 1988 Netherlands. Gullit as captain, Van Basten as the finish, Rijkaard as the screen — the one Dutch side that actually lifted the thing.",
-  seoTitle: "Netherlands 1988 Euro Squad: Final XI & Formation",
+    "Michels' 1988 Netherlands. Gullit as captain, Van Basten up front and Rijkaard alongside Ronald Koeman in defence: European champions after a 2–0 final win.",
+  seoTitle: "Netherlands 1988 Euro Squad: All 20 Players & Final XI",
   seoDescription:
-    "Netherlands Euro 1988 squad and final starting XI: Gullit, Van Basten, Koeman and Rijkaard. See the 2–0 final win, Michels' tactics and selected players.",
+    "The complete 20-player Netherlands Euro 1988 squad and final starting XI. See Gullit and Van Basten's 2–0 final win and compare the selected simulation players.",
 })
 
 export const netherlands2010: HistoricalTeam = makeTeam({

@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next"
 import { SEARCH_LANDING_EVIDENCE, LANDING_REVIEW_DATE } from "@/data/search-landing-evidence"
 import { SEARCH_REVIEW_PATHS, SEARCH_REVIEW_DATE } from "@/data/search-review"
 import { SEARCH_PRIORITY_RECORDS, PRIORITY_REVIEW_DATE } from "@/data/search-priority"
-import { ABOUT_PAGE_UPDATED_ISO, MATCHUP_PAGE_UPDATES, SQUAD_PAGE_UPDATED_ISO } from "@/data/content-updates"
+import { ABOUT_PAGE_UPDATED_ISO, HUB_PAGE_UPDATES, MATCHUP_PAGE_UPDATES, PRIME_PAGE_UPDATES, SQUAD_PAGE_UPDATED_ISO } from "@/data/content-updates"
 import { allVsPairs } from "@/data/matchups"
 import { CLUB_COMPARES } from "@/data/compare"
 import { primeEntities } from "@/data/prime"
@@ -120,6 +120,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     if (teamPageUrls.has(route.url)) return { ...route, lastModified: SQUAD_PAGE_UPDATED_ISO }
     if (path === "/about") return { ...route, lastModified: ABOUT_PAGE_UPDATED_ISO }
     if (MATCHUP_PAGE_UPDATES[path]) return { ...route, lastModified: MATCHUP_PAGE_UPDATES[path].iso }
+    if (PRIME_PAGE_UPDATES[path]) return { ...route, lastModified: PRIME_PAGE_UPDATES[path].iso }
+    if (HUB_PAGE_UPDATES[path]) return { ...route, lastModified: HUB_PAGE_UPDATES[path].iso }
     return SEARCH_PRIORITY_RECORDS[path]
       ? { ...route, lastModified: PRIORITY_REVIEW_DATE }
       : SEARCH_REVIEW_PATHS.has(path)

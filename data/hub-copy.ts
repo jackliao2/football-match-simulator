@@ -16,10 +16,10 @@ export const HUB_COPY: Record<string, HubCopy> = {
   },
   "real-madrid": {
     kicker: "Real Madrid squads",
-    title: "Real Madrid squads: La Décima and the three-in-a-row",
-    lead: "2013/14 is Ancelotti's Décima. 2016/17 is Zidane's third straight European Cup, with a bench that could change a knockout night. Those are different Madrid machines.",
+    title: "Real Madrid squads: La Décima and the 2016/17 double",
+    lead: "2013/14 is Ancelotti's Décima. In 2016/17 Zidane's team won the league and a second successive Champions League, with a bench that could change a knockout match. The third successive European title followed in 2017/18.",
     description:
-      "Real Madrid 2013/14 is Ancelotti's Décima. 2016/17 is Zidane's third straight European Cup. Two machines, not a trophy dump.",
+      "Compare Real Madrid's 2013/14 La Décima squad with the 2016/17 league and Champions League double winners. The third successive European title came in 2017/18.",
   },
   "atletico-madrid": {
     kicker: "Atlético Madrid",

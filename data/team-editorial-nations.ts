@@ -151,21 +151,27 @@ export const NATION_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
     ],
   ),
   "france-2018": d(
-    "Deschamps’ Russia winners. Griezmann dropping, Mbappé running, Kanté covering the grass that modern midfields are asked to cover, and a 4–2 final against Croatia that was more controlled than the score suggests until the last half-hour opened.",
+    "France won their second World Cup on 15 July 2018, beating Croatia 4–2 in Moscow. Didier Deschamps' team could win an open knockout game against Argentina and protect a narrow lead against Belgium; those were different demands on the same squad.",
     [
       {
-        heading: "A squad that could change personality",
+        heading: "What changed between the knockout games",
         paragraphs: [
-          "They beat Argentina 4–3 in a knockout match that looked like a video game, then Belgium 1–0 in a semi-final that looked like a coaching course. Pogba and Kanté together let Matuidi track. Umtiti and Varane were a pair that could play. Lloris still had to make the saves a final demands.",
-          "Mbappé’s tournament is the headline. The structure is why they did not go out in the round of 16 the way talented French sides sometimes do.",
+          "Against Argentina in the round of 16, France recovered from 2–1 down to win 4–3. Pavard equalised and Mbappé scored twice. The semi-final was a 1–0 win over Belgium through Umtiti, rather than another high-scoring exchange.",
+          "The final was 2–1 at half-time. Pogba and Mbappé extended the lead to 4–1 before Mandžukić scored Croatia's second. France had earlier benefited from his own goal and a Griezmann penalty. Calling that sequence a match France controlled throughout would hide the different ways they scored.",
         ],
       },
       {
-        heading: "Against 1998, against 2002 Brazil",
+        heading: "The final XI and the selected simulation squad",
         paragraphs: [
-          "Against France 1998, the interesting contrast is Mbappé's running against Zidane's influence between the lines. Against Brazil 2002, compare Cafu and Roberto Carlos as wing-backs with Pavard and Hernández as full-backs in a back four. Those are different defensive structures, not a shared formation. Any preference between these sides is a modelled comparison, not a historical result.",
+          "The model uses the eleven final starters, with Kanté and Pogba centrally, Griezmann supporting Giroud, Matuidi from the left and Mbappé from the right. Our 4-2-3-1 describes their starting roles; it is a tactical interpretation rather than an official registration category. Matuidi remains a midfielder in the historical roster even though the diagram places him on the left of the attacking line.",
+          "The complete 23-player historical list includes Thomas Lemar, Adil Rami and Alphonse Areola. The playable selection contains 20 players and omits those three. Nzonzi, Tolisso and Fekir all entered the final as substitutes; the model's smaller bench should not be read as the full tournament registration.",
         ],
       },
+    ],
+    [
+      { label: "FFF: France–Croatia final, goals and teams", url: "https://www.fff.fr/selection/matchs/1266-france-croatie.html" },
+      { label: "FIFA: France–Argentina 2018 match review", url: "https://inside.fifa.com/en/tournaments/mens/worldcup/2018russia/news/worldcupathome-france-argentina-russia-2018-3070044" },
+      { label: "FIFA: 2018 list of players, France on page 11 (archived PDF copy)", url: "https://media-files.abidjan.net/document/docs/Liste-des-joueurs.pdf#page=11" },
     ],
   ),
   "france-1984": d(
@@ -223,21 +229,28 @@ export const NATION_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
     ],
   ),
   "italy-2006": d(
-    "Lippi’s Berlin. Italy 2006 won the World Cup in a penalty shootout against France after Zidane’s red card, with a defence of Cannavaro, Zambrotta, Grosso and a midfield that could sit (Pirlo, Gattuso, De Rossi) or strike (Totti, Del Piero, Iaquinta, Toni, Gilardino in rotation).",
+    "Italy won their fourth World Cup in Berlin on 9 July 2006. The final against France was 1–1 after extra time; Italy then won the shootout 5–3. Marcello Lippi's champions conceded only twice in the tournament, to a Cristian Zaccardo own goal and a Zinédine Zidane penalty.",
     [
       {
-        heading: "A knockout team",
+        heading: "How the knockout run was decided",
         paragraphs: [
-          "They drew 1–1 with France after 90 and 120. Grosso’s extra-time winner against Germany in the semi-final is the romantic Italian goal of the tournament. The Australia round of 16 was a late penalty. This was not a group-stage procession. It was a side that knew how to stay in a match.",
-          "Buffon’s tournament, Cannavaro’s year as the organiser of a back line, Pirlo’s passing under a press. Calciopoli hung over the clubs; the national team played as if the noise were somewhere else.",
+          "Italy beat Australia 1–0, Ukraine 3–0 and Germany 2–0 after extra time before the final. Grosso broke the semi-final deadlock in the 119th minute and Del Piero added the second. That late pair of goals should not obscure the attacking changes Lippi made during the match: Gilardino, Iaquinta and Del Piero all came off the bench.",
+          "In Berlin, Materazzi equalised Zidane's early penalty. Italy converted all five of their shootout kicks, in the order Pirlo, Materazzi, De Rossi, Del Piero and Grosso. The 5–3 is the shootout score, separate from the 1–1 match result.",
         ],
       },
       {
-        heading: "Italy against France 2018, against Brazil 2002",
+        heading: "Why the model XI differs from the final",
         paragraphs: [
-          "2006 Italy should look extremely hard to score against and only moderately explosive. Against 2018 France they are the older, denser block. Against 2002 Brazil they are the anti-wing-back test: can Cafu and Roberto Carlos be trapped? The pairing with 2002 is also a final that never happened between two actual world champions.",
+          "The final starters were Buffon; Zambrotta, Cannavaro, Materazzi, Grosso; Camoranesi, Gattuso, Pirlo, Perrotta; Totti; Toni. Del Piero entered as a substitute. The simulator instead selects Del Piero alongside Toni in a 4-3-1-2, with Camoranesi available on the bench. It is a representative attacking selection, not Lippi's Berlin teamsheet.",
+          "The historical table lists all 23 registered players. The playable selection has 19: Zaccardo, Nesta, Amelia and Barone are absent. Ratings and the fixed formation are our estimates; the official roster does not assign those ratings or require that shape.",
         ],
       },
+    ],
+    [
+      { label: "DFB: Italy's numbered 2006 World Cup squad and results", url: "https://datencenter.dfb.de/en/competitions/fifa-world-cup/seasons/2006-in-germany/teams/italy?datacenter_name=data-center" },
+      { label: "FFF: Italy–France final teams and substitutes", url: "https://www.fff.fr/selection/matchs/655-italie-france.html" },
+      { label: "UEFA: the 2006 final and shootout", url: "https://www.uefa.com/european-qualifiers/news/0254-0d7b8c042935-8b455ee4d86c-1000--italy-prevail-after-shoot-out-drama/" },
+      { label: "FIFA: Germany–Italy semi-final and Italy's two goals conceded", url: "https://www.fifa.com/en/tournaments/mens/worldcup/articles/germany-italy-greatest-games" },
     ],
   ),
   "netherlands-1974": d(
@@ -259,21 +272,27 @@ export const NATION_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
     ],
   ),
   "netherlands-1988": d(
-    "The one Dutch trophy. Van Basten’s volley in the 1988 Euros final against the Soviet Union is the image; the 2–1 against West Germany in Hamburg is the exorcism. Gullit, Rijkaard, Van Basten and a 4-4-2 that could press in a way 1974 only sketched.",
+    "The Netherlands won the 1988 European Championship under Rinus Michels, beating the Soviet Union 2–0 in Munich on 25 June. Ruud Gullit's header and Marco van Basten's volley settled the final. This is the European title-winning team, separate from the Dutch World Cup finalists of 1974.",
     [
       {
-        heading: "A short tournament, a complete idea",
+        heading: "Five games, including an opening defeat",
         paragraphs: [
-          "They lost to the Soviet Union in the group, then beat England, Ireland, West Germany and the Soviets again. Koeman’s penalty and Van Basten’s winner against Germany were national politics as sport. The final volley from an impossible angle is the clip that survives people who never saw the rest.",
-          "This is a Euros winner, not a World Cup winner. 1990 would be a disappointment. The 1988 peak is still the national side we put against Platini’s France.",
+          "The final tournament had eight teams, with two groups followed by semi-finals and the final. The Dutch lost 1–0 to the Soviet Union, then beat England 3–1 and the Republic of Ireland 1–0. They defeated West Germany 2–1 in the semi-final before winning the rematch against the Soviets.",
+          "Van Basten began the opening game on the bench. He then scored a hat-trick against England and the semi-final winner, before his final goal took his tournament total to five. The 1988 side's success should not be explained by treating its final XI as a lineup Michels used unchanged from the opening match.",
         ],
       },
       {
-        heading: "Power against the carré magique",
+        heading: "Rijkaard in defence, Gullit close to Van Basten",
         paragraphs: [
-          "Gullit as a moving centre-forward/10 hybrid, Van Basten as the finisher, Rijkaard as the reason the rest-defence existed. Against France 1984 they should look more physically decisive in both boxes. France should look more fluent in the middle of the pitch. Pick a criterion before you pick a winner.",
+          "Rijkaard played in central defence alongside Ronald Koeman in the final. Wouters and Mühren were in midfield, with Vanenburg and Erwin Koeman completing that line, and captain Gullit alongside Van Basten in attack. The model's 4-4-2 is a simplified reading of those roles, not a claim that Gullit stayed level with Van Basten in every phase.",
+          "The historical squad table includes all 20 players. The simulator selects 16, omitting Sjaak Troost, Aron Winter, Wim Koevermans and Hendrie Krüzen. The historical roster and the playable selection therefore answer different questions about the team.",
         ],
       },
+    ],
+    [
+      { label: "UEFA: all 20 players in the 1988 winning squad", url: "https://www.uefa.com/news/025f-0ff0bba775e3-451a9527dcbf-1000--winning-players/" },
+      { label: "UEFA: 1988 final report and line-ups", url: "https://www.uefa.com/uefaeuro/history/news/0253-0d7b2f78ca99-40f24ef873fd-1000--van-basten-volley-crowns-netherlands-euro-1988-final-win-ag/" },
+      { label: "UEFA: 1988 format and Van Basten's tournament", url: "https://www.uefa.com/uefaeuro/history/news/025b-0ed955722c3e-d9f74ab7998d-1000--euro-1988-all-you-need-to-know/" },
     ],
   ),
   "england-1966": d(

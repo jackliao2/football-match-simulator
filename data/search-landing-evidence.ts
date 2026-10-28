@@ -18,9 +18,9 @@ export const SEARCH_LANDING_EVIDENCE: Record<string, LandingEvidence> = {
     facts: [
       { label: "Premier League record", text: "Champions with 95 points, 15 goals conceded and 25 clean sheets. These are league-season figures, separate from the simulated results below." },
       { label: "How the 4-3-3 works", text: "Makélélé protects the centre-backs; Lampard attacks from midfield. Duff and Robben provide width around Drogba. Tiago connects the midfield, while Joe Cole and Guðjohnsen offer different attacking options." },
-      { label: "Selection matters", text: "Bridge is the model's left-back; Gallas is another option in the squad. A season contains rotation and injuries, so this XI should not be read as an appearance ranking." },
+      { label: "Selection matters", text: "Bridge is the model's left-back; Gallas spent much of the real title-winning season at left-back and is retained as an alternative here. The selection is not an appearance ranking." },
     ],
-    sources: [{ label: "Premier League: Chelsea's title-winning records", url: "https://www.premierleague.com/en/news/2737934" }],
+    sources: [{ label: "Premier League: Chelsea's title-winning records", url: "https://www.premierleague.com/en/news/2737934" }, { label: "Chelsea: Gallas's role in the 2004/05 side", url: "https://www.chelseafc.com/en/news/article/from-west-to-north-london--the-arsenal-and-chelsea-connections-" }],
   },
   "/national-teams/netherlands/1988": {
     heading: "Netherlands 1988: European champions",
@@ -34,13 +34,13 @@ export const SEARCH_LANDING_EVIDENCE: Record<string, LandingEvidence> = {
   },
   "/national-teams/france/2018": {
     heading: "France 2018: World Cup squad and tactical roles",
-    scope: "The squad below is the version used in this simulator, not a complete official registration list. Its XI and ratings describe our model; the tournament results are historical facts.",
+    scope: "The complete historical tournament roster above is separate from the simulator's smaller selection below. Its representative XI and ratings describe our model; the tournament results are historical facts.",
     facts: [
       { label: "World Cup result", text: "France beat Croatia 4–2 in the final after a 1–0 semi-final win over Belgium. In the final, a Mario Mandžukić own goal was followed by goals from Antoine Griezmann, Paul Pogba and Kylian Mbappé." },
       { label: "Midfield balance", text: "Kanté covers space alongside Pogba. Matuidi's narrower role on the left helps the midfield defend, while Mbappé offers a more direct threat on the right. This asymmetry matters more than treating both flanks as identical." },
       { label: "Griezmann and Giroud", text: "Griezmann links midfield and attack around Giroud. Giroud's role includes occupying centre-backs and supporting combinations; Mbappé attacks the space beyond them. Our fixed formation is a starting shape, not a map of every possession." },
     ],
-    sources: [{ label: "FIFA: Russia 2018 technical report (PDF)", url: "https://img.fifa.com/image/upload/evdvpfdkueqrdlbbrrus.pdf" }],
+    sources: [{ label: "FIFA: 2018 final result, scorers and line-ups", url: "https://inside.fifa.com/tournaments/mens/worldcup/2018russia/news/worldcupathome-france-croatia-russia-2018-3072767" }, { label: "FFF: France–Croatia final teamsheet", url: "https://www.fff.fr/selection/matchs/1266-france-croatie.html" }],
   },
   "/compare/barcelona-vs-real-madrid": {
     heading: "What the Barcelona–Madrid verdict is based on",

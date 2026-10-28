@@ -64,10 +64,10 @@ export const barcelona200809: HistoricalTeam = makeTeam({
   ],
   styleTags: ["Tiki-Taka", "Positional Play", "High Press", "Short Passing", "Midfield Control"],
   summary:
-    "Pep Guardiola's first Barcelona side. A treble-winning team built around Xavi, Iniesta and a 21-year-old Messi, with Eto'o and Henry finishing the chances.",
+    "Guardiola's first senior Barcelona season brought the league, Copa del Rey and Champions League treble. This selected squad includes Messi, Eto'o and Henry; its fixed XI is a season model, not the Rome final teamsheet.",
   seoTitle: "Barcelona 2008/09 Squad — Guardiola's First Treble",
   seoDescription:
-    "Barcelona 2008/09: Guardiola's first treble, Messi still a right-sided attacker, Xavi and Iniesta occupying the middle. Not the 2010/11 false nine.",
+    "Barcelona 2008/09 treble: selected squad, model lineup and the actual Rome final XI. Messi's false nine already featured in the May 2009 Clásico.",
 })
 
 export const barcelona201011: HistoricalTeam = makeTeam({

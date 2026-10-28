@@ -7,6 +7,7 @@ export type PrimeEditorial = {
   caseFor: string
   counterCase: string
   sections?: PrimeEditorialSection[]
+  sources?: Array<{ label: string; url: string }>
 }
 
 const PRIME_EDITORIAL: Record<string, PrimeEditorial> = {
@@ -15,8 +16,42 @@ const PRIME_EDITORIAL: Record<string, PrimeEditorial> = {
     counterCase: "The strongest counterargument is 2014/15. Suárez gave Barcelona a true centre-forward, Neymar threatened the opposite side and Messi could create from deeper positions, so the team had more ways to win when possession was disrupted. Choose that season if adaptability and front-three danger matter more than positional purity.",
   },
   "real-madrid": {
-    caseFor: "Madrid 2016/17 combined the midfield balance of Casemiro, Kroos and Modrić with Ronaldo's conversion into the decisive penalty-box forward. The league title matters because it shows week-to-week depth, while retaining the Champions League shows that the same squad could solve knockout ties without relying on one emotional run.",
-    counterCase: "La Décima remains the romantic and transition-football countercase. Di María's carrying changed the midfield, Bale still had devastating open-field speed and Ramos supplied the moment that altered the club's European decade. A reader weighting peak counter-attacking force may reasonably prefer 2013/14.",
+    caseFor: "Our 2016/17 preference combines season-long league performance with a successful European title defence. Madrid won La Liga with 93 points and beat Juventus 4–1 in Cardiff. Casemiro, Kroos and Modrić all started the final alongside Isco, Benzema and Ronaldo. We prefer that midfield balance for a hypothetical match; the preference is our judgment, not a title awarded by the historical record.",
+    counterCase: "The 2013/14 side won the Champions League and Copa del Rey. Its counter-attacking options around Ronaldo, Benzema, Bale and Di María offer a different tactical case. Ramos’s stoppage-time equaliser forced extra time in the 4–1 European final win against Atlético. Readers who place greater weight on that attacking structure can prefer La Décima without disputing the later team’s league-and-Europe double.",
+    sections: [
+      {
+        heading: "What our prime verdict measures",
+        paragraphs: [
+          "Here, prime means our preferred playing model from the two completed historical Madrid squads on this page: 2013/14 and 2016/17. We weigh midfield structure, attacking options and success across a league campaign and European knockout ties. This is a limited comparison, not an exhaustive ranking of every Madrid generation or an objective measurement across eras.",
+          "The 2016/17 case has two separate pieces of evidence: the 93-point league title and the successful defence of the Champions League. Those results support an argument about consistency and knockout performance. They do not prove that this side would beat 2013/14, and our estimated simulator ratings cannot turn that opinion into a historical fact.",
+        ],
+      },
+      {
+        heading: "2013/14 and 2016/17: the decisive matches",
+        paragraphs: [
+          "La Décima was 1–1 after regulation time, not a routine four-goal victory. Ramos equalised in the third minute of added time, then Bale, Marcelo and Ronaldo scored in extra time. Di María’s run and shot created the rebound for Bale’s goal. Madrid also beat Barcelona 2–1 in the Copa del Rey final, with Bale scoring the winner.",
+          "The 2013/14 card is a season selection rather than the Lisbon final XI. Xabi Alonso was suspended for the final, Khedira started in midfield, Varane started instead of Pepe, and Coentrão started before Marcelo came on. Those differences matter when using a season model to discuss one particular match.",
+          "In 2017 Madrid beat Juventus 4–1 with two Ronaldo goals, plus goals from Casemiro and Asensio. Ronaldo finished that Champions League campaign with 12 goals, ten in the knockout phase. This was Madrid’s second consecutive win in the Champions League era; the third followed in 2018. The selected players match the Cardiff starters, but our fixed 4-3-3 diagram simplifies the positions, particularly Isco’s role around the midfield and two forwards.",
+        ],
+      },
+      {
+        heading: "Why the 2025/26 card is a separate comparison",
+        paragraphs: [
+          "The third card is a selected 2025/26 simulation dataset, not a third historical prime verdict. Its Xabi Alonso label refers to the coach who began Madrid’s 2025/26 league campaign. The club’s preview of the Osasuna opener on 19 August 2025 confirms that starting context and identifies Trent and Huijsen among the new signings.",
+          "Bellingham and Mendy appear in our model XI even though the same preview listed both as injured for the opener. The card therefore represents a season selection rather than the Osasuna teamsheet. Its ratings and lineup are our choices; it does not claim to be the club’s current squad, cover every manager or transfer during 2025/26, or establish a peak comparable to the historical winners.",
+        ],
+      },
+    ],
+    sources: [
+      { label: "Real Madrid: 2016/17 league title and 93 points", url: "https://www.realmadrid.com/en-US/news/club/latest-news/hace-nueve-anos-se-gano-la-33a-liga-21-05-2026" },
+      { label: "Real Madrid: Cardiff final, lineup and second consecutive title", url: "https://www.realmadrid.com/en-US/news/club/latest-news/noveno-aniversario-de-la-duodecima-03-06-2026" },
+      { label: "UEFA: Ronaldo’s 12 European goals in 2016/17", url: "https://www.uefa.com/uefachampionsleague/news/0250-0c5117b83e40-049fee5ad8db-1000--ronaldo-overtakes-messi-to-finish-as-top-scorer/" },
+      { label: "UEFA: the 2014 European final", url: "https://www.uefa.com/uefachampionsleague/news/0250-0c51093bd4a7-41ccc377a75c-1000--madrid-finally-fulfil-decima-dream/" },
+      { label: "UEFA: Lisbon lineup changes and Alonso’s suspension", url: "https://es.uefa.com/uefachampionsleague/news/0252-0cd2f33d4afc-996729631bdd-1000--el-sueno-de-la-decima-ya-es-real/" },
+      { label: "Real Madrid: 2014 Copa del Rey final", url: "https://www.realmadrid.com/es-ES/noticias/futbol/primer-equipo/personalidades/el-gol-de-bale-deslumbro-al-mundo" },
+      { label: "Real Madrid: dated context for the 2025/26 model", url: "https://www.realmadrid.com/en-US/news/football/first-team/fixtures/previa-real-madrid-osasuna-liga-19-08-2025" },
+      { label: "Real Madrid: opening-day call-up list, August 2025", url: "https://www.realmadrid.com/es-ES/noticias/futbol/primer-equipo/convocatorias/convocatoria-del-real-madrid-frente-al-osasuna-18-08-2025" },
+    ],
   },
   "manchester-united": {
     caseFor: "The 2007/08 selection is about balance in every line. Ferdinand and Vidić protected a mobile attack, Carrick and Scholes could play through pressure, and Ronaldo's goals did not require United to become a one-player side. They won England and Europe while adapting between possession, counterattack and deep knockout defending.",

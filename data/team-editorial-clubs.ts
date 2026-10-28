@@ -6,29 +6,37 @@ function d(intro: string, sections: TeamEditorial["sections"], sources?: TeamEdi
 
 export const CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
   "barcelona-2008-09": d(
-    "Barcelona 2008/09 were Guardiola’s first first-team, and the season that made positional play look like a finished product rather than a coaching fad. Messi was still listed as a right-sided attacker for much of the year; the treble arrived before the false-nine version became doctrine.",
+    "Guardiola’s first season as Barcelona’s senior coach brought La Liga, the Copa del Rey and the Champions League: the first treble by a Spanish club. Our selected season XI is different from the team that started the European final in Rome, and Messi’s role already included the false nine in May 2009.",
     [
       {
-        heading: "What they actually won",
+        heading: "Three trophies in the 2008/09 season",
         paragraphs: [
-          "League, Copa del Rey and Champions League in the same campaign. The European run went through Lyon, Bayern and Chelsea before Manchester United in Rome. The 2–0 in the final was not a smash-and-grab: Xavi and Iniesta occupied the middle of the pitch until United’s press had nowhere left to jump.",
-          "The first half of the league season still had roughness — Eto’o finishing chances that later Messi teams would create for themselves, Henry drifting inside from the left. By spring the side looked inevitable. That is why this page is the origin story, not the peak of control.",
+          "Barcelona beat Athletic Club 4–1 in the Copa del Rey final and Manchester United 2–0 in the Champions League final. Eto’o and Messi scored in Rome. The European knockout route went through Lyon, Bayern and Chelsea; Iniesta’s stoppage-time goal at Stamford Bridge sent Barcelona through on away goals after a 1–1 aggregate draw.",
+          "The treble belongs to the 2008/09 campaign. The Spanish Super Cup, UEFA Super Cup and Club World Cup followed later in the 2009 calendar year. Those later wins completed the sextuple, but they should not be presented as six trophies all won during the 2008/09 season.",
         ],
       },
       {
-        heading: "How the XI was built",
+        heading: "The season model and the Rome final are different XIs",
         paragraphs: [
-          "Busquets replaced Yaya Touré as the first passer. Piqué arrived from Manchester United and immediately played as a stepping centre-back rather than a stopper. Alves provided the width that Messi abandoned when he came inside. The 4-3-3 was a real shape, not a slogan: Abidal and Alves were full-backs with opposite jobs.",
-          "Eto’o’s movement into the channels is the detail later memory erases. He occupied Vidic in Rome; Messi received between the lines. Iniesta’s goal in Stamford Bridge the round before was the other signature — a team that could wait until the 93rd minute without changing idea.",
+          "We select Busquets behind Xavi and Iniesta, with Alves and Abidal at full-back. That is a modelling choice, not evidence that Touré had already lost his place: Touré started the 6–2 win at Real Madrid on 2 May, while Busquets came off the bench. Messi operated as a false nine in that match, so a strict split between a right-wing Messi in 2008/09 and a false nine only in 2010/11 would be misleading.",
+          "In Rome, Alves and Abidal were suspended. The final started with Valdés; Puyol, Touré, Piqué, Sylvinho; Busquets, Xavi, Iniesta; Eto’o, Messi and Henry. Touré played in central defence and Puyol at right-back. The historical XI above is supplied separately so the simulator’s fixed diagram is not mistaken for that teamsheet.",
         ],
       },
       {
         heading: "Where they sit in the model",
         paragraphs: [
-          "Attack and midfield are both elite; the defence is excellent without being Sacchi-level compact. Chemistry is high because this XI had already played together through a full league winter. In simulations they should look like a side that wants the ball and punishes a broken press, not a counter-attacking treble team.",
-          "Run them against later Madrid or against Sacchi’s Milan if the argument is control versus compression. Run them against their own 2010/11 successors if the argument is which Guardiola season was actually stronger.",
+          "Our ratings favour midfield passing, possession and combinations between Messi, Eto’o and Henry. The chemistry and tactical sliders are estimates for this selected squad; they are not measured season statistics or proof that the same eleven played together every week.",
+          "Comparing this model with Barcelona 2010/11 asks whether the first treble side’s attacking options outweigh the later team’s midfield control. That is our tactical interpretation. Neither the trophy list nor a hypothetical simulator result establishes an objective winner between the two seasons.",
         ],
       },
+    ],
+    [
+      { label: "UEFA: 2009 final report and first Spanish treble", url: "https://www.uefa.com/uefachampionsleague/news/01f3-0e78cf0b1cde-767a3469b6c3-1000/" },
+      { label: "UEFA: 2009 final official teamsheet", url: "https://www.uefa.com/newsfiles/UCL/2009/302813_LU.pdf" },
+      { label: "UEFA: Barcelona’s route to the 2009 final", url: "https://www.uefa.com/uefachampionsleague/news/01d9-0e722f098e12-849a9a9859f6-1000--road-to-the-final-fc-barcelona/" },
+      { label: "Barcelona: Messi’s false nine in the 2009 Clásico", url: "https://www.fcbarcelona.com/en/news/4498371/six-clasicos-that-decided-leagues-for-fc-barcelona/amp" },
+      { label: "Barcelona: the 6–2 Clásico starting XI", url: "https://www.fcbarcelona.com/en/news/1205417/ten-years-since-6-2-win-at-bernabeu/amp" },
+      { label: "Barcelona: the six trophies of calendar year 2009", url: "https://www.fcbarcelona.com/en/news/1537648/ten-year" },
     ],
   ),
   "barcelona-2010-11": d(
@@ -326,33 +334,36 @@ export const CLUB_TEAM_EDITORIAL: Record<string, TeamEditorial> = {
     ],
   ),
   "chelsea-2004-05": d(
-    "Mourinho’s first Chelsea won the 2004/05 Premier League with 95 points and only 15 goals conceded. This page shows a representative 4-3-3 from that title season, the wider squad, and why Makélélé, Lampard, Duff and Robben mattered as much as the back four.",
+    "Mourinho’s first Chelsea won the 2004/05 Premier League with 95 points and 15 goals conceded, adding the League Cup. This page separates those historical results from our selected 4-3-3 and playable squad; neither is an official list of every player or every starting lineup used that season.",
     [
       {
         heading: "The 15-goal defence",
         paragraphs: [
-          "Čech behind Terry and Carvalho was the centre of the defence. Paulo Ferreira played at right-back; Wayne Bridge and William Gallas were left-side options. Makélélé screened the back four while Lampard arrived from midfield. Chelsea took 95 league points and kept 25 clean sheets.",
-          "This is the first-title side, not Chelsea's 2011/12 Champions League winners. Liverpool ended its 2004/05 European run in the semi-final, while the league season established a defensive record that still defines the team.",
+          "Chelsea’s league record was 95 points, one defeat and 15 goals conceded. Their 25 team clean sheets and Čech’s 24 individual league clean sheets are different totals. Mourinho changed from an early diamond to a 4-3-3, with Makélélé protecting the centre-backs and Lampard given more freedom to attack from midfield.",
+          "The League Cup final was a 3–2 extra-time win over Liverpool. Liverpool then eliminated Chelsea 1–0 on aggregate in the Champions League semi-final: 0–0 at Stamford Bridge and 1–0 at Anfield. Chelsea’s European title came in 2011/12, a different season and squad.",
         ],
       },
       {
         heading: "The representative 4-3-3 lineup",
         paragraphs: [
-          "Our model XI places Duff, Drogba and Robben across the front, Lampard and Tiago ahead of Makélélé, then Bridge, Terry, Carvalho and Ferreira in front of Čech. That is a representative season lineup for the simulator, not a claim that Mourinho started the same eleven every match.",
-          "Joe Cole and Eiður Guðjohnsen are in the wider squad and were important alternatives in attack; Gallas could change the left side of the defence. The XI and bench on this page show exactly which version this model simulates.",
+          "Our model XI places Duff, Drogba and Robben across the front, Lampard and Tiago ahead of Makélélé, then Bridge, Terry, Carvalho and Ferreira in front of Čech. Bridge is our selection at left-back; Gallas spent much of the real title-winning season in that position and remains in the playable squad. This selection is not an appearance ranking.",
+          "Joe Cole and Guðjohnsen were important attacking options, not merely reserves behind an unchanging front three. For example, the Anfield semi-final started with both of them and Drogba, with Robben coming on and Duff absent from the XI. Injuries and rotation are why one simulator lineup cannot describe every match.",
         ],
       },
       {
         heading: "The argument with the Invincibles",
         paragraphs: [
-          "Arsenal 2003/04 went unbeaten; Chelsea 2004/05 conceded almost nothing. Those are different kinds of dominance. In a simulation Chelsea should look harder to score against and slightly less likely to produce a 5–1 away. Lampard’s late box arrivals are the attacking pattern the engine should keep finding.",
-          "The 2011/12 Champions League winners are a different Chelsea: older, more chaotic, more European. This page is the first-title machine.",
+          "Our model gives this Chelsea a strong defensive profile and uses Lampard’s midfield runs and the wingers’ direct play as attacking themes. The ratings and style sliders express that interpretation; the historical goals-against record does not supply an official numerical player rating or a guaranteed simulated score.",
+          "A comparison with Arsenal 2003/04 asks how an unbeaten league season compares with this defensive record. It is a hypothetical test between selected squads. Choosing a winner requires an editorial or modelling criterion beyond the real teams’ different achievements.",
         ],
       },
     ],
     [
       { label: "Premier League: Chelsea's 2004/05 records", url: "https://www.premierleague.com/en/news/2737934" },
-      { label: "Chelsea FC: 2004/05 title season", url: "https://www.chelseafc.com/en/news/article/chelsea-in-the-premier-league" },
+      { label: "Premier League: team and goalkeeper clean-sheet totals", url: "https://www.premierleague.com/es/news/59017" },
+      { label: "Chelsea: the 2005 League Cup final", url: "https://www.chelseafc.com/en/news/article/ending-the-wait---the-story-of-2004-05--the-first-of-many" },
+      { label: "Chelsea: Gallas’s left-back role in 2004/05", url: "https://www.chelseafc.com/en/news/article/from-west-to-north-london--the-arsenal-and-chelsea-connections-" },
+      { label: "UEFA: Liverpool–Chelsea 2005 semi-final result and lineup", url: "https://www.uefa.com/uefachampionsleague/match/80760/" },
     ],
   ),
   "ajax-1994-95": d(

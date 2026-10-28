@@ -53,7 +53,6 @@ export const italy2006: HistoricalTeam = makeTeam({
     pl("Daniele De Rossi", "DE ROSSI", "CM", 84, { defending: 86 }),
     pl("Massimo Oddo", "ODDO", "RB", 80),
     pl("Andrea Barzagli", "BARZAGLI", "CB", 82),
-    pl("Gianluca Pessotto", "PESSOTTO", "LB", 76),
     pl("Angelo Peruzzi", "PERUZZI", "GK", 80),
     pl("Filippo Inzaghi", "INZAGHI", "ST", 82),
   ],
@@ -65,9 +64,9 @@ export const italy2006: HistoricalTeam = makeTeam({
   styleTags: ["Defensive Mastery", "Pirlo Tempo", "Counter Attack", "Set-Piece Threat", "Experience"],
   summary:
     "Lippi's 2006 Italy. Buffon, Cannavaro and a midfield of Pirlo and Gattuso. A World Cup won in Berlin after a night that became folklore.",
-  seoTitle: "Italy 2006 World Cup Squad — Lippi, Cannavaro, Pirlo",
+  seoTitle: "Italy 2006 World Cup Squad: All 23 Players & Final XI",
   seoDescription:
-    "Italy 2006 World Cup squad: Lippi's Berlin winners. Buffon, Cannavaro, Pirlo, Grosso's semi-final, a shootout after Zidane's red. Knockout XI and ratings.",
+    "Italy's complete 23-player 2006 World Cup squad, shirt numbers and final starting XI. See the 1–1 final, 5–3 shootout and our selected playable squad.",
 })
 
 export const italy1994: HistoricalTeam = makeTeam({

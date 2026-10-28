@@ -133,7 +133,7 @@ export const realMadrid201617: HistoricalTeam = makeTeam({
   styleTags: ["Counter Attack", "Fast Transition", "Strong Midfield", "Wide Fullbacks", "Aerial Threat"],
   summary:
     "Zidane's 2016/17 Madrid. Casemiro-Kroos-Modrić as the midfield spine, Ronaldo still scoring everything, and a side that could win ugly or cut teams open on the break.",
-  seoTitle: "Real Madrid 2016/17 Squad — Zidane, Three in a Row",
+  seoTitle: "Real Madrid 2016/17 Squad — Zidane's League and Europe Double",
   seoDescription:
-    "Real Madrid 2016/17 squad: Zidane's third straight European Cup. Casemiro–Kroos–Modrić, Ronaldo still scoring everything — not the 2014 Décima side.",
+    "Real Madrid 2016/17 selected squad: La Liga champions and the first side to retain the Champions League era title, beating Juventus 4–1 in Cardiff.",
 })

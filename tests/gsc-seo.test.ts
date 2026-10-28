@@ -134,7 +134,7 @@ describe("GSC landing pages", () => {
   it("gives the Clasico comparison a result-oriented search snippet", () => {
     const clasico = CLUB_COMPARES.find((pair) => pair.slug === "barcelona-vs-real-madrid")!
     expect(clasico.seoTitle).toMatch(/2010\/11|All-Time/)
-    expect(compareSearchDescription(clasico)).toMatch(/^Real Madrid lead the all-time club case/)
+    expect(compareSearchDescription(clasico)).toMatch(/^Real Madrid lead European titles 15–5/)
     expect(compareSearchDescription(clasico)).toMatch(/Barcelona 2010\/11/)
   })
 
@@ -288,7 +288,7 @@ describe("GSC landing pages", () => {
 
   it("gives Napoli 86/87, Italy 2006 and Barcelona 2010/11 specific titles", () => {
     expect(teamPageCopy(getTeam("napoli-1986-87")!).title).toMatch(/Maradona/i)
-    expect(teamPageCopy(getTeam("italy-2006")!).title).toMatch(/Cannavaro|Pirlo|Lippi/)
+    expect(teamPageCopy(getTeam("italy-2006")!).title).toMatch(/All 23 Players & Final XI/)
     expect(teamPageCopy(getTeam("barcelona-2010-11")!).title).toMatch(/false nine|Wembley/i)
   })
 
@@ -401,7 +401,9 @@ describe("GSC landing pages", () => {
     for (const team of teams) {
       expect(team.seoDescription, team.id).not.toMatch(/Starting XI, .+ ratings in the simulator/)
       expect(team.seoDescription, team.id).not.toMatch(/squad, starting XI and ratings/)
-      expect(team.seoDescription, team.id).not.toMatch(/\bplayable\b/)
+      if (/\bplayable\b/.test(team.seoDescription)) {
+        expect(team.seoDescription, team.id).toMatch(/selected playable squad|modelled/i)
+      }
       expect(team.seoDescription, team.id).not.toMatch(/in the simulator/)
       const copy = teamPageCopy(team)
       expect(copy.description, team.id).not.toMatch(/Starting XI, .+ ratings in the simulator/)
